@@ -20,3 +20,8 @@
 
 # Create Anaconda Environment
 1. `conda create -n CITS4012_base python=3.8`
+2. `conda activate CITS4012_base`
+3. `conda deactivate`
+
+# Use the virtual environment in VSCode
+* [Instructions on how to use environment in VSCode](https://code.visualstudio.com/docs/python/environments#_conda-environments) 
