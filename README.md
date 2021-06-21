@@ -21,7 +21,12 @@
 # Create Anaconda Environment
 1. `conda create -n CITS4012_base python=3.8`
 2. `conda activate CITS4012_base`
-3. `conda deactivate`
 
 # Use the virtual environment in VSCode
 * [Instructions on how to use environment in VSCode](https://code.visualstudio.com/docs/python/environments#_conda-environments) 
+* Test to see if the CITS4012_base environment is available from VSCode
+
+# Install NLP packages
+## Install Spacy (total 11.3 MB)
+1. Go back to Conda CMD.exe, at the prompt type `conda install spacy`
+ 
