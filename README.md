@@ -28,18 +28,20 @@
 
 # Install NLP packages
 ## Install Spacy (total 11.3 MB)
-1. Go back to Conda CMD.exe, at the prompt type `conda install spacy`
+1. Go back to Conda CMD.exe, check to see if you have `pip` installed using 
+`conda list`
+`pip install -U spacy`
+`python -m spacy download en_core_web_sm`
  
-Find the Spacy version: 
+2. Find the Spacy version (we want v3+): 
 
-`# Windows CMD
-C:\> conda list | findstr "spacy"
-`
+```
+# Windows CMD
+C:\> conda list | findstr "spacy"`
 
-`# Windows PowerShell
-PS C:\> conda list | Select-String "spacy"
-`
+# Windows PowerShell
+C:\> conda list | Select-String "spacy"
 
-`# Linux
-PS $ conda list | grep "spacy"
-`
+# Linux
+$ conda list | grep "spacy"
+```
