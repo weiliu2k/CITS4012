@@ -27,7 +27,7 @@
 * Test to see if the CITS4012_base environment is available from VSCode
 
 # Install NLP packages
-## Install Spacy (total 11.3 MB)
+## Install Spacy
 1. Go back to Conda CMD.exe, check to see if you have `pip` installed using 
 `conda list`
 `pip install -U spacy`
@@ -45,3 +45,14 @@ C:\> conda list | Select-String "spacy"
 # Linux
 $ conda list | grep "spacy"
 ```
+## Install PyTorch
+### Check for Cuda compatible Graphics Card on Windows
+1. Click Start.
+2. On the Start menu, click Run.
+3. In the Open box, type "dxdiag" (without the quotation marks), and then click OK.
+4. The DirectX Diagnostic Tool opens. ...
+5. On the Display tab, information about your graphics card is shown in the Device section.
+
+My laptop has NVIDIA GeForce MX130.<img width="1976" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
+<img width="779" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
+
