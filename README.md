@@ -30,3 +30,16 @@
 ## Install Spacy (total 11.3 MB)
 1. Go back to Conda CMD.exe, at the prompt type `conda install spacy`
  
+Find the Spacy version: 
+
+`# Windows CMD
+C:\> conda list | findstr "spacy"
+`
+
+`# Windows PowerShell
+PS C:\> conda list | Select-String "spacy"
+`
+
+`# Linux
+PS $ conda list | grep "spacy"
+`
