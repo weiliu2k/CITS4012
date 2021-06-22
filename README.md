@@ -39,7 +39,7 @@ Need admin access to write to C drive (Run Conda Powershell as Administrator - r
 * Test to see if the CITS4012_base environment is available from VSCode
 
 ## 2.2 Install NLP packages
-### Install Spacy
+### 2.2.1 Install Spacy
 1. Go back to Conda CMD.exe, check to see if you have `pip` installed using 
 `conda list`
 `pip install -U spacy`
@@ -57,7 +57,7 @@ C:\> conda list | Select-String "spacy"
 # Linux
 $ conda list | grep "spacy"
 ```
-### Install PyTorch
+### 2.2.2 Install PyTorch
 
 #### Check for Cuda compatible Graphics Card on Windows
 1. Click Start.
@@ -89,8 +89,19 @@ Download the exe file and install, make sure it is added to the system PATH.
 #### Install torchviz
 `pip install torchviz`
 
+### 2.2.3 Install NLTK
+`pip install nltk`
+
+and then download the data and models 
+`python -m nltk.downloader -d c:\envs\cits4012\nltk_data all`
+
+#### Install truecase 
+install this after NLTK installation pls.
+
+`pip install truecase`
+
 ## 2.3 Install Jupyterlab
 `conda install -c conda-forge jupyterlab`
 
 
-
+https://mspoweruser.com/ntfs-260-character-windows-10/
