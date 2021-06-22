@@ -70,8 +70,12 @@ My laptop has NVIDIA GeForce MX130.
 
 #### Install Pytorch 
 [Pytorch Website](https://pytorch.org)  
-with GPU `conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c conda-forge`
-CPU only `conda install pytorch torchvision torchaudio cpuonly -c pytorch -c conda-forge`
+
+* with GPU 
+`conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c conda-forge`
+
+* CPU only 
+`conda install pytorch torchvision torchaudio cpuonly -c pytorch -c conda-forge`
 
 #### Install Tensorboard
 `conda install -c conda-forge tensorboard`
