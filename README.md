@@ -18,9 +18,10 @@
 
 <img width="50%" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
 
-# Installing Python Extension for Visual Studio Code
+## Installing Extensions for Visual Studio Code
 * [Python Extension for VSCode Instruction](https://code.visualstudio.com/docs/python/python-tutorial#_install-visual-studio-code-and-the-python-extension)
-* Installation Time (~2-3 mins)
+* Remote - SSH Extension
+* Remote X11 (SSH) Extension
 
 # Create Anaconda Environment
 Need admin access to write to C drive (Run Conda Powershell as Administrator - right click on the icon)
@@ -75,9 +76,9 @@ Download the exe file and install, make sure it is added to the system PATH.
 ### Install torchviz
 `pip install torchviz`
 
-## Install Jupyterlab
+# Install Jupyterlab
 `conda install -c conda-forge jupyterlab`
 
-## Install git
+# Install git
 [Latest Version of Git for Windows](https://git-scm.com/download/win)
 
