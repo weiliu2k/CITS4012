@@ -53,6 +53,11 @@ $ conda list | grep "spacy"
 4. The DirectX Diagnostic Tool opens. ...
 5. On the Display tab, information about your graphics card is shown in the Device section.
 
-My laptop has NVIDIA GeForce MX130.<img width="1976" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
+My laptop has NVIDIA GeForce MX130.
+
+### Install Pytorch
+`conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c conda-forge`
+
+<img width="1976" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
 <img width="779" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
 
