@@ -7,6 +7,8 @@
 * Installation Time (~30 mins)
 * Launch Anaconda Navigator
 
+<img width="50%" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
+
 # Installing Visual Studio Code
 
 * [Visual Studio Code Download](https://code.visualstudio.com/download)
@@ -14,13 +16,16 @@
 * Default Installation Path (`C:\Program Files\Microsoft VS Code`)
 * Installation Time (~5 mins)
 
+<img width="50%" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
+
 # Installing Python Extension for Visual Studio Code
 * [Python Extension for VSCode Instruction](https://code.visualstudio.com/docs/python/python-tutorial#_install-visual-studio-code-and-the-python-extension)
 * Installation Time (~2-3 mins)
 
 # Create Anaconda Environment
-1. `conda create -n CITS4012_base python=3.8`
-2. `conda activate CITS4012_base`
+Need admin access to write to C drive (Run Conda Powershell as Administrator - right click on the icon)
+1. `conda create -p c:\envs\cits4012\ python=3.8`
+2. `conda activate c:\envs\cits4012`
 
 # Use the virtual environment in VSCode
 * [Instructions on how to use environment in VSCode](https://code.visualstudio.com/docs/python/environments#_conda-environments) 
@@ -58,6 +63,21 @@ My laptop has NVIDIA GeForce MX130.
 ### Install Pytorch
 `conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c conda-forge`
 
-<img width="1976" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
-<img width="779" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
+### Install Tensorboard
+`conda install -c conda-forge tensorboard`
+
+### Install GraphViz on Windows
+[2.47.3 EXE installer for Windows 10 (64-bit)](https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.47.3/stable_windows_10_cmake_Release_x64_graphviz-install-2.47.3-win64.exe)
+Download the exe file and install, make sure it is added to the system PATH.
+
+<img width="50%" alt="GraphVizInstall" src="https://user-images.githubusercontent.com/1005582/122881303-9767f280-d36d-11eb-8188-0163c59eab01.png">
+
+### Install torchviz
+`pip install torchviz`
+
+## Install Jupyterlab
+`conda install -c conda-forge jupyterlab`
+
+## Install git
+[Latest Version of Git for Windows](https://git-scm.com/download/win)
 
