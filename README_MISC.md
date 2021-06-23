@@ -16,8 +16,8 @@ Warning: The installation of the Build Tools might take a while (~20mins).
  
 # Create a new environment
 
-`conda create -p c:\envs\cits4012_py37 python=3.7`
-`conda activate c:\envs\cits4012_py37`
+* `conda create -p c:\envs\cits4012_py37 python=3.7`
+* `conda activate c:\envs\cits4012_py37`
 
 # Install Flair
 Flair requires different versions of numpy and torch, so it is better to isolate it from the normal environment
