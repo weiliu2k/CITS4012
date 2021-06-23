@@ -72,9 +72,11 @@ My laptop has NVIDIA GeForce MX130.
 [Pytorch Website](https://pytorch.org)  
 
 * with GPU 
+
 `conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c conda-forge`
 
 * CPU only 
+
 `conda install pytorch torchvision torchaudio cpuonly -c pytorch -c conda-forge`
 
 #### Install Tensorboard
@@ -82,7 +84,8 @@ My laptop has NVIDIA GeForce MX130.
 
 #### Install GraphViz on Windows
 [2.47.3 EXE installer for Windows 10 (64-bit)](https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.47.3/stable_windows_10_cmake_Release_x64_graphviz-install-2.47.3-win64.exe)
-Download the exe file and install, make sure it is added to the system PATH.
+
+Download the exe file and install, make sure it is added to the system PATH (Windows - Edit the Windows Environment Variables.
 
 <img width="50%" alt="GraphVizInstall" src="https://user-images.githubusercontent.com/1005582/122881303-9767f280-d36d-11eb-8188-0163c59eab01.png">
 
@@ -93,6 +96,7 @@ Download the exe file and install, make sure it is added to the system PATH.
 `pip install nltk`
 
 and then download the data and models 
+
 `python -m nltk.downloader -d c:\envs\cits4012\nltk_data all`
 
 #### Install truecase 
@@ -103,5 +107,10 @@ install this after NLTK installation pls.
 ## 2.3 Install Jupyterlab
 `conda install -c conda-forge jupyterlab`
 
+## 2.4 Install Scikit-learn
+`pip install -U scikit-learn`
 
+Verify if it works:
+
+`python -c "import sklearn; sklearn.show_versions()"`
 https://mspoweruser.com/ntfs-260-character-windows-10/
