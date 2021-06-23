@@ -34,17 +34,24 @@ You can start a CMD or POWERSHELL console using the navigator, or following the 
 
 <img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
 
+## 2.2 Install from a environment YAML file
+If we install from YAML file, then we can ignore all the following steps in Section 2.3.
+
+`conda create -p c:\envs\cits4012 --file cits4012.yml`
+
+
+## 2.3 Install packages step by step from scratch
+
 ### Create Anaconda Environment
 Need admin access to write to C drive (Run Conda Powershell as Administrator - right click on the icon)
-1. `conda create -p c:\envs\cits4012\ python=3.8`
+1. `conda create -p c:\envs\cits4012 python=3.8`
 2. `conda activate c:\envs\cits4012`
 
 ### Use the virtual environment in VSCode
 * [Instructions on how to use environment in VSCode](https://code.visualstudio.com/docs/python/environments#_conda-environments) 
 * Test to see if the CITS4012_base environment is available from VSCode
 
-## 2.2 Install NLP packages
-### 2.2.1 Install Spacy
+### 2.3.1 Install Spacy
 1. Go back to Conda CMD.exe, check to see if you have `pip` installed using 
 * `conda list`
 * `pip install -U spacy`
@@ -62,7 +69,7 @@ C:\> conda list | Select-String "spacy"
 # Linux
 $ conda list | grep "spacy"
 ```
-### 2.2.2 Install PyTorch
+### 2.3.2 Install PyTorch
 
 #### Check for Cuda compatible Graphics Card on Windows
 1. Click Start.
@@ -97,7 +104,7 @@ Download the exe file and install, make sure it is added to the system PATH (Win
 #### Install torchviz
 `pip install torchviz`
 
-### 2.2.3 Install NLTK
+### 2.3.3 Install NLTK
 `pip install nltk`
 
 and then download the data and models 
@@ -109,13 +116,15 @@ install this after NLTK installation pls.
 
 `pip install truecase`
 
-## 2.3 Install Jupyterlab
+### 2.3.4 Install Jupyterlab
 `conda install -c conda-forge jupyterlab`
 
-## 2.4 Install Scikit-learn
+### 2.3.5 Install Scikit-learn
 `pip install -U scikit-learn`
 
 Verify if it works:
 
 `python -c "import sklearn; sklearn.show_versions()"`
 
+### 2.3.6 Finally Export Environment into an YAML file
+`conda env export --no-builds > cits4012.yml`
