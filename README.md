@@ -41,9 +41,9 @@ Need admin access to write to C drive (Run Conda Powershell as Administrator - r
 ## 2.2 Install NLP packages
 ### 2.2.1 Install Spacy
 1. Go back to Conda CMD.exe, check to see if you have `pip` installed using 
-`conda list`
-`pip install -U spacy`
-`python -m spacy download en_core_web_sm`
+* `conda list`
+* `pip install -U spacy`
+* `python -m spacy download en_core_web_sm`
  
 2. Find the Spacy version (we want v3+): 
 
@@ -113,4 +113,4 @@ install this after NLTK installation pls.
 Verify if it works:
 
 `python -c "import sklearn; sklearn.show_versions()"`
-https://mspoweruser.com/ntfs-260-character-windows-10/
+
