@@ -15,7 +15,8 @@
 * Remote X11 (SSH) Extension
 
 ## 1.2 Install git
-[Latest Version of Git for Windows](https://git-scm.com/download/win)
+* [Latest Version of Git for Windows](https://git-scm.com/download/win)
+* Don't forget to add git to the system PATH
 
 # 2. Conda and Unit Specific Packages
 
@@ -28,6 +29,10 @@
 * Launch Anaconda Navigator
 
 <img width="50%" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
+
+You can start a CMD or POWERSHELL console using the navigator, or following the steps 1 and 2 in the screenshot below to start a CMD or POWERSHELL. If you are intalling packages, you can right click the arrow to bring up a pop-up menu, `run as adminstrator` (Step 3a) or `pin on taskbar` (Step 3b) for future convenience.
+
+<img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
 
 ### Create Anaconda Environment
 Need admin access to write to C drive (Run Conda Powershell as Administrator - right click on the icon)
