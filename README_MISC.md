@@ -35,3 +35,5 @@ pip install -e .
 ```
 You may run into the frequent problem 2 above. Solve it by installing C++ compiler suitable for your OS. 
 
+# Install Jupyterlab
+`pip install jupyterlab`
