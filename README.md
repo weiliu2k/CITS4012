@@ -35,10 +35,11 @@ You can start a CMD or POWERSHELL console using the navigator, or following the 
 <img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
 
 ## 2.2 Install from a environment YAML file
-If we install from YAML file, then we can ignore all the following steps in Section 2.3.
+If we install from this YAML file, then we can ignore all the following steps in Section 2.3.
 
 `conda create -p c:\envs\cits4012 --file cits4012.yml`
 
+If this is successful, you can ignore the rest of the steps below. 
 
 ## 2.3 Install packages step by step from scratch
 
@@ -127,4 +128,4 @@ Verify if it works:
 `python -c "import sklearn; sklearn.show_versions()"`
 
 ### 2.3.6 Finally Export Environment into an YAML file
-`conda env export --no-builds > cits4012.yml`
+`conda env export -p c:\envs\cits4012 --no-builds -f cits4012.yml`
