@@ -1,4 +1,4 @@
-# Frequently encounted problems in Windows
+# 1. Frequently encounted problems in Windows
 
 1. File not found when files are actually there - this might be to do with the limitation of path length (<=260 characters) in Windows. See below for a solution
 
@@ -13,18 +13,27 @@ Scroll down the page to find "All Tools", expand "Tools for Visual Studio 2019" 
 <img width="50%" alt="vs-build-tools" src="https://user-images.githubusercontent.com/1005582/123034052-6d6d0980-d41b-11eb-8fe2-2f541825375d.png">
 
 Warning: The installation of the Build Tools might take a while (~20mins).
- 
-# Create a new environment
+
+# 2 Install from an environment YAML file
+If we install from this YAML file, then we can ignore all the following steps in Section 3.
+
+`conda create -p c:\envs\cits4012_py37 --file cits4012_py37.yml`
+
+If this is successful, you can ignore the rest of the steps below. 
+
+# 3 Install step by step
+
+## Create a new environment
 
 * `conda create -p c:\envs\cits4012_py37 python=3.7`
 * `conda activate c:\envs\cits4012_py37`
 
-# Install Flair
+## Install Flair
 Flair requires different versions of numpy and torch, so it is better to isolate it from the normal environment
 
 `pip install flair`
 
-# Install Neuralcoref
+## Install Neuralcoref
 Follow the "compile from source instruction" on the github page as it requires Python 3.7 and Spacy 2.0+
 
 ```
@@ -35,5 +44,8 @@ pip install -e .
 ```
 You may run into the frequent problem 2 above. Solve it by installing C++ compiler suitable for your OS. 
 
-# Install Jupyterlab
+## Install Jupyterlab
 `pip install jupyterlab`
+
+## Export Environment Files
+`conda env export -p c:\envs\cits4012_py37 --no-builds -f cits4012_py37.yml`
