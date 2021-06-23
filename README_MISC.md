@@ -8,9 +8,11 @@
 
 > Microsoft Visual C++ 14.0 is required. Get it with "Build Tools for Visual Studio": https://visualstudio.microsoft.com/downloads/
 
-Scroll down the page to find "All Tools", expand "Tools for Visual Studio 2019" and find "Build TOols for Visual Studio 2019", download and install as an admin for all users.<img width="656" alt="vs-build-tools" src="https://user-images.githubusercontent.com/1005582/123034038-6219de00-d41b-11eb-91d0-971062b078d5.png">
+Scroll down the page to find "All Tools", expand "Tools for Visual Studio 2019" and find "Build Tools for Visual Studio 2019", download and install as an admin for all users.
 
 <img width="50%" alt="vs-build-tools" src="https://user-images.githubusercontent.com/1005582/123034052-6d6d0980-d41b-11eb-8fe2-2f541825375d.png">
+
+Warning: The installation of the Build Tools might take a while (~20mins).
  
 # Create a new environment
 
