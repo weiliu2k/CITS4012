@@ -34,7 +34,7 @@ You can start a CMD or POWERSHELL console using the navigator, or following the 
 
 <img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
 
-## 2.2 Install from a environment YAML file
+## 2.2 Install from an environment YAML file
 If we install from this YAML file, then we can ignore all the following steps in Section 2.3.
 
 `conda create -p c:\envs\cits4012 --file cits4012.yml`
