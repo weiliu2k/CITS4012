@@ -5,6 +5,7 @@
   numbered: true
   sections:
     - file: ./basics/installation
+    - file: ./basics/installation_misc
     - file: ./basics/python_review
     - file: ./basics/iterables
     - file: ./basics/numpy

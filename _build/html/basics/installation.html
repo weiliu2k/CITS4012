@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. Installation &#8212; CITS4012 Natural Language Processing</title>
+    <title>1. CITS4012 Base Environment &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Python Basics" href="python_review.html" />
-    <link rel="prev" title="Basics of Python and Numpy" href="intro.html" />
+    <link rel="next" title="2. CITS4012 MISC Enviornment" href="installation_misc.html" />
+    <link rel="prev" title="Lab 01: Conda Environment and Python Refresher" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -90,39 +90,44 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro.html">
-   Introduction to CITS4012’s Jupyter Book
+   HOME
   </a>
  </li>
 </ul>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="intro.html">
-   Basics of Python and Numpy
+   Lab 01: Conda Environment and Python Refresher
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     1. Installation
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="installation_misc.html">
+     2. CITS4012 MISC Enviornment
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="python_review.html">
-     2. Python Basics
+     3. Python Basics
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="iterables.html">
-     3. Iterables
+     4. Iterables
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="numpy.html">
-     4. Numpy
+     5. Numpy
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="matplotlib.html">
-     5. Matplotlib
+     6. Matplotlib
     </a>
    </li>
   </ul>
@@ -271,9 +276,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/basics/installation.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/basics/installation.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -296,6 +301,137 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ides-and-git">
+   1.1. IDEs and Git
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-visual-studio-code">
+     1.1.1. Installing Visual Studio Code
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#installing-extensions-for-visual-studio-code">
+       1.1.1.1. Installing Extensions for Visual Studio Code
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-git">
+     1.1.2. Install git
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conda-and-unit-specific-packages">
+   1.2. Conda and Unit Specific Packages
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-anaconda">
+     1.2.1. Installing Anaconda
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-from-an-environment-yaml-file">
+     1.2.2. Install from an environment YAML file
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-packages-step-by-step-from-scratch">
+     1.2.3. Install packages step by step from scratch
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-anaconda-environment">
+       1.2.3.1. Create Anaconda Environment
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#use-the-virtual-environment-in-vscode">
+       1.2.3.2. Use the virtual environment in VSCode
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#install-spacy">
+       1.2.3.3. Install Spacy
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#install-pytorch">
+       1.2.3.4. Install PyTorch
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#check-for-cuda-compatible-graphics-card-on-windows">
+         1.2.3.4.1. Check for Cuda compatible Graphics Card on Windows
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id1">
+         1.2.3.4.2. Install Pytorch
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#install-tensorboard">
+         1.2.3.4.3. Install Tensorboard
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#install-graphviz-on-windows">
+         1.2.3.4.4. Install GraphViz on Windows
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#install-torchviz">
+         1.2.3.4.5. Install torchviz
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#install-nltk">
+       1.2.3.5. Install NLTK
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#install-truecase">
+         1.2.3.5.1. Install truecase
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#install-jupyterlab">
+       1.2.3.6. Install Jupyterlab
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#install-scikit-learn">
+       1.2.3.7. Install Scikit-learn
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#finally-export-environment-into-an-yaml-file">
+       1.2.3.8. Finally Export Environment into an YAML file
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -303,57 +439,163 @@
         
               <div>
                 
-  <div class="section" id="installation">
-<h1><span class="section-number">1. </span>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>More Tutorials:</p>
-<p><strong>NUMPY</strong>: <br/>
-[<a class="reference external" href="https://cs231n.github.io/python-numpy-tutorial/#numpy">https://cs231n.github.io/python-numpy-tutorial/#numpy</a>]<br/>
-[<a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">https://numpy.org/doc/stable/user/quickstart.html</a>]</p>
-<p><strong>MATPLOTLIB</strong>: <br/>
-[<a class="reference external" href="https://matplotlib.org/gallery/index.html">https://matplotlib.org/gallery/index.html</a>]&lt;</p>
-<p><strong>BASICS</strong>:<br/>
-[<a class="reference external" href="https://www.w3schools.com/python/">https://www.w3schools.com/python/</a>]<br/>
-<em>CONSULT THESE WISELY</em>:<br/>
-The official documentation, Google, and Stack-overflow are your friends!</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This tutorial is based on Python 3.8
-but it should apply to all Python 3.X versions
-Please note that this tutorial is NOT exhaustive
-We try to cover everything you need for class assignments
-but you should also navigate external resources</p>
+  <div class="section" id="cits4012-base-environment">
+<h1><span class="section-number">1. </span>CITS4012 Base Environment<a class="headerlink" href="#cits4012-base-environment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ides-and-git">
+<h2><span class="section-number">1.1. </span>IDEs and Git<a class="headerlink" href="#ides-and-git" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-visual-studio-code">
+<h3><span class="section-number">1.1.1. </span>Installing Visual Studio Code<a class="headerlink" href="#installing-visual-studio-code" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://code.visualstudio.com/download">Visual Studio Code Download</a></p></li>
+<li><p>64 bit System Installer (<code class="docutils literal notranslate"><span class="pre">VSCodeSetup-x64-1.57.1.exe</span></code> - 78KB)</p></li>
+<li><p>Default Installation Path (<code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Microsoft</span> <span class="pre">VS</span> <span class="pre">Code</span></code>)</p></li>
+<li><p>Installation Time (~5 mins)</p></li>
+</ul>
+<img width="50%" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
+<div class="section" id="installing-extensions-for-visual-studio-code">
+<h4><span class="section-number">1.1.1.1. </span>Installing Extensions for Visual Studio Code<a class="headerlink" href="#installing-extensions-for-visual-studio-code" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://code.visualstudio.com/docs/python/python-tutorial#_install-visual-studio-code-and-the-python-extension">Python Extension for VSCode Instruction</a></p></li>
+<li><p>Remote - SSH Extension</p></li>
+<li><p>Remote X11 (SSH) Extension</p></li>
+</ul>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-## Anaconda for environment management 
-
-https://www.anaconda.com/
-
-common commands
-
-```
-conda env list                                &lt;-- list all environments
-
-conda create -n newenv python=3.8            &lt;-- create new environment
-
-conda enc create -f env.yml     &lt;-- create environment from config file
-
-conda activate envname                       &lt;-- activate a environment
-
-conda deactivate                                   &lt;-- exit environment
-
-pip install packagename     &lt;-- install package for current environment
-
-jupyter notebook                &lt;-- open jupyter in current environment
-```
-
-## Recommended IDEs
-
-Spyder (in-built in Anaconda) &lt;br/&gt;
-
-Pycharm (the most popular choice, compatible with Anaconda)
+</div>
+<div class="section" id="install-git">
+<h3><span class="section-number">1.1.2. </span>Install git<a class="headerlink" href="#install-git" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/download/win">Latest Version of Git for Windows</a></p></li>
+<li><p>Don’t forget to add git to the system PATH</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="conda-and-unit-specific-packages">
+<h2><span class="section-number">1.2. </span>Conda and Unit Specific Packages<a class="headerlink" href="#conda-and-unit-specific-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-anaconda">
+<h3><span class="section-number">1.2.1. </span>Installing Anaconda<a class="headerlink" href="#installing-anaconda" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.anaconda.com/anaconda/install/windows/">Anaconda Installation Instructions</a></p></li>
+<li><p>Individual Version (<code class="docutils literal notranslate"><span class="pre">Anaconda3-2021.05-Windows-x86_64.exe</span></code> - 488KB)</p></li>
+<li><p>Installation Size (2.9 GB)</p></li>
+<li><p>Installed for all users at <code class="docutils literal notranslate"><span class="pre">C:\ProgramData\Anaconda3</span></code></p></li>
+<li><p>Installation Time (~30 mins)</p></li>
+<li><p>Launch Anaconda Navigator</p></li>
+</ul>
+<img width="50%" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
+<p>You can start a CMD or POWERSHELL console using the navigator, or following the steps 1 and 2 in the screenshot below to start a CMD or POWERSHELL. If you are intalling packages, you can right click the arrow to bring up a pop-up menu, <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">as</span> <span class="pre">adminstrator</span></code> (Step 3a) or <code class="docutils literal notranslate"><span class="pre">pin</span> <span class="pre">on</span> <span class="pre">taskbar</span></code> (Step 3b) for future convenience.</p>
+<img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
+</div>
+<div class="section" id="install-from-an-environment-yaml-file">
+<h3><span class="section-number">1.2.2. </span>Install from an environment YAML file<a class="headerlink" href="#install-from-an-environment-yaml-file" title="Permalink to this headline">¶</a></h3>
+<p>If we install from this YAML file, then we can ignore all the following steps in Section 2.3.</p>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012</span> <span class="pre">--file</span> <span class="pre">cits4012.yml</span></code></p>
+<p>If this is successful, you can ignore the rest of the steps below.</p>
+</div>
+<div class="section" id="install-packages-step-by-step-from-scratch">
+<h3><span class="section-number">1.2.3. </span>Install packages step by step from scratch<a class="headerlink" href="#install-packages-step-by-step-from-scratch" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="create-anaconda-environment">
+<h4><span class="section-number">1.2.3.1. </span>Create Anaconda Environment<a class="headerlink" href="#create-anaconda-environment" title="Permalink to this headline">¶</a></h4>
+<p>Need admin access to write to C drive (Run Conda Powershell as Administrator - right click on the icon)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">p</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="use-the-virtual-environment-in-vscode">
+<h4><span class="section-number">1.2.3.2. </span>Use the virtual environment in VSCode<a class="headerlink" href="#use-the-virtual-environment-in-vscode" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://code.visualstudio.com/docs/python/environments#_conda-environments">Instructions on how to use environment in VSCode</a></p></li>
+<li><p>Test to see if the CITS4012_base environment is available from VSCode</p></li>
+</ul>
+</div>
+<div class="section" id="install-spacy">
+<h4><span class="section-number">1.2.3.3. </span>Install Spacy<a class="headerlink" href="#install-spacy" title="Permalink to this headline">¶</a></h4>
+<ol class="simple">
+<li><p>Go back to Conda CMD.exe, check to see if you have <code class="docutils literal notranslate"><span class="pre">pip</span></code> installed using</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">spacy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">spacy</span> <span class="pre">download</span> <span class="pre">en_core_web_sm</span></code></p></li>
+</ul>
+<ol class="simple">
+<li><p>Find the Spacy version (we want v3+):</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Windows CMD
+C:\&gt; conda list | findstr &quot;spacy&quot;`
+
+# Windows PowerShell
+C:\&gt; conda list | Select-String &quot;spacy&quot;
+
+# Linux
+$ conda list | grep &quot;spacy&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-pytorch">
+<h4><span class="section-number">1.2.3.4. </span>Install PyTorch<a class="headerlink" href="#install-pytorch" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="check-for-cuda-compatible-graphics-card-on-windows">
+<h5><span class="section-number">1.2.3.4.1. </span>Check for Cuda compatible Graphics Card on Windows<a class="headerlink" href="#check-for-cuda-compatible-graphics-card-on-windows" title="Permalink to this headline">¶</a></h5>
+<ol class="simple">
+<li><p>Click Start.</p></li>
+<li><p>On the Start menu, click Run.</p></li>
+<li><p>In the Open box, type “dxdiag” (without the quotation marks), and then click OK.</p></li>
+<li><p>The DirectX Diagnostic Tool opens. …</p></li>
+<li><p>On the Display tab, information about your graphics card is shown in the Device section.</p></li>
+</ol>
+<p>My laptop has NVIDIA GeForce MX130.</p>
+</div>
+<div class="section" id="id1">
+<h5><span class="section-number">1.2.3.4.2. </span>Install Pytorch<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h5>
+<p><a class="reference external" href="https://pytorch.org">Pytorch Website</a></p>
+<ul class="simple">
+<li><p>with GPU</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pytorch</span> <span class="pre">torchvision</span> <span class="pre">torchaudio</span> <span class="pre">torchtext</span> <span class="pre">cudatoolkit=11.1</span> <span class="pre">-c</span> <span class="pre">pytorch</span> <span class="pre">-c</span> <span class="pre">conda-forge</span></code></p>
+<ul class="simple">
+<li><p>CPU only</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pytorch</span> <span class="pre">torchvision</span> <span class="pre">torchaudio</span> <span class="pre">torchtext</span> <span class="pre">cpuonly</span> <span class="pre">-c</span> <span class="pre">pytorch</span> <span class="pre">-c</span> <span class="pre">conda-forge</span></code></p>
+</div>
+<div class="section" id="install-tensorboard">
+<h5><span class="section-number">1.2.3.4.3. </span>Install Tensorboard<a class="headerlink" href="#install-tensorboard" title="Permalink to this headline">¶</a></h5>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">tensorboard</span></code></p>
+</div>
+<div class="section" id="install-graphviz-on-windows">
+<h5><span class="section-number">1.2.3.4.4. </span>Install GraphViz on Windows<a class="headerlink" href="#install-graphviz-on-windows" title="Permalink to this headline">¶</a></h5>
+<p><a class="reference external" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.47.3/stable_windows_10_cmake_Release_x64_graphviz-install-2.47.3-win64.exe">2.47.3 EXE installer for Windows 10 (64-bit)</a></p>
+<p>Download the exe file and install, make sure it is added to the system PATH (Windows - Edit the Windows Environment Variables.</p>
+<img width="50%" alt="GraphVizInstall" src="https://user-images.githubusercontent.com/1005582/122881303-9767f280-d36d-11eb-8188-0163c59eab01.png">
+</div>
+<div class="section" id="install-torchviz">
+<h5><span class="section-number">1.2.3.4.5. </span>Install torchviz<a class="headerlink" href="#install-torchviz" title="Permalink to this headline">¶</a></h5>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">torchviz</span></code></p>
+</div>
+</div>
+<div class="section" id="install-nltk">
+<h4><span class="section-number">1.2.3.5. </span>Install NLTK<a class="headerlink" href="#install-nltk" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">nltk</span></code></p>
+<p>and then download the data and models</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">nltk.downloader</span> <span class="pre">-d</span> <span class="pre">c:\envs\cits4012\nltk_data</span> <span class="pre">all</span></code></p>
+<div class="section" id="install-truecase">
+<h5><span class="section-number">1.2.3.5.1. </span>Install truecase<a class="headerlink" href="#install-truecase" title="Permalink to this headline">¶</a></h5>
+<p>install this after NLTK installation pls.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">truecase</span></code></p>
+</div>
+</div>
+<div class="section" id="install-jupyterlab">
+<h4><span class="section-number">1.2.3.6. </span>Install Jupyterlab<a class="headerlink" href="#install-jupyterlab" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">jupyterlab</span></code></p>
+</div>
+<div class="section" id="install-scikit-learn">
+<h4><span class="section-number">1.2.3.7. </span>Install Scikit-learn<a class="headerlink" href="#install-scikit-learn" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">scikit-learn</span></code></p>
+<p>Verify if it works:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">sklearn;</span> <span class="pre">sklearn.show_versions()&quot;</span></code></p>
+</div>
+<div class="section" id="finally-export-environment-into-an-yaml-file">
+<h4><span class="section-number">1.2.3.8. </span>Finally Export Environment into an YAML file<a class="headerlink" href="#finally-export-environment-into-an-yaml-file" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012</span> <span class="pre">--no-builds</span> <span class="pre">-f</span> <span class="pre">cits4012.yml</span></code></p>
 </div>
 </div>
 </div>
@@ -387,8 +629,8 @@ Pycharm (the most popular choice, compatible with Anaconda)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Basics of Python and Numpy</a>
-    <a class='right-next' id="next-link" href="python_review.html" title="next page"><span class="section-number">2. </span>Python Basics</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab 01: Conda Environment and Python Refresher</a>
+    <a class='right-next' id="next-link" href="installation_misc.html" title="next page"><span class="section-number">2. </span>CITS4012 MISC Enviornment</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
