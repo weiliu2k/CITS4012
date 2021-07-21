@@ -12,7 +12,7 @@ The following two pages contain instructions on how to set up multiple "isolated
 1. [Setting up CITS4012 Base environment](https://weiliu2k.github.io/CITS4012/basics/installation.html)
 2. [Setting up CITS4012 MISC environment](https://weiliu2k.github.io/CITS4012/basics/installation_misc.html)
 
-## use Lab Machines
+## Use Lab Machines
 
 3. [Use Lab Machines](https://weiliu2k.github.io/CITS4012/basics/lab_machines.html)
 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2.4. Tensor Slicing, Indexing and Joining &#8212; CITS4012 Natural Language Processing</title>
+    <title>4. Tensor Slicing, Indexing and Joining &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. CUDA tensors" href="cuda.html" />
-    <link rel="prev" title="2.3. Tensor Operations" href="tensor_operations.html" />
+    <link rel="next" title="2. CUDA tensors" href="cuda.html" />
+    <link rel="prev" title="3. Tensor Operations" href="tensor_operations.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -156,22 +156,22 @@
     <ul class="current collapse-ul">
      <li class="toctree-l3">
       <a class="reference internal" href="tensor_types.html">
-       2.1. Types of Tensor
+       1. Types of Tensor
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="create_tensors.html">
-       2.2. Creating Tensors
+       2. Creating Tensors
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="tensor_operations.html">
-       2.3. Tensor Operations
+       3. Tensor Operations
       </a>
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       2.4. Tensor Slicing, Indexing and Joining
+       4. Tensor Slicing, Indexing and Joining
       </a>
      </li>
     </ul>
@@ -180,12 +180,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="cuda.html">
-     3. CUDA tensors
+     2. CUDA tensors
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="computational_graph.html">
-     4. Computational Graph
+     3. Computational Graph
     </a>
    </li>
   </ul>
@@ -333,7 +333,7 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#contiguous-indexing-using-a-b">
-   2.4.1. Contiguous Indexing using
+   4.1. Contiguous Indexing using
    <code class="docutils literal notranslate">
     <span class="pre">
      [:a,
@@ -346,12 +346,12 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#noncontiguous-indexing">
-   2.4.2. Noncontiguous Indexing
+   4.2. Noncontiguous Indexing
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#concatenating-tensors">
-   2.4.3. Concatenating Tensors
+   4.3. Concatenating Tensors
   </a>
  </li>
 </ul>
@@ -366,7 +366,7 @@
               <div>
                 
   <div class="section" id="tensor-slicing-indexing-and-joining">
-<h1><span class="section-number">2.4. </span>Tensor Slicing, Indexing and Joining<a class="headerlink" href="#tensor-slicing-indexing-and-joining" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">4. </span>Tensor Slicing, Indexing and Joining<a class="headerlink" href="#tensor-slicing-indexing-and-joining" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -388,7 +388,7 @@ tensor([[0, 1, 2],
 </div>
 </div>
 <div class="section" id="contiguous-indexing-using-a-b">
-<h2><span class="section-number">2.4.1. </span>Contiguous Indexing using <code class="docutils literal notranslate"><span class="pre">[:a,</span> <span class="pre">:b]</span></code><a class="headerlink" href="#contiguous-indexing-using-a-b" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.1. </span>Contiguous Indexing using <code class="docutils literal notranslate"><span class="pre">[:a,</span> <span class="pre">:b]</span></code><a class="headerlink" href="#contiguous-indexing-using-a-b" title="Permalink to this headline">¶</a></h2>
 <p>The code below accesses up to row 1 but not including row 1, and up to col 2, but no including col 2.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -407,7 +407,7 @@ tensor([[0, 1]])
 </div>
 </div>
 <div class="section" id="noncontiguous-indexing">
-<h2><span class="section-number">2.4.2. </span>Noncontiguous Indexing<a class="headerlink" href="#noncontiguous-indexing" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>Noncontiguous Indexing<a class="headerlink" href="#noncontiguous-indexing" title="Permalink to this headline">¶</a></h2>
 <p>Using function <code class="docutils literal notranslate"><span class="pre">torch.index_select()</span></code>, the code below accesses column (<code class="docutils literal notranslate"><span class="pre">dim=1</span></code>) indexed by 0 and 2.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -480,7 +480,7 @@ tensor([0, 5])
 </div>
 </div>
 <div class="section" id="concatenating-tensors">
-<h2><span class="section-number">2.4.3. </span>Concatenating Tensors<a class="headerlink" href="#concatenating-tensors" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.3. </span>Concatenating Tensors<a class="headerlink" href="#concatenating-tensors" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
@@ -645,8 +645,8 @@ tensor([[ 3.,  6.],
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="tensor_operations.html" title="previous page"><span class="section-number">2.3. </span>Tensor Operations</a>
-    <a class='right-next' id="next-link" href="cuda.html" title="next page"><span class="section-number">3. </span>CUDA tensors</a>
+    <a class='left-prev' id="prev-link" href="tensor_operations.html" title="previous page"><span class="section-number">3. </span>Tensor Operations</a>
+    <a class='right-next' id="next-link" href="cuda.html" title="next page"><span class="section-number">2. </span>CUDA tensors</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

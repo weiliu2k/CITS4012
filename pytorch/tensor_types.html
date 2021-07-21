@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2.1. Types of Tensor &#8212; CITS4012 Natural Language Processing</title>
+    <title>1. Types of Tensor &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.2. Creating Tensors" href="create_tensors.html" />
+    <link rel="next" title="2. Creating Tensors" href="create_tensors.html" />
     <link rel="prev" title="2. Tensors" href="tensors.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -156,22 +156,22 @@
     <ul class="current collapse-ul">
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       2.1. Types of Tensor
+       1. Types of Tensor
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="create_tensors.html">
-       2.2. Creating Tensors
+       2. Creating Tensors
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="tensor_operations.html">
-       2.3. Tensor Operations
+       3. Tensor Operations
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="tensor_slicing.html">
-       2.4. Tensor Slicing, Indexing and Joining
+       4. Tensor Slicing, Indexing and Joining
       </a>
      </li>
     </ul>
@@ -180,12 +180,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="cuda.html">
-     3. CUDA tensors
+     2. CUDA tensors
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="computational_graph.html">
-     4. Computational Graph
+     3. Computational Graph
     </a>
    </li>
   </ul>
@@ -333,7 +333,7 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-helper-function-describe-x">
-   2.1.1. A helper function
+   1.1. A helper function
    <code class="docutils literal notranslate">
     <span class="pre">
      describe(x)
@@ -343,7 +343,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#creating-a-tensor-with-torch-tensor">
-   2.1.2. Creating a tensor with
+   1.2. Creating a tensor with
    <code class="docutils literal notranslate">
     <span class="pre">
      torch.Tensor()
@@ -353,22 +353,22 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#creating-a-randomly-initialized-tensor">
-   2.1.3. Creating a randomly initialized tensor
+   1.3. Creating a randomly initialized tensor
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#creating-a-filled-tensor">
-   2.1.4. Creating a filled tensor
+   1.4. Creating a filled tensor
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#creating-and-initialising-a-tensor-from-lists">
-   2.1.5. Creating and initialising a tensor from lists
+   1.5. Creating and initialising a tensor from lists
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#creating-and-initialising-a-tensor-from-numpy">
-   2.1.6. Creating and initialising a tensor from Numpy
+   1.6. Creating and initialising a tensor from Numpy
   </a>
  </li>
 </ul>
@@ -383,9 +383,9 @@
               <div>
                 
   <div class="section" id="types-of-tensor">
-<h1><span class="section-number">2.1. </span>Types of Tensor<a class="headerlink" href="#types-of-tensor" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">1. </span>Types of Tensor<a class="headerlink" href="#types-of-tensor" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="a-helper-function-describe-x">
-<h2><span class="section-number">2.1.1. </span>A helper function <code class="docutils literal notranslate"><span class="pre">describe(x)</span></code><a class="headerlink" href="#a-helper-function-describe-x" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.1. </span>A helper function <code class="docutils literal notranslate"><span class="pre">describe(x)</span></code><a class="headerlink" href="#a-helper-function-describe-x" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">x</span></code> is a torch tensor</p>
 <p>NOTE: <code class="docutils literal notranslate"><span class="pre">tensor.shape</span></code> is a property, not a callable function</p>
 <div class="cell docutils container">
@@ -400,7 +400,7 @@
 </div>
 </div>
 <div class="section" id="creating-a-tensor-with-torch-tensor">
-<h2><span class="section-number">2.1.2. </span>Creating a tensor with <code class="docutils literal notranslate"><span class="pre">torch.Tensor()</span></code><a class="headerlink" href="#creating-a-tensor-with-torch-tensor" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.2. </span>Creating a tensor with <code class="docutils literal notranslate"><span class="pre">torch.Tensor()</span></code><a class="headerlink" href="#creating-a-tensor-with-torch-tensor" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -421,7 +421,7 @@ tensor([[1.3311e+22, 4.2769e-05, 2.0890e+20],
 </div>
 </div>
 <div class="section" id="creating-a-randomly-initialized-tensor">
-<h2><span class="section-number">2.1.3. </span>Creating a randomly initialized tensor<a class="headerlink" href="#creating-a-randomly-initialized-tensor" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.3. </span>Creating a randomly initialized tensor<a class="headerlink" href="#creating-a-randomly-initialized-tensor" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -448,7 +448,7 @@ tensor([[ 0.9838, -0.6697,  1.4443],
 </div>
 </div>
 <div class="section" id="creating-a-filled-tensor">
-<h2><span class="section-number">2.1.4. </span>Creating a filled tensor<a class="headerlink" href="#creating-a-filled-tensor" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.4. </span>Creating a filled tensor<a class="headerlink" href="#creating-a-filled-tensor" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -485,7 +485,7 @@ tensor([[5., 5., 5.],
 </div>
 </div>
 <div class="section" id="creating-and-initialising-a-tensor-from-lists">
-<h2><span class="section-number">2.1.5. </span>Creating and initialising a tensor from lists<a class="headerlink" href="#creating-and-initialising-a-tensor-from-lists" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.5. </span>Creating and initialising a tensor from lists<a class="headerlink" href="#creating-and-initialising-a-tensor-from-lists" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
@@ -506,7 +506,7 @@ tensor([[1., 2., 3.],
 </div>
 </div>
 <div class="section" id="creating-and-initialising-a-tensor-from-numpy">
-<h2><span class="section-number">2.1.6. </span>Creating and initialising a tensor from Numpy<a class="headerlink" href="#creating-and-initialising-a-tensor-from-numpy" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.6. </span>Creating and initialising a tensor from Numpy<a class="headerlink" href="#creating-and-initialising-a-tensor-from-numpy" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -559,7 +559,7 @@ tensor([[0.5401, 0.9993, 0.0777],
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="tensors.html" title="previous page"><span class="section-number">2. </span>Tensors</a>
-    <a class='right-next' id="next-link" href="create_tensors.html" title="next page"><span class="section-number">2.2. </span>Creating Tensors</a>
+    <a class='right-next' id="next-link" href="create_tensors.html" title="next page"><span class="section-number">2. </span>Creating Tensors</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
