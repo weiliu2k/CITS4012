@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6. Matplotlib &#8212; CITS4012 Natural Language Processing</title>
+    <title>2. CITS4012 MISC Enviornment &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to Pytorch" href="../pytorch/intro.html" />
-    <link rel="prev" title="5. Numpy" href="numpy.html" />
+    <link rel="next" title="3. Python Basics" href="python_review.html" />
+    <link rel="prev" title="1. CITS4012 Base Environment" href="installation.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -105,8 +105,8 @@
      1. CITS4012 Base Environment
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="installation_misc.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      2. CITS4012 MISC Enviornment
     </a>
    </li>
@@ -125,8 +125,8 @@
      5. Numpy
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="matplotlib.html">
      6. Matplotlib
     </a>
    </li>
@@ -276,9 +276,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/basics/matplotlib.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/basics/installation_misc.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -296,30 +296,61 @@
 
         <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/basics/matplotlib.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
     </div>
 
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frequently-encounted-problems-in-windows">
+   2.1. Frequently encounted problems in Windows
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-from-an-environment-yaml-file">
+   2.2. Install from an environment YAML file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-step-by-step">
+   2.3. Install step by step
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-a-new-environment">
+     2.3.1. Create a new environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-flair">
+     2.3.2. Install Flair
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-neuralcoref">
+     2.3.3. Install Neuralcoref
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-jupyterlab">
+     2.3.4. Install Jupyterlab
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#export-environment-files">
+     2.3.5. Export Environment Files
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
         
     </div>
 </div>
@@ -328,91 +359,64 @@
         
               <div>
                 
-  <div class="section" id="matplotlib">
-<h1><span class="section-number">6. </span>Matplotlib<a class="headerlink" href="#matplotlib" title="Permalink to this headline">¶</a></h1>
-<p>Powerful tool for visualization <br/>
-Many tutorials online. We only go over the basics here <br/></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+  <div class="section" id="cits4012-misc-enviornment">
+<h1><span class="section-number">2. </span>CITS4012 MISC Enviornment<a class="headerlink" href="#cits4012-misc-enviornment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="frequently-encounted-problems-in-windows">
+<h2><span class="section-number">2.1. </span>Frequently encounted problems in Windows<a class="headerlink" href="#frequently-encounted-problems-in-windows" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>File not found when files are actually there - this might be to do with the limitation of path length (&lt;=260 characters) in Windows. See below for a solution</p></li>
+</ol>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.howtogeek.com/266621/how-to-make-windows-10-accept-file-paths-over-260-characters/">How to set group policies in Windows to allow for long path</a></p></li>
+</ul>
+<ol class="simple">
+<li><p>When trying to install some pip packages you may get the error stating:</p></li>
+</ol>
+<blockquote>
+<div><p>Microsoft Visual C++ 14.0 is required. Get it with “Build Tools for Visual Studio”: <a class="reference external" href="https://visualstudio.microsoft.com/downloads/">https://visualstudio.microsoft.com/downloads/</a></p>
+</div></blockquote>
+<p>Scroll down the page to find “All Tools”, expand “Tools for Visual Studio 2019” and find “Build Tools for Visual Studio 2019”, download and install as an admin for all users.</p>
+<img width="50%" alt="vs-build-tools" src="https://user-images.githubusercontent.com/1005582/123034052-6d6d0980-d41b-11eb-8fe2-2f541825375d.png">
+<p>Warning: The installation of the Build Tools might take a while (~20mins).</p>
+</div>
+<div class="section" id="install-from-an-environment-yaml-file">
+<h2><span class="section-number">2.2. </span>Install from an environment YAML file<a class="headerlink" href="#install-from-an-environment-yaml-file" title="Permalink to this headline">¶</a></h2>
+<p>If we install from this YAML file, then we can ignore all the following steps in Section 3.</p>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012_py37</span> <span class="pre">--file</span> <span class="pre">cits4012_py37.yml</span></code></p>
+<p>If this is successful, you can ignore the rest of the steps below.</p>
+</div>
+<div class="section" id="install-step-by-step">
+<h2><span class="section-number">2.3. </span>Install step by step<a class="headerlink" href="#install-step-by-step" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-a-new-environment">
+<h3><span class="section-number">2.3.1. </span>Create a new environment<a class="headerlink" href="#create-a-new-environment" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">p</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012_py37</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012_py37</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="install-flair">
+<h3><span class="section-number">2.3.2. </span>Install Flair<a class="headerlink" href="#install-flair" title="Permalink to this headline">¶</a></h3>
+<p>Flair requires different versions of numpy and torch, so it is better to isolate it from the normal environment</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">flair</span></code></p>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># line plot</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<div class="section" id="install-neuralcoref">
+<h3><span class="section-number">2.3.3. </span>Install Neuralcoref<a class="headerlink" href="#install-neuralcoref" title="Permalink to this headline">¶</a></h3>
+<p>Follow the “compile from source instruction” on the github page as it requires Python 3.7 and Spacy 2.0+</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">huggingface</span><span class="o">/</span><span class="n">neuralcoref</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">neuralcoref</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
+<p>You may run into the frequent problem 2 above. Solve it by installing C++ compiler suitable for your OS.</p>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x17b1b50a040&gt;]
-</pre></div>
+<div class="section" id="install-jupyterlab">
+<h3><span class="section-number">2.3.4. </span>Install Jupyterlab<a class="headerlink" href="#install-jupyterlab" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code></p>
 </div>
-<img alt="../_images/matplotlib_2_1.png" src="../_images/matplotlib_2_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># scatter plot</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x17b1b530490&gt;
-</pre></div>
-</div>
-<img alt="../_images/matplotlib_3_1.png" src="../_images/matplotlib_3_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bar plots</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 3 artists&gt;
-</pre></div>
-</div>
-<img alt="../_images/matplotlib_4_1.png" src="../_images/matplotlib_4_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot configurations</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">y1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">y2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-
-<span class="c1"># set figure size</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-
-<span class="c1"># set axes</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x label&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y label&quot;</span><span class="p">)</span>
-
-<span class="c1"># add title</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;My Plot&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data1&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data2&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x17b1b669d00&gt;
-</pre></div>
-</div>
-<img alt="../_images/matplotlib_5_1.png" src="../_images/matplotlib_5_1.png" />
+<div class="section" id="export-environment-files">
+<h3><span class="section-number">2.3.5. </span>Export Environment Files<a class="headerlink" href="#export-environment-files" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012_py37</span> <span class="pre">--no-builds</span> <span class="pre">-f</span> <span class="pre">cits4012_py37.yml</span></code></p>
 </div>
 </div>
 </div>
@@ -445,8 +449,8 @@ Many tutorials online. We only go over the basics here <br/></p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="numpy.html" title="previous page"><span class="section-number">5. </span>Numpy</a>
-    <a class='right-next' id="next-link" href="../pytorch/intro.html" title="next page">Introduction to Pytorch</a>
+    <a class='left-prev' id="prev-link" href="installation.html" title="previous page"><span class="section-number">1. </span>CITS4012 Base Environment</a>
+    <a class='right-next' id="next-link" href="python_review.html" title="next page"><span class="section-number">3. </span>Python Basics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
