@@ -156,22 +156,22 @@
     <ul class="collapse-ul">
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/tensor_types.html">
-       2.1. Types of Tensor
+       1. Types of Tensor
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/create_tensors.html">
-       2.2. Creating Tensors
+       2. Creating Tensors
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/tensor_operations.html">
-       2.3. Tensor Operations
+       3. Tensor Operations
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/tensor_slicing.html">
-       2.4. Tensor Slicing, Indexing and Joining
+       4. Tensor Slicing, Indexing and Joining
       </a>
      </li>
     </ul>
@@ -180,12 +180,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/cuda.html">
-     3. CUDA tensors
+     2. CUDA tensors
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/computational_graph.html">
-     4. Computational Graph
+     3. Computational Graph
     </a>
    </li>
   </ul>
@@ -391,8 +391,11 @@
 </div>
 <div class="section" id="install-from-an-environment-yaml-file">
 <h2><span class="section-number">2.2. </span>Install from an environment YAML file<a class="headerlink" href="#install-from-an-environment-yaml-file" title="Permalink to this headline">¶</a></h2>
-<p>If we install from this YAML file, then we can ignore all the following steps in Section 3.</p>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012_py37</span> <span class="pre">--file</span> <span class="pre">cits4012_py37.yml</span></code></p>
+<p>If we install from this YAML file, then we can ignore all the following steps after this.</p>
+<p>Download the environment YAML file here: <span class="xref myst">cits4012_py37.yml</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">p</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012_py37</span> <span class="o">--</span><span class="n">file</span> <span class="n">cits4012_py37</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
 <p>If this is successful, you can ignore the rest of the steps below.</p>
 </div>
 <div class="section" id="install-step-by-step">
@@ -407,7 +410,9 @@
 <div class="section" id="install-flair">
 <h3><span class="section-number">2.3.2. </span>Install Flair<a class="headerlink" href="#install-flair" title="Permalink to this headline">¶</a></h3>
 <p>Flair requires different versions of numpy and torch, so it is better to isolate it from the normal environment</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">flair</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">flair</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="install-neuralcoref">
 <h3><span class="section-number">2.3.3. </span>Install Neuralcoref<a class="headerlink" href="#install-neuralcoref" title="Permalink to this headline">¶</a></h3>
@@ -422,15 +427,21 @@
 </div>
 <div class="section" id="install-jupyterlab">
 <h3><span class="section-number">2.3.4. </span>Install Jupyterlab<a class="headerlink" href="#install-jupyterlab" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterlab</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="install-matplotlib">
 <h3><span class="section-number">2.3.5. </span>Install Matplotlib<a class="headerlink" href="#install-matplotlib" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">matplotlib</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="export-environment-files">
 <h3><span class="section-number">2.3.6. </span>Export Environment Files<a class="headerlink" href="#export-environment-files" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012_py37</span> <span class="pre">--no-builds</span> <span class="pre">-f</span> <span class="pre">cits4012_py37.yml</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">export</span> <span class="o">-</span><span class="n">p</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012_py37</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">builds</span> <span class="o">-</span><span class="n">f</span> <span class="n">cits4012_py37</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
