@@ -111,23 +111,28 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="python_review.html">
-     3. Python Basics
+     4. Python Basics
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="iterables.html">
-     4. Iterables
+     5. Iterables
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="numpy.html">
-     5. Numpy
+     6. Numpy
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="matplotlib.html">
-     6. Matplotlib
+     7. Matplotlib
     </a>
    </li>
   </ul>
@@ -136,7 +141,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../pytorch/intro.html">
-   Introduction to Pytorch
+   Introduction to Pytorch (DRAFT)
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -146,27 +151,27 @@
    </li>
    <li class="toctree-l2 collapsible-parent">
     <a class="reference internal" href="../pytorch/tensors.html">
-     Tensors
+     2. Tensors
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/tensor_types.html">
-       1. Types of Tensor
+       2.1. Types of Tensor
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/create_tensors.html">
-       2. Creating Tensors
+       2.2. Creating Tensors
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/tensor_operations.html">
-       3. Tensor Operations
+       2.3. Tensor Operations
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../pytorch/tensor_slicing.html">
-       4. Tensor Slicing, Indexing and Joining
+       2.4. Tensor Slicing, Indexing and Joining
       </a>
      </li>
     </ul>
@@ -175,12 +180,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/cuda.html">
-     2. CUDA tensors
+     3. CUDA tensors
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/computational_graph.html">
-     3. Computational Graph
+     4. Computational Graph
     </a>
    </li>
   </ul>
@@ -188,8 +193,8 @@
   </i>
  </li>
  <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../nn/content.html">
-   Introduction to Neural Networks
+  <a class="reference internal" href="../nn/intro.html">
+   Introduction to Neural Networks (draft)
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -420,8 +425,13 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#install-matplotlib">
+       1.2.3.8. Install Matplotlib
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#finally-export-environment-into-an-yaml-file">
-       1.2.3.8. Finally Export Environment into an YAML file
+       1.2.3.9. Finally Export Environment into an YAML file
       </a>
      </li>
     </ul>
@@ -593,8 +603,12 @@ $ conda list | grep &quot;spacy&quot;
 <p>Verify if it works:</p>
 <p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">sklearn;</span> <span class="pre">sklearn.show_versions()&quot;</span></code></p>
 </div>
+<div class="section" id="install-matplotlib">
+<h4><span class="section-number">1.2.3.8. </span>Install Matplotlib<a class="headerlink" href="#install-matplotlib" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code></p>
+</div>
 <div class="section" id="finally-export-environment-into-an-yaml-file">
-<h4><span class="section-number">1.2.3.8. </span>Finally Export Environment into an YAML file<a class="headerlink" href="#finally-export-environment-into-an-yaml-file" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.2.3.9. </span>Finally Export Environment into an YAML file<a class="headerlink" href="#finally-export-environment-into-an-yaml-file" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012</span> <span class="pre">--no-builds</span> <span class="pre">-f</span> <span class="pre">cits4012.yml</span></code></p>
 </div>
 </div>
@@ -639,7 +653,7 @@ $ conda list | grep &quot;spacy&quot;
         
           By A/Prof. Wei Liu<br/>
         
-            &copy; Copyright 2021.<br/>
+            &copy; Copyright UWA 2021.<br/>
       </p>
     </div>
   </footer>

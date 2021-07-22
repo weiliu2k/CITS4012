@@ -52,5 +52,8 @@ You may run into the frequent problem 2 above. Solve it by installing C++ compil
 ### Install Jupyterlab
 `pip install jupyterlab`
 
+### Install Matplotlib
+`pip install matplotlib`
+
 ### Export Environment Files
 `conda env export -p c:\envs\cits4012_py37 --no-builds -f cits4012_py37.yml`

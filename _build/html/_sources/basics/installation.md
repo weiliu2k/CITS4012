@@ -131,5 +131,8 @@ Verify if it works:
 
 `python -c "import sklearn; sklearn.show_versions()"`
 
+#### Install Matplotlib
+`pip install matplotlib`
+
 #### Finally Export Environment into an YAML file
 `conda env export -p c:\envs\cits4012 --no-builds -f cits4012.yml`

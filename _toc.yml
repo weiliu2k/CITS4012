@@ -6,6 +6,7 @@
   sections:
     - file: ./basics/installation
     - file: ./basics/installation_misc
+    - file: ./basics/lab_machines.md
     - file: ./basics/python_review
     - file: ./basics/iterables
     - file: ./basics/numpy
@@ -23,7 +24,7 @@
         - file: ./pytorch/tensor_slicing
     - file: ./pytorch/cuda
     - file: ./pytorch/computational_graph
-- file: ./nn/content
+- file: ./nn/intro
   numbered: true
   sections:
     - file: ./nn/activations

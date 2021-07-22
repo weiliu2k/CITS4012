@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. CITS4012 MISC Enviornment &#8212; CITS4012 Natural Language Processing</title>
+    <title>3. Use Lab Machines &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Use Lab Machines" href="lab_machines.html" />
-    <link rel="prev" title="1. CITS4012 Base Environment" href="installation.html" />
+    <link rel="next" title="4. Python Basics" href="python_review.html" />
+    <link rel="prev" title="2. CITS4012 MISC Enviornment" href="installation_misc.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -105,13 +105,13 @@
      1. CITS4012 Base Environment
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="installation_misc.html">
      2. CITS4012 MISC Enviornment
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="lab_machines.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      3. Use Lab Machines
     </a>
    </li>
@@ -281,7 +281,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/basics/installation_misc.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/basics/lab_machines.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -306,62 +306,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#frequently-encounted-problems-in-windows">
-   2.1. Frequently encounted problems in Windows
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#install-from-an-environment-yaml-file">
-   2.2. Install from an environment YAML file
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#install-step-by-step">
-   2.3. Install step by step
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-a-new-environment">
-     2.3.1. Create a new environment
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-flair">
-     2.3.2. Install Flair
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-neuralcoref">
-     2.3.3. Install Neuralcoref
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-jupyterlab">
-     2.3.4. Install Jupyterlab
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-matplotlib">
-     2.3.5. Install Matplotlib
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#export-environment-files">
-     2.3.6. Export Environment Files
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -369,68 +313,27 @@
         
               <div>
                 
-  <div class="section" id="cits4012-misc-enviornment">
-<h1><span class="section-number">2. </span>CITS4012 MISC Enviornment<a class="headerlink" href="#cits4012-misc-enviornment" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="frequently-encounted-problems-in-windows">
-<h2><span class="section-number">2.1. </span>Frequently encounted problems in Windows<a class="headerlink" href="#frequently-encounted-problems-in-windows" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="use-lab-machines">
+<h1><span class="section-number">3. </span>Use Lab Machines<a class="headerlink" href="#use-lab-machines" title="Permalink to this headline">¶</a></h1>
+<p>Our labs support dual boot into either Window 10 or Redhat 7. Depending on which OS you prefer, you can follow the below instructions to activate the environment. However, please note these are <em>un-writable environments</em>. It is not possible to install new packages during the semester, as our IT team maintains a university-wide image. Installation during semester may disturb the global computing environment.</p>
+<p>It is useful if you want some spare CPUs to train your model as the lab machines have decent CPU processing power, while carrying out other activities on your own devices.</p>
+<div class="tabbed-set docutils">
+<input checked="checked" id="a0232f43-f659-4b8c-9d51-10af0e66d4a2" name="1f5ccb9b-67e3-480a-af02-2e0b068ae421" type="radio">
+</input><label class="tabbed-label" for="a0232f43-f659-4b8c-9d51-10af0e66d4a2">
+Windows</label><div class="tabbed-content docutils">
 <ol class="simple">
-<li><p>File not found when files are actually there - this might be to do with the limitation of path length (&lt;=260 characters) in Windows. See below for a solution</p></li>
+<li><p>Open the start menu and type ‘Anaconda Prompt’ into the search box.</p></li>
+<li><p>Open ‘Anaconda Prompt (Anaconda3)’ or ‘Anaconda Powershell Prompt (Anaconda3)’</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">A:\Anaconda\envs\cits4012</span></code> for the ‘cits4012’ environment or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">A:\Anaconda\envs\cits4012_py37</span></code> to activate the ‘cits4012_py37’ environment and press enter.</p></li>
 </ol>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.howtogeek.com/266621/how-to-make-windows-10-accept-file-paths-over-260-characters/">How to set group policies in Windows to allow for long path</a></p></li>
-</ul>
+</div>
+<input id="c0bab1a9-1c4d-491c-b9f1-8eb92adbcb54" name="1f5ccb9b-67e3-480a-af02-2e0b068ae421" type="radio">
+</input><label class="tabbed-label" for="c0bab1a9-1c4d-491c-b9f1-8eb92adbcb54">
+Red Hat Linux</label><div class="tabbed-content docutils">
 <ol class="simple">
-<li><p>When trying to install some pip packages you may get the error stating:</p></li>
+<li><p>Select ‘Applications’ in the top left corner and select ‘CSSE’ -&gt; ‘Anaconda Prompt’</p></li>
+<li><p>In terminal, type <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">~/anaconda/envs/cits4012</span></code> to activate the ‘cits4012’ environment or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">~/anaconda/envs/cits4012_py37</span></code> to activate the ‘cits4012_py37’ environment and press enter.</p></li>
 </ol>
-<blockquote>
-<div><p>Microsoft Visual C++ 14.0 is required. Get it with “Build Tools for Visual Studio”: <a class="reference external" href="https://visualstudio.microsoft.com/downloads/">https://visualstudio.microsoft.com/downloads/</a></p>
-</div></blockquote>
-<p>Scroll down the page to find “All Tools”, expand “Tools for Visual Studio 2019” and find “Build Tools for Visual Studio 2019”, download and install as an admin for all users.</p>
-<img width="50%" alt="vs-build-tools" src="https://user-images.githubusercontent.com/1005582/123034052-6d6d0980-d41b-11eb-8fe2-2f541825375d.png">
-<p>Warning: The installation of the Build Tools might take a while (~20mins).</p>
-</div>
-<div class="section" id="install-from-an-environment-yaml-file">
-<h2><span class="section-number">2.2. </span>Install from an environment YAML file<a class="headerlink" href="#install-from-an-environment-yaml-file" title="Permalink to this headline">¶</a></h2>
-<p>If we install from this YAML file, then we can ignore all the following steps in Section 3.</p>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012_py37</span> <span class="pre">--file</span> <span class="pre">cits4012_py37.yml</span></code></p>
-<p>If this is successful, you can ignore the rest of the steps below.</p>
-</div>
-<div class="section" id="install-step-by-step">
-<h2><span class="section-number">2.3. </span>Install step by step<a class="headerlink" href="#install-step-by-step" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="create-a-new-environment">
-<h3><span class="section-number">2.3.1. </span>Create a new environment<a class="headerlink" href="#create-a-new-environment" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">p</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012_py37</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">c</span><span class="p">:</span>\<span class="n">envs</span>\<span class="n">cits4012_py37</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="install-flair">
-<h3><span class="section-number">2.3.2. </span>Install Flair<a class="headerlink" href="#install-flair" title="Permalink to this headline">¶</a></h3>
-<p>Flair requires different versions of numpy and torch, so it is better to isolate it from the normal environment</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">flair</span></code></p>
-</div>
-<div class="section" id="install-neuralcoref">
-<h3><span class="section-number">2.3.3. </span>Install Neuralcoref<a class="headerlink" href="#install-neuralcoref" title="Permalink to this headline">¶</a></h3>
-<p>Follow the “compile from source instruction” on the github page as it requires Python 3.7 and Spacy 2.0+</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">huggingface</span><span class="o">/</span><span class="n">neuralcoref</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">neuralcoref</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p>You may run into the frequent problem 2 above. Solve it by installing C++ compiler suitable for your OS.</p>
-</div>
-<div class="section" id="install-jupyterlab">
-<h3><span class="section-number">2.3.4. </span>Install Jupyterlab<a class="headerlink" href="#install-jupyterlab" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code></p>
-</div>
-<div class="section" id="install-matplotlib">
-<h3><span class="section-number">2.3.5. </span>Install Matplotlib<a class="headerlink" href="#install-matplotlib" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code></p>
-</div>
-<div class="section" id="export-environment-files">
-<h3><span class="section-number">2.3.6. </span>Export Environment Files<a class="headerlink" href="#export-environment-files" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012_py37</span> <span class="pre">--no-builds</span> <span class="pre">-f</span> <span class="pre">cits4012_py37.yml</span></code></p>
 </div>
 </div>
 </div>
@@ -463,8 +366,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="installation.html" title="previous page"><span class="section-number">1. </span>CITS4012 Base Environment</a>
-    <a class='right-next' id="next-link" href="lab_machines.html" title="next page"><span class="section-number">3. </span>Use Lab Machines</a>
+    <a class='left-prev' id="prev-link" href="installation_misc.html" title="previous page"><span class="section-number">2. </span>CITS4012 MISC Enviornment</a>
+    <a class='right-next' id="next-link" href="python_review.html" title="next page"><span class="section-number">4. </span>Python Basics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
