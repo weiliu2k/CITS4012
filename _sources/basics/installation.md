@@ -37,9 +37,15 @@ You can start a CMD or POWERSHELL console using the navigator, or following the 
 <img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
 
 ### Install from an environment YAML file
-If we install from this YAML file, then we can ignore all the following steps in Section 2.3.
+If we install from this YAML file, then we can ignore all the following steps after this section.
 
-`conda create -p c:\envs\cits4012 --file cits4012.yml`
+First download the installation file here: [cits4012.yml](./cits4012.yml)
+
+```
+conda create -p c:\envs\cits4012 --file cits4012.yml
+```
+
+
 
 If this is successful, you can ignore the rest of the steps below. 
 
@@ -58,9 +64,11 @@ conda activate c:\envs\cits4012
 
 #### Install Spacy
 1. Go back to Conda CMD.exe, check to see if you have `pip` installed using 
-* `conda list`
-* `pip install -U spacy`
-* `python -m spacy download en_core_web_sm`
+```
+conda list
+pip install -U spacy
+python -m spacy download en_core_web_sm
+```
  
 2. Find the Spacy version (we want v3+): 
 
@@ -90,14 +98,20 @@ My laptop has NVIDIA GeForce MX130.
 
 * with GPU 
 
-`conda install pytorch torchvision torchaudio torchtext cudatoolkit=11.1 -c pytorch -c conda-forge`
+```
+conda install pytorch torchvision torchaudio torchtext cudatoolkit=11.1 -c pytorch -c conda-forge
+```
 
 * CPU only 
 
-`conda install pytorch torchvision torchaudio torchtext cpuonly -c pytorch -c conda-forge`
+```
+conda install pytorch torchvision torchaudio torchtext cpuonly -c pytorch -c conda-forge
+```
 
 ##### Install Tensorboard
-`conda install -c conda-forge tensorboard`
+```
+conda install -c conda-forge tensorboard
+```
 
 ##### Install GraphViz on Windows
 [2.47.3 EXE installer for Windows 10 (64-bit)](https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.47.3/stable_windows_10_cmake_Release_x64_graphviz-install-2.47.3-win64.exe)
@@ -107,32 +121,50 @@ Download the exe file and install, make sure it is added to the system PATH (Win
 <img width="50%" alt="GraphVizInstall" src="https://user-images.githubusercontent.com/1005582/122881303-9767f280-d36d-11eb-8188-0163c59eab01.png">
 
 ##### Install torchviz
-`pip install torchviz`
+```
+pip install torchviz
+```
 
 #### Install NLTK
-`pip install nltk`
+```
+pip install nltk
+```
 
 and then download the data and models 
 
-`python -m nltk.downloader -d c:\envs\cits4012\nltk_data all`
+```
+python -m nltk.downloader -d c:\envs\cits4012\nltk_data all
+```
 
 ##### Install truecase 
 install this after NLTK installation pls.
 
-`pip install truecase`
+```
+pip install truecase
+```
 
 #### Install Jupyterlab
-`conda install -c conda-forge jupyterlab`
+```
+conda install -c conda-forge jupyterlab
+```
 
 #### Install Scikit-learn
-`pip install -U scikit-learn`
+```
+pip install -U scikit-learn
+```
 
 Verify if it works:
 
-`python -c "import sklearn; sklearn.show_versions()"`
+```
+python -c "import sklearn; sklearn.show_versions()"
+```
 
 #### Install Matplotlib
-`pip install matplotlib`
+```
+pip install matplotlib
+```
 
 #### Finally Export Environment into an YAML file
-`conda env export -p c:\envs\cits4012 --no-builds -f cits4012.yml`
+```
+conda env export -p c:\envs\cits4012 --no-builds -f cits4012.yml
+```
