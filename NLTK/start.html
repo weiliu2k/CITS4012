@@ -1,0 +1,896 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Starting with NLTK &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. A Closer Look at Python: Texts as Lists of Words" href="closer_look.html" />
+    <link rel="prev" title="Lab02 NLTK" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab02 NLTK
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Introduction to Pytorch (DRAFT)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/installing.html">
+     1. Installing Pytorch
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../pytorch/tensors.html">
+     Tensors
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_types.html">
+       1. Types of Tensor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/create_tensors.html">
+       2. Creating Tensors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_operations.html">
+       3. Tensor Operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_slicing.html">
+       4. Tensor Slicing, Indexing and Joining
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/cuda.html">
+     2. CUDA tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     3. Computational Graph
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Introduction to Neural Networks (draft)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_from_scratch.html">
+     2. Neural net from scratch (no
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       torch.nn
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_torch.nn.html">
+     3. Using torch.nn.functional
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../content.html">
+   Content in Jupyter Book
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../markdown.html">
+     Markdown Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../notebooks.html">
+     Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/NLTK/start.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/NLTK/start.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-text">
+   1.1. Searching Text
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concordance">
+     1.1.1. Concordance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#similar-words-and-common-context">
+     1.1.2. Similar Words and Common Context
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generating-text">
+     1.1.3. Generating Text
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#counting-vocabulary">
+   1.2. Counting Vocabulary
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#text-size-vs-vocabulary-size">
+     1.2.1. Text Size vs. Vocabulary Size
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lexical-richness">
+     1.2.2. Lexical Richness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#word-freqency">
+     1.2.3. Word Freqency
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="starting-with-nltk">
+<h1><span class="section-number">1. </span>Starting with NLTK<a class="headerlink" href="#starting-with-nltk" title="Permalink to this headline">¶</a></h1>
+<p>If you have installed nltk and have downloaded the data and models, you can skip this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Downloading the NLTK Book Collection: browse the available packages using nltk.download(). The Collections tab on the downloader shows how the packages are grouped into sets, and you should select the line labeled book to obtain all data required for the examples and exercises in this book. It consists of about 30 compressed files requiring about 100Mb disk space. The full collection of data (i.e., all in the downloader) is nearly ten times this size (at the time of writing) and continues to expand.</p>
+<p>Once the data is downloaded to your machine, you can load some of it using the Jupyter Notebook. The first step is to type a special command which tells the interpreter to load some texts for us to explore: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">nltk.book</span> <span class="pre">import</span> <span class="pre">*</span></code>. This says “from NLTK’s book module, load all items.” The book module contains all the data you will need as you read this chapter. After printing a welcome message, it loads the text of several books (this will take a few seconds). Here’s the command again, together with the output that you will see. Take care to get spelling and punctuation right.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.book</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>*** Introductory Examples for the NLTK Book ***
+Loading text1, ..., text9 and sent1, ..., sent9
+Type the name of the text or sentence to view it.
+Type: &#39;texts()&#39; or &#39;sents()&#39; to list the materials.
+text1: Moby Dick by Herman Melville 1851
+text2: Sense and Sensibility by Jane Austen 1811
+text3: The Book of Genesis
+text4: Inaugural Address Corpus
+text5: Chat Corpus
+text6: Monty Python and the Holy Grail
+text7: Wall Street Journal
+text8: Personals Corpus
+text9: The Man Who Was Thursday by G . K . Chesterton 1908
+</pre></div>
+</div>
+</div>
+</div>
+<p>Any time we want to find out about these texts, we just have to enter their names at the Python prompt:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Text: Moby Dick by Herman Melville 1851&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Text: Sense and Sensibility by Jane Austen 1811&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have some data to work with, we’re ready to get started.</p>
+<div class="section" id="searching-text">
+<h2><span class="section-number">1.1. </span>Searching Text<a class="headerlink" href="#searching-text" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="concordance">
+<h3><span class="section-number">1.1.1. </span>Concordance<a class="headerlink" href="#concordance" title="Permalink to this headline">¶</a></h3>
+<p>There are many ways to examine the context of a text apart from simply reading it. A concordance view shows us every occurrence of a given word, together with some context. Here we look up the word <code class="docutils literal notranslate"><span class="pre">monstrous</span></code> in Moby Dick:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text1</span><span class="o">.</span><span class="n">concordance</span><span class="p">(</span><span class="s2">&quot;monstrous&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Displaying 11 of 11 matches:
+ong the former , one was of a most monstrous size . ... This came towards us , 
+ON OF THE PSALMS . &quot; Touching that monstrous bulk of the whale or ork we have r
+ll over with a heathenish array of monstrous clubs and spears . Some were thick
+d as you gazed , and wondered what monstrous cannibal and savage could ever hav
+that has survived the flood ; most monstrous and most mountainous ! That Himmal
+they might scout at Moby Dick as a monstrous fable , or still worse and more de
+th of Radney .&#39;&quot; CHAPTER 55 Of the Monstrous Pictures of Whales . I shall ere l
+ing Scenes . In connexion with the monstrous pictures of whales , I am strongly
+ere to enter upon those still more monstrous stories of them which are to be fo
+ght have been rummaged out of this monstrous cabinet there is no telling . But 
+of Whale - Bones ; for Whales of a monstrous size are oftentimes cast up dead u
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first time you use a concordance on a particular text, it takes a few extra seconds to build an index so that subsequent searches are fast.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<ul class="simple">
+<li><p>Try searching for other words,</p></li>
+<li><p>You can also try searches on some of the other texts we have included. For example, search <code class="docutils literal notranslate"><span class="pre">Sense</span> <span class="pre">and</span> <span class="pre">Sensibility</span></code> for the word <code class="docutils literal notranslate"><span class="pre">affection</span></code>, using <code class="docutils literal notranslate"><span class="pre">text2</span></code>.concordance(“affection”).</p></li>
+<li><p>Search the book of <code class="docutils literal notranslate"><span class="pre">Genesis</span></code> to find out how long some people lived, using <code class="docutils literal notranslate"><span class="pre">text3.concordance(&quot;lived&quot;)</span></code>.</p></li>
+<li><p>You could look at <code class="docutils literal notranslate"><span class="pre">text4</span></code>, <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">Inaugural</span> <span class="pre">Address</span> <span class="pre">Corpus</span></code>, to see examples of English going back to 1789, and search for words like <code class="docutils literal notranslate"><span class="pre">nation</span></code>, <code class="docutils literal notranslate"><span class="pre">terror</span></code>, <code class="docutils literal notranslate"><span class="pre">god</span></code> to see how these words have been used differently over time.</p></li>
+<li><p>We’ve also included <code class="docutils literal notranslate"><span class="pre">text5</span></code>, the <code class="docutils literal notranslate"><span class="pre">NPS</span> <span class="pre">Chat</span> <span class="pre">Corpus</span></code>: search this for unconventional words like <code class="docutils literal notranslate"><span class="pre">im</span></code>, <code class="docutils literal notranslate"><span class="pre">ur</span></code>, <code class="docutils literal notranslate"><span class="pre">lol</span></code>. (Note that this corpus is uncensored!)</p></li>
+</ul>
+</div>
+<p>Once you’ve spent a little while examining these texts, we hope you have a new sense of the richness and diversity of language.</p>
+</div>
+<div class="section" id="similar-words-and-common-context">
+<h3><span class="section-number">1.1.2. </span>Similar Words and Common Context<a class="headerlink" href="#similar-words-and-common-context" title="Permalink to this headline">¶</a></h3>
+<p>A concordance permits us to see words in context. For example, we saw that monstrous occurred in contexts such as the ___ pictures and a ___ size . What other words appear in a similar range of contexts? We can find out by using <code class="docutils literal notranslate"><span class="pre">similar()</span></code> function for the text object (e.g. <code class="docutils literal notranslate"><span class="pre">text1</span></code>) with the word (e.g. <code class="docutils literal notranslate"><span class="pre">monstrous</span></code>) as its argument:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text1</span><span class="o">.</span><span class="n">similar</span><span class="p">(</span><span class="s2">&quot;monstrous&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true contemptible christian abundant few part mean careful puzzled
+mystifying passing curious loving wise doleful gamesome singular
+delightfully perilous fearless
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text2</span><span class="o">.</span><span class="n">similar</span><span class="p">(</span><span class="s2">&quot;monstrous&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>very so exceedingly heartily a as good great extremely remarkably
+sweet vast amazingly
+</pre></div>
+</div>
+</div>
+</div>
+<p>Observe that we get different results for different texts. Austen uses this word quite differently from Melville; for her, <code class="docutils literal notranslate"><span class="pre">monstrous</span></code> has positive connotations, and sometimes functions as an intensifier like the word <code class="docutils literal notranslate"><span class="pre">very</span></code>.</p>
+<p>The term common_contexts allows us to examine just the contexts that are shared by two or more words, such as monstrous and very. We have to enclose these words by square brackets as well as parentheses, and separate them with a comma:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text2</span><span class="o">.</span><span class="n">common_contexts</span><span class="p">([</span><span class="s2">&quot;monstrous&quot;</span><span class="p">,</span> <span class="s2">&quot;very&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>am_glad a_pretty a_lucky is_pretty be_glad
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Pick another pair of words and compare their usage in two different texts, using the <code class="docutils literal notranslate"><span class="pre">similar()</span></code> and <code class="docutils literal notranslate"><span class="pre">common_contexts()</span></code> functions.</p>
+</div>
+<p>We have seen how to automatically detect that a particular word occurs in a text, and to display some words that appear in the same context. We can also determine the location of a word in the text: how many words from the beginning it appears. This positional information can be displayed using a dispersion plot. Each stripe represents an instance of a word, and each row represents the entire text. We can see the dispersion of words in <code class="docutils literal notranslate"><span class="pre">text4</span></code> (Inaugural Address Corpus). You can produce this plot as shown below. You might like to try more words (e.g., <code class="docutils literal notranslate"><span class="pre">liberty</span></code>, <code class="docutils literal notranslate"><span class="pre">constitution</span></code>), and different texts. Can you predict the dispersion of a word before you view it? As before, take care to get the quotes, commas, brackets and parentheses exactly right.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text4</span><span class="o">.</span><span class="n">dispersion_plot</span><span class="p">([</span><span class="s2">&quot;citizens&quot;</span><span class="p">,</span> <span class="s2">&quot;democracy&quot;</span><span class="p">,</span> <span class="s2">&quot;freedom&quot;</span><span class="p">,</span> <span class="s2">&quot;duties&quot;</span><span class="p">,</span> <span class="s2">&quot;America&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/start_17_0.png" src="../_images/start_17_0.png" />
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You need to have Python’s NumPy and Matplotlib packages installed in order to produce the graphical plots used in this book. Please see <a class="reference external" href="http://nltk.org/">http://nltk.org/</a> for installation instructions.</p>
+<p>You can also plot the frequency of word usage through time using <a class="reference external" href="https://books.google.com/ngrams">https://books.google.com/ngrams</a></p>
+</div>
+</div>
+<div class="section" id="generating-text">
+<h3><span class="section-number">1.1.3. </span>Generating Text<a class="headerlink" href="#generating-text" title="Permalink to this headline">¶</a></h3>
+<p>Now, just for fun, let’s try generating some random text in the various styles we have just seen. To do this, we type the name of the text followed by the term generate. (We need to include the parentheses, but there’s nothing that goes between them.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text3</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Building ngram index...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>laid by her , and said unto Cain , Where art thou , and said , Go to ,
+I will not do it for ten &#39; s sons ; we dreamed each man according to
+their generatio the firstborn said unto Laban , Because I said , Nay ,
+but Sarah shall her name be . , duke Elah , duke Shobal , and Akan .
+and looked upon my affliction . Bashemath Ishmael &#39; s blood , but Isra
+for as a prince hast thou found of all the cattle in the valley , and
+the wo The
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;laid by her , and said unto Cain , Where art thou , and said , Go to ,\nI will not do it for ten &#39; s sons ; we dreamed each man according to\ntheir generatio the firstborn said unto Laban , Because I said , Nay ,\nbut Sarah shall her name be . , duke Elah , duke Shobal , and Akan .\nand looked upon my affliction . Bashemath Ishmael &#39; s blood , but Isra\nfor as a prince hast thou found of all the cattle in the valley , and\nthe wo The&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="counting-vocabulary">
+<h2><span class="section-number">1.2. </span>Counting Vocabulary<a class="headerlink" href="#counting-vocabulary" title="Permalink to this headline">¶</a></h2>
+<p>The most obvious fact about texts that emerges from the preceding examples is that they differ in the vocabulary they use. In this section we will see how to use the computer to count the words in a text in a variety of useful ways. Test your understanding by modifying the examples, and trying the exercises at the end of this lab.</p>
+<div class="section" id="text-size-vs-vocabulary-size">
+<h3><span class="section-number">1.2.1. </span>Text Size vs. Vocabulary Size<a class="headerlink" href="#text-size-vs-vocabulary-size" title="Permalink to this headline">¶</a></h3>
+<p>Let’s begin by finding out the length of a text from start to finish, in terms of the words and punctuation symbols that appear. We use the term len to get the length of something, which we’ll apply here to the book of <code class="docutils literal notranslate"><span class="pre">Genesis</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">text3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>44764
+</pre></div>
+</div>
+</div>
+</div>
+<p>So <code class="docutils literal notranslate"><span class="pre">Genesis</span></code> has 44,764 words and punctuation symbols, or “tokens.” A token is the technical name for a sequence of characters — such as <code class="docutils literal notranslate"><span class="pre">hairy</span></code>, <code class="docutils literal notranslate"><span class="pre">his</span></code>, or <code class="docutils literal notranslate"><span class="pre">:)</span></code> — that we want to treat as a group. When we count the number of tokens in a text, say, the phrase <code class="docutils literal notranslate"><span class="pre">to</span> <span class="pre">be</span> <span class="pre">or</span> <span class="pre">not</span> <span class="pre">to</span> <span class="pre">be</span></code>, we are counting occurrences of these sequences. Thus, in our example phrase there are two occurrences of <code class="docutils literal notranslate"><span class="pre">to</span></code>, two of <code class="docutils literal notranslate"><span class="pre">be</span></code>, and one each of <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code>. But there are only four distinct vocabulary items in this phrase.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>How many distinct words does the book of <code class="docutils literal notranslate"><span class="pre">Genesis</span></code> contain?</p>
+</div>
+<p>To work this out in Python, we have to pose the question slightly differently. The vocabulary of a text is just the set of tokens that it uses, since in a set, all duplicates are collapsed together. In Python we can obtain the vocabulary items of <code class="docutils literal notranslate"><span class="pre">text3</span></code> with the command: <code class="docutils literal notranslate"><span class="pre">set(text3)</span></code>. When you do this, many screens of words will fly past. Now try the following. By wrapping sorted() around the Python expression <code class="docutils literal notranslate"><span class="pre">set(text3)</span></code>, we obtain a sorted list of vocabulary items, beginning with various punctuation symbols and continuing with words starting with A. All capitalized words precede lowercase words. <code class="docutils literal notranslate"><span class="pre">[:20]</span></code> will list the first 20 tokens, not including the token indexed by <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">text3</span><span class="p">))</span> <span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;!&#39;,
+ &quot;&#39;&quot;,
+ &#39;(&#39;,
+ &#39;)&#39;,
+ &#39;,&#39;,
+ &#39;,)&#39;,
+ &#39;.&#39;,
+ &#39;.)&#39;,
+ &#39;:&#39;,
+ &#39;;&#39;,
+ &#39;;)&#39;,
+ &#39;?&#39;,
+ &#39;?)&#39;,
+ &#39;A&#39;,
+ &#39;Abel&#39;,
+ &#39;Abelmizraim&#39;,
+ &#39;Abidah&#39;,
+ &#39;Abide&#39;,
+ &#39;Abimael&#39;,
+ &#39;Abimelech&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">text3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2789
+</pre></div>
+</div>
+</div>
+</div>
+<p>We discover the size of the vocabulary indirectly, by asking for the number of items in the set, and again we can use len to obtain this number. Although it has 44,764 tokens, this book has only 2,789 distinct words, or “word types.” A word type is the form or spelling of the word independently of its specific occurrences in a text — that is, the word considered as a unique item of vocabulary. Our count of 2,789 items will include punctuation symbols, so we will generally call these unique items types instead of word types.</p>
+</div>
+<div class="section" id="lexical-richness">
+<h3><span class="section-number">1.2.2. </span>Lexical Richness<a class="headerlink" href="#lexical-richness" title="Permalink to this headline">¶</a></h3>
+<p>Now, let’s calculate a measure of the lexical richness of the text. The next example shows us that the number of distinct words is just 6% of the total number of words, or equivalently that each word is used 16 times on average.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">text3</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">text3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06230453042623537
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="word-freqency">
+<h3><span class="section-number">1.2.3. </span>Word Freqency<a class="headerlink" href="#word-freqency" title="Permalink to this headline">¶</a></h3>
+<p>Next, let’s focus on particular words. We can count how often a word occurs in a text, and compute what percentage of the text is taken up by a specific word:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># raw count</span>
+<span class="n">text3</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;smote&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># percentage frequency</span>
+<span class="mi">100</span> <span class="o">*</span> <span class="n">text4</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">text4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.457973123627309
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>How many times does the word <code class="docutils literal notranslate"><span class="pre">lol</span></code> appear in <code class="docutils literal notranslate"><span class="pre">text5</span></code>? How much is this as a percentage of the total number of words in this text?</p>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>You may want to repeat such calculations on several texts, but it is tedious to keep retyping the formula. Instead, you can come up with your own name for a task, like “lexical_diversity” or “tf” (for term frequency), and associate it with a block of code. Now you only have to type a short name instead of one or more complete lines of Python code, and you can re-use it as often as you like. The block of code that does a task for us is called a <strong>function</strong>, and we define a short name for our function with the keyword def. The next example shows how to define two new functions, <code class="docutils literal notranslate"><span class="pre">lexical_diversity()</span></code> and <code class="docutils literal notranslate"><span class="pre">tf()</span></code>:</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lexical_diversity</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">text</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tf</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">count</span> <span class="o">/</span> <span class="n">total</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the definition of <code class="docutils literal notranslate"><span class="pre">lexical_diversity()</span></code>, we specify a parameter named text . This parameter is a “placeholder” for the actual text whose lexical diversity we want to compute, and reoccurs in the block of code that will run when the function is used. Similarly, <code class="docutils literal notranslate"><span class="pre">tf()</span></code> is defined to take two parameters, named <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">token</span></code>.</p>
+<p>Once Python knows that <code class="docutils literal notranslate"><span class="pre">lexical_diversity()</span></code> and <code class="docutils literal notranslate"><span class="pre">tf()</span></code> are the names for specific blocks of code, we can go ahead and use these functions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lexical_diversity</span><span class="p">(</span><span class="n">text3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06230453042623537
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="p">(</span><span class="n">text4</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.457973123627309
+</pre></div>
+</div>
+</div>
+</div>
+<p>To recap, we use or call a function such as <code class="docutils literal notranslate"><span class="pre">lexical_diversity()</span></code> by typing its name, followed by an open parenthesis, the name of the text, and then a close parenthesis. These parentheses will show up often; their role is to separate the name of a task — such as <code class="docutils literal notranslate"><span class="pre">lexical_diversity()</span></code> — from the data that the task is to be performed on — such as <code class="docutils literal notranslate"><span class="pre">text3</span></code>. The data value that we place in the parentheses when we call a function is an argument to the function.</p>
+<p>You have already encountered several functions in this lab, such as <code class="docutils literal notranslate"><span class="pre">len()</span></code>, <code class="docutils literal notranslate"><span class="pre">set()</span></code>, and sorted(). By convention, we will always add an empty pair of parentheses after a function name, as in <code class="docutils literal notranslate"><span class="pre">len()</span></code>, just to make clear that what we are talking about is a function rather than some other kind of Python expression. Functions are an important concept in programming, you should consider refactoring frequently reusable blocks of code into functions.</p>
+<p>Later we’ll see how to use functions when tabulating data. Each row of the table will involve the same computation but with different data, and we’ll do this repetitive work using a function.</p>
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">Lexical Diversity of Various Genres in the Brown Corpus</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Genre</p></th>
+<th class="head"><p>Tokens</p></th>
+<th class="head"><p>Types</p></th>
+<th class="head"><p>Lexical diversity</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>skill and hobbies</p></td>
+<td><p>82345</p></td>
+<td><p>11935</p></td>
+<td><p>0.145</p></td>
+</tr>
+<tr class="row-odd"><td><p>humor</p></td>
+<td><p>21695</p></td>
+<td><p>5017</p></td>
+<td><p>0.231</p></td>
+</tr>
+<tr class="row-even"><td><p>fiction: science</p></td>
+<td><p>14470</p></td>
+<td><p>3233</p></td>
+<td><p>0.223</p></td>
+</tr>
+<tr class="row-odd"><td><p>press: reportage</p></td>
+<td><p>100554</p></td>
+<td><p>14394</p></td>
+<td><p>0.143</p></td>
+</tr>
+<tr class="row-even"><td><p>fiction: romance</p></td>
+<td><p>70022</p></td>
+<td><p>8452</p></td>
+<td><p>0.121</p></td>
+</tr>
+<tr class="row-odd"><td><p>religion</p></td>
+<td><p>39399</p></td>
+<td><p>6373</p></td>
+<td><p>0.162</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./NLTK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab02 NLTK</a>
+    <a class='right-next' id="next-link" href="closer_look.html" title="next page"><span class="section-number">2. </span>A Closer Look at Python: Texts as Lists of Words</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

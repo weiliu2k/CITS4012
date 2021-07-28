@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Computational Graph &#8212; CITS4012 Natural Language Processing</title>
+    <title>Lab02: NLTK &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to Neural Networks (draft)" href="../nn/intro.html" />
-    <link rel="prev" title="2. CUDA tensors" href="cuda.html" />
+    <link rel="next" title="1. Starting with NLTK" href="start.html" />
+    <link rel="prev" title="7. Matplotlib" href="../basics/matplotlib.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -139,33 +139,33 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../NLTK/intro.html">
-   Lab02 NLTK
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Lab02: NLTK
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="../NLTK/start.html">
+    <a class="reference internal" href="start.html">
      1. Starting with NLTK
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../NLTK/closer_look.html">
+    <a class="reference internal" href="closer_look.html">
      2. A Closer Look at Python: Texts as Lists of Words
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../NLTK/computing.html">
+    <a class="reference internal" href="computing.html">
      3. Computing with Language: Simple Statistics
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../NLTK/take_control.html">
+    <a class="reference internal" href="take_control.html">
      4. Back to Python: Making Decisions and Taking Control
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../NLTK/exercises.html">
+    <a class="reference internal" href="exercises.html">
      5. Exercises
     </a>
    </li>
@@ -173,38 +173,38 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 current active collapsible-parent">
-  <a class="reference internal" href="intro.html">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../pytorch/intro.html">
    Introduction to Pytorch (DRAFT)
   </a>
-  <ul class="current collapse-ul">
+  <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="installing.html">
+    <a class="reference internal" href="../pytorch/installing.html">
      1. Installing Pytorch
     </a>
    </li>
    <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="tensors.html">
+    <a class="reference internal" href="../pytorch/tensors.html">
      Tensors
     </a>
     <ul class="collapse-ul">
      <li class="toctree-l3">
-      <a class="reference internal" href="tensor_types.html">
+      <a class="reference internal" href="../pytorch/tensor_types.html">
        1. Types of Tensor
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="create_tensors.html">
+      <a class="reference internal" href="../pytorch/create_tensors.html">
        2. Creating Tensors
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="tensor_operations.html">
+      <a class="reference internal" href="../pytorch/tensor_operations.html">
        3. Tensor Operations
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="tensor_slicing.html">
+      <a class="reference internal" href="../pytorch/tensor_slicing.html">
        4. Tensor Slicing, Indexing and Joining
       </a>
      </li>
@@ -213,12 +213,12 @@
     </i>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="cuda.html">
+    <a class="reference internal" href="../pytorch/cuda.html">
      2. CUDA tensors
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
      3. Computational Graph
     </a>
    </li>
@@ -315,9 +315,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/pytorch/computational_graph.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/NLTK/intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -347,8 +347,27 @@
         
               <div>
                 
-  <div class="section" id="computational-graph">
-<h1><span class="section-number">3. </span>Computational Graph<a class="headerlink" href="#computational-graph" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="lab02-nltk">
+<h1>Lab02: NLTK<a class="headerlink" href="#lab02-nltk" title="Permalink to this headline">¶</a></h1>
+<p>It is easy to get our hands on millions of words of text. What can we do with it, assuming we can write some simple programs? In this chapter we’ll address the following questions:</p>
+<ul class="simple">
+<li><p>What can we achieve by combining simple programming techniques with large quantities of text?</p></li>
+<li><p>How can we automatically extract key words and phrases that sum up the style and content of a text?</p></li>
+<li><p>What tools and techniques does the Python programming language provide for such work?</p></li>
+<li><p>What are some of the interesting challenges of natural language processing?</p></li>
+</ul>
+<p>This chapter is divided into sections that skip between two quite different styles.</p>
+<ul class="simple">
+<li><p>In the “computing with language” sections we will take on some linguistically motivated programming tasks without necessarily explaining how they work.</p></li>
+<li><p>In the “closer look at Python” sections we will systematically review key programming concepts.</p></li>
+</ul>
+<p>You can skip Section 2 and 4 if you are confident with Python, but do attempt the exercises and refer back to those sections if you find some of the questions challenging.</p>
+<p>We’ll flag the two styles in the section titles, but later labs will mix both styles without being so up-front about it. We hope this style of introduction gives you an authentic taste of what will come later, while covering a range of elementary concepts in linguistics and computer science.</p>
+<p>Online reference material for NLTK is at <a class="reference external" href="http://nltk.org/">http://nltk.org/</a>.</p>
+<p>This lab may raise more questions than it answers, we will try to address some in the rest of this unit.</p>
+<p><a class="reference external" href="https://www.nltk.org/book/ch01.html">Original Content Credit to Chapter 1 of the online NLTK Book</a></p>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -364,7 +383,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./pytorch"
+            path: "./NLTK"
         },
         predefinedOutput: true
     }
@@ -379,8 +398,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="cuda.html" title="previous page"><span class="section-number">2. </span>CUDA tensors</a>
-    <a class='right-next' id="next-link" href="../nn/intro.html" title="next page">Introduction to Neural Networks (draft)</a>
+    <a class='left-prev' id="prev-link" href="../basics/matplotlib.html" title="previous page"><span class="section-number">7. </span>Matplotlib</a>
+    <a class='right-next' id="next-link" href="start.html" title="next page"><span class="section-number">1. </span>Starting with NLTK</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
