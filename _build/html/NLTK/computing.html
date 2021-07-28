@@ -1,0 +1,1920 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Computing with Language: Simple Statistics &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Back to Python: Making Decisions and Taking Control" href="take_control.html" />
+    <link rel="prev" title="2. A Closer Look at Python: Texts as Lists of Words" href="closer_look.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab02 NLTK
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Introduction to Pytorch (DRAFT)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/installing.html">
+     1. Installing Pytorch
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../pytorch/tensors.html">
+     Tensors
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_types.html">
+       1. Types of Tensor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/create_tensors.html">
+       2. Creating Tensors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_operations.html">
+       3. Tensor Operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_slicing.html">
+       4. Tensor Slicing, Indexing and Joining
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/cuda.html">
+     2. CUDA tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     3. Computational Graph
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Introduction to Neural Networks (draft)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_from_scratch.html">
+     2. Neural net from scratch (no
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       torch.nn
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_torch.nn.html">
+     3. Using torch.nn.functional
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../content.html">
+   Content in Jupyter Book
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../markdown.html">
+     Markdown Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../notebooks.html">
+     Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/NLTK/computing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/NLTK/computing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frequency-distributions">
+   3.1. Frequency Distributions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fine-grained-selection-of-words">
+   3.2. Fine-grained Selection of Words
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#collocations-and-bigrams">
+   3.3. Collocations and Bigrams
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#counting-other-things">
+   3.4. Counting Other Things
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="computing-with-language-simple-statistics">
+<h1><span class="section-number">3. </span>Computing with Language: Simple Statistics<a class="headerlink" href="#computing-with-language-simple-statistics" title="Permalink to this headline">¶</a></h1>
+<p>Let us return to our exploration of the ways we can bring our computational resources to bear on large quantities of text. We began this discussion in 1, and saw how to search for words in context, how to compile the vocabulary of a text, how to generate random text in the same style, and so on.</p>
+<p>In this section we pick up the question of what makes a text distinct, and use automatic methods to find characteristic words and expressions of a text.</p>
+<p>Before continuing further, you might like to check your understanding of the last section by predicting the output of the following code. You can use the Jupyter Notebook Code Cell to check whether you got it right. If you’re not sure how to do this task, it would be a good idea to review the previous section before continuing further.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">saying</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;After&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;said&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;done&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;more&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;said&#39;</span><span class="p">,</span> <span class="s1">&#39;than&#39;</span><span class="p">,</span> <span class="s1">&#39;done&#39;</span><span class="p">]</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">saying</span><span class="p">)</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="n">tokens</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;After&#39;, &#39;all&#39;, &#39;and&#39;, &#39;done&#39;, &#39;is&#39;, &#39;more&#39;, &#39;said&#39;, &#39;than&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>What output do you expect of `tokens[-2:]?</p>
+</div>
+<div class="section" id="frequency-distributions">
+<h2><span class="section-number">3.1. </span>Frequency Distributions<a class="headerlink" href="#frequency-distributions" title="Permalink to this headline">¶</a></h2>
+<p>How can we automatically identify the words of a text that are most informative about the topic and genre of the text? Imagine how you might go about finding the 50 most frequent words of a book. One method would be to keep a tally for each vocabulary item. The tally would need thousands of rows (the same size as the vocabulary), and it would be an exceedingly laborious process — so laborious that we would rather assign the task to a machine. Since we often need frequency distributions in language processing, NLTK provides built-in support for them. Let’s use a FreqDist to find the 50 most frequent words of <code class="docutils literal notranslate"><span class="pre">Moby</span> <span class="pre">Dick</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.book</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>*** Introductory Examples for the NLTK Book ***
+Loading text1, ..., text9 and sent1, ..., sent9
+Type the name of the text or sentence to view it.
+Type: &#39;texts()&#39; or &#39;sents()&#39; to list the materials.
+text1: Moby Dick by Herman Melville 1851
+text2: Sense and Sensibility by Jane Austen 1811
+text3: The Book of Genesis
+text4: Inaugural Address Corpus
+text5: Chat Corpus
+text6: Monty Python and the Holy Grail
+text7: Wall Street Journal
+text8: Personals Corpus
+text9: The Man Who Was Thursday by G . K . Chesterton 1908
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist1</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fdist1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;FreqDist with 19317 samples and 260819 outcomes&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist1</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;,&#39;, 18713),
+ (&#39;the&#39;, 13721),
+ (&#39;.&#39;, 6862),
+ (&#39;of&#39;, 6536),
+ (&#39;and&#39;, 6024),
+ (&#39;a&#39;, 4569),
+ (&#39;to&#39;, 4542),
+ (&#39;;&#39;, 4072),
+ (&#39;in&#39;, 3916),
+ (&#39;that&#39;, 2982),
+ (&quot;&#39;&quot;, 2684),
+ (&#39;-&#39;, 2552),
+ (&#39;his&#39;, 2459),
+ (&#39;it&#39;, 2209),
+ (&#39;I&#39;, 2124),
+ (&#39;s&#39;, 1739),
+ (&#39;is&#39;, 1695),
+ (&#39;he&#39;, 1661),
+ (&#39;with&#39;, 1659),
+ (&#39;was&#39;, 1632),
+ (&#39;as&#39;, 1620),
+ (&#39;&quot;&#39;, 1478),
+ (&#39;all&#39;, 1462),
+ (&#39;for&#39;, 1414),
+ (&#39;this&#39;, 1280),
+ (&#39;!&#39;, 1269),
+ (&#39;at&#39;, 1231),
+ (&#39;by&#39;, 1137),
+ (&#39;but&#39;, 1113),
+ (&#39;not&#39;, 1103),
+ (&#39;--&#39;, 1070),
+ (&#39;him&#39;, 1058),
+ (&#39;from&#39;, 1052),
+ (&#39;be&#39;, 1030),
+ (&#39;on&#39;, 1005),
+ (&#39;so&#39;, 918),
+ (&#39;whale&#39;, 906),
+ (&#39;one&#39;, 889),
+ (&#39;you&#39;, 841),
+ (&#39;had&#39;, 767),
+ (&#39;have&#39;, 760),
+ (&#39;there&#39;, 715),
+ (&#39;But&#39;, 705),
+ (&#39;or&#39;, 697),
+ (&#39;were&#39;, 680),
+ (&#39;now&#39;, 646),
+ (&#39;which&#39;, 640),
+ (&#39;?&#39;, 637),
+ (&#39;me&#39;, 627),
+ (&#39;like&#39;, 624)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The tally is known as a frequency distribution, and it tells us the frequency of each vocabulary item in the text. (In general, it could count any kind of observable event.) It is a “distribution” because it tells us how the total number of word tokens in the text are distributed across the vocabulary items. Since we often need frequency distributions in language processing, NLTK provides built-in support for them. Let’s use a FreqDist to find the 50 most frequent words of Moby Dick:</p>
+<p>When we first invoke FreqDist, we pass the name of the text as an argument. We can inspect the total number of words (“outcomes”) that have been counted up — 260,819 in the case of <code class="docutils literal notranslate"><span class="pre">Moby</span> <span class="pre">Dick</span></code>. The expression most_common(50) gives us a list of the 50 most frequently occurring types in the text with a raw count of each word.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Try the preceding frequency distribution example for yourself, for <code class="docutils literal notranslate"><span class="pre">text2</span></code>. Be careful to use the correct parentheses and uppercase letters. If you get an error message NameError: name ‘FreqDist’ is not defined, you need to start your work with from nltk.book import *</p>
+</div>
+<p>Do any words produced in the last example help us grasp the topic or genre of this text? Only one word, whale, is slightly informative! It occurs over 900 times. The rest of the words tell us nothing about the text; they’re just English “plumbing.” What proportion of the text is taken up with such words? We can generate a cumulative frequency plot for these words, using <code class="docutils literal notranslate"><span class="pre">fdist1.plot(50,</span> <span class="pre">cumulative=True)</span></code>, to produce the following graph. These 50 words account for nearly half the book!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The frequency distribution</span>
+<span class="n">fdist1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/computing_7_0.png" src="../_images/computing_7_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Samples&#39;, ylabel=&#39;Counts&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">cumulative</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/computing_8_0.png" src="../_images/computing_8_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Samples&#39;, ylabel=&#39;Cumulative Counts&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the Cumulative Frequency Plot for 50 Most Frequently Words in <code class="docutils literal notranslate"><span class="pre">Moby</span> <span class="pre">Dick</span></code>: these account for nearly half of the tokens.</p>
+<p>If the frequent words don’t help us, how about the words that occur once only, the so-called hapaxes? View them by typing <code class="docutils literal notranslate"><span class="pre">fdist1.hapaxes()</span></code>. This list contains <code class="docutils literal notranslate"><span class="pre">lexicographer</span></code>, <code class="docutils literal notranslate"><span class="pre">cetological</span></code>, <code class="docutils literal notranslate"><span class="pre">contraband</span></code>, <code class="docutils literal notranslate"><span class="pre">expostulations</span></code>, and about 9,000 others. It seems that there are too many rare words, and without seeing the context we probably can’t guess what half of the hapaxes mean in any case! Since neither frequent nor infrequent words help, we need to try something else.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist1</span><span class="o">.</span><span class="n">hapaxes</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Herman&#39;,
+ &#39;Melville&#39;,
+ &#39;]&#39;,
+ &#39;ETYMOLOGY&#39;,
+ &#39;Late&#39;,
+ &#39;Consumptive&#39;,
+ &#39;School&#39;,
+ &#39;threadbare&#39;,
+ &#39;lexicons&#39;,
+ &#39;mockingly&#39;,
+ &#39;flags&#39;,
+ &#39;mortality&#39;,
+ &#39;signification&#39;,
+ &#39;HACKLUYT&#39;,
+ &#39;Sw&#39;,
+ &#39;HVAL&#39;,
+ &#39;roundness&#39;,
+ &#39;Dut&#39;,
+ &#39;Ger&#39;,
+ &#39;WALLEN&#39;,
+ &#39;WALW&#39;,
+ &#39;IAN&#39;,
+ &#39;RICHARDSON&#39;,
+ &#39;KETOS&#39;,
+ &#39;GREEK&#39;,
+ &#39;CETUS&#39;,
+ &#39;LATIN&#39;,
+ &#39;WHOEL&#39;,
+ &#39;ANGLO&#39;,
+ &#39;SAXON&#39;,
+ &#39;WAL&#39;,
+ &#39;HWAL&#39;,
+ &#39;SWEDISH&#39;,
+ &#39;ICELANDIC&#39;,
+ &#39;BALEINE&#39;,
+ &#39;BALLENA&#39;,
+ &#39;FEGEE&#39;,
+ &#39;ERROMANGOAN&#39;,
+ &#39;Librarian&#39;,
+ &#39;painstaking&#39;,
+ &#39;burrower&#39;,
+ &#39;grub&#39;,
+ &#39;Vaticans&#39;,
+ &#39;stalls&#39;,
+ &#39;higgledy&#39;,
+ &#39;piggledy&#39;,
+ &#39;gospel&#39;,
+ &#39;promiscuously&#39;,
+ &#39;commentator&#39;,
+ &#39;belongest&#39;,
+ &#39;sallow&#39;,
+ &#39;Pale&#39;,
+ &#39;Sherry&#39;,
+ &#39;loves&#39;,
+ &#39;bluntly&#39;,
+ &#39;Subs&#39;,
+ &#39;thankless&#39;,
+ &#39;Hampton&#39;,
+ &#39;Court&#39;,
+ &#39;hie&#39;,
+ &#39;refugees&#39;,
+ &#39;pampered&#39;,
+ &#39;Michael&#39;,
+ &#39;Raphael&#39;,
+ &#39;unsplinterable&#39;,
+ &#39;GENESIS&#39;,
+ &#39;JOB&#39;,
+ &#39;JONAH&#39;,
+ &#39;punish&#39;,
+ &#39;ISAIAH&#39;,
+ &#39;soever&#39;,
+ &#39;cometh&#39;,
+ &#39;incontinently&#39;,
+ &#39;perisheth&#39;,
+ &#39;PLUTARCH&#39;,
+ &#39;MORALS&#39;,
+ &#39;breedeth&#39;,
+ &#39;Whirlpooles&#39;,
+ &#39;Balaene&#39;,
+ &#39;arpens&#39;,
+ &#39;PLINY&#39;,
+ &#39;Scarcely&#39;,
+ &#39;TOOKE&#39;,
+ &#39;LUCIAN&#39;,
+ &#39;TRUE&#39;,
+ &#39;catched&#39;,
+ &#39;OCTHER&#39;,
+ &#39;VERBAL&#39;,
+ &#39;TAKEN&#39;,
+ &#39;MOUTH&#39;,
+ &#39;ALFRED&#39;,
+ &#39;890&#39;,
+ &#39;gudgeon&#39;,
+ &#39;retires&#39;,
+ &#39;MONTAIGNE&#39;,
+ &#39;APOLOGY&#39;,
+ &#39;RAIMOND&#39;,
+ &#39;SEBOND&#39;,
+ &#39;Nick&#39;,
+ &#39;RABELAIS&#39;,
+ &#39;cartloads&#39;,
+ &#39;STOWE&#39;,
+ &#39;ANNALS&#39;,
+ &#39;LORD&#39;,
+ &#39;BACON&#39;,
+ &#39;Touching&#39;,
+ &#39;ork&#39;,
+ &#39;DEATH&#39;,
+ &#39;sovereignest&#39;,
+ &#39;bruise&#39;,
+ &#39;HAMLET&#39;,
+ &#39;leach&#39;,
+ &#39;Mote&#39;,
+ &#39;availle&#39;,
+ &#39;returne&#39;,
+ &#39;againe&#39;,
+ &#39;worker&#39;,
+ &#39;Dinting&#39;,
+ &#39;paine&#39;,
+ &#39;thro&#39;,
+ &#39;maine&#39;,
+ &#39;FAERIE&#39;,
+ &#39;Immense&#39;,
+ &#39;til&#39;,
+ &#39;DAVENANT&#39;,
+ &#39;PREFACE&#39;,
+ &#39;GONDIBERT&#39;,
+ &#39;spermacetti&#39;,
+ &#39;Hosmannus&#39;,
+ &#39;Nescio&#39;,
+ &#39;VIDE&#39;,
+ &#39;Spencer&#39;,
+ &#39;Talus&#39;,
+ &#39;flail&#39;,
+ &#39;threatens&#39;,
+ &#39;jav&#39;,
+ &#39;lins&#39;,
+ &#39;WALLER&#39;,
+ &#39;SUMMER&#39;,
+ &#39;ISLANDS&#39;,
+ &#39;Commonwealth&#39;,
+ &#39;Civitas&#39;,
+ &#39;OPENING&#39;,
+ &#39;SENTENCE&#39;,
+ &#39;HOBBES&#39;,
+ &#39;LEVIATHAN&#39;,
+ &#39;Silly&#39;,
+ &#39;Mansoul&#39;,
+ &#39;chewing&#39;,
+ &#39;sprat&#39;,
+ &#39;PILGRIM&#39;,
+ &#39;PROGRESS&#39;,
+ &#39;Created&#39;,
+ &#39;PARADISE&#39;,
+ &#39;LOST&#39;,
+ &#39;---&quot;&#39;,
+ &#39;Hugest&#39;,
+ &#39;Stretched&#39;,
+ &#39;Draws&#39;,
+ &#39;FULLLER&#39;,
+ &#39;PROFANE&#39;,
+ &#39;HOLY&#39;,
+ &#39;STATE&#39;,
+ &#39;DRYDEN&#39;,
+ &#39;ANNUS&#39;,
+ &#39;MIRABILIS&#39;,
+ &#39;aground&#39;,
+ &#39;EDGE&#39;,
+ &#39;TEN&#39;,
+ &#39;SPITZBERGEN&#39;,
+ &#39;PURCHAS&#39;,
+ &#39;wantonness&#39;,
+ &#39;fuzzing&#39;,
+ &#39;vents&#39;,
+ &#39;HERBERT&#39;,
+ &#39;INTO&#39;,
+ &#39;ASIA&#39;,
+ &#39;AFRICA&#39;,
+ &#39;SCHOUTEN&#39;,
+ &#39;SIXTH&#39;,
+ &#39;CIRCUMNAVIGATION&#39;,
+ &#39;Elbe&#39;,
+ &#39;ducat&#39;,
+ &#39;herrings&#39;,
+ &#39;GREENLAND&#39;,
+ &#39;Several&#39;,
+ &#39;Fife&#39;,
+ &#39;Anno&#39;,
+ &#39;1652&#39;,
+ &#39;Pitferren&#39;,
+ &#39;SIBBALD&#39;,
+ &#39;FIFE&#39;,
+ &#39;KINROSS&#39;,
+ &#39;Myself&#39;,
+ &#39;Sperma&#39;,
+ &#39;ceti&#39;,
+ &#39;fierceness&#39;,
+ &#39;RICHARD&#39;,
+ &#39;STRAFFORD&#39;,
+ &#39;LETTER&#39;,
+ &#39;BERMUDAS&#39;,
+ &#39;PHIL&#39;,
+ &#39;TRANS&#39;,
+ &#39;1668&#39;,
+ &#39;PRIMER&#39;,
+ &#39;COWLEY&#39;,
+ &#39;1729&#39;,
+ &#39;&quot;...&#39;,
+ &#39;frequendy&#39;,
+ &#39;insupportable&#39;,
+ &#39;disorder&#39;,
+ &#39;ULLOA&#39;,
+ &#39;SOUTH&#39;,
+ &#39;AMERICA&#39;,
+ &#39;sylphs&#39;,
+ &#39;petticoat&#39;,
+ &#39;Oft&#39;,
+ &#39;Tho&#39;,
+ &#39;RAPE&#39;,
+ &#39;LOCK&#39;,
+ &#39;NAT&#39;,
+ &#39;wales&#39;,
+ &#39;JOHNSON&#39;,
+ &#39;COOK&#39;,
+ &#39;dung&#39;,
+ &#39;lime&#39;,
+ &#39;juniper&#39;,
+ &#39;UNO&#39;,
+ &#39;VON&#39;,
+ &#39;TROIL&#39;,
+ &#39;LETTERS&#39;,
+ &#39;BANKS&#39;,
+ &#39;SOLANDER&#39;,
+ &#39;1772&#39;,
+ &#39;Nantuckois&#39;,
+ &#39;JEFFERSON&#39;,
+ &#39;MEMORIAL&#39;,
+ &#39;MINISTER&#39;,
+ &#39;REFERENCE&#39;,
+ &#39;PARLIAMENT&#39;,
+ &#39;SOMEWHERE&#39;,
+ &#39;guarding&#39;,
+ &#39;protecting&#39;,
+ &#39;robbers&#39;,
+ &#39;BLACKSTONE&#39;,
+ &#39;Rodmond&#39;,
+ &#39;suspends&#39;,
+ &#39;attends&#39;,
+ &#39;FALCONER&#39;,
+ &#39;Bright&#39;,
+ &#39;roofs&#39;,
+ &#39;domes&#39;,
+ &#39;rockets&#39;,
+ &#39;Around&#39;,
+ &#39;unwieldy&#39;,
+ &#39;COWPER&#39;,
+ &#39;VISIT&#39;,
+ &#39;LONDON&#39;,
+ &#39;HUNTER&#39;,
+ &#39;DISSECTION&#39;,
+ &#39;SMALL&#39;,
+ &#39;SIZED&#39;,
+ &#39;aorta&#39;,
+ &#39;gushing&#39;,
+ &#39;PALEY&#39;,
+ &#39;THEOLOGY&#39;,
+ &#39;mammiferous&#39;,
+ &#39;hind&#39;,
+ &#39;BARON&#39;,
+ &#39;CUVIER&#39;,
+ &#39;COLNETT&#39;,
+ &#39;PURPOSE&#39;,
+ &#39;EXTENDING&#39;,
+ &#39;SPERMACETI&#39;,
+ &#39;Floundered&#39;,
+ &#39;chace&#39;,
+ &#39;peopling&#39;,
+ &#39;Gather&#39;,
+ &#39;Led&#39;,
+ &#39;instincts&#39;,
+ &#39;trackless&#39;,
+ &#39;Assaulted&#39;,
+ &#39;voracious&#39;,
+ &#39;spiral&#39;,
+ &#39;MONTGOMERY&#39;,
+ &#39;WORLD&#39;,
+ &#39;FLOOD&#39;,
+ &#39;Paean&#39;,
+ &#39;fatter&#39;,
+ &#39;Flounders&#39;,
+ &#39;CHARLES&#39;,
+ &#39;LAMB&#39;,
+ &#39;TRIUMPH&#39;,
+ &#39;1690&#39;,
+ &#39;OBED&#39;,
+ &#39;Susan&#39;,
+ &#39;HAWTHORNE&#39;,
+ &#39;TWICE&#39;,
+ &#39;bespeak&#39;,
+ &#39;raal&#39;,
+ &#39;COOPER&#39;,
+ &#39;PILOT&#39;,
+ &#39;Berlin&#39;,
+ &#39;Gazette&#39;,
+ &#39;ECKERMANN&#39;,
+ &#39;CONVERSATIONS&#39;,
+ &#39;GOETHE&#39;,
+ &#39;ESSEX&#39;,
+ &#39;WAS&#39;,
+ &#39;ATTACKED&#39;,
+ &#39;FINALLY&#39;,
+ &#39;DESTROYED&#39;,
+ &#39;OWEN&#39;,
+ &#39;CHACE&#39;,
+ &#39;FIRST&#39;,
+ &#39;SAID&#39;,
+ &#39;VESSEL&#39;,
+ &#39;YORK&#39;,
+ &#39;1821&#39;,
+ &#39;piping&#39;,
+ &#39;dimmed&#39;,
+ &#39;phospher&#39;,
+ &#39;ELIZABETH&#39;,
+ &#39;OAKES&#39;,
+ &#39;SMITH&#39;,
+ &#39;amounted&#39;,
+ &#39;440&#39;,
+ &#39;SCORESBY&#39;,
+ &#39;Mad&#39;,
+ &#39;agonies&#39;,
+ &#39;endures&#39;,
+ &#39;infuriated&#39;,
+ &#39;rears&#39;,
+ &#39;snaps&#39;,
+ &#39;propelled&#39;,
+ &#39;observers&#39;,
+ &#39;opportunities&#39;,
+ &#39;habitudes&#39;,
+ &#39;BEALE&#39;,
+ &#39;offensively&#39;,
+ &#39;artful&#39;,
+ &#39;mischievous&#39;,
+ &#39;FREDERICK&#39;,
+ &#39;DEBELL&#39;,
+ &#39;1840&#39;,
+ &#39;October&#39;,
+ &#39;Raise&#39;,
+ &#39;ay&#39;,
+ &#39;THAR&#39;,
+ &#39;bowes&#39;,
+ &#39;os&#39;,
+ &#39;ROSS&#39;,
+ &#39;ETCHINGS&#39;,
+ &#39;CRUIZE&#39;,
+ &#39;1846&#39;,
+ &#39;Globe&#39;,
+ &#39;transactions&#39;,
+ &#39;relate&#39;,
+ &#39;HUSSEY&#39;,
+ &#39;SURVIVORS&#39;,
+ &#39;parried&#39;,
+ &#39;MISSIONARY&#39;,
+ &#39;JOURNAL&#39;,
+ &#39;TYERMAN&#39;,
+ &#39;boldest&#39;,
+ &#39;persevering&#39;,
+ &#39;REPORT&#39;,
+ &#39;DANIEL&#39;,
+ &#39;SPEECH&#39;,
+ &#39;SENATE&#39;,
+ &#39;APPLICATION&#39;,
+ &#39;ERECTION&#39;,
+ &#39;BREAKWATER&#39;,
+ &#39;CAPTORS&#39;,
+ &#39;WHALEMAN&#39;,
+ &#39;ADVENTURES&#39;,
+ &#39;BIOGRAPHY&#39;,
+ &#39;GATHERED&#39;,
+ &#39;HOMEWARD&#39;,
+ &#39;COMMODORE&#39;,
+ &#39;PREBLE&#39;,
+ &#39;REV&#39;,
+ &#39;CHEEVER&#39;,
+ &#39;MUTINEER&#39;,
+ &#39;BROTHER&#39;,
+ &#39;ANOTHER&#39;,
+ &#39;MCCULLOCH&#39;,
+ &#39;COMMERCIAL&#39;,
+ &#39;reciprocal&#39;,
+ &#39;clews&#39;,
+ &#39;SOMETHING&#39;,
+ &#39;UNPUBLISHED&#39;,
+ &#39;CURRENTS&#39;,
+ &#39;Pedestrians&#39;,
+ &#39;recollect&#39;,
+ &#39;gateways&#39;,
+ &#39;VOYAGER&#39;,
+ &#39;ARCTIC&#39;,
+ &#39;NEWSPAPER&#39;,
+ &#39;TAKING&#39;,
+ &#39;RETAKING&#39;,
+ &#39;HOBOMACK&#39;,
+ &#39;MIRIAM&#39;,
+ &#39;FISHERMAN&#39;,
+ &#39;appliance&#39;,
+ &#39;RIBS&#39;,
+ &#39;TRUCKS&#39;,
+ &#39;Terra&#39;,
+ &#39;Del&#39;,
+ &#39;Fuego&#39;,
+ &#39;DARWIN&#39;,
+ &#39;NATURALIST&#39;,
+ &quot;;--&#39;&quot;,
+ &#39;!\&#39;&quot;&#39;,
+ &#39;WHARTON&#39;,
+ &#39;Loomings&#39;,
+ &#39;spleen&#39;,
+ &#39;regulating&#39;,
+ &#39;circulation&#39;,
+ &#39;Whenever&#39;,
+ &#39;drizzly&#39;,
+ &#39;hypos&#39;,
+ &#39;philosophical&#39;,
+ &#39;Cato&#39;,
+ &#39;Manhattoes&#39;,
+ &#39;reefs&#39;,
+ &#39;downtown&#39;,
+ &#39;gazers&#39;,
+ &#39;Circumambulate&#39;,
+ &#39;Corlears&#39;,
+ &#39;Coenties&#39;,
+ &#39;Slip&#39;,
+ &#39;Whitehall&#39;,
+ &#39;Posted&#39;,
+ &#39;sentinels&#39;,
+ &#39;spiles&#39;,
+ &#39;pier&#39;,
+ &#39;lath&#39;,
+ &#39;counters&#39;,
+ &#39;desks&#39;,
+ &#39;loitering&#39;,
+ &#39;shady&#39;,
+ &#39;Inlanders&#39;,
+ &#39;lanes&#39;,
+ &#39;alleys&#39;,
+ &#39;attract&#39;,
+ &#39;dale&#39;,
+ &#39;dreamiest&#39;,
+ &#39;shadiest&#39;,
+ &#39;quietest&#39;,
+ &#39;enchanting&#39;,
+ &#39;Saco&#39;,
+ &#39;crucifix&#39;,
+ &#39;Deep&#39;,
+ &#39;mazy&#39;,
+ &#39;Tiger&#39;,
+ &#39;Tennessee&#39;,
+ &#39;Rockaway&#39;,
+ &#39;Persians&#39;,
+ &#39;deity&#39;,
+ &#39;Narcissus&#39;,
+ &#39;ungraspable&#39;,
+ &#39;hazy&#39;,
+ &#39;quarrelsome&#39;,
+ &#39;offices&#39;,
+ &#39;abominate&#39;,
+ &#39;toils&#39;,
+ &#39;trials&#39;,
+ &#39;barques&#39;,
+ &#39;schooners&#39;,
+ &#39;broiling&#39;,
+ &#39;buttered&#39;,
+ &#39;judgmatically&#39;,
+ &#39;peppered&#39;,
+ &#39;reverentially&#39;,
+ &#39;idolatrous&#39;,
+ &#39;dotings&#39;,
+ &#39;ibis&#39;,
+ &#39;roasted&#39;,
+ &#39;bake&#39;,
+ &#39;plumb&#39;,
+ &#39;Van&#39;,
+ &#39;Rensselaers&#39;,
+ &#39;Randolphs&#39;,
+ &#39;Hardicanutes&#39;,
+ &#39;lording&#39;,
+ &#39;tallest&#39;,
+ &#39;decoction&#39;,
+ &#39;Seneca&#39;,
+ &#39;Stoics&#39;,
+ &#39;Testament&#39;,
+ &#39;promptly&#39;,
+ &#39;rub&#39;,
+ &#39;infliction&#39;,
+ &#39;BEING&#39;,
+ &#39;PAID&#39;,
+ &#39;urbane&#39;,
+ &#39;ills&#39;,
+ &#39;monied&#39;,
+ &#39;consign&#39;,
+ &#39;prevalent&#39;,
+ &#39;violate&#39;,
+ &#39;Pythagorean&#39;,
+ &#39;commonalty&#39;,
+ &#39;police&#39;,
+ &#39;surveillance&#39;,
+ &#39;programme&#39;,
+ &#39;solo&#39;,
+ &#39;CONTESTED&#39;,
+ &#39;ELECTION&#39;,
+ &#39;PRESIDENCY&#39;,
+ &#39;UNITED&#39;,
+ &#39;STATES&#39;,
+ &#39;ISHMAEL&#39;,
+ &#39;BLOODY&#39;,
+ &#39;AFFGHANISTAN&#39;,
+ &#39;managers&#39;,
+ &#39;genteel&#39;,
+ &#39;comedies&#39;,
+ &#39;farces&#39;,
+ &#39;cunningly&#39;,
+ &#39;disguises&#39;,
+ &#39;cajoling&#39;,
+ &#39;unbiased&#39;,
+ &#39;freewill&#39;,
+ &#39;discriminating&#39;,
+ &#39;overwhelming&#39;,
+ &#39;undeliverable&#39;,
+ &#39;itch&#39;,
+ &#39;forbidden&#39;,
+ &#39;ignoring&#39;,
+ &#39;lodges&#39;,
+ &#39;Carpet&#39;,
+ &#39;Bag&#39;,
+ &#39;Manhatto&#39;,
+ &#39;candidates&#39;,
+ &#39;penalties&#39;,
+ &#39;Tyre&#39;,
+ &#39;Carthage&#39;,
+ &#39;imported&#39;,
+ &#39;cobblestones&#39;,
+ &#39;bitingly&#39;,
+ &#39;shouldering&#39;,
+ &#39;price&#39;,
+ &#39;fervent&#39;,
+ &#39;asphaltic&#39;,
+ &#39;pavement&#39;,
+ &#39;flinty&#39;,
+ &#39;projections&#39;,
+ &#39;soles&#39;,
+ &#39;Too&#39;,
+ &#39;cheapest&#39;,
+ &#39;cheeriest&#39;,
+ &#39;invitingly&#39;,
+ &#39;particles&#39;,
+ &#39;peer&#39;,
+ &#39;Angel&#39;,
+ &#39;Doom&#39;,
+ &#39;wailing&#39;,
+ &#39;gnashing&#39;,
+ &#39;Wretched&#39;,
+ &#39;entertainment&#39;,
+ &#39;Moving&#39;,
+ &#39;emigrant&#39;,
+ &#39;poverty&#39;,
+ &#39;creak&#39;,
+ &#39;lodgings&#39;,
+ &#39;zephyr&#39;,
+ &#39;hob&#39;,
+ &#39;toasting&#39;,
+ &#39;observest&#39;,
+ &#39;sashless&#39;,
+ &#39;glazier&#39;,
+ &#39;reasonest&#39;,
+ &#39;chinks&#39;,
+ &#39;crannies&#39;,
+ &#39;lint&#39;,
+ &#39;chattering&#39;,
+ &#39;shiverings&#39;,
+ &#39;cob&#39;,
+ &#39;redder&#39;,
+ &#39;Orion&#39;,
+ &#39;glitters&#39;,
+ &#39;conservatories&#39;,
+ &#39;president&#39;,
+ &#39;temperance&#39;,
+ &#39;blubbering&#39;,
+ &#39;straggling&#39;,
+ &#39;wainscots&#39;,
+ &#39;reminding&#39;,
+ &#39;oilpainting&#39;,
+ &#39;besmoked&#39;,
+ &#39;defaced&#39;,
+ &#39;unequal&#39;,
+ &#39;crosslights&#39;,
+ &#39;hags&#39;,
+ &#39;delineate&#39;,
+ &#39;bewitched&#39;,
+ &#39;ponderings&#39;,
+ &#39;boggy&#39;,
+ &#39;soggy&#39;,
+ &#39;squitchy&#39;,
+ &#39;froze&#39;,
+ &#39;heath&#39;,
+ &#39;icebound&#39;,
+ &#39;represents&#39;,
+ &#39;Horner&#39;,
+ &#39;foundered&#39;,
+ &#39;clubs&#39;,
+ &#39;harvesting&#39;,
+ &#39;hacking&#39;,
+ &#39;horrifying&#39;,
+ &#39;Mixed&#39;,
+ &#39;Nathan&#39;,
+ &#39;Swain&#39;,
+ &#39;corkscrew&#39;,
+ &#39;Blanco&#39;,
+ &#39;sojourning&#39;,
+ &#39;fireplaces&#39;,
+ &#39;duskier&#39;,
+ &#39;cockpits&#39;,
+ &#39;rarities&#39;,
+ &#39;Projecting&#39;,
+ &#39;Within&#39;,
+ &#39;shelves&#39;,
+ &#39;flasks&#39;,
+ &#39;bustles&#39;,
+ &#39;deliriums&#39;,
+ &#39;Abominable&#39;,
+ &#39;tumblers&#39;,
+ &#39;cylinders&#39;,
+ &#39;goggling&#39;,
+ &#39;deceitfully&#39;,
+ &#39;tapered&#39;,
+ &#39;Parallel&#39;,
+ &#39;pecked&#39;,
+ &#39;footpads&#39;,
+ &#39;Fill&#39;,
+ &#39;shilling&#39;,
+ &#39;examining&#39;,
+ &#39;SKRIMSHANDER&#39;,
+ &#39;accommodated&#39;,
+ &#39;unoccupied&#39;,
+ &#39;haint&#39;,
+ &#39;pose&#39;,
+ &#39;whalin&#39;,
+ &#39;decidedly&#39;,
+ &#39;objectionable&#39;,
+ &#39;wander&#39;,
+ &#39;Battery&#39;,
+ &#39;ruminating&#39;,
+ &#39;adorning&#39;,
+ &#39;potatoes&#39;,
+ &#39;sartainty&#39;,
+ &#39;diabolically&#39;,
+ &#39;steaks&#39;,
+ &#39;undress&#39;,
+ &#39;looker&#39;,
+ &#39;rioting&#39;,
+ &#39;Grampus&#39;,
+ &#39;seed&#39;,
+ &#39;Feegees&#39;,
+ &#39;tramping&#39;,
+ &#39;Enveloped&#39;,
+ &#39;bedarned&#39;,
+ &#39;eruption&#39;,
+ &#39;officiating&#39;,
+ &#39;brimmers&#39;,
+ &#39;complained&#39;,
+ &#39;potion&#39;,
+ &#39;colds&#39;,
+ &#39;catarrhs&#39;,
+ &#39;liquor&#39;,
+ &#39;arrantest&#39;,
+ &#39;topers&#39;,
+ &#39;obstreperously&#39;,
+ &#39;aloof&#39;,
+ &#39;desirous&#39;,
+ &#39;hilarity&#39;,
+ &#39;coffer&#39;,
+ &#39;Southerner&#39;,
+ &#39;mountaineers&#39;,
+ &#39;Alleghanian&#39;,
+ &#39;missed&#39;,
+ &#39;supernaturally&#39;,
+ &#39;congratulate&#39;,
+ &#39;multiply&#39;,
+ &#39;bachelor&#39;,
+ &#39;abominated&#39;,
+ &#39;tidiest&#39;,
+ &#39;bedwards&#39;,
+ &#39;shan&#39;,
+ &#39;tablecloth&#39;,
+ &#39;Skrimshander&#39;,
+ &#39;bump&#39;,
+ &#39;spraining&#39;,
+ &#39;eider&#39;,
+ &#39;yoking&#39;,
+ &#39;rickety&#39;,
+ &#39;whirlwinds&#39;,
+ &#39;knockings&#39;,
+ &#39;dismissed&#39;,
+ &#39;popped&#39;,
+ &#39;cherishing&#39;,
+ &#39;chuckled&#39;,
+ &#39;chuckle&#39;,
+ &#39;mightily&#39;,
+ &#39;catches&#39;,
+ &#39;bamboozingly&#39;,
+ &#39;overstocked&#39;,
+ &#39;toothpick&#39;,
+ &#39;rayther&#39;,
+ &#39;BROWN&#39;,
+ &#39;slanderin&#39;,
+ &#39;farrago&#39;,
+ &#39;BROKE&#39;,
+ &#39;Sartain&#39;,
+ &#39;Mt&#39;,
+ &#39;Hecla&#39;,
+ &#39;persist&#39;,
+ &#39;mystifying&#39;,
+ &#39;unsay&#39;,
+ &#39;criminal&#39;,
+ &#39;Wall&#39;,
+ &#39;purty&#39;,
+ &#39;sarmon&#39;,
+ &#39;rips&#39;,
+ &#39;tellin&#39;,
+ &#39;bought&#39;,
+ &#39;balmed&#39;,
+ &#39;curios&#39;,
+ &#39;sellin&#39;,
+ &#39;inions&#39;,
+ &#39;fooling&#39;,
+ &#39;idolators&#39;,
+ &#39;Depend&#39;,
+ &#39;reg&#39;,
+ &#39;lar&#39;,
+ &#39;spliced&#39;,
+ &#39;Johnny&#39;,
+ &#39;sprawling&#39;,
+ &#39;Arter&#39;,
+ &#39;glim&#39;,
+ &#39;jiffy&#39;,
+ &#39;irresolute&#39;,
+ &#39;vum&#39;,
+ &#39;WON&#39;,
+ &#39;Folding&#39;,
+ &#39;scrutiny&#39;,
+ &#39;porcupine&#39;,
+ &#39;moccasin&#39;,
+ &#39;ponchos&#39;,
+ &#39;parade&#39;,
+ &#39;rainy&#39;,
+ &#39;remembering&#39;,
+ &#39;commended&#39;,
+ &#39;cobs&#39;,
+ &#39;Nod&#39;,
+ &#39;footfall&#39;,
+ &#39;unlacing&#39;,
+ &#39;blackish&#39;,
+ &#39;plasters&#39;,
+ &#39;inkling&#39;,
+ &#39;Placing&#39;,
+ &#39;crammed&#39;,
+ &#39;scalp&#39;,
+ &#39;mildewed&#39;,
+ &#39;Ignorance&#39;,
+ &#39;parent&#39;,
+ &#39;nonplussed&#39;,
+ &#39;undressing&#39;,
+ &#39;checkered&#39;,
+ &#39;Thirty&#39;,
+ &#39;frogs&#39;,
+ &#39;quaked&#39;,
+ &#39;wrapall&#39;,
+ &#39;dreadnaught&#39;,
+ &#39;fumbled&#39;,
+ &#39;Remembering&#39;,
+ &#39;manikin&#39;,
+ &#39;tenpin&#39;,
+ &#39;andirons&#39;,
+ &#39;jambs&#39;,
+ &#39;bricks&#39;,
+ &#39;appropriate&#39;,
+ &#39;applying&#39;,
+ &#39;hastier&#39;,
+ &#39;withdrawals&#39;,
+ &#39;antics&#39;,
+ &#39;devotee&#39;,
+ &#39;extinguishing&#39;,
+ &#39;unceremoniously&#39;,
+ &#39;bagged&#39;,
+ &#39;sportsman&#39;,
+ &#39;woodcock&#39;,
+ &#39;uncomfortableness&#39;,
+ &#39;deliberating&#39;,
+ &#39;puffed&#39;,
+ &#39;sang&#39;,
+ &#39;Stammering&#39;,
+ &#39;conjured&#39;,
+ &#39;responses&#39;,
+ &#39;debel&#39;,
+ &#39;flourishing&#39;,
+ &#39;Angels&#39;,
+ &#39;flourishings&#39;,
+ &#39;peddlin&#39;,
+ &#39;sleepe&#39;,
+ &#39;grunted&#39;,
+ &#39;gettee&#39;,
+ &#39;motioning&#39;,
+ &#39;comely&#39;,
+ &#39;insured&#39;,
+ &#39;Counterpane&#39;,
+ &#39;parti&#39;,
+ &#39;triangles&#39;,
+ &#39;interminable&#39;,
+ &#39;caper&#39;,
+ &#39;supperless&#39;,
+ &#39;21st&#39;,
+ &#39;hemisphere&#39;,
+ &#39;sigh&#39;,
+ &#39;Sixteen&#39;,
+ &#39;ached&#39;,
+ &#39;coaches&#39;,
+ &#39;stockinged&#39;,
+ &#39;slippering&#39;,
+ &#39;misbehaviour&#39;,
+ &#39;unendurable&#39;,
+ &#39;stepmothers&#39;,
+ &#39;misfortunes&#39;,
+ &#39;steeped&#39;,
+ &#39;shudderingly&#39;,
+ &#39;confounding&#39;,
+ &#39;soberly&#39;,
+ &#39;recurred&#39;,
+ &#39;predicament&#39;,
+ &#39;unlock&#39;,
+ &#39;bridegroom&#39;,
+ &#39;clasp&#39;,
+ &#39;hugged&#39;,
+ &#39;rouse&#39;,
+ &#39;snore&#39;,
+ &#39;scratch&#39;,
+ &#39;Throwing&#39;,
+ &#39;expostulations&#39;,
+ &#39;unbecomingness&#39;,
+ &#39;matrimonial&#39;,
+ &#39;dawning&#39;,
+ &#39;overture&#39;,
+ &#39;innate&#39;,
+ &#39;compliment&#39;,
+ &#39;civility&#39;,
+ &#39;rudeness&#39;,
+ &#39;toilette&#39;,
+ &#39;dressing&#39;,
+ &#39;donning&#39;,
+ &#39;gaspings&#39;,
+ &#39;booting&#39;,
+ &#39;caterpillar&#39;,
+ &#39;outlandishness&#39;,
+ &#39;manners&#39;,
+ &#39;education&#39;,
+ &#39;undergraduate&#39;,
+ &#39;dreamt&#39;,
+ &#39;cowhide&#39;,
+ &#39;pinched&#39;,
+ &#39;curtains&#39;,
+ &#39;indecorous&#39;,
+ &#39;contented&#39;,
+ &#39;restricting&#39;,
+ &#39;donned&#39;,
+ &#39;lathering&#39;,
+ &#39;unsheathes&#39;,
+ &#39;whets&#39;,
+ &#39;Rogers&#39;,
+ &#39;cutlery&#39;,
+ &#39;Afterwards&#39;,
+ &#39;baton&#39;,
+ &#39;Breakfast&#39;,
+ &#39;pleasantly&#39;,
+ &#39;bountifully&#39;,
+ &#39;laughable&#39;,
+ &#39;bosky&#39;,
+ &#39;unshorn&#39;,
+ &#39;gowns&#39;,
+ &#39;toasted&#39;,
+ &#39;lingers&#39;,
+ &#39;tarried&#39;,
+ &#39;barred&#39;,
+ &#39;Grub&#39;,
+ &#39;Park&#39;,
+ &#39;assurance&#39;,
+ &#39;polish&#39;,
+ &#39;occasioned&#39;,
+ &#39;embarrassed&#39;,
+ &#39;bashfulness&#39;,
+ &#39;duelled&#39;,
+ &#39;winking&#39;,
+ &#39;tastes&#39;,
+ &#39;sheepishly&#39;,
+ &#39;bashful&#39;,
+ &#39;icicle&#39;,
+ &#39;admirer&#39;,
+ &#39;cordially&#39;,
+ &#39;grappling&#39;,
+ &#39;genteelly&#39;,
+ &#39;eschewed&#39;,
+ &#39;undivided&#39;,
+ &#39;6&#39;,
+ &#39;circulating&#39;,
+ &#39;nondescripts&#39;,
+ &#39;Chestnut&#39;,
+ &#39;jostle&#39;,
+ &#39;Regent&#39;,
+ &#39;Lascars&#39;,
+ &#39;Bombay&#39;,
+ &#39;Apollo&#39;,
+ &#39;Feegeeans&#39;,
+ &#39;Tongatobooarrs&#39;,
+ &#39;Erromanggoans&#39;,
+ &#39;Pannangians&#39;,
+ &#39;Brighggians&#39;,
+ &#39;weekly&#39;,
+ &#39;Vermonters&#39;,
+ &#39;stalwart&#39;,
+ &#39;frames&#39;,
+ &#39;felled&#39;,
+ &#39;strutting&#39;,
+ &#39;wester&#39;,
+ &#39;bombazine&#39;,
+ &#39;cloak&#39;,
+ &#39;mow&#39;,
+ &#39;gloves&#39;,
+ &#39;joins&#39;,
+ &#39;outfit&#39;,
+ &#39;waistcoats&#39;,
+ &#39;Hay&#39;,
+ &#39;Seed&#39;,
+ &#39;tract&#39;,
+ &#39;dearest&#39;,
+ &#39;pave&#39;,
+ &#39;eggs&#39;,
+ &#39;patrician&#39;,
+ &#39;parks&#39;,
+ &#39;scraggy&#39;,
+ &#39;scoria&#39;,
+ &#39;Herr&#39;,
+ &#39;dowers&#39;,
+ &#39;nieces&#39;,
+ &#39;reservoirs&#39;,
+ &#39;maples&#39;,
+ &#39;bountiful&#39;,
+ &#39;proffer&#39;,
+ &#39;passer&#39;,
+ &#39;cones&#39;,
+ &#39;blossoms&#39;,
+ &#39;superinduced&#39;,
+ &#39;carnation&#39;,
+ &#39;Salem&#39;,
+ &#39;sweethearts&#39;,
+ &#39;Puritanic&#39;,
+ &#39;Whaleman&#39;,
+ &#39;Wrapping&#39;,
+ &#39;Each&#39;,
+ &#39;quote&#39;,
+ &#39;TALBOT&#39;,
+ &#39;Near&#39;,
+ &#39;Desolation&#39;,
+ &#39;1st&#39;,
+ &#39;SISTER&#39;,
+ &#39;ROBERT&#39;,
+ &#39;WILLIS&#39;,
+ &#39;ELLERY&#39;,
+ &#39;NATHAN&#39;,
+ &#39;COLEMAN&#39;,
+ &#39;WALTER&#39;,
+ &#39;CANNY&#39;,
+ &#39;SETH&#39;,
+ &#39;GLEIG&#39;,
+ &#39;Forming&#39;,
+ &#39;ELIZA&#39;,
+ &#39;31st&#39;,
+ &#39;MARBLE&#39;,
+ &#39;SHIPMATES&#39;,
+ &#39;EZEKIEL&#39;,
+ &#39;HARDY&#39;,
+ &#39;AUGUST&#39;,
+ &#39;3d&#39;,
+ &#39;1833&#39;,
+ &#39;WIDOW&#39;,
+ &#39;Shaking&#39;,
+ &#39;glazed&#39;,
+ &#39;Affected&#39;,
+ &#39;relatives&#39;,
+ &#39;unhealing&#39;,
+ &#39;sympathetically&#39;,
+ &#39;wounds&#39;,
+ &#39;bleed&#39;,
+ &#39;blanks&#39;,
+ ...]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="fine-grained-selection-of-words">
+<h2><span class="section-number">3.2. </span>Fine-grained Selection of Words<a class="headerlink" href="#fine-grained-selection-of-words" title="Permalink to this headline">¶</a></h2>
+<p>Next, let’s look at the long words of a text; perhaps these will be more characteristic and informative. For this we adapt some notation from set theory. We would like to find the words from the vocabulary of the text that are more than 15 characters long. Let’s call this property <code class="docutils literal notranslate"><span class="pre">P</span></code>, so that <code class="docutils literal notranslate"><span class="pre">P(w)</span></code> is true if and only if <code class="docutils literal notranslate"><span class="pre">w</span></code> is more than 15 characters long. Now we can express the words of interest using mathematical set notation as shown in <a class="reference internal" href="#equation-set">(3.1)</a>. This means “the set of all <code class="docutils literal notranslate"><span class="pre">w</span></code> such that <code class="docutils literal notranslate"><span class="pre">w</span></code> is an element of <code class="docutils literal notranslate"><span class="pre">V</span></code> (the vocabulary) and <code class="docutils literal notranslate"><span class="pre">w</span></code> has property <code class="docutils literal notranslate"><span class="pre">P</span></code>”.</p>
+<div class="math notranslate nohighlight" id="equation-set">
+<span class="eqno">(3.1)<a class="headerlink" href="#equation-set" title="Permalink to this equation">¶</a></span>\[{w | w \in V &amp; P(w)}\]</div>
+<p>[w for w in V if p(w)]</p>
+<p>The corresponding Python expression is given in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">V</span> <span class="k">if</span> <span class="n">p</span><span class="p">(</span><span class="n">w</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Note that it produces a list, not a set, which means that duplicates are possible. Observe how similar the two notations are. Let’s go one more step and write executable Python code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span>
+<span class="n">long_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">V</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">]</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">long_words</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;CIRCUMNAVIGATION&#39;,
+ &#39;Physiognomically&#39;,
+ &#39;apprehensiveness&#39;,
+ &#39;cannibalistically&#39;,
+ &#39;characteristically&#39;,
+ &#39;circumnavigating&#39;,
+ &#39;circumnavigation&#39;,
+ &#39;circumnavigations&#39;,
+ &#39;comprehensiveness&#39;,
+ &#39;hermaphroditical&#39;,
+ &#39;indiscriminately&#39;,
+ &#39;indispensableness&#39;,
+ &#39;irresistibleness&#39;,
+ &#39;physiognomically&#39;,
+ &#39;preternaturalness&#39;,
+ &#39;responsibilities&#39;,
+ &#39;simultaneousness&#39;,
+ &#39;subterraneousness&#39;,
+ &#39;supernaturalness&#39;,
+ &#39;superstitiousness&#39;,
+ &#39;uncomfortableness&#39;,
+ &#39;uncompromisedness&#39;,
+ &#39;undiscriminating&#39;,
+ &#39;uninterpenetratingly&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Try out the previous statements in the Jupyter Notebook, and experiment with changing the text and changing the length condition. Does it make a difference to your results if you change the variable names, e.g., using <code class="docutils literal notranslate"><span class="pre">[word</span> <span class="pre">for</span> <span class="pre">word</span> <span class="pre">in</span> <span class="pre">vocab</span> <span class="pre">if</span> <span class="pre">...]</span></code>?</p>
+</div>
+<p>Let’s return to our task of finding words that characterize a text. Notice that the long words in <code class="docutils literal notranslate"><span class="pre">text4</span></code> reflect its national focus — constitutionally, transcontinental — whereas those in <code class="docutils literal notranslate"><span class="pre">text5</span></code> reflect its informal content: boooooooooooglyyyyyy and yuuuuuuuuuuuummmmmmmmmmmm. Have we succeeded in automatically extracting words that typify a text? Well, these very long words are often <em>hapaxes</em> (i.e., unique) and perhaps it would be better to find frequently occurring long words. This seems promising since it eliminates frequent short words (e.g., the) and infrequent long words (e.g. antiphilosophists). Here are all words from the chat corpus that are longer than seven characters, that occur more than seven times:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist5</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">text5</span><span class="p">)</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text5</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">7</span> <span class="ow">and</span> <span class="n">fdist5</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;#14-19teens&#39;,
+ &#39;#talkcity_adults&#39;,
+ &#39;((((((((((&#39;,
+ &#39;........&#39;,
+ &#39;Question&#39;,
+ &#39;actually&#39;,
+ &#39;anything&#39;,
+ &#39;computer&#39;,
+ &#39;cute.-ass&#39;,
+ &#39;everyone&#39;,
+ &#39;football&#39;,
+ &#39;innocent&#39;,
+ &#39;listening&#39;,
+ &#39;remember&#39;,
+ &#39;seriously&#39;,
+ &#39;something&#39;,
+ &#39;together&#39;,
+ &#39;tomorrow&#39;,
+ &#39;watching&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice how we have used two conditions: <code class="docutils literal notranslate"><span class="pre">len(w)</span> <span class="pre">&gt;</span> <span class="pre">7</span></code> ensures that the words are longer than seven letters, and <code class="docutils literal notranslate"><span class="pre">fdist5[w]</span> <span class="pre">&gt;</span> <span class="pre">7</span></code> ensures that these words occur more than seven times. At last we have managed to automatically identify the frequently-occurring content-bearing words of the text. It is a modest but important milestone: a tiny piece of code, processing tens of thousands of words, produces some informative output.</p>
+</div>
+<div class="section" id="collocations-and-bigrams">
+<h2><span class="section-number">3.3. </span>Collocations and Bigrams<a class="headerlink" href="#collocations-and-bigrams" title="Permalink to this headline">¶</a></h2>
+<p>A collocation is a sequence of words that occur together unusually often. Thus <code class="docutils literal notranslate"><span class="pre">red</span> <span class="pre">wine</span></code> is a collocation, whereas <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">wine</span></code> is not. A characteristic of collocations is that they are resistant to substitution with words that have similar senses; for example, <code class="docutils literal notranslate"><span class="pre">maroon</span> <span class="pre">wine</span></code> sounds definitely odd.</p>
+<p>To get a handle on collocations, we start off by extracting from a text a list of word pairs, also known as bigrams. This is easily accomplished with the function <code class="docutils literal notranslate"><span class="pre">bigrams()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">bigrams</span><span class="p">([</span><span class="s1">&#39;more&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;said&#39;</span><span class="p">,</span> <span class="s1">&#39;than&#39;</span><span class="p">,</span> <span class="s1">&#39;done&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;more&#39;, &#39;is&#39;), (&#39;is&#39;, &#39;said&#39;), (&#39;said&#39;, &#39;than&#39;), (&#39;than&#39;, &#39;done&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you omitted list() above, and just typed bigrams([‘more’, …]), you would have seen output of the form &lt;generator object bigrams at 0x10fb8b3a8&gt;. This is Python’s way of saying that it is ready to compute a sequence of items, in this case, bigrams. For now, you just need to know to tell Python to convert it into a list, using list().</p>
+<p>Here we see that the pair of words <code class="docutils literal notranslate"><span class="pre">than-done</span></code> is a bigram, and we write it in Python as (‘than’, ‘done’). Now, collocations are essentially just frequent bigrams, except that we want to pay more attention to the cases that involve rare words. In particular, we want to find bigrams that occur more often than we would expect based on the frequency of the individual words. The collocations() function does this for us. We will see how it works later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text4</span><span class="o">.</span><span class="n">collocations</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>United States; fellow citizens; four years; years ago; Federal
+Government; General Government; American people; Vice President; God
+bless; Chief Justice; Old World; Almighty God; Fellow citizens; Chief
+Magistrate; every citizen; one another; fellow Americans; Indian
+tribes; public debt; foreign nations
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text8</span><span class="o">.</span><span class="n">collocations</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>would like; medium build; social drinker; quiet nights; non smoker;
+long term; age open; Would like; easy going; financially secure; fun
+times; similar interests; Age open; weekends away; poss rship; well
+presented; never married; single mum; permanent relationship; slim
+build
+</pre></div>
+</div>
+</div>
+</div>
+<p>The collocations that emerge are very specific to the genre of the texts. In order to find red wine as a collocation, we would need to process a much larger body of text.</p>
+</div>
+<div class="section" id="counting-other-things">
+<h2><span class="section-number">3.4. </span>Counting Other Things<a class="headerlink" href="#counting-other-things" title="Permalink to this headline">¶</a></h2>
+<p>Counting words is useful, but we can count other things too. For example, we can look at the distribution of word lengths in a text, by creating a FreqDist out of a long list of numbers, where each number is the length of the corresponding word in the text:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">text1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fdist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;FreqDist with 19 samples and 260819 outcomes&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FreqDist({3: 50223, 1: 47933, 4: 42345, 2: 38513, 5: 26597, 6: 17111, 7: 14399, 8: 9966, 9: 6428, 10: 3528, ...})
+</pre></div>
+</div>
+</div>
+</div>
+<p>We start by deriving a list of the lengths of words in text1, and the FreqDist then counts the number of times each of these occurs. The result is a distribution containing a quarter of a million items, each of which is a number corresponding to a word token in the text. But there are at most only 20 distinct items being counted, the numbers 1 through 20, because there are only 20 different word lengths. That is, there are words consisting of just one character, two characters, …, twenty characters, but none with twenty one or more characters. One might wonder how frequent the different lengths of word are (e.g., how many words of length four appear in the text, are there more words of length five than length four, etc). We can do this as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(3, 50223),
+ (1, 47933),
+ (4, 42345),
+ (2, 38513),
+ (5, 26597),
+ (6, 17111),
+ (7, 14399),
+ (8, 9966),
+ (9, 6428),
+ (10, 3528),
+ (11, 1873),
+ (12, 1053),
+ (13, 567),
+ (14, 177),
+ (15, 70),
+ (16, 22),
+ (17, 12),
+ (18, 1),
+ (20, 1)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50223
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fdist</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19255882431878046
+</pre></div>
+</div>
+</div>
+</div>
+<p>From this we see that the most frequent word length is 3, and that words of length 3 account for roughly 50,000 (or 20%) of the words making up the book. Although we will not pursue it here, further analysis of word length might help us understand differences between authors, genres, or languages.</p>
+<p>3.1 summarizes the functions defined in frequency distributions.</p>
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Functions Defined for NLTK’s Frequency Distributions</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>fdist = FreqDist(samples)</p></td>
+<td><p>create a frequency distribution containing the given samples</p></td>
+</tr>
+<tr class="row-odd"><td><p>fdist[sample] += 1</p></td>
+<td><p>increment the count for this sample</p></td>
+</tr>
+<tr class="row-even"><td><p>fdist[‘monstrous’]</p></td>
+<td><p>count of the number of times a given sample occurred</p></td>
+</tr>
+<tr class="row-odd"><td><p>fdist.freq(‘monstrous’)</p></td>
+<td><p>frequency of a given sample</p></td>
+</tr>
+<tr class="row-even"><td><p>fdist.N()</p></td>
+<td><p>total number of samples</p></td>
+</tr>
+<tr class="row-odd"><td><p>fdist.most_common(n)</p></td>
+<td><p>the n most common samples and their frequencies</p></td>
+</tr>
+<tr class="row-even"><td><p>for sample in fdist:</p></td>
+<td><p>iterate over the samples</p></td>
+</tr>
+<tr class="row-odd"><td><p>fdist.max()</p></td>
+<td><p>sample with the greatest count</p></td>
+</tr>
+<tr class="row-even"><td><p>fdist.tabulate()</p></td>
+<td><p>tabulate the frequency distribution</p></td>
+</tr>
+<tr class="row-odd"><td><p>fdist.plot()</p></td>
+<td><p>graphical plot of the frequency distribution</p></td>
+</tr>
+<tr class="row-even"><td><p>fdist.plot(cumulative=True)</p></td>
+<td><p>cumulative plot of the frequency distribution</p></td>
+</tr>
+<tr class="row-odd"><td><p>fdist1 |= fdist2</p></td>
+<td><p>update fdist1 with counts from fdist2</p></td>
+</tr>
+<tr class="row-even"><td><p>fdist1 &lt; fdist2</p></td>
+<td><p>test if samples in fdist1 occur less frequently than in fdist2</p></td>
+</tr>
+</tbody>
+</table>
+<p>Our discussion of frequency distributions has introduced some important Python concepts, and we will look at them systematically.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./NLTK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="closer_look.html" title="previous page"><span class="section-number">2. </span>A Closer Look at Python: Texts as Lists of Words</a>
+    <a class='right-next' id="next-link" href="take_control.html" title="next page"><span class="section-number">4. </span>Back to Python: Making Decisions and Taking Control</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5. Exercises &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to Pytorch (DRAFT)" href="../pytorch/intro.html" />
+    <link rel="prev" title="4. Back to Python: Making Decisions and Taking Control" href="take_control.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab02 NLTK
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Introduction to Pytorch (DRAFT)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/installing.html">
+     1. Installing Pytorch
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../pytorch/tensors.html">
+     Tensors
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_types.html">
+       1. Types of Tensor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/create_tensors.html">
+       2. Creating Tensors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_operations.html">
+       3. Tensor Operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_slicing.html">
+       4. Tensor Slicing, Indexing and Joining
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/cuda.html">
+     2. CUDA tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     3. Computational Graph
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Introduction to Neural Networks (draft)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_from_scratch.html">
+     2. Neural net from scratch (no
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       torch.nn
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_torch.nn.html">
+     3. Using torch.nn.functional
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../content.html">
+   Content in Jupyter Book
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../markdown.html">
+     Markdown Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../notebooks.html">
+     Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/NLTK/exercises.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="exercises">
+<h1><span class="section-number">5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<ol>
+<li><p>Try using the Python interpreter as a calculator, and typing expressions like <code class="docutils literal notranslate"><span class="pre">12</span> <span class="pre">/</span> <span class="pre">(4</span> <span class="pre">+</span> <span class="pre">1)</span></code>.</p></li>
+<li><p>Given an alphabet of 26 letters, there are 26 to the power 10, or <code class="docutils literal notranslate"><span class="pre">26</span> <span class="pre">**</span> <span class="pre">10</span></code>, ten-letter strings we can form. That works out to 141167095653376. How many hundred-letter strings are possible?</p></li>
+<li><p>The Python multiplication operation can be applied to lists. What happens when you type <code class="docutils literal notranslate"><span class="pre">['Monty',</span> <span class="pre">'Python']</span> <span class="pre">*</span> <span class="pre">20</span></code>, or <code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">sent1</span></code>?</p></li>
+<li><p>How many words are there in <code class="docutils literal notranslate"><span class="pre">text2</span></code>? How many distinct words are there?</p></li>
+<li><p>Compare the lexical diversity scores for humor and romance fiction in 1.1. Which genre is more lexically diverse?</p></li>
+<li><p>Produce a dispersion plot of the four main protagonists in <code class="docutils literal notranslate"><span class="pre">Sense</span> <span class="pre">and</span> <span class="pre">Sensibility</span></code>: <code class="docutils literal notranslate"><span class="pre">Elinor</span></code>, <code class="docutils literal notranslate"><span class="pre">Marianne</span></code>, <code class="docutils literal notranslate"><span class="pre">Edward</span></code>, and <code class="docutils literal notranslate"><span class="pre">Willoughby</span></code>. What can you observe about the different roles played by the males and females in this novel? Can you identify the couples?</p></li>
+<li><p>Find the collocations in text5.</p></li>
+<li><p>Consider the following Python expression: <code class="docutils literal notranslate"><span class="pre">len(set(text4))</span></code>. State the purpose of this expression. Describe the two steps involved in performing this computation.</p></li>
+<li><p>Define a string and assign it to a variable, e.g., <code class="docutils literal notranslate"><span class="pre">my_string</span> <span class="pre">=</span> <span class="pre">'My</span> <span class="pre">String'</span></code> (but put something more interesting in the string).</p>
+<ul class="simple">
+<li><p>Print the contents of this variable in two ways, first by simply typing the variable name and pressing enter, then by using the print statement.</p></li>
+<li><p>Try adding the string to itself using <code class="docutils literal notranslate"><span class="pre">my_string</span> <span class="pre">+</span> <span class="pre">my_string</span></code>, or multiplying it by a number, e.g.,<code class="docutils literal notranslate"><span class="pre">my_string</span> <span class="pre">*</span> <span class="pre">3</span></code>.</p></li>
+<li><p>Notice that the strings are joined together without any spaces. How could you fix this?</p></li>
+</ul>
+</li>
+<li><p>Define a variable <code class="docutils literal notranslate"><span class="pre">my_sent</span></code> to be a list of words, using the syntax <code class="docutils literal notranslate"><span class="pre">my_sent</span> <span class="pre">=</span> <span class="pre">[&quot;My&quot;,</span> <span class="pre">&quot;sent&quot;]</span></code> (but with your own words, or a favorite saying).</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">'.join(my_sent)</span></code> to convert this into a string.</p></li>
+<li><p>Use split() to split the string back into the list form you had to start with.</p></li>
+</ul>
+</li>
+<li><p>Define several variables containing lists of words, e.g., <code class="docutils literal notranslate"><span class="pre">phrase1</span></code>, <code class="docutils literal notranslate"><span class="pre">phrase2</span></code>, and so on. Join them together in various combinations (using the plus operator) to form whole sentences. What is the relationship between <code class="docutils literal notranslate"><span class="pre">len(phrase1</span> <span class="pre">+</span> <span class="pre">phrase2)</span></code> and <code class="docutils literal notranslate"><span class="pre">len(phrase1)</span> <span class="pre">+</span> <span class="pre">len(phrase2)</span></code>?</p></li>
+<li><p>Consider the following two expressions, which have the same value. Which one will typically be more relevant in NLP? Why?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Monty Python&quot;</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="s2">&quot;Monty&quot;</span><span class="p">,</span> <span class="s2">&quot;Python&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>We have seen how to represent a sentence as a list of words, where each word is a sequence of characters. What does <code class="docutils literal notranslate"><span class="pre">sent1[2][2]</span></code> do? Why? Experiment with other index values.</p></li>
+<li><p>The first sentence of <code class="docutils literal notranslate"><span class="pre">text3</span></code> is provided to you in the variable sent3. The index of <code class="docutils literal notranslate"><span class="pre">the</span></code> in <code class="docutils literal notranslate"><span class="pre">sent3</span></code> is 1, because <code class="docutils literal notranslate"><span class="pre">sent3[1]</span></code> gives us ‘the’. What are the indexes of the two other occurrences of this word in <code class="docutils literal notranslate"><span class="pre">sent3</span></code>?</p></li>
+<li><p>Find all words in the <code class="docutils literal notranslate"><span class="pre">Chat</span> <span class="pre">Corpus</span></code> (<code class="docutils literal notranslate"><span class="pre">text5</span></code>) starting with the letter <code class="docutils literal notranslate"><span class="pre">b</span></code>. Show them in alphabetical order.</p></li>
+<li><p>Type the expression <code class="docutils literal notranslate"><span class="pre">list(range(10))</span></code> at the interpreter prompt. Now try <code class="docutils literal notranslate"><span class="pre">list(range(10,</span> <span class="pre">20))</span></code>, <code class="docutils literal notranslate"><span class="pre">list(range(10,</span> <span class="pre">20,</span> <span class="pre">2))</span></code>, and <code class="docutils literal notranslate"><span class="pre">list(range(20,</span> <span class="pre">10,</span> <span class="pre">-2))</span></code>. We will see a variety of uses for this built-in function in later part of the unit.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">text9.index()</span></code> to find the index of the word <code class="docutils literal notranslate"><span class="pre">sunset</span></code>. You’ll need to insert this word as an argument between the parentheses. By a process of trial and error, find the slice for the complete sentence that contains this word.</p>
+<ul class="simple">
+<li><p>Using list addition, and the set and sorted operations, compute the vocabulary of the sentences <code class="docutils literal notranslate"><span class="pre">sent1</span> <span class="pre">...</span> <span class="pre">sent8</span></code>.</p></li>
+</ul>
+</li>
+<li><p>What is the difference between the following two lines? Which one will give a larger value? Will this be the case for other texts?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">text1</span><span class="p">))</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text1</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p>What is the difference between the following two tests: <code class="docutils literal notranslate"><span class="pre">w.isupper()</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">w.islower()</span></code>?</p></li>
+<li><p>Write the slice expression that extracts the last two words of <code class="docutils literal notranslate"><span class="pre">text2</span></code>.</p></li>
+<li><p>Find all the four-letter words in <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">Chat</span> <span class="pre">Corpus</span></code> (<code class="docutils literal notranslate"><span class="pre">text5</span></code>). With the help of a frequency distribution (FreqDist), show these words in decreasing order of frequency.</p></li>
+<li><p>Review the discussion of looping with conditions. Use a combination of <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">if</span></code> statements to loop over the words of the movie script for <code class="docutils literal notranslate"><span class="pre">Monty</span> <span class="pre">Python</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">Holy</span> <span class="pre">Grail</span></code> (<code class="docutils literal notranslate"><span class="pre">text6</span></code>) and print all the uppercase words, one per line.</p></li>
+<li><p>Write expressions for finding all words in <code class="docutils literal notranslate"><span class="pre">text6</span></code> that meet the conditions listed below. The result should be in the form of a list of words: <code class="docutils literal notranslate"><span class="pre">['word1',</span> <span class="pre">'word2',</span> <span class="pre">...]</span></code>.</p>
+<ul class="simple">
+<li><p>Ending in ise</p></li>
+<li><p>Containing the letter z</p></li>
+<li><p>Containing the sequence of letters pt</p></li>
+<li><p>Having all lowercase letters except for an initial capital (i.e., titlecase)</p></li>
+</ul>
+</li>
+<li><p>Define sent to be the list of words [‘she’, ‘sells’, ‘sea’, ‘shells’, ‘by’, ‘the’, ‘sea’, ‘shore’]. Now write code to perform the following tasks:</p>
+<ul class="simple">
+<li><p>Print all words beginning with sh</p></li>
+<li><p>Print all words longer than four characters</p></li>
+</ul>
+</li>
+<li><p>What does the following Python code do? <code class="docutils literal notranslate"><span class="pre">sum(len(w)</span> <span class="pre">for</span> <span class="pre">w</span> <span class="pre">in</span> <span class="pre">text1)</span></code> Can you use it to work out the average word length of a text?</p></li>
+<li><p>Define a function called <code class="docutils literal notranslate"><span class="pre">vocab_size(text)</span></code> that has a single parameter for the text, and which returns the vocabulary size of the text.</p></li>
+<li><p>Define a function percent(word, text) that calculates how often a given word occurs in a text, and expresses the result as a percentage.</p></li>
+<li><p>We have been using sets to store vocabularies. Try the following Python expression: <code class="docutils literal notranslate"><span class="pre">set(sent3)</span> <span class="pre">&lt;</span> <span class="pre">set(text1)</span></code>. Experiment with this using different arguments to <code class="docutils literal notranslate"><span class="pre">set()</span></code>. What does it do? Can you think of a practical application for this?</p></li>
+</ol>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./NLTK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="take_control.html" title="previous page"><span class="section-number">4. </span>Back to Python: Making Decisions and Taking Control</a>
+    <a class='right-next' id="next-link" href="../pytorch/intro.html" title="next page">Introduction to Pytorch (DRAFT)</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

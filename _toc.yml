@@ -11,6 +11,14 @@
     - file: ./basics/iterables
     - file: ./basics/numpy
     - file: ./basics/matplotlib
+- file: ./NLTK/intro
+  numbered: true
+  sections:
+    - file: ./NLTK/start
+    - file: ./NLTK/closer_look
+    - file: ./NLTK/computing
+    - file: ./NLTK/take_control
+    - file: ./NLTK/exercises
 - file: ./pytorch/intro
   numbered: true
   sections:

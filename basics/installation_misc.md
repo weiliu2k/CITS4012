@@ -20,9 +20,9 @@ Warning: The installation of the Build Tools might take a while (~20mins).
 ## Install from an environment YAML file
 If we install from this YAML file, then we can ignore all the following steps after this.
 
-Download the environment YAML file here: [cits4012_py37.yml](./cits4012_py37.yml)
+Download the environment YAML file here: [cits4012_py37.yml](https://github.com/weiliu2k/CITS4012/blob/master/basics/cits4012_py37.yml)
 ```
-conda create -p c:\envs\cits4012_py37 --file cits4012_py37.yml
+conda env create -p c:\envs\cits4012_py37 --file cits4012_py37.yml
 ```
 
 If this is successful, you can ignore the rest of the steps below. 

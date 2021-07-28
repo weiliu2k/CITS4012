@@ -1,0 +1,870 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Back to Python: Making Decisions and Taking Control &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Exercises" href="exercises.html" />
+    <link rel="prev" title="3. Computing with Language: Simple Statistics" href="computing.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Introduction to Pytorch (DRAFT)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/installing.html">
+     1. Installing Pytorch
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../pytorch/tensors.html">
+     2. Tensors
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_types.html">
+       2.1. Types of Tensor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/create_tensors.html">
+       2.2. Creating Tensors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_operations.html">
+       2.3. Tensor Operations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pytorch/tensor_slicing.html">
+       2.4. Tensor Slicing, Indexing and Joining
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/cuda.html">
+     3. CUDA tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     4. Computational Graph
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Introduction to Neural Networks (draft)
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_from_scratch.html">
+     2. Neural net from scratch (no
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       torch.nn
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/nn_torch.nn.html">
+     3. Using torch.nn.functional
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../content.html">
+   Content in Jupyter Book
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../markdown.html">
+     Markdown Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../notebooks.html">
+     Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/NLTK/take_control.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/NLTK/take_control.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operating-on-every-element">
+   4.1. Operating on Every Element
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nested-code-blocks">
+   4.2. Nested Code Blocks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#looping-with-conditions">
+   4.3. Looping with Conditions
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="back-to-python-making-decisions-and-taking-control">
+<h1><span class="section-number">4. </span>Back to Python: Making Decisions and Taking Control<a class="headerlink" href="#back-to-python-making-decisions-and-taking-control" title="Permalink to this headline">¶</a></h1>
+<p>So far, our little programs have had some interesting qualities: the ability to work with language, and the potential to save human effort through automation. A key feature of programming is the ability of machines to make decisions on our behalf, executing instructions when certain conditions are met, or repeatedly looping through text data until some condition is satisfied. This feature is known as control, and is the focus of this section.</p>
+<p>4.1   Conditionals
+Python supports a wide range of operators, such as &lt; and &gt;=, for testing the relationship between values. The full set of these relational operators is shown in 4.1.</p>
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 4.1 </span><span class="caption-text">Numerical Comparison Operators</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operator</p></th>
+<th class="head"><p>Relationship</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;</p></td>
+<td><p>less than</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;=</p></td>
+<td><p>less than or equal to</p></td>
+</tr>
+<tr class="row-even"><td><p>==</p></td>
+<td><p>equal to (note this is two “=” signs, not one)</p></td>
+</tr>
+<tr class="row-odd"><td><p>!=</p></td>
+<td><p>not equal to</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt;</p></td>
+<td><p>greater than</p></td>
+</tr>
+<tr class="row-odd"><td><p>&gt;=</p></td>
+<td><p>greater than or equal to</p></td>
+</tr>
+</tbody>
+</table>
+<p>We can use these to select different words from a sentence of news text. Here are some examples — only the operator is changed from one line to the next. They all use <code class="docutils literal notranslate"><span class="pre">sent7</span></code>, the first sentence from text7 (Wall Street Journal). As before, if you get an error saying that <code class="docutils literal notranslate"><span class="pre">sent7</span></code> is undefined, you need to first type: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">nltk.book</span> <span class="pre">import</span> <span class="pre">*</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.book</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>*** Introductory Examples for the NLTK Book ***
+Loading text1, ..., text9 and sent1, ..., sent9
+Type the name of the text or sentence to view it.
+Type: &#39;texts()&#39; or &#39;sents()&#39; to list the materials.
+text1: Moby Dick by Herman Melville 1851
+text2: Sense and Sensibility by Jane Austen 1811
+text3: The Book of Genesis
+text4: Inaugural Address Corpus
+text5: Chat Corpus
+text6: Monty Python and the Holy Grail
+text7: Wall Street Journal
+text8: Personals Corpus
+text9: The Man Who Was Thursday by G . K . Chesterton 1908
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sent7</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Pierre&#39;,
+ &#39;Vinken&#39;,
+ &#39;,&#39;,
+ &#39;61&#39;,
+ &#39;years&#39;,
+ &#39;old&#39;,
+ &#39;,&#39;,
+ &#39;will&#39;,
+ &#39;join&#39;,
+ &#39;the&#39;,
+ &#39;board&#39;,
+ &#39;as&#39;,
+ &#39;a&#39;,
+ &#39;nonexecutive&#39;,
+ &#39;director&#39;,
+ &#39;Nov.&#39;,
+ &#39;29&#39;,
+ &#39;.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sent7</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;,&#39;, &#39;61&#39;, &#39;old&#39;, &#39;,&#39;, &#39;the&#39;, &#39;as&#39;, &#39;a&#39;, &#39;29&#39;, &#39;.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sent7</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;,&#39;, &#39;61&#39;, &#39;old&#39;, &#39;,&#39;, &#39;will&#39;, &#39;join&#39;, &#39;the&#39;, &#39;as&#39;, &#39;a&#39;, &#39;Nov.&#39;, &#39;29&#39;, &#39;.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sent7</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;will&#39;, &#39;join&#39;, &#39;Nov.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sent7</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Pierre&#39;,
+ &#39;Vinken&#39;,
+ &#39;,&#39;,
+ &#39;61&#39;,
+ &#39;years&#39;,
+ &#39;old&#39;,
+ &#39;,&#39;,
+ &#39;the&#39;,
+ &#39;board&#39;,
+ &#39;as&#39;,
+ &#39;a&#39;,
+ &#39;nonexecutive&#39;,
+ &#39;director&#39;,
+ &#39;29&#39;,
+ &#39;.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is a common pattern to all of these examples: <code class="docutils literal notranslate"><span class="pre">[w</span> <span class="pre">for</span> <span class="pre">w</span> <span class="pre">in</span> <span class="pre">text</span> <span class="pre">if</span> <span class="pre">condition</span> <span class="pre">]</span></code>, where condition is a Python “test” that yields either true or false. In the cases shown in the previous code example, the condition is always a numerical comparison.</p>
+<p>Instead of writing your own Regex, we can test various properties of words, using the functions for a string object listed below.</p>
+<table class="table" id="id2">
+<caption><span class="caption-number">Table 4.2 </span><span class="caption-text">Some Word Comparison Operators</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s.startswith(t)</p></td>
+<td><p>test if s starts with t</p></td>
+</tr>
+<tr class="row-odd"><td><p>s.endswith(t)</p></td>
+<td><p>test if s ends with t</p></td>
+</tr>
+<tr class="row-even"><td><p>t in s</p></td>
+<td><p>test if t is a substring of s</p></td>
+</tr>
+<tr class="row-odd"><td><p>s.islower()</p></td>
+<td><p>test if s contains cased characters and all are lowercase</p></td>
+</tr>
+<tr class="row-even"><td><p>s.isupper()</p></td>
+<td><p>test if s contains cased characters and all are uppercase</p></td>
+</tr>
+<tr class="row-odd"><td><p>s.isalpha()</p></td>
+<td><p>test if s is non-empty and all characters in s are alphabetic</p></td>
+</tr>
+<tr class="row-even"><td><p>s.isalnum()</p></td>
+<td><p>test if s is non-empty and all characters in s are alphanumeric</p></td>
+</tr>
+<tr class="row-odd"><td><p>s.isdigit()</p></td>
+<td><p>test if s is non-empty and all characters in s are digits</p></td>
+</tr>
+<tr class="row-even"><td><p>s.istitle()</p></td>
+<td><p>test if s contains cased characters and is titlecased (i.e. all words in s have initial capitals)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Here are some examples of these operators being used to select words from our texts: words ending with -<code class="docutils literal notranslate"><span class="pre">ableness</span></code>; words containing <code class="docutils literal notranslate"><span class="pre">gnt</span></code>; words having an initial capital; and words consisting entirely of digits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;ableness&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;comfortableness&#39;,
+ &#39;honourableness&#39;,
+ &#39;immutableness&#39;,
+ &#39;indispensableness&#39;,
+ &#39;indomitableness&#39;,
+ &#39;intolerableness&#39;,
+ &#39;palpableness&#39;,
+ &#39;reasonableness&#39;,
+ &#39;uncomfortableness&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">term</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text4</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;gnt&#39;</span> <span class="ow">in</span> <span class="n">term</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Sovereignty&#39;, &#39;sovereignties&#39;, &#39;sovereignty&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text6</span><span class="p">)</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">istitle</span><span class="p">())[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Yes&#39;, &#39;You&#39;, &#39;Your&#39;, &#39;Yup&#39;, &#39;Zoot&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">sent7</span><span class="p">)</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;29&#39;, &#39;61&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also create more complex conditions. If <code class="docutils literal notranslate"><span class="pre">c</span></code> is a condition, then <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">c</span></code> is also a condition. If we have two conditions <code class="docutils literal notranslate"><span class="pre">c1</span></code> and <code class="docutils literal notranslate"><span class="pre">c2</span></code>, then we can combine them to form a new condition using conjunction and disjunction: <code class="docutils literal notranslate"><span class="pre">c1</span> <span class="pre">and</span> <span class="pre">c2</span></code>, <code class="docutils literal notranslate"><span class="pre">c1</span> <span class="pre">or</span> <span class="pre">c2</span></code>.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Run the following examples and try to explain what is going on in each one. Next, try to make up some conditions of your own.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text7</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">w</span> <span class="ow">and</span> <span class="s1">&#39;index&#39;</span> <span class="ow">in</span> <span class="n">w</span><span class="p">)</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">wd</span> <span class="k">for</span> <span class="n">wd</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text3</span><span class="p">)</span> <span class="k">if</span> <span class="n">wd</span><span class="o">.</span><span class="n">istitle</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">wd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">sent7</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span><span class="o">.</span><span class="n">islower</span><span class="p">())</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text2</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;cie&#39;</span> <span class="ow">in</span> <span class="n">t</span> <span class="ow">or</span> <span class="s1">&#39;cei&#39;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="operating-on-every-element">
+<h2><span class="section-number">4.1. </span>Operating on Every Element<a class="headerlink" href="#operating-on-every-element" title="Permalink to this headline">¶</a></h2>
+<p>We saw some examples of counting items other than words. Let’s take a closer look at the notation we used:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These expressions have the form [f(w) for …] or [w.f() for …], where f is a function that operates on a word to compute its length, or to convert it to uppercase. For now, you don’t need to understand the difference between the notations f(w) and w.f(). Instead, simply learn this Python idiom which performs the same operation on every element of a list. In the preceding examples, it goes through each word in text1, assigning each one in turn to the variable w and performing the specified operation on the variable.</p>
+<p>The notation just described is called a <strong>list comprehension</strong>.” This is a Python idiom, a fixed notation that we use habitually without bothering to analyze each time. Mastering such idioms is an important part of becoming a fluent Python programmer.</p>
+</div>
+<p>Let’s return to the question of vocabulary size, and apply the same idiom here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">text1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>260819
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">text1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17231
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we are not double-counting words like This and this, which differ only in capitalization, we’ve wiped 2,000 off the vocabulary count! We can go a step further and eliminate numbers and punctuation from the vocabulary count by filtering out any non-alphabetic items:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text1</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16948
+</pre></div>
+</div>
+</div>
+</div>
+<p>This example is slightly complicated: it lowercases all the purely alphabetic items. Perhaps it would have been simpler just to count the lowercase-only items, but this gives the wrong answer (why?).</p>
+</div>
+<div class="section" id="nested-code-blocks">
+<h2><span class="section-number">4.2. </span>Nested Code Blocks<a class="headerlink" href="#nested-code-blocks" title="Permalink to this headline">¶</a></h2>
+<p>Most programming languages permit us to execute a block of code when a conditional expression, or if statement, is satisfied. We already saw examples of conditional tests in code like <code class="docutils literal notranslate"><span class="pre">[w</span> <span class="pre">for</span> <span class="pre">w</span> <span class="pre">in</span> <span class="pre">sent7</span> <span class="pre">if</span> <span class="pre">len(w)</span> <span class="pre">&lt;</span> <span class="pre">4]</span></code>. In the following program, we have created a variable called word containing the string value ‘cat’. The if statement checks whether the test <code class="docutils literal notranslate"><span class="pre">len(word)</span> <span class="pre">&lt;</span> <span class="pre">5</span></code> is true. It is, so the body of the if statement is invoked and the print statement is executed, displaying a message to the user. Remember to indent the print statement by typing four spaces.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">word</span> <span class="o">=</span> <span class="s1">&#39;cat&#39;</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;word length is less than 5&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;word length is greater than or equal to 5&#39;</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>word length is less than 5
+</pre></div>
+</div>
+</div>
+</div>
+<p>An if statement is known as a control structure because it controls whether the code in the indented block will be run. Another control structure is the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop. Try the following, and remember to include the colon and the four spaces:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Call&#39;</span><span class="p">,</span> <span class="s1">&#39;me&#39;</span><span class="p">,</span> <span class="s1">&#39;Ishmael&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]:</span>
+   <span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call
+me
+Ishmael
+.
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is called a loop because Python executes the code in circular fashion. It starts by performing the assignment word = ‘Call’, effectively using the word variable to name the first item of the list. Then, it displays the value of word to the user. Next, it goes back to the for statement, and performs the assignment word = ‘me’, before displaying this new value to the user, and so on. It continues in this fashion until every item of the list has been processed.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If we want to create a list by iterating through a list, “list comprehension” is a Pythonic way and preferred than a loop.</p>
+</div>
+</div>
+<div class="section" id="looping-with-conditions">
+<h2><span class="section-number">4.3. </span>Looping with Conditions<a class="headerlink" href="#looping-with-conditions" title="Permalink to this headline">¶</a></h2>
+<p>Now we can combine the if and for statements. We will loop over every item of the list, and print the item only if it ends with the letter l. We’ll pick another name for the variable to demonstrate that Python doesn’t try to make sense of variable names.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sent1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Call&#39;</span><span class="p">,</span> <span class="s1">&#39;me&#39;</span><span class="p">,</span> <span class="s1">&#39;Ishmael&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">xyzzy</span> <span class="ow">in</span> <span class="n">sent1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">xyzzy</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">xyzzy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call
+Ishmael
+</pre></div>
+</div>
+</div>
+</div>
+<p>You will notice that if and for statements have a colon at the end of the line, before the indentation begins. In fact, all Python control structures end with a colon. The colon indicates that the current statement relates to the indented block that follows.</p>
+<p>We can also specify an action to be taken if the condition of the if statement is not met. Here we see the elif (else if) statement, and the else statement. Notice that these also have colons before the indented code.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sent1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">islower</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s1">&#39;is a lowercase word&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">istitle</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s1">&#39;is a titlecase word&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s1">&#39;is punctuation&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call is a titlecase word
+me is a lowercase word
+Ishmael is a titlecase word
+. is punctuation
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, even with this small amount of Python knowledge, you can start to build multiline Python programs. It’s important to develop such programs in pieces, testing that each piece does what you expect before combining them into a program. This is why the Python interactive interpreter is so invaluable, and why you should get comfortable using it.</p>
+<p>Finally, let’s combine the idioms we’ve been exploring. First, we create a list of cie and cei words, then we loop over each item and print it. Notice the extra information given in the print statement: end=’ ‘. This tells Python to print a space (not the default newline) after each word.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tricky</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">text2</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;cie&#39;</span> <span class="ow">in</span> <span class="n">w</span> <span class="ow">or</span> <span class="s1">&#39;cei&#39;</span> <span class="ow">in</span> <span class="n">w</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tricky</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ancient ceiling conceit conceited conceive conscience conscientious conscientiously deceitful deceive deceived deceiving deficiencies deficiency deficient delicacies excellencies fancied insufficiency insufficient legacies perceive perceived perceiving prescience prophecies receipt receive received receiving society species sufficient sufficiently undeceive undeceiving 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./NLTK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="computing.html" title="previous page"><span class="section-number">3. </span>Computing with Language: Simple Statistics</a>
+    <a class='right-next' id="next-link" href="exercises.html" title="next page"><span class="section-number">5. </span>Exercises</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
