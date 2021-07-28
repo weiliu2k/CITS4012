@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Tensor Operations &#8212; CITS4012 Natural Language Processing</title>
+    <title>2.3. Tensor Operations &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4. Tensor Slicing, Indexing and Joining" href="tensor_slicing.html" />
-    <link rel="prev" title="2. Creating Tensors" href="create_tensors.html" />
+    <link rel="next" title="2.4. Tensor Slicing, Indexing and Joining" href="tensor_slicing.html" />
+    <link rel="prev" title="2.2. Creating Tensors" href="create_tensors.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -141,7 +141,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../NLTK/intro.html">
-   Lab02 NLTK
+   Lab02: NLTK
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -185,27 +185,27 @@
    </li>
    <li class="toctree-l2 current active collapsible-parent">
     <a class="reference internal" href="tensors.html">
-     Tensors
+     2. Tensors
     </a>
     <ul class="current collapse-ul">
      <li class="toctree-l3">
       <a class="reference internal" href="tensor_types.html">
-       1. Types of Tensor
+       2.1. Types of Tensor
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="create_tensors.html">
-       2. Creating Tensors
+       2.2. Creating Tensors
       </a>
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       3. Tensor Operations
+       2.3. Tensor Operations
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="tensor_slicing.html">
-       4. Tensor Slicing, Indexing and Joining
+       2.4. Tensor Slicing, Indexing and Joining
       </a>
      </li>
     </ul>
@@ -214,12 +214,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="cuda.html">
-     2. CUDA tensors
+     3. CUDA tensors
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="computational_graph.html">
-     3. Computational Graph
+     4. Computational Graph
     </a>
    </li>
   </ul>
@@ -367,12 +367,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#addition">
-   3.1. Addition
+   2.3.1. Addition
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dimension-based-tensor-operations">
-   3.2. Dimension based tensor operations
+   2.3.2. Dimension based tensor operations
   </a>
  </li>
 </ul>
@@ -387,9 +387,9 @@
               <div>
                 
   <div class="section" id="tensor-operations">
-<h1><span class="section-number">3. </span>Tensor Operations<a class="headerlink" href="#tensor-operations" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">2.3. </span>Tensor Operations<a class="headerlink" href="#tensor-operations" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="addition">
-<h2><span class="section-number">3.1. </span>Addition<a class="headerlink" href="#addition" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3.1. </span>Addition<a class="headerlink" href="#addition" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -443,7 +443,7 @@ tensor([[-1.5394,  2.7661,  1.4369],
 </div>
 </div>
 <div class="section" id="dimension-based-tensor-operations">
-<h2><span class="section-number">3.2. </span>Dimension based tensor operations<a class="headerlink" href="#dimension-based-tensor-operations" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3.2. </span>Dimension based tensor operations<a class="headerlink" href="#dimension-based-tensor-operations" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -555,8 +555,8 @@ tensor([[0, 3],
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="create_tensors.html" title="previous page"><span class="section-number">2. </span>Creating Tensors</a>
-    <a class='right-next' id="next-link" href="tensor_slicing.html" title="next page"><span class="section-number">4. </span>Tensor Slicing, Indexing and Joining</a>
+    <a class='left-prev' id="prev-link" href="create_tensors.html" title="previous page"><span class="section-number">2.2. </span>Creating Tensors</a>
+    <a class='right-next' id="next-link" href="tensor_slicing.html" title="next page"><span class="section-number">2.4. </span>Tensor Slicing, Indexing and Joining</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
