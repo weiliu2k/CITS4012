@@ -19,9 +19,9 @@ Python supports a wide range of operators, such as < and >=, for testing the rel
   - equal to (note this is two "=" signs, not one)
 * - !=	
   - not equal to
-* - \>	
+* - &gt;	
   - greater than
-* - \>=	
+* - &gt;=	
   - greater than or equal to
 ```
 
