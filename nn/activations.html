@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. Activation Functions and their derivatives &#8212; CITS4012 Natural Language Processing</title>
+    <title>Activation Functions and their derivatives &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Neural net from scratch (no torch.nn)" href="nn_from_scratch.html" />
-    <link rel="prev" title="Introduction to Neural Networks (draft)" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -94,7 +92,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -141,7 +139,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../NLTK/intro.html">
-   Lab02 NLTK
+   Lab02: NLTK
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -167,108 +165,6 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../NLTK/exercises.html">
      5. Exercises
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../pytorch/intro.html">
-   Introduction to Pytorch (DRAFT)
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/installing.html">
-     1. Installing Pytorch
-    </a>
-   </li>
-   <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="../pytorch/tensors.html">
-     Tensors
-    </a>
-    <ul class="collapse-ul">
-     <li class="toctree-l3">
-      <a class="reference internal" href="../pytorch/tensor_types.html">
-       1. Types of Tensor
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../pytorch/create_tensors.html">
-       2. Creating Tensors
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../pytorch/tensor_operations.html">
-       3. Tensor Operations
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../pytorch/tensor_slicing.html">
-       4. Tensor Slicing, Indexing and Joining
-      </a>
-     </li>
-    </ul>
-    <i class="fas fa-chevron-down">
-    </i>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/cuda.html">
-     2. CUDA tensors
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/computational_graph.html">
-     3. Computational Graph
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 current active collapsible-parent">
-  <a class="reference internal" href="intro.html">
-   Introduction to Neural Networks (draft)
-  </a>
-  <ul class="current collapse-ul">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     1. Activation Functions and their derivatives
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="nn_from_scratch.html">
-     2. Neural net from scratch (no
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       torch.nn
-      </span>
-     </code>
-     )
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="nn_torch.nn.html">
-     3. Using torch.nn.functional
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../content.html">
-   Content in Jupyter Book
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../markdown.html">
-     Markdown Files
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../notebooks.html">
-     Activation Functions and their derivatives
     </a>
    </li>
   </ul>
@@ -367,17 +263,17 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sigmoid-function">
-   1.1. Sigmoid Function
+   Sigmoid Function
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#in-plain-python-with-numpy">
-     1.1.1. In Plain Python with Numpy
+     In Plain Python with Numpy
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#in-pytorch-with-torch-sigmoid">
-     1.1.2. In Pytorch with
+     In Pytorch with
      <code class="docutils literal notranslate">
       <span class="pre">
        torch.sigmoid()
@@ -389,17 +285,17 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hyperbolic-tanh">
-   1.2. Hyperbolic tanh
+   Hyperbolic tanh
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#in-plain-python-and-numpy">
-     1.2.1. In Plain Python and Numpy
+     In Plain Python and Numpy
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#in-pytorch-with-torch-tanh">
-     1.2.2. In Pytorch with
+     In Pytorch with
      <code class="docutils literal notranslate">
       <span class="pre">
        torch.tanh()
@@ -411,17 +307,17 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#relu">
-   1.3. Relu
+   Relu
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#parametric-and-leaky-relu">
-   1.4. Parametric and Leaky Relu
+   Parametric and Leaky Relu
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#softmax">
-   1.5. Softmax
+   Softmax
   </a>
  </li>
 </ul>
@@ -436,20 +332,20 @@
               <div>
                 
   <div class="section" id="activation-functions-and-their-derivatives">
-<h1><span class="section-number">1. </span>Activation Functions and their derivatives<a class="headerlink" href="#activation-functions-and-their-derivatives" title="Permalink to this headline">¶</a></h1>
+<h1>Activation Functions and their derivatives<a class="headerlink" href="#activation-functions-and-their-derivatives" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://medium.com/&#64;omkar.nallagoni/activation-functions-with-derivative-and-python-code-sigmoid-vs-tanh-vs-relu-44d23915c1f4">Reference blog</a></p>
 <div class="figure align-default">
 <a class="bg-primary mb-1 reference internal image-reference" href="../_images/artificial_neuron.gif"><img alt="Atifical Neuron Animation" class="bg-primary mb-1" src="../_images/artificial_neuron.gif" style="width: 400px;" /></a>
 </div>
 <p>Image Credit [<a class="reference external" href="https://www.mql5.com/en/blogs/post/724245">https://www.mql5.com/en/blogs/post/724245</a>]</p>
 <div class="section" id="sigmoid-function">
-<h2><span class="section-number">1.1. </span>Sigmoid Function<a class="headerlink" href="#sigmoid-function" title="Permalink to this headline">¶</a></h2>
+<h2>Sigmoid Function<a class="headerlink" href="#sigmoid-function" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[t = f(z) = \frac{1}{1+e^{-z}}\]</div>
 <div class="math notranslate nohighlight">
 \[\frac{dt}{dz} = f(z)*(1-f(z)) = \frac{1-e^{-z}}{1-e^{-z}}\]</div>
 <div class="section" id="in-plain-python-with-numpy">
-<h3><span class="section-number">1.1.1. </span>In Plain Python with Numpy<a class="headerlink" href="#in-plain-python-with-numpy" title="Permalink to this headline">¶</a></h3>
+<h3>In Plain Python with Numpy<a class="headerlink" href="#in-plain-python-with-numpy" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -485,7 +381,7 @@
 </div>
 </div>
 <div class="section" id="in-pytorch-with-torch-sigmoid">
-<h3><span class="section-number">1.1.2. </span>In Pytorch with <code class="docutils literal notranslate"><span class="pre">torch.sigmoid()</span></code><a class="headerlink" href="#in-pytorch-with-torch-sigmoid" title="Permalink to this headline">¶</a></h3>
+<h3>In Pytorch with <code class="docutils literal notranslate"><span class="pre">torch.sigmoid()</span></code><a class="headerlink" href="#in-pytorch-with-torch-sigmoid" title="Permalink to this headline">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><code class="docutils literal notranslate"><span class="pre">torch.range</span></code> is deprecated and will be removed in a future release because its behavior is inconsistent with Python’s range builtin. Instead, use torch.arange, which produces values in [start, end). Do not use:
@@ -548,13 +444,13 @@
 </div>
 </div>
 <div class="section" id="hyperbolic-tanh">
-<h2><span class="section-number">1.2. </span>Hyperbolic tanh<a class="headerlink" href="#hyperbolic-tanh" title="Permalink to this headline">¶</a></h2>
+<h2>Hyperbolic tanh<a class="headerlink" href="#hyperbolic-tanh" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[t = tanh(z) = \frac{e^z-e^{-z}}{e^z-e^{-z}}\]</div>
 <div class="math notranslate nohighlight">
 \[\frac{dt}{dz} = 1 - t^2\]</div>
 <div class="section" id="in-plain-python-and-numpy">
-<h3><span class="section-number">1.2.1. </span>In Plain Python and Numpy<a class="headerlink" href="#in-plain-python-and-numpy" title="Permalink to this headline">¶</a></h3>
+<h3>In Plain Python and Numpy<a class="headerlink" href="#in-plain-python-and-numpy" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -590,7 +486,7 @@
 </div>
 </div>
 <div class="section" id="in-pytorch-with-torch-tanh">
-<h3><span class="section-number">1.2.2. </span>In Pytorch with <code class="docutils literal notranslate"><span class="pre">torch.tanh()</span></code><a class="headerlink" href="#in-pytorch-with-torch-tanh" title="Permalink to this headline">¶</a></h3>
+<h3>In Pytorch with <code class="docutils literal notranslate"><span class="pre">torch.tanh()</span></code><a class="headerlink" href="#in-pytorch-with-torch-tanh" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -626,7 +522,7 @@
 </div>
 </div>
 <div class="section" id="relu">
-<h2><span class="section-number">1.3. </span>Relu<a class="headerlink" href="#relu" title="Permalink to this headline">¶</a></h2>
+<h2>Relu<a class="headerlink" href="#relu" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[ t = f(z) = max(0, z)\]</div>
 <p>\begin{equation}
@@ -727,7 +623,7 @@
 </div>
 </div>
 <div class="section" id="parametric-and-leaky-relu">
-<h2><span class="section-number">1.4. </span>Parametric and Leaky Relu<a class="headerlink" href="#parametric-and-leaky-relu" title="Permalink to this headline">¶</a></h2>
+<h2>Parametric and Leaky Relu<a class="headerlink" href="#parametric-and-leaky-relu" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-dying-relu admonition">
 <p class="admonition-title">Dying ReLU</p>
 <p>The clipping effect of ReLU that helps with the vanishing gradient problem can also become an issue. Over time, certain ouputs in the network can simply vecome zero and never revive again. The is called the <em>dying ReLU</em> problem.</p>
@@ -806,7 +702,7 @@
 </div>
 </div>
 <div class="section" id="softmax">
-<h2><span class="section-number">1.5. </span>Softmax<a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h2>
+<h2>Softmax<a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h2>
 <p>The softmax function squahses the output of each unit to be between 0 and 1, like sigmod function. However, the softmax operation also divides each output by the sum of all outputs, which gives a discrete probabilty distribution over <span class="math notranslate nohighlight">\(k\)</span> possible classes.</p>
 <div class="math notranslate nohighlight">
 \[ softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^{k}e^{x_j}}\]</div>
@@ -864,8 +760,6 @@ tensor([1.])
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Introduction to Neural Networks (draft)</a>
-    <a class='right-next' id="next-link" href="nn_from_scratch.html" title="next page"><span class="section-number">2. </span>Neural net from scratch (no <code class="docutils literal notranslate"><span class="pre">torch.nn</span></code>)</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
