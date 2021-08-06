@@ -1,0 +1,17 @@
+Implement the code of lecture notes on dependency parsing. 
+
+Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following: 
+
+```{tabbed} What's Expressed
+ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)
+```
+```{tabbed} Example Sentences
+For instance, we want to find “I can do it.”
+but not “I’ve done it.”
+```
+```{tabbed} Linguistic Pattern
+`subject + auxiliary + verb + . . . + direct object + ...`
+
+The ellipses indicate that the direct object isn't necessarily
+located immediately behind the verb, there might be other words in between.
+```

@@ -1,0 +1,49 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+- file: intro
+- file: ./basics/intro
+  numbered: true
+  sections:
+    - file: ./basics/installation
+    - file: ./basics/installation_misc
+    - file: ./basics/lab_machines.md
+    - file: ./basics/python_review
+    - file: ./basics/iterables
+    - file: ./basics/numpy
+    - file: ./basics/matplotlib
+- file: ./NLTK/intro
+  numbered: true
+  sections:
+    - file: ./NLTK/start
+    - file: ./NLTK/closer_look
+    - file: ./NLTK/computing
+    - file: ./NLTK/take_control
+    - file: ./NLTK/exercises
+- file: ./spacy/intro
+  numbered: true
+  sections:
+    - file: ./spacy/patterns    
+- file: ./pytorch/intro
+  numbered: true
+  sections:
+    - file: ./pytorch/installing
+    - file: ./pytorch/tensors
+      numbered: true
+      sections:
+        - file: ./pytorch/tensor_types
+        - file: ./pytorch/create_tensors
+        - file: ./pytorch/tensor_operations
+        - file: ./pytorch/tensor_slicing
+    - file: ./pytorch/cuda
+    - file: ./pytorch/computational_graph
+- file: ./nn/intro
+  numbered: true
+  sections:
+    - file: ./nn/activations
+    - file: ./nn/loss_function
+    - file: ./nn/nn_from_scratch
+    - file: ./nn/nn_torch.nn
+- file: content
+  sections:
+    - file: markdown
+    - file: notebooks

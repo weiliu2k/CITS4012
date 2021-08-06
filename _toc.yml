@@ -19,27 +19,11 @@
     - file: ./NLTK/computing
     - file: ./NLTK/take_control
     - file: ./NLTK/exercises
-- file: ./pytorch/intro
+- file: ./spacy/intro
   numbered: true
   sections:
-    - file: ./pytorch/installing
-    - file: ./pytorch/tensors
-      numbered: true
-      sections:
-        - file: ./pytorch/tensor_types
-        - file: ./pytorch/create_tensors
-        - file: ./pytorch/tensor_operations
-        - file: ./pytorch/tensor_slicing
-    - file: ./pytorch/cuda
-    - file: ./pytorch/computational_graph
-- file: ./nn/intro
-  numbered: true
-  sections:
-    - file: ./nn/activations
-    - file: ./nn/loss_function
-    - file: ./nn/nn_from_scratch
-    - file: ./nn/nn_torch.nn
-- file: content
-  sections:
-    - file: markdown
-    - file: notebooks
+    - file: ./spacy/container
+    - file: ./spacy/pipeline
+    - file: ./spacy/patterns
+    - file: ./spacy/telegram
+    - file: ./spacy/exercise
