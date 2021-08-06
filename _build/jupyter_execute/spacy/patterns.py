@@ -47,7 +47,7 @@ displacy.render(doc, style='dep')
 
 
 options = {'compact': True, 'font': 'Tahoma'}
-displacy.render(doc, style='dep')
+displacy.render(doc, style='dep', options=options)
 
 
 if dep_pattern(doc):
