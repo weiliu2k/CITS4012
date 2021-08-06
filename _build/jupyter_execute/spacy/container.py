@@ -3,7 +3,7 @@ Container Objects in spaCy
 
 Container objects in spaCy mimic the structure of natural language texts: a text is composed of sentences, and each sentence contains tokens. Token, Span, and Doc, the most widely used container objects in spaCy from a user's standpoint, represent a token, a phrase or sentence, and a text, respectively. A container can contain other containers - for example, a Doc contains Tokens. In this section, we’ll explore working with these container objects. 
 
-## Doc `<class 'spacy.tokens.doc.Doc'>`
+## Doc
 
 The `Doc()` constructor, requires two parameters:
 
