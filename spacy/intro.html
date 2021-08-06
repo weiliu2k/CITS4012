@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lab03: Introduction to spaCy &#8212; CITS4012 Natural Language Processing</title>
+    <title>Lab03: spaCy NLP pipelines &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,6 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Container Objects in spaCy" href="container.html" />
+    <link rel="prev" title="5. Exercises" href="../NLTK/exercises.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -171,6 +173,40 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -243,8 +279,20 @@
         
               <div>
                 
-  <div class="section" id="lab03-introduction-to-spacy">
-<h1>Lab03: Introduction to spaCy<a class="headerlink" href="#lab03-introduction-to-spacy" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="lab03-spacy-nlp-pipelines">
+<h1>Lab03: spaCy NLP pipelines<a class="headerlink" href="#lab03-spacy-nlp-pipelines" title="Permalink to this headline">¶</a></h1>
+<p>spaCy makes use of two core types of objects to support various NLP tasks.</p>
+<p>A <strong>container</strong> object in spaCy groups multiple elements into a single
+unit. It can be a collection of objects, like tokens or sentences, or a
+set of annotations related to a single object.</p>
+<p><strong>Pipeline components</strong> objects that process the text input to
+create containers and fill them with relevant data, such as a
+part-of-speech tagger, a dependency parser and an entity recogniser.</p>
+<p>In this lab, we will look at these two types of objects in spaCy to get a more in-depth understanding of how spaCy NLP code works. The we will test out our information extraction skills by deploying a simple rule-based chatbot.</p>
+<p><strong>Reference:</strong> (The book code works with spaCy v2.2, our lab code is compiled on spaCy v3.0.5)</p>
+<p><img alt="image" src="../_images/spacy-book-cover.jfif" /></p>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -275,6 +323,8 @@
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="../NLTK/exercises.html" title="previous page"><span class="section-number">5. </span>Exercises</a>
+    <a class='right-next' id="next-link" href="container.html" title="next page"><span class="section-number">1. </span>Container Objects in spaCy</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
