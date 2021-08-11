@@ -1,6 +1,13 @@
 Document Classification
 =======================
-Now that we have a good understanding of TF-IDF term document matrix, we can treat each term as a feature, and each document (row) as an instance or a training sample to train a classifier. The classifier can be any traditional supervised learning models that deals with tabular shaped data, where one colum stores the labels of each sample record. 
+Now that we have a good understanding of TF-IDF term document matrix, we can treat each term as a feature, and each document (row) as an instance or a training sample to train a classifier. The classifier can be any traditional supervised learning models that deals with tabular shaped data, where one column stores the labels of each sample. All other columns are feature variables, in this case, each term/word is a feature. An illustration table is shown below. 
+
+|ID |best	|it |	of	| the |	 times |	was |	worst |	age |	wisdom |	foolishness | class label |
+| :--- | --- | --- |  --- | --- | --- | --- | --- |  --- | --- |  --- | ---: |
+| 0	| 0.844727 |	0.117126	|0.117126	|0.117126|	0.480957|	0.117126|	0.844727 |	0.480957 |	0.844727 |	0.844727 | positive |
+|1	|5.000000	|0.117126	|0.117126|	0.117126|	0.480957|	0.117126|	0.844727|	0.000000|	0.000000|	0.000000 |negative |
+|2	|0.000000	|0.117126|	0.117126|	0.117126|	0.000000|	0.117126|	0.000000|	0.480957|	0.844727|	0.000000| positive|
+|3	|0.000000|	0.117126|	0.117126|	0.117126|	0.000000|	0.117126|	0.000000	|0.480957	|0.000000|	0.844727 | negative |
 
 The goal of this guide is to explore some of the main 'scikit-learn'
 tools on a popular classification task: analyzing a collection of text
@@ -365,5 +372,7 @@ The index value of a word in the vocabulary is linked to its frequency
 in the whole training corpus.
 
 :::{admonition} Your Turn
-Update the code to use TfidfVectorisor. Think about how a classification model or a similarity/distance calculation using TF-IDF might help your chatbot. 
+1. Build classifiers using the `raw count`, or `term frequency` to compare the performance against `tf-idf`. 
+2. Update the code to use TfidfVectorisor. 
+3. Think about how a classification model or a similarity/distance calculation using `tf-idf` might help your chatbot. 
 :::

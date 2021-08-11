@@ -127,9 +127,6 @@ import pandas as pd
 df = pd.DataFrame(data=np.zeros((len(BoW_corpus), len(vocab)), dtype=np.float16),
                   index=index,
                   columns=vocab)
-
-df['best'][1] = 5
-df
 
 
 for idx in index:
