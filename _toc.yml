@@ -27,3 +27,9 @@
     - file: ./spacy/patterns
     - file: ./spacy/telegram
     - file: ./spacy/exercise
+- file: ./gensim/intro
+  numbered: true
+  sections:
+    - file: ./gensim/word-coocur
+    - file: ./gensim/tf-idf
+    - file: ./gensim/classification   

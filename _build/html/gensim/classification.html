@@ -1,0 +1,1060 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Document Classification &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2. TF-IDF in scikit-learn and Gensim" href="tf-idf.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="word-coocur.html">
+     1. Word Co-occurence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tf-idf.html">
+     2. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/gensim/classification.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/gensim/classification.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-20-newsgroups-dataset">
+   3.1. Loading the 20 newsgroups dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extracting-features-from-text-files">
+   3.2. Extracting features from text files
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bags-of-words">
+     3.2.1. Bags of words
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tokenizing-text-with-scikit-learn">
+     3.2.2. Tokenizing text with
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       scikit-learn
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#from-occurrences-to-frequencies">
+     3.2.3. From occurrences to frequencies
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-a-classifier">
+   3.3. Training a classifier
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-a-pipeline">
+   3.4. Building a pipeline
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation-of-the-performance-on-the-test-set">
+   3.5. Evaluation of the performance on the test set
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parameter-tuning-using-grid-search">
+   3.6. Parameter tuning using grid search
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="document-classification">
+<h1><span class="section-number">3. </span>Document Classification<a class="headerlink" href="#document-classification" title="Permalink to this headline">¶</a></h1>
+<p>Now that we have a good understanding of TF-IDF term document matrix, we can treat each term as a feature, and each document (row) as an instance or a training sample to train a classifier. The classifier can be any traditional supervised learning models that deals with tabular shaped data, where one colum stores the labels of each sample record.</p>
+<p>The goal of this guide is to explore some of the main ‘scikit-learn’
+tools on a popular classification task: analyzing a collection of text
+documents (newsgroups posts) and classify them into one of the twenty different topics.</p>
+<p>In this notebook we will see how to:</p>
+<ul class="simple">
+<li><p>load the file contents and the categories</p></li>
+<li><p>extract feature vectors suitable for machine learning</p></li>
+<li><p>train a linear model to perform categorization</p></li>
+<li><p>use a grid search strategy to find a good configuration of both the feature extraction components and the classifier</p></li>
+</ul>
+<p>Original Notebook Credit to <a class="reference external" href="https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html">scikit-learn tutorial on Working with Text Data</a></p>
+<div class="section" id="loading-the-20-newsgroups-dataset">
+<h2><span class="section-number">3.1. </span>Loading the 20 newsgroups dataset<a class="headerlink" href="#loading-the-20-newsgroups-dataset" title="Permalink to this headline">¶</a></h2>
+<p>The dataset is called “Twenty Newsgroups”. Here is the <a class="reference external" href="http://people.csail.mit.edu/jrennie/20Newsgroups/">official
+description</a>:</p>
+<blockquote>
+<div><p>The 20 Newsgroups data set is a collection of approximately 20,000
+newsgroup documents, partitioned (nearly) evenly across 20 different
+newsgroups. To the best of our knowledge, it was originally collected
+by Ken Lang, probably for his paper “Newsweeder: Learning to filter
+netnews,” though he does not explicitly mention this collection.
+The 20 newsgroups collection has become a popular data set for
+experiments in text applications of machine learning techniques,
+such as text classification and text clustering.</p>
+</div></blockquote>
+<p>In the following we will use the built-in dataset loader for 20 newsgroups
+from scikit-learn.</p>
+<p>In order to get faster execution times for this first example we will
+work on a partial dataset with only 4 categories out of the 20 available
+in the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;alt.atheism&#39;</span><span class="p">,</span> <span class="s1">&#39;soc.religion.christian&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;comp.graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;sci.med&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now load the list of files matching those categories as follows (this may take a while - 65.1s on a desktop computer - AMD 16 core, 32GB RAM):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_20newsgroups</span>
+<span class="n">twenty_train</span> <span class="o">=</span> <span class="n">fetch_20newsgroups</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+      <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The returned dataset is a <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> “bunch”: a simple holder
+object with fields that can be both accessed as python <code class="docutils literal notranslate"><span class="pre">dict</span></code>
+keys or <code class="docutils literal notranslate"><span class="pre">object</span></code> attributes for convenience, for instance the
+<code class="docutils literal notranslate"><span class="pre">target_names</span></code> holds the list of the requested category names::</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twenty_train</span><span class="o">.</span><span class="n">target_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;alt.atheism&#39;, &#39;comp.graphics&#39;, &#39;sci.med&#39;, &#39;soc.religion.christian&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The files themselves are loaded in memory in the <code class="docutils literal notranslate"><span class="pre">data</span></code> attribute. For
+reference the filenames are also available:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2257
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twenty_train</span><span class="o">.</span><span class="n">filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;C:\\Users\\wei\\scikit_learn_data\\20news_home\\20news-bydate-train\\comp.graphics\\38440&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s print the first three lines of the first loaded file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>From: sd345@city.ac.uk (Michael Collier)
+Subject: Converting images to HP LaserJet III?
+Nntp-Posting-Host: hampton
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below is how to access the class label (i.e. target column) of the first document.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>comp.graphics
+</pre></div>
+</div>
+</div>
+</div>
+<p>Supervised learning algorithms will require a category label for each
+document in the training set. In this case the category is the name of the
+newsgroup which also happens to be the name of the folder holding the
+individual documents.</p>
+<p>For speed and space efficiency reasons <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> loads the
+target attribute as an array of integers that corresponds to the
+index of the category name in the <code class="docutils literal notranslate"><span class="pre">target_names</span></code> list. The category
+integer id of each sample is stored in the <code class="docutils literal notranslate"><span class="pre">target</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 1, 3, 3, 3, 3, 3, 2, 2, 2], dtype=int64)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is possible to get back the category names as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>comp.graphics
+comp.graphics
+soc.religion.christian
+soc.religion.christian
+soc.religion.christian
+soc.religion.christian
+soc.religion.christian
+sci.med
+sci.med
+sci.med
+</pre></div>
+</div>
+</div>
+</div>
+<p>You might have noticed that the samples were shuffled randomly when we called
+<code class="docutils literal notranslate"><span class="pre">fetch_20newsgroups(...,</span> <span class="pre">shuffle=True,</span> <span class="pre">random_state=42)</span></code>: this is useful if
+you wish to select only a subset of samples to quickly train a model and get a
+first idea of the results before re-training on the complete dataset later.</p>
+</div>
+<div class="section" id="extracting-features-from-text-files">
+<h2><span class="section-number">3.2. </span>Extracting features from text files<a class="headerlink" href="#extracting-features-from-text-files" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform machine learning on text documents, we first need to
+turn the text content into numerical feature vectors.</p>
+<div class="section" id="bags-of-words">
+<h3><span class="section-number">3.2.1. </span>Bags of words<a class="headerlink" href="#bags-of-words" title="Permalink to this headline">¶</a></h3>
+<p>The most intuitive way to do so is to use a bags of words representation:</p>
+<ol class="simple">
+<li><p>Assign a fixed integer id to each word occurring in any document
+of the training set (for instance by building a dictionary
+from words to integer indices).</p></li>
+<li><p>For each document <code class="docutils literal notranslate"><span class="pre">#i</span></code>, count the number of occurrences of each
+word <code class="docutils literal notranslate"><span class="pre">w</span></code> and store it in <code class="docutils literal notranslate"><span class="pre">X[i,</span> <span class="pre">j]</span></code> as the value of feature
+<code class="docutils literal notranslate"><span class="pre">#j</span></code> where <code class="docutils literal notranslate"><span class="pre">j</span></code> is the index of word <code class="docutils literal notranslate"><span class="pre">w</span></code> in the dictionary.</p></li>
+</ol>
+<p>The bags of words representation implies that <code class="docutils literal notranslate"><span class="pre">n_features</span></code> is
+the number of distinct words in the corpus: this number is typically
+larger than 100,000.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">n_samples</span> <span class="pre">==</span> <span class="pre">10000</span></code>, storing <code class="docutils literal notranslate"><span class="pre">X</span></code> as a NumPy array of type
+float32 would require 10000 x 100000 x 4 bytes = <strong>4GB in RAM</strong> which
+is barely manageable on today’s computers.</p>
+<p>Fortunately, <strong>most values in X will be zeros</strong> since for a given
+document less than a few thousand distinct words will be
+used. For this reason we say that bags of words are typically
+<strong>high-dimensional sparse datasets</strong>. We can save a lot of memory by
+only storing the non-zero parts of the feature vectors in memory.</p>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.sparse</span></code> matrices are data structures that do exactly this,
+and <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has built-in support for these structures.</p>
+</div>
+<div class="section" id="tokenizing-text-with-scikit-learn">
+<h3><span class="section-number">3.2.2. </span>Tokenizing text with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code><a class="headerlink" href="#tokenizing-text-with-scikit-learn" title="Permalink to this headline">¶</a></h3>
+<p>Text preprocessing, tokenizing and filtering of stopwords are all included
+in class: <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>, which builds a dictionary of features and
+transforms documents to feature vectors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+ 
+ <span class="n">count_vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+ <span class="n">X_train_counts</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+ <span class="n">X_train_counts</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2257, 35788)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Class <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> supports counts of N-grams of words or consecutive
+characters. Once fitted, the vectorizer has built a dictionary of feature
+indices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The number of times the word &#39;algorithm&#39; occurs </span>
+<span class="n">count_vect</span><span class="o">.</span><span class="n">vocabulary_</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;algorithm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4690
+</pre></div>
+</div>
+</div>
+</div>
+<p>The index value of a word in the vocabulary is linked to its frequency
+in the whole training corpus.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">count_vect.fit_transform</span></code> performs two actions:
+it learns the vocabulary and transforms the documents into count vectors.
+It’s possible to separate these steps by calling
+<code class="docutils literal notranslate"><span class="pre">count_vect.fit(twenty_train.data)</span></code> followed by
+<code class="docutils literal notranslate"><span class="pre">X_train_counts</span> <span class="pre">=</span> <span class="pre">count_vect.transform(twenty_train.data)</span></code>,
+but doing so would tokenize and vectorize each text file twice.</p>
+</div>
+</div>
+<div class="section" id="from-occurrences-to-frequencies">
+<h3><span class="section-number">3.2.3. </span>From occurrences to frequencies<a class="headerlink" href="#from-occurrences-to-frequencies" title="Permalink to this headline">¶</a></h3>
+<p>Occurrence count is a good start but there is an issue: longer
+documents will have higher average count values than shorter documents,
+even though they might talk about the same topics.</p>
+<p>To avoid these potential discrepancies it suffices to divide the
+number of occurrences of each word in a document by the total number
+of words in the document: these new features are called <code class="docutils literal notranslate"><span class="pre">tf</span></code> for Term
+Frequencies.</p>
+<p>Another refinement on top of tf is to downscale weights for words
+that occur in many documents in the corpus and are therefore less
+informative than those that occur only in a smaller portion of the
+corpus.</p>
+<p>This downscaling is the <code class="docutils literal notranslate"><span class="pre">tf–idf</span></code> -  “Term Frequency times
+Inverse Document Frequency” we discussed earlier.</p>
+<p>As dicussed in the previous notebooks, both <strong>tf</strong> and <strong>tf–idf</strong> can be computed as follows using class <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
+
+<span class="n">tf_transformer</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">use_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_counts</span><span class="p">)</span>
+<span class="n">X_train_tf</span> <span class="o">=</span> <span class="n">tf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_counts</span><span class="p">)</span>
+<span class="n">X_train_tf</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2257, 35788)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the above example-code, we firstly use the <code class="docutils literal notranslate"><span class="pre">fit(..)</span></code> method to fit our
+estimator to the data and secondly the <code class="docutils literal notranslate"><span class="pre">transform(..)</span></code> method to transform
+our count-matrix to a tf-idf representation.
+These two steps can be combined to achieve the same end result faster
+by skipping redundant processing. This is done through using the
+<code class="docutils literal notranslate"><span class="pre">fit_transform(..)</span></code> method as shown below, and as mentioned in the note
+in the previous section:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_transformer</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">()</span>
+<span class="n">X_train_tfidf</span> <span class="o">=</span> <span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_counts</span><span class="p">)</span>
+<span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2257, 35788)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-a-classifier">
+<h2><span class="section-number">3.3. </span>Training a classifier<a class="headerlink" href="#training-a-classifier" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have our features, we can train a classifier to try to predict
+the category of a post. Let’s start with a <code class="docutils literal notranslate"><span class="pre">naïve</span> <span class="pre">Bayes</span> <span class="pre">&lt;naive_bayes&gt;</span></code>
+classifier, which provides a nice baseline for this task. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> includes several
+variants of this classifier; the one most suitable for word counts is the
+multinomial variant:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To try to predict the outcome on a new document we need to extract
+the features using almost the same feature extracting chain as before.
+The difference is that we call <code class="docutils literal notranslate"><span class="pre">transform</span></code> instead of <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code>
+on the transformers, since they have already been fit to the training set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">docs_new</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;God is love&#39;</span><span class="p">,</span> <span class="s1">&#39;OpenGL on the GPU is fast&#39;</span><span class="p">]</span>
+<span class="n">X_new_counts</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">docs_new</span><span class="p">)</span>
+<span class="n">X_new_tfidf</span> <span class="o">=</span> <span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_new_counts</span><span class="p">)</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new_tfidf</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">doc</span><span class="p">,</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">docs_new</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> =&gt; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">twenty_train</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">category</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;God is love&#39; =&gt; soc.religion.christian
+&#39;OpenGL on the GPU is fast&#39; =&gt; comp.graphics
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="building-a-pipeline">
+<h2><span class="section-number">3.4. </span>Building a pipeline<a class="headerlink" href="#building-a-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>In order to make the vectorizer =&gt; transformer =&gt; classifier easier
+to work with, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides a class <code class="docutils literal notranslate"><span class="pre">~sklearn.pipeline.Pipeline</span></code> that behaves
+like a compound classifier:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="n">text_clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+     <span class="p">(</span><span class="s1">&#39;vect&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">()),</span>
+     <span class="p">(</span><span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="n">TfidfTransformer</span><span class="p">()),</span>
+     <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">MultinomialNB</span><span class="p">())])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The names <code class="docutils literal notranslate"><span class="pre">vect</span></code>, <code class="docutils literal notranslate"><span class="pre">tfidf</span></code> and <code class="docutils literal notranslate"><span class="pre">clf</span></code> (classifier) are arbitrary.
+We will use them to perform grid search for suitable hyperparameters below.
+We can now train the model with a single command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pipeline(steps=[(&#39;vect&#39;, CountVectorizer()), (&#39;tfidf&#39;, TfidfTransformer()),
+                (&#39;clf&#39;, MultinomialNB())])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="evaluation-of-the-performance-on-the-test-set">
+<h2><span class="section-number">3.5. </span>Evaluation of the performance on the test set<a class="headerlink" href="#evaluation-of-the-performance-on-the-test-set" title="Permalink to this headline">¶</a></h2>
+<p>Evaluating the predictive accuracy of the model is simply a comparision of the predicted and the actual labels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">twenty_test</span> <span class="o">=</span> <span class="n">fetch_20newsgroups</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> 
+              <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">docs_test</span> <span class="o">=</span> <span class="n">twenty_test</span><span class="o">.</span><span class="n">data</span>
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">text_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">docs_test</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">twenty_test</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8348868175765646
+</pre></div>
+</div>
+</div>
+</div>
+<p>We achieved 83.5% accuracy. Let’s see if we can do better with a
+linear <code class="docutils literal notranslate"><span class="pre">support</span> <span class="pre">vector</span> <span class="pre">machine</span> <span class="pre">(SVM)</span> <span class="pre">&lt;svm&gt;</span></code>,
+which is widely regarded as one of
+the best text classification algorithms (although it’s also a bit slower
+than naïve Bayes). We can change the learner by simply plugging a different
+classifier object into our pipeline:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
+<span class="n">text_clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+     <span class="p">(</span><span class="s1">&#39;vect&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">()),</span>
+     <span class="p">(</span><span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="n">TfidfTransformer</span><span class="p">()),</span>
+     <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;hinge&#39;</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span>
+                           <span class="n">alpha</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                           <span class="n">max_iter</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">))])</span>
+
+<span class="n">text_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pipeline(steps=[(&#39;vect&#39;, CountVectorizer()), (&#39;tfidf&#39;, TfidfTransformer()),
+                (&#39;clf&#39;,
+                 SGDClassifier(alpha=0.001, max_iter=5, random_state=42,
+                               tol=None))])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted</span> <span class="o">=</span> <span class="n">text_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">docs_test</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">twenty_test</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9101198402130493
+</pre></div>
+</div>
+</div>
+</div>
+<p>We achieved 91.3% accuracy using the SVM. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides further
+utilities for more detailed performance analysis of the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">twenty_test</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">predicted</span><span class="p">,</span>
+      <span class="n">target_names</span><span class="o">=</span><span class="n">twenty_test</span><span class="o">.</span><span class="n">target_names</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                        precision    recall  f1-score   support
+
+           alt.atheism       0.95      0.80      0.87       319
+         comp.graphics       0.87      0.98      0.92       389
+               sci.med       0.94      0.89      0.91       396
+soc.religion.christian       0.90      0.95      0.93       398
+
+              accuracy                           0.91      1502
+             macro avg       0.91      0.91      0.91      1502
+          weighted avg       0.91      0.91      0.91      1502
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">twenty_test</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">predicted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[256,  11,  16,  36],
+       [  4, 380,   3,   2],
+       [  5,  35, 353,   3],
+       [  5,  11,   4, 378]], dtype=int64)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected the confusion matrix shows that posts from the newsgroups
+on atheism and Christianity are more often confused for one another than
+with computer graphics.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SGD stands for Stochastic Gradient Descent. This is a simple
+optimization algorithms that is known to be scalable when the dataset
+has many samples.</p>
+<p>By setting <code class="docutils literal notranslate"><span class="pre">loss=&quot;hinge&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">penalty=&quot;l2&quot;</span></code> we are configuring
+the classifier model to tune its parameters for the linear Support
+Vector Machine cost function.</p>
+</div>
+<p>Alternatively we could have used <code class="docutils literal notranslate"><span class="pre">sklearn.svm.LinearSVC</span></code> (Linear
+Support Vector Machine Classifier) that provides an alternative
+optimizer for the same cost function based on the liblinear_ C++
+library.</p>
+</div>
+<div class="section" id="parameter-tuning-using-grid-search">
+<h2><span class="section-number">3.6. </span>Parameter tuning using grid search<a class="headerlink" href="#parameter-tuning-using-grid-search" title="Permalink to this headline">¶</a></h2>
+<p>We’ve already encountered some parameters such as <code class="docutils literal notranslate"><span class="pre">use_idf</span></code> in the
+<code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>. Classifiers tend to have many parameters as well;
+e.g., <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> includes a smoothing parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and
+<code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> has a penalty parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and configurable loss
+and penalty terms in the objective function (see the module documentation,
+or use the Python <code class="docutils literal notranslate"><span class="pre">help</span></code> function to get a description of these).</p>
+<p>Instead of tweaking the parameters of the various components of the
+chain, it is possible to run an exhaustive search of the best
+parameters on a grid of possible values. We try out all classifiers
+on either words or bigrams, with or without idf, and with a penalty
+parameter of either 0.01 or 0.001 for the linear SVM:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;vect__ngram_range&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="s1">&#39;tfidf__use_idf&#39;</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+    <span class="s1">&#39;clf__alpha&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Obviously, such an exhaustive search can be expensive. If we have multiple
+CPU cores at our disposal, we can tell the grid searcher to try these eight
+parameter combinations in parallel with the <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code> parameter. If we give
+this parameter a value of <code class="docutils literal notranslate"><span class="pre">-1</span></code>, grid search will detect how many cores
+are installed and use them all:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs_clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">text_clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The grid search instance behaves like a normal <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>
+model. Let’s perform the search on a smaller subset of the training data
+to speed up the computation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs_clf</span> <span class="o">=</span> <span class="n">gs_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">twenty_train</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">400</span><span class="p">],</span> <span class="n">twenty_train</span><span class="o">.</span><span class="n">target</span><span class="p">[:</span><span class="mi">400</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> on a <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> object, we now obtained a classifier
+that we can use to <code class="docutils literal notranslate"><span class="pre">predict</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twenty_train</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">gs_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="s1">&#39;God is love&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;soc.religion.christian&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The object’s <code class="docutils literal notranslate"><span class="pre">best_score_</span></code> and <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attributes store the best
+mean score and the parameters setting corresponding to that score:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs_clf</span><span class="o">.</span><span class="n">best_score_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9175000000000001
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">gs_clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="n">param_name</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>clf__alpha: 0.001
+tfidf__use_idf: True
+vect__ngram_range: (1, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>A more detailed summary of the search is available at <code class="docutils literal notranslate"><span class="pre">gs_clf.cv_results_</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cv_results_</span></code> parameter can be easily imported into pandas as a
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> for further inspection.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> object also stores the best classifier that it trained
+as its <code class="docutils literal notranslate"><span class="pre">best_estimator_</span></code> attribute. In this case, that isn’t much use as
+we trained on a small, 400-document subset of our full training set.</p>
+</div>
+<p>The index value of a word in the vocabulary is linked to its frequency
+in the whole training corpus.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Update the code to use TfidfVectorisor. Think about how a classification model or a similarity/distance calculation using TF-IDF might help your chatbot.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./gensim"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="tf-idf.html" title="previous page"><span class="section-number">2. </span>TF-IDF in scikit-learn and Gensim</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

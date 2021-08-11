@@ -5,12 +5,12 @@ Many tutorials online. We only go over the basics here <br/>
 
 import matplotlib.pyplot as plt
 
-# line plot
-x = [1,2,3]
-y = [1,3,2]
+# line plot
+x = [1,2,3]
+y = [1,3,2]
 plt.plot(x,y)
 
-# scatter plot
+# scatter plot
 plt.scatter(x,y)
 
 # bar plots
