@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. TF-IDF in scikit-learn and Gensim &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Document Classification" href="classification.html" />
+    <link rel="prev" title="1. Word Co-occurence Matrix" href="word-coocur.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="word-coocur.html">
+     1. Word Co-occurence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="classification.html">
+     3. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/gensim/tf-idf.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/gensim/tf-idf.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tf-idf-in-gensim">
+   2.1. TF-IDF in Gensim
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-1-preprocessing">
+     2.1.1. Step 1: Preprocessing
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-2-create-a-corpus-with-counts">
+     2.1.2. Step 2: Create a corpus with counts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-3-calculating-the-tfidf-values">
+     2.1.3. Step 3: Calculating the tfidf values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-code">
+     2.1.4. Example Code
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-we-get-the-document-term-matrix">
+     2.1.5. How do we get the document-term matrix
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tf-idf-in-scikit-learn">
+   2.2. TF-IDF in scikit-learn
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tfidftransformer-vs-tfidfvectorizer">
+     2.2.1.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       TfidfTransformer
+      </span>
+     </code>
+     vs
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       TfidfVectorizer
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.2.2. Example Code
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="tf-idf-in-scikit-learn-and-gensim">
+<h1><span class="section-number">2. </span>TF-IDF in scikit-learn and Gensim<a class="headerlink" href="#tf-idf-in-scikit-learn-and-gensim" title="Permalink to this headline">¶</a></h1>
+<p>In a large text corpus, some words will be very present (e.g. “the”, “a”, “is” in English) hence carrying very little meaningful information about the actual contents of the document. If we were to feed the raw count data directly to a classifier those very frequent terms would shadow the frequencies of rarer yet more interesting terms. In other words, frequent words may not provide descriminative or similarity information for</p>
+<ul class="simple">
+<li><p>scoring/ranking documents with regard to a query document, in the context of information retrieval used in search engines;</p></li>
+<li><p>separating documents into different categories, in the context of documen classification (sentiment detection, spam detection).</p></li>
+</ul>
+<p>In this lab, we will focus on document classification. In order to re-weight the count features into floating point values suitable for usage by a classifier it is very common to use the tf–idf transform.</p>
+<p>TF-IDF was originally a term weighting scheme developed for information retrieval (as a ranking function for search engines results) that has also found good use in document classification and clustering.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Term Frequency</p>
+<p>Denoted <span class="math notranslate nohighlight">\(tf_{d,t}\)</span>, which means term-frequency of term <span class="math notranslate nohighlight">\(t\)</span> in document <span class="math notranslate nohighlight">\(d\)</span>, is the number of times term term <span class="math notranslate nohighlight">\(t\)</span> occurs in document <span class="math notranslate nohighlight">\(d\)</span>.</p>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Document Frequency</p>
+<p>Denoted <span class="math notranslate nohighlight">\(df_{t}\)</span>, which means the number of times that term <span class="math notranslate nohighlight">\(t\)</span> occurs across the entire collection of documents (i.e. corpus). It is a value specific to each term but not specific to each document.</p>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Inverse Document Frequency</p>
+<p>Denoted <span class="math notranslate nohighlight">\(idf_{t}\)</span>, which is defined as</p>
+<div class="math notranslate nohighlight">
+\[idf_t = \log_2\frac{N}{df_t}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is total number of documents in the collection. It is a value specific to each term but not specific to each document.</p>
+</div>
+<p>TF-IDF is the term frequency discounted by the document freqency. In other words, a frequent term in a document needs to be infrequent across documents to acquire a high tf-idf value. There are several variations of TF-IDF implementations. Gensim’s implementation is more closer to the original definition. scikit-learn’s implementation normalises the resulting vector to ensure the values are between 0 and 1, which is better for classification tasks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;It was the best of times&quot;</span><span class="p">,</span>
+<span class="s2">&quot;it was the worst of times&quot;</span><span class="p">,</span>
+<span class="s2">&quot;it was the age of wisdom&quot;</span><span class="p">,</span>
+<span class="s2">&quot;it was the age of foolishness&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tf-idf-in-gensim">
+<h2><span class="section-number">2.1. </span>TF-IDF in Gensim<a class="headerlink" href="#tf-idf-in-gensim" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://radimrehurek.com/gensim/">Gensim</a> is yet another popular libray specialising in statistical analysis of natural language text, in particular useful for Topic Modelling, which we will cover later in the unit.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to activate the cits4012_py37 environment to use gensim.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gensim</span>
+<span class="kn">import</span> <span class="nn">gensim.downloader</span> <span class="k">as</span> <span class="nn">api</span>
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">TfidfModel</span>
+<span class="kn">from</span> <span class="nn">gensim.corpora</span> <span class="kn">import</span> <span class="n">Dictionary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-1-preprocessing">
+<h3><span class="section-number">2.1.1. </span>Step 1: Preprocessing<a class="headerlink" href="#step-1-preprocessing" title="Permalink to this headline">¶</a></h3>
+<p>Gensim has a different routine in preparing text. It uses <code class="docutils literal notranslate"><span class="pre">gensim.utils.simple_preprocess()</span></code> to tokenise while removing punctuation and turn the tokens into lower cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sent_to_words</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+        <span class="c1"># deacc=True removes punctuations</span>
+        <span class="k">yield</span><span class="p">(</span><span class="n">gensim</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">simple_preprocess</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sentence</span><span class="p">),</span> <span class="n">deacc</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-2-create-a-corpus-with-counts">
+<h3><span class="section-number">2.1.2. </span>Step 2: Create a corpus with counts<a class="headerlink" href="#step-2-create-a-corpus-with-counts" title="Permalink to this headline">¶</a></h3>
+<p>Gensim has a built-in class <code class="docutils literal notranslate"><span class="pre">gensim.corpora.Dictionary</span></code> that has a function <code class="docutils literal notranslate"><span class="pre">doc2bow</span></code> that implements the bag of words idea, which processes the document collection, assigning an id to each unique token, while counting the term frequency of each token in each document. The following code returns each document as a list of tuples, in the form of <code class="docutils literal notranslate"><span class="pre">(term_id,</span> <span class="pre">count)</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc_tokenized</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sent_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="n">dictionary</span> <span class="o">=</span> <span class="n">Dictionary</span><span class="p">()</span>
+<span class="n">BoW_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">allow_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">doc_tokenized</span><span class="p">]</span>
+<span class="n">BoW_corpus</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)],
+ [(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1)],
+ [(1, 1), (2, 1), (3, 1), (5, 1), (7, 1), (8, 1)],
+ [(1, 1), (2, 1), (3, 1), (5, 1), (7, 1), (9, 1)]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can examine the Bag of Words corpus obtained. You can think of the dictionary object is a vocabulary of the collection, mapping a term id to its lexical form (i.e. the word form) of the term.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">BoW_corpus</span><span class="p">:</span>
+   <span class="nb">print</span><span class="p">([[</span><span class="n">dictionary</span><span class="p">[</span><span class="nb">id</span><span class="p">],</span> <span class="n">freq</span><span class="p">]</span> <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&#39;best&#39;, 1], [&#39;it&#39;, 1], [&#39;of&#39;, 1], [&#39;the&#39;, 1], [&#39;times&#39;, 1], [&#39;was&#39;, 1]]
+[[&#39;it&#39;, 1], [&#39;of&#39;, 1], [&#39;the&#39;, 1], [&#39;times&#39;, 1], [&#39;was&#39;, 1], [&#39;worst&#39;, 1]]
+[[&#39;it&#39;, 1], [&#39;of&#39;, 1], [&#39;the&#39;, 1], [&#39;was&#39;, 1], [&#39;age&#39;, 1], [&#39;wisdom&#39;, 1]]
+[[&#39;it&#39;, 1], [&#39;of&#39;, 1], [&#39;the&#39;, 1], [&#39;was&#39;, 1], [&#39;age&#39;, 1], [&#39;foolishness&#39;, 1]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-3-calculating-the-tfidf-values">
+<h3><span class="section-number">2.1.3. </span>Step 3: Calculating the tfidf values<a class="headerlink" href="#step-3-calculating-the-tfidf-values" title="Permalink to this headline">¶</a></h3>
+<p>A <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html"><code class="docutils literal notranslate"><span class="pre">gensim.models.TfidfModel</span></code></a> object can be constructed using the processed BoW corpus. The <code class="docutils literal notranslate"><span class="pre">smartirs</span></code> parameter stands for SMART information retrieval system, where SMART is an acronym for “System for the Mechanical Analysis and Retrieval of Text”. If interested, you can read more about <a class="reference external" href="https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System">SMART on Wikipedia</a>, which contains a rather comprehensive list of TF-IDF variants.  <code class="docutils literal notranslate"><span class="pre">smartirs</span> <span class="pre">=</span> <span class="pre">ntc</span></code> means the model will use <code class="docutils literal notranslate"><span class="pre">n</span></code> raw term freqency, <code class="docutils literal notranslate"><span class="pre">t</span></code> zero-corrected idf, and <code class="docutils literal notranslate"><span class="pre">c</span></code> cosine for document vector nomalisation. For a list of other letter codes for each of the three tf-idf components, see the tabs or refer to the <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html">original documentation</a>. You do not need to memorise all these variants, but just be aware of the many alternatives in calculating such a seemingly simple value. You can even define your own way of calculating tf and idf to feed into the model constructor.</p>
+<div class="tabbed-set docutils">
+<input checked="checked" id="75296073-0d42-4743-89e8-f22e139abf26" name="4985a014-6d70-4062-84e0-538d4e2a5030" type="radio">
+</input><label class="tabbed-label" for="75296073-0d42-4743-89e8-f22e139abf26">
+Term frequency weighing</label><div class="tabbed-content docutils">
+<ul class="simple">
+<li><p>b - binary,</p></li>
+<li><p>t or n - raw,</p></li>
+<li><p>a - augmented,</p></li>
+<li><p>l - logarithm,</p></li>
+<li><p>d - double logarithm,</p></li>
+<li><p>L - log average.</p></li>
+</ul>
+</div>
+<input id="a1146be1-857e-4fde-ad4d-b7f3da2a6972" name="4985a014-6d70-4062-84e0-538d4e2a5030" type="radio">
+</input><label class="tabbed-label" for="a1146be1-857e-4fde-ad4d-b7f3da2a6972">
+Document frequency weighting</label><div class="tabbed-content docutils">
+<ul class="simple">
+<li><p>x or n - none,</p></li>
+<li><p>f - idf,</p></li>
+<li><p>t - zero-corrected idf,</p></li>
+<li><p>p - probabilistic idf.</p></li>
+</ul>
+</div>
+<input id="2e829837-d7f4-4002-84f5-8abb43dc698e" name="4985a014-6d70-4062-84e0-538d4e2a5030" type="radio">
+</input><label class="tabbed-label" for="2e829837-d7f4-4002-84f5-8abb43dc698e">
+Document normalization</label><div class="tabbed-content docutils">
+<ul class="simple">
+<li><p>x or n - none,</p></li>
+<li><p>c - cosine,</p></li>
+<li><p>u - pivoted unique,</p></li>
+<li><p>b - pivoted character length.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="example-code">
+<h3><span class="section-number">2.1.4. </span>Example Code<a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfModel</span><span class="p">(</span><span class="n">BoW_corpus</span><span class="p">,</span> <span class="n">smartirs</span><span class="o">=</span><span class="s1">&#39;ntc&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get the tfidf vector representation of the second sentence</span>
+<span class="n">tfidf</span><span class="p">[</span><span class="n">BoW_corpus</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 0.11713529839512132),
+ (2, 0.11713529839512132),
+ (3, 0.11713529839512132),
+ (4, 0.48099076877929253),
+ (5, 0.11713529839512132),
+ (6, 0.8448462391634637)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the tfidf transformed corpus, </span>
+<span class="c1"># then the vector of the second sentence.</span>
+<span class="n">tfidf</span><span class="p">[</span><span class="n">BoW_corpus</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 0.11713529839512132),
+ (2, 0.11713529839512132),
+ (3, 0.11713529839512132),
+ (4, 0.48099076877929253),
+ (5, 0.11713529839512132),
+ (6, 0.8448462391634637)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now a friendlier print out</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tfidf</span><span class="p">[</span><span class="n">BoW_corpus</span><span class="p">]:</span>
+   <span class="nb">print</span><span class="p">([[</span><span class="n">dictionary</span><span class="p">[</span><span class="nb">id</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span><span class="n">decimals</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span> <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&#39;best&#39;, 0.84], [&#39;it&#39;, 0.12], [&#39;of&#39;, 0.12], [&#39;the&#39;, 0.12], [&#39;times&#39;, 0.48], [&#39;was&#39;, 0.12]]
+[[&#39;it&#39;, 0.12], [&#39;of&#39;, 0.12], [&#39;the&#39;, 0.12], [&#39;times&#39;, 0.48], [&#39;was&#39;, 0.12], [&#39;worst&#39;, 0.84]]
+[[&#39;it&#39;, 0.12], [&#39;of&#39;, 0.12], [&#39;the&#39;, 0.12], [&#39;was&#39;, 0.12], [&#39;age&#39;, 0.48], [&#39;wisdom&#39;, 0.84]]
+[[&#39;it&#39;, 0.12], [&#39;of&#39;, 0.12], [&#39;the&#39;, 0.12], [&#39;was&#39;, 0.12], [&#39;age&#39;, 0.48], [&#39;foolishness&#39;, 0.84]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="how-do-we-get-the-document-term-matrix">
+<h3><span class="section-number">2.1.5. </span>How do we get the document-term matrix<a class="headerlink" href="#how-do-we-get-the-document-term-matrix" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))]</span>
+<span class="n">vocab</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;best&#39;,
+ &#39;it&#39;,
+ &#39;of&#39;,
+ &#39;the&#39;,
+ &#39;times&#39;,
+ &#39;was&#39;,
+ &#39;worst&#39;,
+ &#39;age&#39;,
+ &#39;wisdom&#39;,
+ &#39;foolishness&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">BoW_corpus</span><span class="p">)))</span>
+<span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">BoW_corpus</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">),</span>
+                  <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+                  <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;best&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>best</th>
+      <th>it</th>
+      <th>of</th>
+      <th>the</th>
+      <th>times</th>
+      <th>was</th>
+      <th>worst</th>
+      <th>age</th>
+      <th>wisdom</th>
+      <th>foolishness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
+    <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">tfidf</span><span class="p">[</span><span class="n">BoW_corpus</span><span class="p">[</span><span class="n">idx</span><span class="p">]]:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">dictionary</span><span class="p">[</span><span class="nb">id</span><span class="p">]][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>best</th>
+      <th>it</th>
+      <th>of</th>
+      <th>the</th>
+      <th>times</th>
+      <th>was</th>
+      <th>worst</th>
+      <th>age</th>
+      <th>wisdom</th>
+      <th>foolishness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.844727</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.480957</td>
+      <td>0.117126</td>
+      <td>0.844727</td>
+      <td>0.480957</td>
+      <td>0.844727</td>
+      <td>0.844727</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.000000</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.480957</td>
+      <td>0.117126</td>
+      <td>0.844727</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000000</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.000000</td>
+      <td>0.117126</td>
+      <td>0.000000</td>
+      <td>0.480957</td>
+      <td>0.844727</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000000</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.117126</td>
+      <td>0.000000</td>
+      <td>0.117126</td>
+      <td>0.000000</td>
+      <td>0.480957</td>
+      <td>0.000000</td>
+      <td>0.844727</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="tf-idf-in-scikit-learn">
+<h2><span class="section-number">2.2. </span>TF-IDF in scikit-learn<a class="headerlink" href="#tf-idf-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<p>In scikit-learn, the TF-IDF is caculated using the <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>. Its default settings, <code class="docutils literal notranslate"><span class="pre">TfidfTransformer(norm='l2',</span> <span class="pre">use_idf=True,</span> <span class="pre">smooth_idf=True,</span> <span class="pre">sublinear_tf=False)</span></code> the term frequency, the number of times a term occurs in a given document, is multiplied with idf component, which is computed as</p>
+<div class="tabbed-set docutils">
+<input checked="checked" id="9613f399-4ce9-422c-b516-df8c58c51bb1" name="c8e2c137-19be-4b61-bf24-f7a813ea7fa1" type="radio">
+</input><label class="tabbed-label" for="9613f399-4ce9-422c-b516-df8c58c51bb1">
+TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code></label><div class="tabbed-content docutils">
+<div class="math notranslate nohighlight">
+\[idf_t = \log_2\frac{1+n}{1+df_t} + 1\]</div>
+<p>The default parameter <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code> adds “1” to the numerator and denominator as if an extra document was seen containing every term in the collection exactly once, which prevents zero divisions.</p>
+</div>
+<input id="ad1da293-cb74-4d40-9d22-cd566cf24f8f" name="c8e2c137-19be-4b61-bf24-f7a813ea7fa1" type="radio">
+</input><label class="tabbed-label" for="ad1da293-cb74-4d40-9d22-cd566cf24f8f">
+TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=False</span></code></label><div class="tabbed-content docutils">
+<div class="math notranslate nohighlight">
+\[idf_t = \log_2\frac{n}{df_t} + 1\]</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">smooth_idf=False</span></code>, the “1” count is added to the idf instead of the idf’s denominator:</p>
+</div>
+</div>
+<p>Then the resulting tf-idf vectors are then normalized by the Euclidean norm</p>
+<div class="math notranslate nohighlight">
+\[ v_{norm} = \frac{v}{||v||} = \frac{v}{\sqrt{v_1^2 + ... + v_n^2}}\]</div>
+<p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction">scikit-learn Documenation on Feature Extraction (Section 6.2.3.4)</a> for more details.</p>
+<div class="section" id="tfidftransformer-vs-tfidfvectorizer">
+<h3><span class="section-number">2.2.1. </span><a class="reference external" href="https://kavita-ganesan.com/tfidftransformer-tfidfvectorizer-usage-differences/#.YRN0KI4zYuU"><code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> vs <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code></a><a class="headerlink" href="#tfidftransformer-vs-tfidfvectorizer" title="Permalink to this headline">¶</a></h3>
+<p>With <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> you will systematically compute word counts using <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> and then compute the Inverse Document Frequency (IDF) values and only then compute the Tf-idf scores.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> on the contrary, you will do all three steps at once. Under the hood, it computes the word counts, IDF values, and Tf-idf scores all using the same dataset.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> if you need to obtain term frequency (i.e. term counts). We will illustrate the TF-IDF calculation using <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> in this notebook and <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> in the classification notebook after this.</p>
+</div>
+<div class="section" id="id1">
+<h3><span class="section-number">2.2.2. </span>Example Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">tfidf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.        , 0.60735961, 0.        , 0.31694544, 0.31694544,
+        0.31694544, 0.4788493 , 0.31694544, 0.        , 0.        ],
+       [0.        , 0.        , 0.        , 0.31694544, 0.31694544,
+        0.31694544, 0.4788493 , 0.31694544, 0.        , 0.60735961],
+       [0.4788493 , 0.        , 0.        , 0.31694544, 0.31694544,
+        0.31694544, 0.        , 0.31694544, 0.60735961, 0.        ],
+       [0.4788493 , 0.        , 0.60735961, 0.31694544, 0.31694544,
+        0.31694544, 0.        , 0.31694544, 0.        , 0.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># Define labels for the x and y axis</span>
+<span class="n">nrows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tfidf</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">xlabels</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="n">ylabels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nrows</span><span class="p">))]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;D0&#39;, &#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlabels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;age&#39;,
+ &#39;best&#39;,
+ &#39;foolishness&#39;,
+ &#39;it&#39;,
+ &#39;of&#39;,
+ &#39;the&#39;,
+ &#39;times&#39;,
+ &#39;was&#39;,
+ &#39;wisdom&#39;,
+ &#39;worst&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ylabels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;D0&#39;, &#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tfidf</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> 
+          <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gnuplot2</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xlabels</span><span class="p">)),</span> <span class="n">xlabels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">),</span> <span class="n">ylabels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-10-4c5527a74677&gt;:10: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+</pre></div>
+</div>
+<img alt="../_images/tf-idf_30_1.svg" src="../_images/tf-idf_30_1.svg" /></div>
+</div>
+<p>Note, this is a document-term matrix, with tf-idf values for each cell, not a similarity or distance plot.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>You can refer to the code for word similarity from word occurrence matrix to work out the similarities between these documents.</p>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./gensim"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="word-coocur.html" title="previous page"><span class="section-number">1. </span>Word Co-occurence Matrix</a>
+    <a class='right-next' id="next-link" href="classification.html" title="next page"><span class="section-number">3. </span>Document Classification</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

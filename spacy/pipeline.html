@@ -175,7 +175,7 @@
  </li>
  <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="intro.html">
-   Lab03: How spaCy NLP pipeline works
+   Lab03: spaCy NLP pipelines
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2">
@@ -201,6 +201,30 @@
    <li class="toctree-l2">
     <a class="reference internal" href="exercise.html">
      5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/word-coocur.html">
+     1. Word Co-occurence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     2. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     3. Document Classification
     </a>
    </li>
   </ul>
@@ -450,13 +474,13 @@
 <p>spaCy allows you to load a selected set of pipeline components, dis-abling those that aren’t necessary.</p>
 <p>You can do this either when creating a nlp object or disable it after the nlp object is created.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="f5a565db-340c-442f-9a88-081fc9f58489" name="95b2a5c0-64a0-4863-9bf1-d5e4eb4b086b" type="radio">
-</input><label class="tabbed-label" for="f5a565db-340c-442f-9a88-081fc9f58489">
+<input checked="checked" id="4b46e2fa-7fb4-4dd8-9e0e-abbe7be73ff1" name="0704de02-2a04-4bcd-82a3-e95bbee842b8" type="radio">
+</input><label class="tabbed-label" for="4b46e2fa-7fb4-4dd8-9e0e-abbe7be73ff1">
 Disabling when create</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp</span> <span class="pre">=</span> <span class="pre">spacy.load('en_core_web_sm',disable=['parser'])</span></code></p>
 </div>
-<input id="4bad30e8-7011-4b05-b018-9fa580c68ba4" name="95b2a5c0-64a0-4863-9bf1-d5e4eb4b086b" type="radio">
-</input><label class="tabbed-label" for="4bad30e8-7011-4b05-b018-9fa580c68ba4">
+<input id="1f5e0f10-cfeb-4f07-906b-8326a88568b3" name="0704de02-2a04-4bcd-82a3-e95bbee842b8" type="radio">
+</input><label class="tabbed-label" for="1f5e0f10-cfeb-4f07-906b-8326a88568b3">
 Disabling after creation</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('tagger')</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('parser')</span></code></p>

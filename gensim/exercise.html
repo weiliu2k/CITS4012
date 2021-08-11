@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lab 01: Conda Environment and Python Refresher &#8212; CITS4012 Natural Language Processing</title>
+    <title>Exercise &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="1. CITS4012 Base Environment" href="installation.html" />
-    <link rel="prev" title="HOME" href="../intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -94,44 +92,44 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active collapsible-parent">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="installation.html">
+    <a class="reference internal" href="../basics/installation.html">
      1. CITS4012 Base Environment
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="installation_misc.html">
+    <a class="reference internal" href="../basics/installation_misc.html">
      2. CITS4012 MISC Enviornment
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="lab_machines.html">
+    <a class="reference internal" href="../basics/lab_machines.html">
      3. Use Lab Machines
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="python_review.html">
+    <a class="reference internal" href="../basics/python_review.html">
      4. Python Basics
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="iterables.html">
+    <a class="reference internal" href="../basics/iterables.html">
      5. Iterables
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="numpy.html">
+    <a class="reference internal" href="../basics/numpy.html">
      6. Numpy
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="matplotlib.html">
+    <a class="reference internal" href="../basics/matplotlib.html">
      7. Matplotlib
     </a>
    </li>
@@ -208,22 +206,22 @@
   </i>
  </li>
  <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../gensim/intro.html">
+  <a class="reference internal" href="intro.html">
    Lab04: Count-Based Models
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="../gensim/word-coocur.html">
+    <a class="reference internal" href="word-coocur.html">
      1. Word Co-occurence Matrix
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../gensim/tf-idf.html">
+    <a class="reference internal" href="tf-idf.html">
      2. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../gensim/classification.html">
+    <a class="reference internal" href="classification.html">
      3. Document Classification
     </a>
    </li>
@@ -271,9 +269,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/basics/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/gensim/exercise.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -296,35 +294,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#google-colab">
-   Google Colab
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bring-you-own-device">
-   Bring you own device
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#use-lab-machines">
-   Use Lab Machines
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#python-refresher">
-   Python Refresher
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -332,39 +301,8 @@
         
               <div>
                 
-  <div class="section" id="lab-01-conda-environment-and-python-refresher">
-<h1>Lab 01: Conda Environment and Python Refresher<a class="headerlink" href="#lab-01-conda-environment-and-python-refresher" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to CITS4012 Natural Language Processing. NLP is a very practical discipline that requires familiarity with Python, Numpy, Pandas and <a class="reference external" href="https://sunscrapers.com/blog/8-best-python-natural-language-processing-nlp-libraries/">many similar yet distinctive text processing packages</a>. So let’s started by getting used to handle multiple environments as often different NLP toolkits have conflict requirement on package or Python versions. Then we will move on with some refresher of Python and Numpy.</p>
-<div class="section" id="google-colab">
-<h2>Google Colab<a class="headerlink" href="#google-colab" title="Permalink to this headline">¶</a></h2>
-<p>For quick code testing without worrying too much about installing packages, one can use <a class="reference external" href="https://colab.research.google.com/notebooks/">Google Colaboratory</a>, “Colab” for short. If you are not familar with Colab, please follow the intructions to either create a Jupyter Notebook or look through the sample ones.</p>
-</div>
-<div class="section" id="bring-you-own-device">
-<h2>Bring you own device<a class="headerlink" href="#bring-you-own-device" title="Permalink to this headline">¶</a></h2>
-<p>The following two pages contain instructions on how to set up multiple “isolated” Python environments on your own computer. This is the recommended mode of study because as system adminstrator you have a lot more control on what you can install and when, and the kernerls will not disconnect with a time limit like Google Colab. Fluency in managing multiple environments is also a desired learning outcome of this unit. So despite it can be frustrating and tedious at times, it is rewarding to manage your own coding environment. Please do remember to make use of repositories such as Github for regular backups.</p>
-<ol class="simple">
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/installation.html">Setting up CITS4012 Base environment</a></p></li>
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/installation_misc.html">Setting up CITS4012 MISC environment</a></p></li>
-</ol>
-</div>
-<div class="section" id="use-lab-machines">
-<h2>Use Lab Machines<a class="headerlink" href="#use-lab-machines" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/lab_machines.html">Use Lab Machines</a></p></li>
-</ol>
-</div>
-<div class="section" id="python-refresher">
-<h2>Python Refresher<a class="headerlink" href="#python-refresher" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/python_review.html">Python Basics</a></p></li>
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/iterables.html">Iterables</a></p></li>
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/numpy.html">Numpy (for math and matrix operations)</a></p></li>
-<li><p><a class="reference external" href="https://weiliu2k.github.io/CITS4012/basics/matplotlib.html">Matplotlib (for plotting)</a></p></li>
-</ol>
-<p><a class="reference external" href="http://web.stanford.edu/class/cs224n/readings/cs224n-python-review-code-updated.zip">Original Refresher Notebooks credit to Stanford 224n</a></p>
-<div class="toctree-wrapper compound">
-</div>
-</div>
+  <div class="section" id="exercise">
+<h1>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h1>
 </div>
 
     <script type="text/x-thebe-config">
@@ -380,7 +318,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./basics"
+            path: "./gensim"
         },
         predefinedOutput: true
     }
@@ -395,8 +333,6 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">HOME</a>
-    <a class='right-next' id="next-link" href="installation.html" title="next page"><span class="section-number">1. </span>CITS4012 Base Environment</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
