@@ -385,7 +385,78 @@
                 
   <div class="section" id="document-classification">
 <h1><span class="section-number">3. </span>Document Classification<a class="headerlink" href="#document-classification" title="Permalink to this headline">¶</a></h1>
-<p>Now that we have a good understanding of TF-IDF term document matrix, we can treat each term as a feature, and each document (row) as an instance or a training sample to train a classifier. The classifier can be any traditional supervised learning models that deals with tabular shaped data, where one colum stores the labels of each sample record.</p>
+<p>Now that we have a good understanding of TF-IDF term document matrix, we can treat each term as a feature, and each document (row) as an instance or a training sample to train a classifier. The classifier can be any traditional supervised learning models that deals with tabular shaped data, where one column stores the labels of each sample. All other columns are feature variables, in this case, each term/word is a feature. An illustration table is shown below.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>ID</p></th>
+<th class="head"><p>best</p></th>
+<th class="head"><p>it</p></th>
+<th class="head"><p>of</p></th>
+<th class="head"><p>the</p></th>
+<th class="head"><p>times</p></th>
+<th class="head"><p>was</p></th>
+<th class="head"><p>worst</p></th>
+<th class="head"><p>age</p></th>
+<th class="head"><p>wisdom</p></th>
+<th class="head"><p>foolishness</p></th>
+<th class="text-align:right head"><p>class label</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>0</p></td>
+<td><p>0.844727</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.480957</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.844727</p></td>
+<td><p>0.480957</p></td>
+<td><p>0.844727</p></td>
+<td><p>0.844727</p></td>
+<td class="text-align:right"><p>positive</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>1</p></td>
+<td><p>5.000000</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.480957</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.844727</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.000000</p></td>
+<td class="text-align:right"><p>negative</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>2</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.480957</p></td>
+<td><p>0.844727</p></td>
+<td><p>0.000000</p></td>
+<td class="text-align:right"><p>positive</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>3</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.117126</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.480957</p></td>
+<td><p>0.000000</p></td>
+<td><p>0.844727</p></td>
+<td class="text-align:right"><p>negative</p></td>
+</tr>
+</tbody>
+</table>
 <p>The goal of this guide is to explore some of the main ‘scikit-learn’
 tools on a popular classification task: analyzing a collection of text
 documents (newsgroups posts) and classify them into one of the twenty different topics.</p>
@@ -999,7 +1070,11 @@ we trained on a small, 400-document subset of our full training set.</p>
 in the whole training corpus.</p>
 <div class="admonition-your-turn admonition">
 <p class="admonition-title">Your Turn</p>
-<p>Update the code to use TfidfVectorisor. Think about how a classification model or a similarity/distance calculation using TF-IDF might help your chatbot.</p>
+<ol class="simple">
+<li><p>Build classifiers using the <code class="docutils literal notranslate"><span class="pre">raw</span> <span class="pre">count</span></code>, or <code class="docutils literal notranslate"><span class="pre">term</span> <span class="pre">frequency</span></code> to compare the performance against <code class="docutils literal notranslate"><span class="pre">tf-idf</span></code>.</p></li>
+<li><p>Update the code to use TfidfVectorisor.</p></li>
+<li><p>Think about how a classification model or a similarity/distance calculation using <code class="docutils literal notranslate"><span class="pre">tf-idf</span></code> might help your chatbot.</p></li>
+</ol>
 </div>
 </div>
 </div>
