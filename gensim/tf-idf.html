@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. TF-IDF in scikit-learn and Gensim &#8212; CITS4012 Natural Language Processing</title>
+    <title>1. TF-IDF in scikit-learn and Gensim &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Document Classification" href="classification.html" />
-    <link rel="prev" title="1. Word Co-occurence Matrix" href="word-coocur.html" />
+    <link rel="next" title="2. Document Classification" href="classification.html" />
+    <link rel="prev" title="Lab04: Count-Based Models" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -212,19 +212,14 @@
    Lab04: Count-Based Models
   </a>
   <ul class="current collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="word-coocur.html">
-     1. Word Co-occurence Matrix
-    </a>
-   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     2. TF-IDF in scikit-learn and Gensim
+     1. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="classification.html">
-     3. Document Classification
+     2. Document Classification
     </a>
    </li>
   </ul>
@@ -323,44 +318,44 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#tf-idf-in-gensim">
-   2.1. TF-IDF in Gensim
+   1.1. TF-IDF in Gensim
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#step-1-preprocessing">
-     2.1.1. Step 1: Preprocessing
+     1.1.1. Step 1: Preprocessing
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#step-2-create-a-corpus-with-counts">
-     2.1.2. Step 2: Create a corpus with counts
+     1.1.2. Step 2: Create a corpus with counts
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#step-3-calculating-the-tfidf-values">
-     2.1.3. Step 3: Calculating the tfidf values
+     1.1.3. Step 3: Calculating the tfidf values
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#example-code">
-     2.1.4. Example Code
+     1.1.4. Example Code
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#how-do-we-get-the-document-term-matrix">
-     2.1.5. How do we get the document-term matrix
+     1.1.5. How do we get the document-term matrix
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#tf-idf-in-scikit-learn">
-   2.2. TF-IDF in scikit-learn
+   1.2. TF-IDF in scikit-learn
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#tfidftransformer-vs-tfidfvectorizer">
-     2.2.1.
+     1.2.1.
      <code class="docutils literal notranslate">
       <span class="pre">
        TfidfTransformer
@@ -376,7 +371,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
-     2.2.2. Example Code
+     1.2.2. Example Code
     </a>
    </li>
   </ul>
@@ -393,7 +388,7 @@
               <div>
                 
   <div class="section" id="tf-idf-in-scikit-learn-and-gensim">
-<h1><span class="section-number">2. </span>TF-IDF in scikit-learn and Gensim<a class="headerlink" href="#tf-idf-in-scikit-learn-and-gensim" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">1. </span>TF-IDF in scikit-learn and Gensim<a class="headerlink" href="#tf-idf-in-scikit-learn-and-gensim" title="Permalink to this headline">¶</a></h1>
 <p>In a large text corpus, some words will be very present (e.g. “the”, “a”, “is” in English) hence carrying very little meaningful information about the actual contents of the document. If we were to feed the raw count data directly to a classifier those very frequent terms would shadow the frequencies of rarer yet more interesting terms. In other words, frequent words may not provide descriminative or similarity information for</p>
 <ul class="simple">
 <li><p>scoring/ranking documents with regard to a query document, in the context of information retrieval used in search engines;</p></li>
@@ -428,7 +423,7 @@
 </div>
 </div>
 <div class="section" id="tf-idf-in-gensim">
-<h2><span class="section-number">2.1. </span>TF-IDF in Gensim<a class="headerlink" href="#tf-idf-in-gensim" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.1. </span>TF-IDF in Gensim<a class="headerlink" href="#tf-idf-in-gensim" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://radimrehurek.com/gensim/">Gensim</a> is yet another popular libray specialising in statistical analysis of natural language text, in particular useful for Topic Modelling, which we will cover later in the unit.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -445,7 +440,7 @@
 </div>
 </div>
 <div class="section" id="step-1-preprocessing">
-<h3><span class="section-number">2.1.1. </span>Step 1: Preprocessing<a class="headerlink" href="#step-1-preprocessing" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.1.1. </span>Step 1: Preprocessing<a class="headerlink" href="#step-1-preprocessing" title="Permalink to this headline">¶</a></h3>
 <p>Gensim has a different routine in preparing text. It uses <code class="docutils literal notranslate"><span class="pre">gensim.utils.simple_preprocess()</span></code> to tokenise while removing punctuation and turn the tokens into lower cases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -459,7 +454,7 @@
 </div>
 </div>
 <div class="section" id="step-2-create-a-corpus-with-counts">
-<h3><span class="section-number">2.1.2. </span>Step 2: Create a corpus with counts<a class="headerlink" href="#step-2-create-a-corpus-with-counts" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.1.2. </span>Step 2: Create a corpus with counts<a class="headerlink" href="#step-2-create-a-corpus-with-counts" title="Permalink to this headline">¶</a></h3>
 <p>Gensim has a built-in class <code class="docutils literal notranslate"><span class="pre">gensim.corpora.Dictionary</span></code> that has a function <code class="docutils literal notranslate"><span class="pre">doc2bow</span></code> that implements the bag of words idea, which processes the document collection, assigning an id to each unique token, while counting the term frequency of each token in each document. The following code returns each document as a list of tuples, in the form of <code class="docutils literal notranslate"><span class="pre">(term_id,</span> <span class="pre">count)</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -498,11 +493,11 @@
 </div>
 </div>
 <div class="section" id="step-3-calculating-the-tfidf-values">
-<h3><span class="section-number">2.1.3. </span>Step 3: Calculating the tfidf values<a class="headerlink" href="#step-3-calculating-the-tfidf-values" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.1.3. </span>Step 3: Calculating the tfidf values<a class="headerlink" href="#step-3-calculating-the-tfidf-values" title="Permalink to this headline">¶</a></h3>
 <p>A <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html"><code class="docutils literal notranslate"><span class="pre">gensim.models.TfidfModel</span></code></a> object can be constructed using the processed BoW corpus. The <code class="docutils literal notranslate"><span class="pre">smartirs</span></code> parameter stands for SMART information retrieval system, where SMART is an acronym for “System for the Mechanical Analysis and Retrieval of Text”. If interested, you can read more about <a class="reference external" href="https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System">SMART on Wikipedia</a>, which contains a rather comprehensive list of TF-IDF variants.  <code class="docutils literal notranslate"><span class="pre">smartirs</span> <span class="pre">=</span> <span class="pre">ntc</span></code> means the model will use <code class="docutils literal notranslate"><span class="pre">n</span></code> raw term freqency, <code class="docutils literal notranslate"><span class="pre">t</span></code> zero-corrected idf, and <code class="docutils literal notranslate"><span class="pre">c</span></code> cosine for document vector nomalisation. For a list of other letter codes for each of the three tf-idf components, see the tabs or refer to the <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html">original documentation</a>. You do not need to memorise all these variants, but just be aware of the many alternatives in calculating such a seemingly simple value. You can even define your own way of calculating tf and idf to feed into the model constructor.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="ee4f30bd-fb5a-4b01-bd42-a577e7390d6c" name="ca821dd6-e5df-40da-8d19-999744794637" type="radio">
-</input><label class="tabbed-label" for="ee4f30bd-fb5a-4b01-bd42-a577e7390d6c">
+<input checked="checked" id="26d72545-73cf-464a-885b-899949bd86c4" name="1439ad8b-fafe-49da-bfd7-3f0e65f4bc69" type="radio">
+</input><label class="tabbed-label" for="26d72545-73cf-464a-885b-899949bd86c4">
 Term frequency weighing</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>b - binary,</p></li>
@@ -513,8 +508,8 @@ Term frequency weighing</label><div class="tabbed-content docutils">
 <li><p>L - log average.</p></li>
 </ul>
 </div>
-<input id="0a180218-0830-4301-b8d7-f77a2594d02f" name="ca821dd6-e5df-40da-8d19-999744794637" type="radio">
-</input><label class="tabbed-label" for="0a180218-0830-4301-b8d7-f77a2594d02f">
+<input id="7fb2edc4-453d-4a19-ab7e-7e6cddf598c9" name="1439ad8b-fafe-49da-bfd7-3f0e65f4bc69" type="radio">
+</input><label class="tabbed-label" for="7fb2edc4-453d-4a19-ab7e-7e6cddf598c9">
 Document frequency weighting</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>x or n - none,</p></li>
@@ -523,8 +518,8 @@ Document frequency weighting</label><div class="tabbed-content docutils">
 <li><p>p - probabilistic idf.</p></li>
 </ul>
 </div>
-<input id="6d1b903b-fbbc-4521-bae1-bcc04eb9057d" name="ca821dd6-e5df-40da-8d19-999744794637" type="radio">
-</input><label class="tabbed-label" for="6d1b903b-fbbc-4521-bae1-bcc04eb9057d">
+<input id="9cd2df5f-f8b8-458f-8d6c-f88570c58481" name="1439ad8b-fafe-49da-bfd7-3f0e65f4bc69" type="radio">
+</input><label class="tabbed-label" for="9cd2df5f-f8b8-458f-8d6c-f88570c58481">
 Document normalization</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>x or n - none,</p></li>
@@ -536,7 +531,7 @@ Document normalization</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="section" id="example-code">
-<h3><span class="section-number">2.1.4. </span>Example Code<a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.1.4. </span>Example Code<a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -596,7 +591,7 @@ Document normalization</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="section" id="how-do-we-get-the-document-term-matrix">
-<h3><span class="section-number">2.1.5. </span>How do we get the document-term matrix<a class="headerlink" href="#how-do-we-get-the-document-term-matrix" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.1.5. </span>How do we get the document-term matrix<a class="headerlink" href="#how-do-we-get-the-document-term-matrix" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))]</span>
@@ -748,18 +743,18 @@ Document normalization</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="section" id="tf-idf-in-scikit-learn">
-<h2><span class="section-number">2.2. </span>TF-IDF in scikit-learn<a class="headerlink" href="#tf-idf-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.2. </span>TF-IDF in scikit-learn<a class="headerlink" href="#tf-idf-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
 <p>In scikit-learn, the TF-IDF is caculated using the <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>. Its default settings, <code class="docutils literal notranslate"><span class="pre">TfidfTransformer(norm='l2',</span> <span class="pre">use_idf=True,</span> <span class="pre">smooth_idf=True,</span> <span class="pre">sublinear_tf=False)</span></code> the term frequency, the number of times a term occurs in a given document, is multiplied with idf component, which is computed as</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="1f6623eb-ea50-4506-a844-3f32120f6f53" name="06e1bc7b-34f6-425a-92ec-665fcc83c376" type="radio">
-</input><label class="tabbed-label" for="1f6623eb-ea50-4506-a844-3f32120f6f53">
+<input checked="checked" id="94e16370-3fb8-4f41-9020-91932e84ccd2" name="7b5afd9b-7055-4bbc-89fd-579f4facc9a8" type="radio">
+</input><label class="tabbed-label" for="94e16370-3fb8-4f41-9020-91932e84ccd2">
 TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code></label><div class="tabbed-content docutils">
 <div class="math notranslate nohighlight">
 \[idf_t = \log_2\frac{1+n}{1+df_t} + 1\]</div>
 <p>The default parameter <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code> adds “1” to the numerator and denominator as if an extra document was seen containing every term in the collection exactly once, which prevents zero divisions.</p>
 </div>
-<input id="26f925ff-cbaa-4ac9-8ac0-300011e2f1f5" name="06e1bc7b-34f6-425a-92ec-665fcc83c376" type="radio">
-</input><label class="tabbed-label" for="26f925ff-cbaa-4ac9-8ac0-300011e2f1f5">
+<input id="53039578-adf8-453b-89a3-787549dc9f2a" name="7b5afd9b-7055-4bbc-89fd-579f4facc9a8" type="radio">
+</input><label class="tabbed-label" for="53039578-adf8-453b-89a3-787549dc9f2a">
 TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=False</span></code></label><div class="tabbed-content docutils">
 <div class="math notranslate nohighlight">
 \[idf_t = \log_2\frac{n}{df_t} + 1\]</div>
@@ -771,13 +766,13 @@ TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_
 \[ v_{norm} = \frac{v}{||v||} = \frac{v}{\sqrt{v_1^2 + ... + v_n^2}}\]</div>
 <p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction">scikit-learn Documenation on Feature Extraction (Section 6.2.3.4)</a> for more details.</p>
 <div class="section" id="tfidftransformer-vs-tfidfvectorizer">
-<h3><span class="section-number">2.2.1. </span><a class="reference external" href="https://kavita-ganesan.com/tfidftransformer-tfidfvectorizer-usage-differences/#.YRN0KI4zYuU"><code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> vs <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code></a><a class="headerlink" href="#tfidftransformer-vs-tfidfvectorizer" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.2.1. </span><a class="reference external" href="https://kavita-ganesan.com/tfidftransformer-tfidfvectorizer-usage-differences/#.YRN0KI4zYuU"><code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> vs <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code></a><a class="headerlink" href="#tfidftransformer-vs-tfidfvectorizer" title="Permalink to this headline">¶</a></h3>
 <p>With <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> you will systematically compute word counts using <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> and then compute the Inverse Document Frequency (IDF) values and only then compute the Tf-idf scores.</p>
 <p>With <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> on the contrary, you will do all three steps at once. Under the hood, it computes the word counts, IDF values, and Tf-idf scores all using the same dataset.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> if you need to obtain term frequency (i.e. term counts). We will illustrate the TF-IDF calculation using <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> in this notebook and <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code> in the classification notebook after this.</p>
 </div>
 <div class="section" id="id1">
-<h3><span class="section-number">2.2.2. </span>Example Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.2.2. </span>Example Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
@@ -915,8 +910,8 @@ TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="word-coocur.html" title="previous page"><span class="section-number">1. </span>Word Co-occurence Matrix</a>
-    <a class='right-next' id="next-link" href="classification.html" title="next page"><span class="section-number">3. </span>Document Classification</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab04: Count-Based Models</a>
+    <a class='right-next' id="next-link" href="classification.html" title="next page"><span class="section-number">2. </span>Document Classification</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
