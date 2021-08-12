@@ -12,7 +12,7 @@ TF-IDF was originally a term weighting scheme developed for information retrieva
 
 :::{admonition} Term Frequency
 :class: dropdown
-Denoted $tf_{d,t}$, which means term-frequency of term $t$ in document $d$, is the number of times term term $t$ occurs in document $d$.
+Denoted $tf_{d,t}$, which means term-frequency of term $t$ in document $d$, can be referred to as the *raw count*, i.e. the number of times term term $t$ occurs in document $d$; or the raw count normalised (divided) by the total number of words in document $d$.
 :::
 
 :::{admonition} Document Frequency
@@ -197,5 +197,5 @@ plt.show()
 Note, this is a document-term matrix, with tf-idf values for each cell, not a similarity or distance plot. 
 
 :::{admonition} Your Turn
-You can refer to the code for word similarity from word occurrence matrix to work out the similarities between these documents. 
+You can refer to the code for similarity calculation in Resturant Example (Lecture 3) to work out the cosine similarities between these documents. Note this will require `pytorch`.  
 :::
