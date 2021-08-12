@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Document Classification &#8212; CITS4012 Natural Language Processing</title>
+    <title>2. Document Classification &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="2. TF-IDF in scikit-learn and Gensim" href="tf-idf.html" />
+    <link rel="prev" title="1. TF-IDF in scikit-learn and Gensim" href="tf-idf.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -212,18 +212,13 @@
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="word-coocur.html">
-     1. Word Co-occurence Matrix
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="tf-idf.html">
-     2. TF-IDF in scikit-learn and Gensim
+     1. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     3. Document Classification
+     2. Document Classification
     </a>
    </li>
   </ul>
@@ -322,22 +317,22 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loading-the-20-newsgroups-dataset">
-   3.1. Loading the 20 newsgroups dataset
+   2.1. Loading the 20 newsgroups dataset
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#extracting-features-from-text-files">
-   3.2. Extracting features from text files
+   2.2. Extracting features from text files
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#bags-of-words">
-     3.2.1. Bags of words
+     2.2.1. Bags of words
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#tokenizing-text-with-scikit-learn">
-     3.2.2. Tokenizing text with
+     2.2.2. Tokenizing text with
      <code class="docutils literal notranslate">
       <span class="pre">
        scikit-learn
@@ -347,29 +342,29 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#from-occurrences-to-frequencies">
-     3.2.3. From occurrences to frequencies
+     2.2.3. From occurrences to frequencies
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-a-classifier">
-   3.3. Training a classifier
+   2.3. Training a classifier
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#building-a-pipeline">
-   3.4. Building a pipeline
+   2.4. Building a pipeline
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#evaluation-of-the-performance-on-the-test-set">
-   3.5. Evaluation of the performance on the test set
+   2.5. Evaluation of the performance on the test set
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#parameter-tuning-using-grid-search">
-   3.6. Parameter tuning using grid search
+   2.6. Parameter tuning using grid search
   </a>
  </li>
 </ul>
@@ -384,7 +379,7 @@
               <div>
                 
   <div class="section" id="document-classification">
-<h1><span class="section-number">3. </span>Document Classification<a class="headerlink" href="#document-classification" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">2. </span>Document Classification<a class="headerlink" href="#document-classification" title="Permalink to this headline">¶</a></h1>
 <p>Now that we have a good understanding of TF-IDF term document matrix, we can treat each term as a feature, and each document (row) as an instance or a training sample to train a classifier. The classifier can be any traditional supervised learning models that deals with tabular shaped data, where one column stores the labels of each sample. All other columns are feature variables, in this case, each term/word is a feature. An illustration table is shown below.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -469,7 +464,7 @@ documents (newsgroups posts) and classify them into one of the twenty different 
 </ul>
 <p>Original Notebook Credit to <a class="reference external" href="https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html">scikit-learn tutorial on Working with Text Data</a></p>
 <div class="section" id="loading-the-20-newsgroups-dataset">
-<h2><span class="section-number">3.1. </span>Loading the 20 newsgroups dataset<a class="headerlink" href="#loading-the-20-newsgroups-dataset" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Loading the 20 newsgroups dataset<a class="headerlink" href="#loading-the-20-newsgroups-dataset" title="Permalink to this headline">¶</a></h2>
 <p>The dataset is called “Twenty Newsgroups”. Here is the <a class="reference external" href="http://people.csail.mit.edu/jrennie/20Newsgroups/">official
 description</a>:</p>
 <blockquote>
@@ -624,11 +619,11 @@ you wish to select only a subset of samples to quickly train a model and get a
 first idea of the results before re-training on the complete dataset later.</p>
 </div>
 <div class="section" id="extracting-features-from-text-files">
-<h2><span class="section-number">3.2. </span>Extracting features from text files<a class="headerlink" href="#extracting-features-from-text-files" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Extracting features from text files<a class="headerlink" href="#extracting-features-from-text-files" title="Permalink to this headline">¶</a></h2>
 <p>In order to perform machine learning on text documents, we first need to
 turn the text content into numerical feature vectors.</p>
 <div class="section" id="bags-of-words">
-<h3><span class="section-number">3.2.1. </span>Bags of words<a class="headerlink" href="#bags-of-words" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.1. </span>Bags of words<a class="headerlink" href="#bags-of-words" title="Permalink to this headline">¶</a></h3>
 <p>The most intuitive way to do so is to use a bags of words representation:</p>
 <ol class="simple">
 <li><p>Assign a fixed integer id to each word occurring in any document
@@ -653,7 +648,7 @@ only storing the non-zero parts of the feature vectors in memory.</p>
 and <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has built-in support for these structures.</p>
 </div>
 <div class="section" id="tokenizing-text-with-scikit-learn">
-<h3><span class="section-number">3.2.2. </span>Tokenizing text with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code><a class="headerlink" href="#tokenizing-text-with-scikit-learn" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.2. </span>Tokenizing text with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code><a class="headerlink" href="#tokenizing-text-with-scikit-learn" title="Permalink to this headline">¶</a></h3>
 <p>Text preprocessing, tokenizing and filtering of stopwords are all included
 in class: <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>, which builds a dictionary of features and
 transforms documents to feature vectors:</p>
@@ -702,7 +697,7 @@ but doing so would tokenize and vectorize each text file twice.</p>
 </div>
 </div>
 <div class="section" id="from-occurrences-to-frequencies">
-<h3><span class="section-number">3.2.3. </span>From occurrences to frequencies<a class="headerlink" href="#from-occurrences-to-frequencies" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.3. </span>From occurrences to frequencies<a class="headerlink" href="#from-occurrences-to-frequencies" title="Permalink to this headline">¶</a></h3>
 <p>Occurrence count is a good start but there is an issue: longer
 documents will have higher average count values than shorter documents,
 even though they might talk about the same topics.</p>
@@ -775,7 +770,7 @@ in the previous section:</p>
 </div>
 </div>
 <div class="section" id="training-a-classifier">
-<h2><span class="section-number">3.3. </span>Training a classifier<a class="headerlink" href="#training-a-classifier" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>Training a classifier<a class="headerlink" href="#training-a-classifier" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have our features, we can train a classifier to try to predict
 the category of a post. Let’s start with a <code class="docutils literal notranslate"><span class="pre">naïve</span> <span class="pre">Bayes</span> <span class="pre">&lt;naive_bayes&gt;</span></code>
 classifier, which provides a nice baseline for this task. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> includes several
@@ -816,7 +811,7 @@ on the transformers, since they have already been fit to the training set:</p>
 </div>
 </div>
 <div class="section" id="building-a-pipeline">
-<h2><span class="section-number">3.4. </span>Building a pipeline<a class="headerlink" href="#building-a-pipeline" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.4. </span>Building a pipeline<a class="headerlink" href="#building-a-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>In order to make the vectorizer =&gt; transformer =&gt; classifier easier
 to work with, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides a class <code class="docutils literal notranslate"><span class="pre">~sklearn.pipeline.Pipeline</span></code> that behaves
 like a compound classifier:</p>
@@ -849,7 +844,7 @@ We can now train the model with a single command:</p>
 </div>
 </div>
 <div class="section" id="evaluation-of-the-performance-on-the-test-set">
-<h2><span class="section-number">3.5. </span>Evaluation of the performance on the test set<a class="headerlink" href="#evaluation-of-the-performance-on-the-test-set" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.5. </span>Evaluation of the performance on the test set<a class="headerlink" href="#evaluation-of-the-performance-on-the-test-set" title="Permalink to this headline">¶</a></h2>
 <p>Evaluating the predictive accuracy of the model is simply a comparision of the predicted and the actual labels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -968,7 +963,7 @@ optimizer for the same cost function based on the liblinear_ C++
 library.</p>
 </div>
 <div class="section" id="parameter-tuning-using-grid-search">
-<h2><span class="section-number">3.6. </span>Parameter tuning using grid search<a class="headerlink" href="#parameter-tuning-using-grid-search" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.6. </span>Parameter tuning using grid search<a class="headerlink" href="#parameter-tuning-using-grid-search" title="Permalink to this headline">¶</a></h2>
 <p>We’ve already encountered some parameters such as <code class="docutils literal notranslate"><span class="pre">use_idf</span></code> in the
 <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>. Classifiers tend to have many parameters as well;
 e.g., <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> includes a smoothing parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and
@@ -1107,7 +1102,7 @@ in the whole training corpus.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="tf-idf.html" title="previous page"><span class="section-number">2. </span>TF-IDF in scikit-learn and Gensim</a>
+    <a class='left-prev' id="prev-link" href="tf-idf.html" title="previous page"><span class="section-number">1. </span>TF-IDF in scikit-learn and Gensim</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

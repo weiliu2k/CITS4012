@@ -30,6 +30,5 @@
 - file: ./gensim/intro
   numbered: true
   sections:
-    - file: ./gensim/word-coocur
     - file: ./gensim/tf-idf
     - file: ./gensim/classification   

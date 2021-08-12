@@ -213,18 +213,13 @@
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="../gensim/word-coocur.html">
-     1. Word Co-occurence Matrix
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../gensim/tf-idf.html">
-     2. TF-IDF in scikit-learn and Gensim
+     1. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../gensim/classification.html">
-     3. Document Classification
+     2. Document Classification
     </a>
    </li>
   </ul>
@@ -363,19 +358,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="b6281588-b0ef-4ac1-a0b7-0e3fa1427884" name="874d5708-2cfa-4827-a514-0f0a7f7d0ba4" type="radio">
-</input><label class="tabbed-label" for="b6281588-b0ef-4ac1-a0b7-0e3fa1427884">
+<input checked="checked" id="c734499e-744a-45e5-afba-faa4bbd46c69" name="e309c406-760b-45ed-949a-af2db166b764" type="radio">
+</input><label class="tabbed-label" for="c734499e-744a-45e5-afba-faa4bbd46c69">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="18e7d3fe-89d9-49e0-8b1f-dddd0fde98b0" name="874d5708-2cfa-4827-a514-0f0a7f7d0ba4" type="radio">
-</input><label class="tabbed-label" for="18e7d3fe-89d9-49e0-8b1f-dddd0fde98b0">
+<input id="f1383a12-f8c7-4950-b504-c5a91100093a" name="e309c406-760b-45ed-949a-af2db166b764" type="radio">
+</input><label class="tabbed-label" for="f1383a12-f8c7-4950-b504-c5a91100093a">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="67dfaa03-5d4e-40fe-8c25-1bb564ea364d" name="874d5708-2cfa-4827-a514-0f0a7f7d0ba4" type="radio">
-</input><label class="tabbed-label" for="67dfaa03-5d4e-40fe-8c25-1bb564ea364d">
+<input id="bd04dbf0-6430-4ce3-8090-e31aa6faa5dd" name="e309c406-760b-45ed-949a-af2db166b764" type="radio">
+</input><label class="tabbed-label" for="bd04dbf0-6430-4ce3-8090-e31aa6faa5dd">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

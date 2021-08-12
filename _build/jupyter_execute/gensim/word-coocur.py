@@ -72,9 +72,10 @@ from torch.nn import functional as F
 matrix = torch.as_tensor(df.values).float()
 
 # Buit-in torch distrance measures
-# Use the code below to replace the F.cosine_similarity 
-# manhattan_dist = torch.cdist(matrix[i], matrix[j], p=1)
-# euclidean_dist = torch.cdist(matrix[i], matrix[j], p=2)
+# Use the code below to compute p-norm distance between each 
+# pair of the two collections of row vectors.  
+# manhattan_dist = torch.cdist(matrix, matrix, p=1)
+# euclidean_dist = torch.cdist(matrix, matrix, p=2)
 
 dim = matrix.shape 
 nrows = dim[0] 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. Word Co-occurence Matrix &#8212; CITS4012 Natural Language Processing</title>
+    <title>Word Co-occurence Matrix &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. TF-IDF in scikit-learn and Gensim" href="tf-idf.html" />
-    <link rel="prev" title="Lab04: Count-Based Models" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -94,7 +92,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -207,24 +205,19 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 current active collapsible-parent">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="intro.html">
    Lab04: Count-Based Models
   </a>
-  <ul class="current collapse-ul">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     1. Word Co-occurence Matrix
-    </a>
-   </li>
+  <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="tf-idf.html">
-     2. TF-IDF in scikit-learn and Gensim
+     1. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="classification.html">
-     3. Document Classification
+     2. Document Classification
     </a>
    </li>
   </ul>
@@ -323,22 +316,22 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#define-a-co-occurence-function">
-   1.1. Define a co-occurence function
+   Define a co-occurence function
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-data-and-call-function">
-   1.2. Load Data and call function
+   Load Data and call function
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#work-out-cosine-similarity-using-pytorch">
-   1.3. Work out cosine similarity using pyTorch
+   Work out cosine similarity using pyTorch
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#visualising-the-matrix">
-   1.4. Visualising the matrix
+   Visualising the matrix
   </a>
  </li>
 </ul>
@@ -353,7 +346,7 @@
               <div>
                 
   <div class="section" id="word-co-occurence-matrix">
-<h1><span class="section-number">1. </span>Word Co-occurence Matrix<a class="headerlink" href="#word-co-occurence-matrix" title="Permalink to this headline">¶</a></h1>
+<h1>Word Co-occurence Matrix<a class="headerlink" href="#word-co-occurence-matrix" title="Permalink to this headline">¶</a></h1>
 <p>Given a list of sentences and a window size to define co-occurrence, we can work out a symmetric matrix that record the co-occurence frequency between word pairs. Let’s store it as a pandas data frame, so we can use the words as column names.</p>
 <p>Below is a plain Python implementation that does not rely on any NLP packages.</p>
 <div class="cell docutils container">
@@ -366,7 +359,7 @@
 </div>
 </div>
 <div class="section" id="define-a-co-occurence-function">
-<h2><span class="section-number">1.1. </span>Define a co-occurence function<a class="headerlink" href="#define-a-co-occurence-function" title="Permalink to this headline">¶</a></h2>
+<h2>Define a co-occurence function<a class="headerlink" href="#define-a-co-occurence-function" title="Permalink to this headline">¶</a></h2>
 <p>The function takes in a list of sentences and an integer that specifies the size of the window, then return a pandas data frame with word-pair co-occurence frequency.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -400,7 +393,7 @@
 </div>
 </div>
 <div class="section" id="load-data-and-call-function">
-<h2><span class="section-number">1.2. </span>Load Data and call function<a class="headerlink" href="#load-data-and-call-function" title="Permalink to this headline">¶</a></h2>
+<h2>Load Data and call function<a class="headerlink" href="#load-data-and-call-function" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;It was the best of times&quot;</span><span class="p">,</span>
@@ -600,7 +593,7 @@
 <p>Work out the number of tokens now.</p>
 </div>
 <div class="section" id="work-out-cosine-similarity-using-pytorch">
-<h2><span class="section-number">1.3. </span>Work out cosine similarity using pyTorch<a class="headerlink" href="#work-out-cosine-similarity-using-pytorch" title="Permalink to this headline">¶</a></h2>
+<h2>Work out cosine similarity using pyTorch<a class="headerlink" href="#work-out-cosine-similarity-using-pytorch" title="Permalink to this headline">¶</a></h2>
 <p>Note there are plenty of built-in functions for working out how close a pair of words is, using the various similarity (cosine similarity) or distance measures (L1 norm - manhattan/city block distance; L2 norm - euclidean/direct line distance) from a word co-ocurrence matrix. You can also code it yourself without relying on a package.</p>
 <p>Here we have an implementation using pyTorch built-in functions here to give you an early glimpse of how pyTorch works.</p>
 <div class="cell docutils container">
@@ -612,9 +605,10 @@
 <span class="n">matrix</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
 
 <span class="c1"># Buit-in torch distrance measures</span>
-<span class="c1"># Use the code below to replace the F.cosine_similarity </span>
-<span class="c1"># manhattan_dist = torch.cdist(matrix[i], matrix[j], p=1)</span>
-<span class="c1"># euclidean_dist = torch.cdist(matrix[i], matrix[j], p=2)</span>
+<span class="c1"># Use the code below to compute p-norm distance between each </span>
+<span class="c1"># pair of the two collections of row vectors.  </span>
+<span class="c1"># manhattan_dist = torch.cdist(matrix, matrix, p=1)</span>
+<span class="c1"># euclidean_dist = torch.cdist(matrix, matrix, p=2)</span>
 
 <span class="n">dim</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span> 
 <span class="n">nrows</span> <span class="o">=</span> <span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
@@ -657,7 +651,7 @@
 </div>
 </div>
 <div class="section" id="visualising-the-matrix">
-<h2><span class="section-number">1.4. </span>Visualising the matrix<a class="headerlink" href="#visualising-the-matrix" title="Permalink to this headline">¶</a></h2>
+<h2>Visualising the matrix<a class="headerlink" href="#visualising-the-matrix" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -717,8 +711,6 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab04: Count-Based Models</a>
-    <a class='right-next' id="next-link" href="tf-idf.html" title="next page"><span class="section-number">2. </span>TF-IDF in scikit-learn and Gensim</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
