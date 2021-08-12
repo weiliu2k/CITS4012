@@ -496,8 +496,8 @@
 <h3><span class="section-number">1.1.3. </span>Step 3: Calculating the tfidf values<a class="headerlink" href="#step-3-calculating-the-tfidf-values" title="Permalink to this headline">¶</a></h3>
 <p>A <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html"><code class="docutils literal notranslate"><span class="pre">gensim.models.TfidfModel</span></code></a> object can be constructed using the processed BoW corpus. The <code class="docutils literal notranslate"><span class="pre">smartirs</span></code> parameter stands for SMART information retrieval system, where SMART is an acronym for “System for the Mechanical Analysis and Retrieval of Text”. If interested, you can read more about <a class="reference external" href="https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System">SMART on Wikipedia</a>, which contains a rather comprehensive list of TF-IDF variants.  <code class="docutils literal notranslate"><span class="pre">smartirs</span> <span class="pre">=</span> <span class="pre">ntc</span></code> means the model will use <code class="docutils literal notranslate"><span class="pre">n</span></code> raw term freqency, <code class="docutils literal notranslate"><span class="pre">t</span></code> zero-corrected idf, and <code class="docutils literal notranslate"><span class="pre">c</span></code> cosine for document vector nomalisation. For a list of other letter codes for each of the three tf-idf components, see the tabs or refer to the <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html">original documentation</a>. You do not need to memorise all these variants, but just be aware of the many alternatives in calculating such a seemingly simple value. You can even define your own way of calculating tf and idf to feed into the model constructor.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="26d72545-73cf-464a-885b-899949bd86c4" name="1439ad8b-fafe-49da-bfd7-3f0e65f4bc69" type="radio">
-</input><label class="tabbed-label" for="26d72545-73cf-464a-885b-899949bd86c4">
+<input checked="checked" id="281926ac-7dd0-44fb-b614-72e9b1d857de" name="5c305f09-fc2d-44e5-90e7-5b6fa972ff8c" type="radio">
+</input><label class="tabbed-label" for="281926ac-7dd0-44fb-b614-72e9b1d857de">
 Term frequency weighing</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>b - binary,</p></li>
@@ -508,8 +508,8 @@ Term frequency weighing</label><div class="tabbed-content docutils">
 <li><p>L - log average.</p></li>
 </ul>
 </div>
-<input id="7fb2edc4-453d-4a19-ab7e-7e6cddf598c9" name="1439ad8b-fafe-49da-bfd7-3f0e65f4bc69" type="radio">
-</input><label class="tabbed-label" for="7fb2edc4-453d-4a19-ab7e-7e6cddf598c9">
+<input id="64e1f3b7-3b3c-4516-bd9e-0182e2912c30" name="5c305f09-fc2d-44e5-90e7-5b6fa972ff8c" type="radio">
+</input><label class="tabbed-label" for="64e1f3b7-3b3c-4516-bd9e-0182e2912c30">
 Document frequency weighting</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>x or n - none,</p></li>
@@ -518,8 +518,8 @@ Document frequency weighting</label><div class="tabbed-content docutils">
 <li><p>p - probabilistic idf.</p></li>
 </ul>
 </div>
-<input id="9cd2df5f-f8b8-458f-8d6c-f88570c58481" name="1439ad8b-fafe-49da-bfd7-3f0e65f4bc69" type="radio">
-</input><label class="tabbed-label" for="9cd2df5f-f8b8-458f-8d6c-f88570c58481">
+<input id="62674aec-4cb7-4ca3-8028-f391f64a1d44" name="5c305f09-fc2d-44e5-90e7-5b6fa972ff8c" type="radio">
+</input><label class="tabbed-label" for="62674aec-4cb7-4ca3-8028-f391f64a1d44">
 Document normalization</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>x or n - none,</p></li>
@@ -746,15 +746,15 @@ Document normalization</label><div class="tabbed-content docutils">
 <h2><span class="section-number">1.2. </span>TF-IDF in scikit-learn<a class="headerlink" href="#tf-idf-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
 <p>In scikit-learn, the TF-IDF is caculated using the <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>. Its default settings, <code class="docutils literal notranslate"><span class="pre">TfidfTransformer(norm='l2',</span> <span class="pre">use_idf=True,</span> <span class="pre">smooth_idf=True,</span> <span class="pre">sublinear_tf=False)</span></code> the term frequency, the number of times a term occurs in a given document, is multiplied with idf component, which is computed as</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="94e16370-3fb8-4f41-9020-91932e84ccd2" name="7b5afd9b-7055-4bbc-89fd-579f4facc9a8" type="radio">
-</input><label class="tabbed-label" for="94e16370-3fb8-4f41-9020-91932e84ccd2">
+<input checked="checked" id="c06be52d-e3f4-4f5d-9155-797026c6ec48" name="457d48c3-d9e5-4737-91ff-44a5e43ccf85" type="radio">
+</input><label class="tabbed-label" for="c06be52d-e3f4-4f5d-9155-797026c6ec48">
 TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code></label><div class="tabbed-content docutils">
 <div class="math notranslate nohighlight">
 \[idf_t = \log_2\frac{1+n}{1+df_t} + 1\]</div>
 <p>The default parameter <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code> adds “1” to the numerator and denominator as if an extra document was seen containing every term in the collection exactly once, which prevents zero divisions.</p>
 </div>
-<input id="53039578-adf8-453b-89a3-787549dc9f2a" name="7b5afd9b-7055-4bbc-89fd-579f4facc9a8" type="radio">
-</input><label class="tabbed-label" for="53039578-adf8-453b-89a3-787549dc9f2a">
+<input id="f0245f42-9272-4896-9e6a-d5a4b15af74e" name="457d48c3-d9e5-4737-91ff-44a5e43ccf85" type="radio">
+</input><label class="tabbed-label" for="f0245f42-9272-4896-9e6a-d5a4b15af74e">
 TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=False</span></code></label><div class="tabbed-content docutils">
 <div class="math notranslate nohighlight">
 \[idf_t = \log_2\frac{n}{df_t} + 1\]</div>
@@ -876,7 +876,7 @@ TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_
 <p>Note, this is a document-term matrix, with tf-idf values for each cell, not a similarity or distance plot.</p>
 <div class="admonition-your-turn admonition">
 <p class="admonition-title">Your Turn</p>
-<p>You can refer to the code for word similarity from word occurrence matrix to work out the similarities between these documents.</p>
+<p>You can refer to the code for similarity calculation in Resturant Example (Lecture 3) to work out the cosine similarities between these documents. Note this will require <code class="docutils literal notranslate"><span class="pre">pytorch</span></code>.</p>
 </div>
 </div>
 </div>
