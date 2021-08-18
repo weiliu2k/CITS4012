@@ -226,6 +226,30 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/activations.html">
+     3. Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -358,19 +382,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="c734499e-744a-45e5-afba-faa4bbd46c69" name="e309c406-760b-45ed-949a-af2db166b764" type="radio">
-</input><label class="tabbed-label" for="c734499e-744a-45e5-afba-faa4bbd46c69">
+<input checked="checked" id="637f1c2e-87a0-48e8-9b94-d20c2b15d435" name="bed50f0f-25c2-4408-aafe-692db7f07a1c" type="radio">
+</input><label class="tabbed-label" for="637f1c2e-87a0-48e8-9b94-d20c2b15d435">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="f1383a12-f8c7-4950-b504-c5a91100093a" name="e309c406-760b-45ed-949a-af2db166b764" type="radio">
-</input><label class="tabbed-label" for="f1383a12-f8c7-4950-b504-c5a91100093a">
+<input id="b3dbb266-ed49-40cf-97ce-13757b5d7285" name="bed50f0f-25c2-4408-aafe-692db7f07a1c" type="radio">
+</input><label class="tabbed-label" for="b3dbb266-ed49-40cf-97ce-13757b5d7285">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="bd04dbf0-6430-4ce3-8090-e31aa6faa5dd" name="e309c406-760b-45ed-949a-af2db166b764" type="radio">
-</input><label class="tabbed-label" for="bd04dbf0-6430-4ce3-8090-e31aa6faa5dd">
+<input id="abfadc9e-5bcb-452f-ac90-02f599d6fd9a" name="bed50f0f-25c2-4408-aafe-692db7f07a1c" type="radio">
+</input><label class="tabbed-label" for="abfadc9e-5bcb-452f-ac90-02f599d6fd9a">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

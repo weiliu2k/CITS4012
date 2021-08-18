@@ -226,6 +226,30 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/activations.html">
+     3. Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -469,13 +493,13 @@
 <p>spaCy allows you to load a selected set of pipeline components, dis-abling those that aren’t necessary.</p>
 <p>You can do this either when creating a nlp object or disable it after the nlp object is created.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="8a816763-15ab-4472-94cc-bdbad52ee0c5" name="25d522c3-4c48-4b32-a943-74fa862a8e5f" type="radio">
-</input><label class="tabbed-label" for="8a816763-15ab-4472-94cc-bdbad52ee0c5">
+<input checked="checked" id="fe2da9df-5bcc-45a4-9f67-0f4633e489b7" name="aa68e2dc-babf-45e9-90c2-e3f4150bfd0f" type="radio">
+</input><label class="tabbed-label" for="fe2da9df-5bcc-45a4-9f67-0f4633e489b7">
 Disabling when create</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp</span> <span class="pre">=</span> <span class="pre">spacy.load('en_core_web_sm',disable=['parser'])</span></code></p>
 </div>
-<input id="2e7b98a2-8a42-4675-b2a5-b4b9e6a1e20c" name="25d522c3-4c48-4b32-a943-74fa862a8e5f" type="radio">
-</input><label class="tabbed-label" for="2e7b98a2-8a42-4675-b2a5-b4b9e6a1e20c">
+<input id="03cc3d5c-8ac7-4974-a248-750bcda31b5f" name="aa68e2dc-babf-45e9-90c2-e3f4150bfd0f" type="radio">
+</input><label class="tabbed-label" for="03cc3d5c-8ac7-4974-a248-750bcda31b5f">
 Disabling after creation</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('tagger')</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('parser')</span></code></p>

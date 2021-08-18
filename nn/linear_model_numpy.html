@@ -1,0 +1,857 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Linear Models in Numpy &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Introduction to Pytorch Tensors" href="tensors.html" />
+    <link rel="prev" title="Lab05: Introduction to Neural Networks" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab05: Introduction to Neural Networks
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="activations.html">
+     3. Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/nn/linear_model_numpy.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/nn/linear_model_numpy.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   1.1. Data Preparation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generating-a-synthetic-dataset">
+     1.1.1. Generating a synthetic dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#splitting-the-dataset-to-training-and-validation">
+     1.1.2. Splitting the dataset to training and validation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent">
+   1.2. Gradient Descent
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-0-random-initialization">
+     1.2.1. Step 0: Random Initialization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-1-compute-predication">
+     1.2.2. Step 1: Compute Predication
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-2-compute-the-loss">
+     1.2.3. Step 2 - Compute the Loss
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-3-compute-the-gradient">
+     1.2.4. Step 3 - Compute the gradient
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-4-update-the-parameters">
+     1.2.5. Step 4 - Update the Parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-5-rinse-and-repeat">
+     1.2.6. Step 5 - Rinse and Repeat!
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sanity-check-using-scikit-learn">
+   1.3. Sanity Check using Scikit-Learn
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="linear-models-in-numpy">
+<h1><span class="section-number">1. </span>Linear Models in Numpy<a class="headerlink" href="#linear-models-in-numpy" title="Permalink to this headline">¶</a></h1>
+<p>Despite the simplicity, linear models can be applicable in many scenarios. For example, a traditional model for document sentiment classification can be achieved by collecting a set of features (e.g. fequency of positive and negative words by looking up <a class="reference external" href="https://github.com/aesuli/SentiWordNet">SentiWordNet</a>, and model the sentiment score as a linear combination of the features.  Linear models can be seen as the simplest type of neural networks without non-linear activation functions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="data-preparation">
+<h2><span class="section-number">1.1. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generating-a-synthetic-dataset">
+<h3><span class="section-number">1.1.1. </span>Generating a synthetic dataset<a class="headerlink" href="#generating-a-synthetic-dataset" title="Permalink to this headline">¶</a></h3>
+<p>We define a linear line <span class="math notranslate nohighlight">\(y = 2x +1\)</span> and add random small guassian noise for the synthetic dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">true_w</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="c1"># Data Generation</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Guassian noise to add some randomness to y</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">true_b</span> <span class="o">+</span> <span class="n">true_w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">epsilon</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The epsilon is in the range of [</span><span class="si">%3.2f</span><span class="s2">, </span><span class="si">%3.2f</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">epsilon</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The epsilon is in the range of [-0.20, 0.25]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="splitting-the-dataset-to-training-and-validation">
+<h3><span class="section-number">1.1.2. </span>Splitting the dataset to training and validation<a class="headerlink" href="#splitting-the-dataset-to-training-and-validation" title="Permalink to this headline">¶</a></h3>
+<p>Next, let’s split our synthetic data into train and validation sets, shuffling the array of indexes and using the first 80 shuffled points for training, the rest of 20 for validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shuffles the indices</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+<span class="c1"># Uses first 80 random indices for train</span>
+<span class="n">train_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="o">*.</span><span class="mi">8</span><span class="p">)]</span>
+<span class="c1"># Uses the remaining indices for validation</span>
+<span class="n">val_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="o">*.</span><span class="mi">8</span><span class="p">):]</span>
+<span class="c1"># Generates train and validation sets</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+<span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">val_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">val_idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">figure1</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Generated Data - Train&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Generated Data - Validation&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">figure1</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 864x432 with 2 Axes&gt;,
+ array([&lt;AxesSubplot:title={&#39;center&#39;:&#39;Generated Data - Train&#39;}, xlabel=&#39;x&#39;, ylabel=&#39;y&#39;&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;Generated Data - Validation&#39;}, xlabel=&#39;x&#39;, ylabel=&#39;y&#39;&gt;],
+       dtype=object))
+</pre></div>
+</div>
+<img alt="../_images/linear_model_numpy_9_1.svg" src="../_images/linear_model_numpy_9_1.svg" /></div>
+</div>
+</div>
+</div>
+<div class="section" id="gradient-descent">
+<h2><span class="section-number">1.2. </span>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-0-random-initialization">
+<h3><span class="section-number">1.2.1. </span>Step 0: Random Initialization<a class="headerlink" href="#step-0-random-initialization" title="Permalink to this headline">¶</a></h3>
+<p>For training a model, you need to randomly initialize the parameters/weights (we
+have only two, <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(w\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 0 - Initializes parameters &quot;b&quot; and &quot;w&quot; randomly</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.49671415] [-0.1382643]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-1-compute-predication">
+<h3><span class="section-number">1.2.2. </span>Step 1: Compute Predication<a class="headerlink" href="#step-1-compute-predication" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - Computes our model&#39;s predicted output - forward pass</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train</span>
+<span class="n">yhat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.390075  ],
+       [0.4879263 ],
+       [0.37737776],
+       [0.4931996 ],
+       [0.39550552],
+       [0.48647642],
+       [0.46923887],
+       [0.4537164 ],
+       [0.43142369],
+       [0.36265521],
+       [0.47984062],
+       [0.38954095],
+       [0.38579895],
+       [0.39583566],
+       [0.48320959],
+       [0.47115538],
+       [0.47514234],
+       [0.49386805],
+       [0.36026292],
+       [0.41053427],
+       [0.39881299],
+       [0.41404593],
+       [0.36925186],
+       [0.40856271],
+       [0.45787094],
+       [0.46093412],
+       [0.48017854],
+       [0.39591849],
+       [0.36551716],
+       [0.41271239],
+       [0.41910955],
+       [0.42843985],
+       [0.47157425],
+       [0.45919627],
+       [0.36261025],
+       [0.46735523],
+       [0.47135586],
+       [0.37695291],
+       [0.44492863],
+       [0.45644756],
+       [0.38494166],
+       [0.48868326],
+       [0.38161705],
+       [0.42167866],
+       [0.38994027],
+       [0.3740443 ],
+       [0.4844788 ],
+       [0.49046083],
+       [0.41480437],
+       [0.40210915],
+       [0.39809786],
+       [0.49195945],
+       [0.41360141],
+       [0.38396495],
+       [0.43585678],
+       [0.45175291],
+       [0.38815235],
+       [0.39152474],
+       [0.42824886],
+       [0.4691064 ],
+       [0.3652643 ],
+       [0.45632098],
+       [0.47742713],
+       [0.45361564],
+       [0.39898102],
+       [0.4806936 ],
+       [0.44715114],
+       [0.49595064],
+       [0.46961672],
+       [0.37299147],
+       [0.43365596],
+       [0.42415907],
+       [0.47722936],
+       [0.48771984],
+       [0.47313675],
+       [0.38212934],
+       [0.45173258],
+       [0.36681499],
+       [0.45096277],
+       [0.44605939]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-2-compute-the-loss">
+<h3><span class="section-number">1.2.3. </span>Step 2 - Compute the Loss<a class="headerlink" href="#step-2-compute-the-loss" title="Permalink to this headline">¶</a></h3>
+<p>For a regression problem, the loss is given by the Mean Squared Error (MSE), that
+is, the average of all squared errors, that is, the average of all squared differences between labels (<span class="math notranslate nohighlight">\(y\)</span>) and predictions (<span class="math notranslate nohighlight">\(b + wx\)</span>).</p>
+<p>For a regression problem, the loss is given by the Mean Squared Error (MSE), that
+is, the average of all squared errors, that is, the average of all squared differences between labels (y) and predictions (b + wx).</p>
+<p>\begin{flalign}
+MSE &amp; =\frac{1}{n} \sum_{i=1}^n error_i^2 \
+&amp; = \frac{1}{n} \sum_{i=1}^n (\hat{y}<em>i - y_i)
+^2\
+&amp; = \frac{1}{n} \sum</em>{i=1}^n (b + wx_i - y_i)^2\
+\end{flalign}</p>
+<p>In the code below, we are using all data points of the training set to compute the
+loss, so <span class="math notranslate nohighlight">\(n = N = 80\)</span>, meaning we are performing batch gradient descent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2 - Computing the loss</span>
+<span class="c1"># We are using ALL data points, so this is BATCH gradient</span>
+<span class="c1"># descent. </span>
+
+<span class="c1"># How wrong is our model? This is the error!</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">yhat</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="c1"># It is a regression, so it computes mean squared error (MSE)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.7421577700550976
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown tip admonition">
+<p class="admonition-title">Batch, Mini-batch, and Stochastic Gradient Descent</p>
+<ul class="simple">
+<li><p>if we use all points in the training set (n = N) to compute the
+loss, we are performing a batch gradient descent</p></li>
+<li><p>if we were to use a single point (n = 1) each time, it would be a
+stochastic gradient descent</p></li>
+<li><p>anything else (n) in-between 1 and N characterizes a minibatch
+gradient descent</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="step-3-compute-the-gradient">
+<h3><span class="section-number">1.2.4. </span>Step 3 - Compute the gradient<a class="headerlink" href="#step-3-compute-the-gradient" title="Permalink to this headline">¶</a></h3>
+<p>A gradient is a partial derivative — why partial? Because one computes it with
+respect to (w.r.t.) a single parameter. We have two parameters, b and w, so we must
+compute two partial derivatives.</p>
+<p>A derivative tells you how much a given quantity changes when you slightly vary
+some other quantity. In our case, how much does our MSE loss change when we
+vary each one of our two parameters separately?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot; parameters</span>
+<span class="n">b_grad</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">w_grad</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_train</span> <span class="o">*</span> <span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b_grad</span><span class="p">,</span> <span class="n">w_grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-3.044811379650508 -1.8337537171510832
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-4-update-the-parameters">
+<h3><span class="section-number">1.2.5. </span>Step 4 - Update the Parameters<a class="headerlink" href="#step-4-update-the-parameters" title="Permalink to this headline">¶</a></h3>
+<p>In the final step, we use the gradients to update the parameters. Since we are
+trying to minimize our losses, we reverse the sign of the gradient for the update.
+There is still another (hyper-)parameter to consider: the learning rate, denoted by
+the Greek letter alpha, which is the multiplicative factor
+that we need to apply to the gradient for the parameter update.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sets learning rate - this is &quot;eta&quot; ~ the &quot;n&quot;-like Greek letter</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<span class="c1"># Step 4 - Updates parameters using gradients and</span>
+<span class="c1"># the learning rate</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">b_grad</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">w_grad</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.80119529] [0.04511107]
+[1.10567643] [0.22848644]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-5-rinse-and-repeat">
+<h3><span class="section-number">1.2.6. </span>Step 5 - Rinse and Repeat!<a class="headerlink" href="#step-5-rinse-and-repeat" title="Permalink to this headline">¶</a></h3>
+<p>Now we use the updated parameters to go back to Step 1 and restart the process.</p>
+<div class="admonition-definition-of-epoch admonition">
+<p class="admonition-title">Definition of Epoch</p>
+<p>An epoch is complete whenever every point in the training set
+(N) has already been used in all steps: forward pass, computing
+loss, computing gradients, and updating parameters.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="c1"># Step 1 - Computes model&#39;s predicted output - forward pass</span>
+    <span class="n">yhat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train</span>
+    
+    <span class="c1"># Step 2 - Computes the loss</span>
+    <span class="c1"># We are using ALL data points, so this is BATCH gradient</span>
+    <span class="c1"># descent.</span>
+    <span class="c1"># How wrong is our model? This is the error!</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">yhat</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> 
+    <span class="c1"># It is a regression, so it computes mean squared error (MSE)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
+    <span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot; parameters</span>
+    <span class="n">b_grad</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">w_grad</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_train</span> <span class="o">*</span> <span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Step 4 - Updates parameters using gradients and</span>
+    <span class="c1"># the learning rate</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">b_grad</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">w_grad</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.02354093] [1.96896412]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sanity-check-using-scikit-learn">
+<h2><span class="section-number">1.3. </span>Sanity Check using Scikit-Learn<a class="headerlink" href="#sanity-check-using-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<p>Just to make sure we haven’t done any mistakes in our code, we can use Scikit-
+Learn’s Linear Regression to fit the model and compare the coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="c1"># Sanity Check: do we get the same results as our</span>
+<span class="c1"># gradient descent?</span>
+<span class="n">linr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">linr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">linr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">linr</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.02354075] [1.96896447]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./nn"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab05: Introduction to Neural Networks</a>
+    <a class='right-next' id="next-link" href="tensors.html" title="next page"><span class="section-number">2. </span>Introduction to Pytorch Tensors</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

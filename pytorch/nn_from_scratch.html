@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. Neural net from scratch (no torch.nn) &#8212; CITS4012 Natural Language Processing</title>
+    <title>Neural net from scratch (no torch.nn) &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="5. Using torch.nn.functional" href="nn_torch.nn.html" />
-    <link rel="prev" title="3. Computational Graph" href="computational_graph.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -90,74 +88,49 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro.html">
-   Welcome to your Jupyter Book
+   HOME
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active collapsible-parent">
-  <a class="reference internal" href="intro.html">
-   Introduction to Pytorch
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
   </a>
-  <ul class="current collapse-ul">
+  <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="installing.html">
-     1. Installing Pytorch
-    </a>
-   </li>
-   <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="tensors.html">
-     2. Tensors
-    </a>
-    <ul class="collapse-ul">
-     <li class="toctree-l3">
-      <a class="reference internal" href="tensor_types.html">
-       1. Types of Tensor
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="create_tensors.html">
-       2. Creating Tensors
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="tensor_operations.html">
-       3. Tensor Operations
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="tensor_slicing.html">
-       4. Tensor Slicing, Indexing and Joining
-      </a>
-     </li>
-    </ul>
-    <i class="fas fa-chevron-down">
-    </i>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="cuda.html">
-     2. CUDA tensors
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="computational_graph.html">
-     3. Computational Graph
-    </a>
-   </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     4. Neural net from scratch (no
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       torch.nn
-      </span>
-     </code>
-     )
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="nn_torch.nn.html">
-     5. Using torch.nn.functional
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
     </a>
    </li>
   </ul>
@@ -165,32 +138,110 @@
   </i>
  </li>
  <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../nn/content.html">
-   Introduction to Neural Networks
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
   </a>
   <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../nn/activations.html">
-     1. Activation Functions and their derivatives
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../content.html">
-   Content in Jupyter Book
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../markdown.html">
-     Markdown Files
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../notebooks.html">
-     Activation Functions and their derivatives
+     3. Activation Functions and their derivatives
     </a>
    </li>
   </ul>
@@ -289,7 +340,7 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#log-softmax">
-   4.1. log_softmax
+   log_softmax
   </a>
  </li>
 </ul>
@@ -304,7 +355,7 @@
               <div>
                 
   <div class="section" id="neural-net-from-scratch-no-torch-nn">
-<h1><span class="section-number">4. </span>Neural net from scratch (no <code class="docutils literal notranslate"><span class="pre">torch.nn</span></code>)<a class="headerlink" href="#neural-net-from-scratch-no-torch-nn" title="Permalink to this headline">¶</a></h1>
+<h1>Neural net from scratch (no <code class="docutils literal notranslate"><span class="pre">torch.nn</span></code>)<a class="headerlink" href="#neural-net-from-scratch-no-torch-nn" title="Permalink to this headline">¶</a></h1>
 <p>Modified from <a class="reference external" href="https://pytorch.org/tutorials/beginner/nn_tutorial.html">the original post by Jeremy Howard, <code class="docutils literal notranslate"><span class="pre">fast.ai</span> <span class="pre">&lt;https://www.fast.ai&gt;</span></code>_. Thanks to Rachel Thomas and Francisco Ingham.</a></p>
 <p>Let’s first create a model using nothing but PyTorch tensor operations. We’re assuming
 you’re already familiar with the basics of neural networks. (If you’re not, you can
@@ -370,7 +421,7 @@ so forth, you can easily write your own using plain python. PyTorch will
 even create fast GPU or vectorized CPU code for your function
 automatically.</p>
 <div class="section" id="log-softmax">
-<h2><span class="section-number">4.1. </span>log_softmax<a class="headerlink" href="#log-softmax" title="Permalink to this headline">¶</a></h2>
+<h2>log_softmax<a class="headerlink" href="#log-softmax" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[LogSoftmax(x_i) = \log (\frac{e^{x_i}}{\sum_{j}e^{x_j}}) = \log e^{x_i} - log \sum_{j} e^{x_j} = x_i - log \sum_{j} e^{x_j} \]</div>
 <img src="../_images/negative_log_likelihood.jpeg" width="80%">
@@ -592,8 +643,6 @@ have increased, and they have.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="computational_graph.html" title="previous page"><span class="section-number">3. </span>Computational Graph</a>
-    <a class='right-next' id="next-link" href="nn_torch.nn.html" title="next page"><span class="section-number">5. </span>Using torch.nn.functional</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
@@ -602,7 +651,7 @@ have increased, and they have.</p>
         
           By A/Prof. Wei Liu<br/>
         
-            &copy; Copyright 2021.<br/>
+            &copy; Copyright UWA 2021.<br/>
       </p>
     </div>
   </footer>

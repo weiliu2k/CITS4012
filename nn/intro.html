@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction to Neural Networks (draft) &#8212; CITS4012 Natural Language Processing</title>
+    <title>Lab05: Introduction to Neural Networks and Pytorch &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,6 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Linear Models in Numpy" href="linear_model_numpy.html" />
+    <link rel="prev" title="2. Document Classification" href="../gensim/classification.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -224,6 +226,30 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Lab05: Introduction to Neural Networks and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="activations.html">
+     3. Activation Functions and their derivatives
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -296,10 +322,13 @@
         
               <div>
                 
-  <div class="section" id="introduction-to-neural-networks-draft">
-<h1>Introduction to Neural Networks (draft)<a class="headerlink" href="#introduction-to-neural-networks-draft" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="lab05-introduction-to-neural-networks-and-pytorch">
+<h1>Lab05: Introduction to Neural Networks and Pytorch<a class="headerlink" href="#lab05-introduction-to-neural-networks-and-pytorch" title="Permalink to this headline">¶</a></h1>
+<p>In this lab, we will introduce the basic training steps of neural networks by starting with simple linear models in Numpy. Then we will introduce basic Pytorch data types, and non-linearity by looking into activation functions, to pave the way for our future labs.</p>
 <div class="figure align-default">
 <a class="bg-primary mb-1 reference internal image-reference" href="../_images/artificial_neuron.gif"><img alt="Atifical Neuron Animation" class="bg-primary mb-1" src="../_images/artificial_neuron.gif" style="width: 400px;" /></a>
+</div>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 
@@ -331,6 +360,8 @@
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="../gensim/classification.html" title="previous page"><span class="section-number">2. </span>Document Classification</a>
+    <a class='right-next' id="next-link" href="linear_model_numpy.html" title="next page"><span class="section-number">1. </span>Linear Models in Numpy</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
