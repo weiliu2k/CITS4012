@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="2. Introduction to Pytorch Tensors" href="tensors.html" />
-    <link rel="prev" title="Lab05: Introduction to Neural Networks" href="intro.html" />
+    <link rel="prev" title="Lab05: Introduction to Neural Networks and Pytorch" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -228,7 +228,7 @@
  </li>
  <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="intro.html">
-   Lab05: Introduction to Neural Networks
+   Lab05: Introduction to Neural Networks and Pytorch
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2 current active">
@@ -413,6 +413,7 @@
   <div class="section" id="linear-models-in-numpy">
 <h1><span class="section-number">1. </span>Linear Models in Numpy<a class="headerlink" href="#linear-models-in-numpy" title="Permalink to this headline">¶</a></h1>
 <p>Despite the simplicity, linear models can be applicable in many scenarios. For example, a traditional model for document sentiment classification can be achieved by collecting a set of features (e.g. fequency of positive and negative words by looking up <a class="reference external" href="https://github.com/aesuli/SentiWordNet">SentiWordNet</a>, and model the sentiment score as a linear combination of the features.  Linear models can be seen as the simplest type of neural networks without non-linear activation functions.</p>
+<p>Notebook adapted from <a class="reference external" href="https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter01.ipynb">Github of Deep Learning with Pytorch: Step by Step</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -723,8 +724,8 @@ that we need to apply to the gradient for the parameter update.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.80119529] [0.04511107]
-[1.10567643] [0.22848644]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.49671415] [-0.1382643]
+[0.80119529] [0.04511107]
 </pre></div>
 </div>
 </div>
@@ -828,7 +829,7 @@ Learn’s Linear Regression to fit the model and compare the coefficients.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab05: Introduction to Neural Networks</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab05: Introduction to Neural Networks and Pytorch</a>
     <a class='right-next' id="next-link" href="tensors.html" title="next page"><span class="section-number">2. </span>Introduction to Pytorch Tensors</a>
 
     </div>
