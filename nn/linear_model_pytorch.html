@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Linear Models in Pytorch &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2. Introduction to Pytorch Tensors" href="tensors.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab05: Introduction to Neural Networks and Pytorch
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3. Linear Models in Pytorch
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/nn/linear_model_pytorch.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/nn/linear_model_pytorch.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   3.1. Data Preparation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-parameters">
+   3.2. Creating Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#autograd">
+   3.3. Autograd
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#backward">
+     3.3.1.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       backward()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grad">
+     3.3.2. grad
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#accumulated-gradients">
+     3.3.3. Accumulated Gradients
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zero">
+     3.3.4. zero_
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#put-it-all-together">
+   3.4. Put it all together
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="linear-models-in-pytorch">
+<h1><span class="section-number">3. </span>Linear Models in Pytorch<a class="headerlink" href="#linear-models-in-pytorch" title="Permalink to this headline">¶</a></h1>
+<p>Now that we have some basic knowledge of Torch tensors, let’s see how we can implement the linear model earlier using Pytorch.</p>
+<div class="section" id="data-preparation">
+<h2><span class="section-number">3.1. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
+<p>Let’s first repeat the same data preparation process, first generating a synthetic dataset of 100 data points, then perform an 80%:20% split as training and validation dataset, respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">true_w</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="c1"># Data Generation</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Guassian noise to add some randomness to y</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">true_b</span> <span class="o">+</span> <span class="n">true_w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Shuffles the indices</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+<span class="c1"># Uses first 80 random indices for train</span>
+<span class="n">train_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="o">*.</span><span class="mi">8</span><span class="p">)]</span>
+<span class="c1"># Uses the remaining indices for validation</span>
+<span class="n">val_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="o">*.</span><span class="mi">8</span><span class="p">):]</span>
+<span class="c1"># Generates train and validation sets</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+<span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">val_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">val_idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>No matter you have a GPU or not, the best practice is to use <code class="docutils literal notranslate"><span class="pre">.to(device)</span></code> method to make your code GPU ready.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span>
+<span class="c1"># Our data was in Numpy arrays, but we need to transform them</span>
+<span class="c1"># into PyTorch&#39;s Tensors and then we send them to the</span>
+<span class="c1"># chosen device</span>
+<span class="n">x_train_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">y_train_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we can see the difference - notice that .type() is more</span>
+<span class="c1"># useful since it also tells us WHERE the tensor is (device)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x_train</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">x_train_tensor</span><span class="p">),</span> <span class="n">x_train_tensor</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.ndarray&#39;&gt; &lt;class &#39;torch.Tensor&#39;&gt; torch.cuda.FloatTensor
+</pre></div>
+</div>
+</div>
+</div>
+<p>We normally can turn a tensor back to a <em>Numpy</em> array using <code class="docutils literal notranslate"><span class="pre">sourceTensor.numpy()</span></code>, but now we have GPU tensor, which cannot be directly handled by Numpy. We have turn it back to a CPU tensor first before converting to a Numpy array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">back_to_numpy</span> <span class="o">=</span> <span class="n">x_train_tensor</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Good Practice</p>
+<p>It is a good practice to always first <code class="docutils literal notranslate"><span class="pre">cpu()</span></code> and then <code class="docutils literal notranslate"><span class="pre">numpy()</span></code>, even if you are using a CPU. It follows the same principle of to(device): you may share your code with others who may be using a GPU.</p>
+</div>
+</div>
+<div class="section" id="creating-parameters">
+<h2><span class="section-number">3.2. </span>Creating Parameters<a class="headerlink" href="#creating-parameters" title="Permalink to this headline">¶</a></h2>
+<p>What distinguishes a tensor used for training data (or validation, or test) — like the ones we’ve just created — from a tensor used as a (trainable) parameter/weight?</p>
+<p>The latter (a parameter) requires the computation of its gradients, so we can update their values (the parameters’ values).</p>
+<p>In Pytorch, we use the  <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> argument to tell PyTorch to compute gradients for us.</p>
+<p><strong>A tensor for a learnable parameter requires a gradient!</strong></p>
+<div class="tip admonition">
+<p class="admonition-title">Good Practice</p>
+<p>To make GPU ready code, we should specify the device at the moment of creation to avoid shadowing the gradient requirement.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can specify the device at the moment of creation</span>
+<span class="c1"># RECOMMENDED!</span>
+<span class="c1"># Step 0 - Initializes parameters &quot;b&quot; and &quot;w&quot; randomly</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.1940], device=&#39;cuda:0&#39;, requires_grad=True) tensor([0.1391], device=&#39;cuda:0&#39;, requires_grad=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that even with the same seed value, because <em>Pytorch</em> and <em>Numpy</em> are two different packages, they have different implemenations of the <code class="docutils literal notranslate"><span class="pre">randn()</span></code> method, thus different results.</p>
+</div>
+</div>
+<div class="section" id="autograd">
+<h2><span class="section-number">3.3. </span>Autograd<a class="headerlink" href="#autograd" title="Permalink to this headline">¶</a></h2>
+<p>In Pytorch, we don’t need to worry about partial derivatives, chain rule, or anything like it. Autograd is PyTorch’s automatic differentiation package.</p>
+<div class="section" id="backward">
+<h3><span class="section-number">3.3.1. </span><code class="docutils literal notranslate"><span class="pre">backward()</span></code><a class="headerlink" href="#backward" title="Permalink to this headline">¶</a></h3>
+<p>To tell PyTorch to compute all gradients, we use the <code class="docutils literal notranslate"><span class="pre">backward()</span></code> method. It will compute gradients for all (requiring gradient) tensors involved in the computation of a given variable.</p>
+<p>Recall that we need to compute the partial derivatives of the loss function w.r.t. our parameters. Hence, we need to invoke the <code class="docutils literal notranslate"><span class="pre">backward()</span></code> method from the corresponding Python variable: <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - Computes our model&#39;s predicted output - forward pass</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train_tensor</span>
+<span class="c1"># Step 2 - Computes the loss</span>
+<span class="c1"># We are using ALL data points, so this is BATCH gradient</span>
+<span class="c1"># descent. How wrong is our model? That&#39;s the error!</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">yhat</span> <span class="o">-</span> <span class="n">y_train_tensor</span><span class="p">)</span>
+<span class="c1"># It is a regression, so it computes mean squared error (MSE)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot; parameters</span>
+<span class="c1"># No more manual computation of gradients!</span>
+<span class="c1"># b_grad = 2 * error.mean()</span>
+<span class="c1"># w_grad = 2 * (x_tensor * error).mean()</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> to both <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">w</span></code>, so they are obviously included in the list of gradient calculation. We use them both to compute <code class="docutils literal notranslate"><span class="pre">yhat</span></code>, so it will also make it to the list. Then we use <code class="docutils literal notranslate"><span class="pre">yhat</span></code> to compute the <code class="docutils literal notranslate"><span class="pre">error</span></code>, so <code class="docutils literal notranslate"><span class="pre">error</span></code> is also on the list.</p>
+<p><code class="docutils literal notranslate"><span class="pre">x_train_tensor</span></code> and <code class="docutils literal notranslate"><span class="pre">y_train_tensor</span></code> however, are not gradient-requiring tensors, so <code class="docutils literal notranslate"><span class="pre">backward()</span></code> does not care about them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">yhat</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train_tensor</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">x_train_tensor</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True True True True
+False False
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="grad">
+<h3><span class="section-number">3.3.2. </span>grad<a class="headerlink" href="#grad" title="Permalink to this headline">¶</a></h3>
+<p>We can inspect the actual values of the gradients by looking at the <code class="docutils literal notranslate"><span class="pre">grad</span></code> attribute of a tensor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-3.3881], device=&#39;cuda:0&#39;) tensor([-1.9439], device=&#39;cuda:0&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="accumulated-gradients">
+<h3><span class="section-number">3.3.3. </span>Accumulated Gradients<a class="headerlink" href="#accumulated-gradients" title="Permalink to this headline">¶</a></h3>
+<p>Let’s run the backward function again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1 - Computes our model&#39;s predicted output - forward pass</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train_tensor</span>
+<span class="c1"># Step 2 - Computes the loss</span>
+<span class="c1"># We are using ALL data points, so this is BATCH gradient</span>
+<span class="c1"># descent. How wrong is our model? That&#39;s the error!</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">yhat</span> <span class="o">-</span> <span class="n">y_train_tensor</span><span class="p">)</span>
+<span class="c1"># It is a regression, so it computes mean squared error (MSE)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot; parameters</span>
+<span class="c1"># No more manual computation of gradients!</span>
+<span class="c1"># b_grad = 2 * error.mean()</span>
+<span class="c1"># w_grad = 2 * (x_tensor * error).mean()</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-6.7762], device=&#39;cuda:0&#39;) tensor([-3.8878], device=&#39;cuda:0&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If we ran this above code again, the gradient of <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(w\)</span> exactly doubled. This is because Pytorch implements an accumlated gradients to circumvent hardware limitations. If a minibatch is still too big to fit in memory, we can split it further into “subminibatch”, that’s when the aggregated gradients become useful.</p>
+</div>
+</div>
+<div class="section" id="zero">
+<h3><span class="section-number">3.3.4. </span>zero_<a class="headerlink" href="#zero" title="Permalink to this headline">¶</a></h3>
+<p>For training problem that does not have memory limitations, every time we use the gradients to update the parameters, we need to zero the
+gradients afterward. This what <code class="docutils literal notranslate"><span class="pre">zero_()</span></code> is good for.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This code will be placed _after_ Step 4</span>
+<span class="c1"># (updating the parameters)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0.], device=&#39;cuda:0&#39;), tensor([0.], device=&#39;cuda:0&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In PyTorch, every method that ends with an underscore (_), like
+the <code class="docutils literal notranslate"><span class="pre">requires_grad_()</span></code> and <code class="docutils literal notranslate"><span class="pre">zero_()</span></code> method above, makes changes in-place,
+in other words, they will modify the underlying variable.</p>
+</div>
+</div>
+</div>
+<div class="section" id="put-it-all-together">
+<h2><span class="section-number">3.4. </span>Put it all together<a class="headerlink" href="#put-it-all-together" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sets learning rate - this is &quot;eta&quot; ~ the &quot;n&quot;-like Greek letter</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="c1"># Step 0 - Initializes parameters &quot;b&quot; and &quot;w&quot; randomly</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Defines number of epochs</span>
+<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="c1"># Step 1 - Computes model&#39;s predicted output - forward pass</span>
+    <span class="n">yhat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train_tensor</span>
+
+    <span class="c1"># Step 2 - Computes the loss</span>
+    <span class="c1"># We are using ALL data points, so this is BATCH gradient</span>
+    <span class="c1"># descent. How wrong is our model? That&#39;s the error!</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">yhat</span> <span class="o">-</span> <span class="n">y_train_tensor</span><span class="p">)</span>
+    <span class="c1"># It is a regression, so it computes mean squared error (MSE)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot;</span>
+    <span class="c1"># parameters. No more manual computation of gradients!</span>
+    <span class="c1"># b_grad = 2 * error.mean()</span>
+    <span class="c1"># w_grad = 2 * (x_tensor * error).mean()</span>
+    <span class="c1"># We just tell PyTorch to work its way BACKWARDS</span>
+    <span class="c1"># from the specified loss!</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># Step 4 - Updates parameters using gradients and</span>
+    <span class="c1"># the learning rate. But not so fast...</span>
+    <span class="c1"># FIRST ATTEMPT - just using the same code as before</span>
+    <span class="c1"># AttributeError: &#39;NoneType&#39; object has no attribute &#39;zero_&#39;</span>
+    <span class="c1"># b = b - lr * b.grad</span>
+    <span class="c1"># w = w - lr * w.grad</span>
+    <span class="c1"># print(b)</span>
+
+    <span class="c1"># SECOND ATTEMPT - using in-place Python assingment</span>
+    <span class="c1"># RuntimeError: a leaf Variable that requires grad</span>
+    <span class="c1"># has been used in an in-place operation.</span>
+    <span class="c1"># b -= lr * b.grad</span>
+    <span class="c1"># w -= lr * w.grad</span>
+
+    <span class="c1"># THIRD ATTEMPT - NO_GRAD for the win!</span>
+    <span class="c1"># We need to use NO_GRAD to keep the update out of</span>
+    <span class="c1"># the gradient computation. Why is that? It boils</span>
+    <span class="c1"># down to the DYNAMIC GRAPH that PyTorch uses...</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">b</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">grad</span>
+        <span class="n">w</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">w</span><span class="o">.</span><span class="n">grad</span>
+
+    <span class="c1"># PyTorch is &quot;clingy&quot; to its computed gradients, we</span>
+    <span class="c1"># need to tell it to let it go...</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1.0235], device=&#39;cuda:0&#39;, requires_grad=True) tensor([1.9690], device=&#39;cuda:0&#39;, requires_grad=True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the first attempt, if we use the same update structure as in our Numpy code, we’ll get a weird error but we can get a hint of what’s going on by looking at
+the tensor itself — once again, we “lost” the gradient while reassigning the update
+results to our parameters. Thus, the grad attribute turns out to be None, and it
+raises the error…</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>We use <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">torch.no_grad():</span></code> to ensure the update is not tracked by the <em>dyanmic computation graph</em> mechanism of Pytorch. We will talk about compuation graph next lab.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./nn"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="tensors.html" title="previous page"><span class="section-number">2. </span>Introduction to Pytorch Tensors</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

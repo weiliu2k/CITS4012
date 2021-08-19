@@ -56,7 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Activation Functions and their derivatives" href="activations.html" />
+    <link rel="next" title="3. Linear Models in Pytorch" href="linear_model_pytorch.html" />
     <link rel="prev" title="1. Linear Models in Numpy" href="linear_model_numpy.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -242,8 +242,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="activations.html">
-     3. Activation Functions and their derivatives
+    <a class="reference internal" href="linear_model_pytorch.html">
+     3. Linear Models in Pytorch
     </a>
    </li>
   </ul>
@@ -390,6 +390,16 @@
      2.2.6. Creating and initialising a tensor from Numpy
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#subtleties-in-torch-memory-model">
+     2.2.7. Subtleties in Torch Memory Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reshaping-a-tensor">
+     2.2.8. Reshaping a tensor
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -465,16 +475,132 @@
 </div>
 <div class="section" id="creating-tensors">
 <h2><span class="section-number">2.2. </span>Creating Tensors<a class="headerlink" href="#creating-tensors" title="Permalink to this headline">¶</a></h2>
+<p>You can create tensors in PyTorch pretty much the same way you create arrays in
+<em>Numpy</em>. Using <code class="docutils literal notranslate"><span class="pre">tensor()</span></code> you can create either a scalar or a tensor.
+PyTorch’s tensors have equivalent functions as its Numpy counterparts, like:
+<code class="docutils literal notranslate"><span class="pre">ones()</span></code>, <code class="docutils literal notranslate"><span class="pre">zeros()</span></code>, <code class="docutils literal notranslate"><span class="pre">rand()</span></code>, <code class="docutils literal notranslate"><span class="pre">randn()</span></code> and many more. In the example below, we create one of each: scalar, vector, matrix and tensor or, saying it differently, one scalar and three tensors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scalar</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">)</span>
+<span class="n">vector</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+<span class="c1"># two (2) 3x4 matrices</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scalar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(3.1416)
+tensor([1, 2, 3])
+tensor([[1., 1., 1.],
+        [1., 1., 1.]])
+tensor([[[-0.1062,  0.0259,  1.0003,  1.7506],
+         [ 1.5519,  0.5936,  0.0977,  1.0550],
+         [-0.8436, -0.2855,  0.0348, -1.2236]],
+
+        [[-0.7193, -1.7311,  0.3547, -2.5190],
+         [ 0.6258, -0.6508, -0.4601, -0.4112],
+         [ 0.6510,  0.2963, -0.1989,  0.3999]]])
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="a-helper-function-describe-x">
 <h3><span class="section-number">2.2.1. </span>A helper function <code class="docutils literal notranslate"><span class="pre">describe(x)</span></code><a class="headerlink" href="#a-helper-function-describe-x" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">x</span></code> is a torch tensor</p>
-<p>NOTE: <code class="docutils literal notranslate"><span class="pre">tensor.shape</span></code> is a property, not a callable function</p>
+<p>Given a torch tensor <code class="docutils literal notranslate"><span class="pre">x</span></code>, we can use either <code class="docutils literal notranslate"><span class="pre">x.size()</span></code> function or <code class="docutils literal notranslate"><span class="pre">x.shape</span></code> property to look at the dimensionality of the torch tensor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">tensor.shape</span></code> is a property, not a callable function, whereas <code class="docutils literal notranslate"><span class="pre">tensor.size()</span></code> is a function.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Type:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">type</span><span class="p">()))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape/size:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Size():</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Values: </span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">scalar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
+Shape:torch.Size([])
+Size():torch.Size([])
+Values: 
+3.141590118408203
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
+Shape:torch.Size([3])
+Size():torch.Size([3])
+Values: 
+tensor([1, 2, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
+Values: 
+tensor([[1., 1., 1.],
+        [1., 1., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
+Shape:torch.Size([2, 3, 4])
+Size():torch.Size([2, 3, 4])
+Values: 
+tensor([[[-0.1062,  0.0259,  1.0003,  1.7506],
+         [ 1.5519,  0.5936,  0.0977,  1.0550],
+         [-0.8436, -0.2855,  0.0348, -1.2236]],
+
+        [[-0.7193, -1.7311,  0.3547, -2.5190],
+         [ 0.6258, -0.6508, -0.4601, -0.4112],
+         [ 0.6510,  0.2963, -0.1989,  0.3999]]])
 </pre></div>
 </div>
 </div>
@@ -484,21 +610,27 @@
 <h3><span class="section-number">2.2.2. </span>Creating a tensor with <code class="docutils literal notranslate"><span class="pre">torch.Tensor()</span></code><a class="headerlink" href="#creating-a-tensor-with-torch-tensor" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
-tensor([[1.0862e+21, 3.5241e-40, 1.0879e+21],
-        [3.5241e-40, 1.0863e+21, 3.5241e-40]])
+tensor([[0.0000e+00, 0.0000e+00, 2.1019e-44],
+        [0.0000e+00, 1.4013e-45, 0.0000e+00]])
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You might have noted that we can create tensors using both <code class="docutils literal notranslate"><span class="pre">torch.tensor()</span></code> and <code class="docutils literal notranslate"><span class="pre">torch.Tensor()</span></code>, note the subtle difference between the case of letter “t”.</p>
+<p><code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> is an alias for <code class="docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>, which creates tensors of float type.</p>
+<p><code class="docutils literal notranslate"><span class="pre">torch.tensor</span></code> on the other hand, infers the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> automatically, and allows explicit specification of <code class="docutils literal notranslate"><span class="pre">dtype</span></code> during creation.</p>
+<p>So let’s stick to <code class="docutils literal notranslate"><span class="pre">torch.tensor</span></code> instead.</p>
 </div>
 </div>
 <div class="section" id="creating-a-randomly-initialized-tensor">
@@ -514,15 +646,17 @@ tensor([[1.0862e+21, 3.5241e-40, 1.0879e+21],
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
-tensor([[0.7992, 0.9784, 0.0448],
-        [0.9578, 0.0454, 0.0026]])
+tensor([[0.2609, 0.1867, 0.2250],
+        [0.7788, 0.2673, 0.5694]])
 Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
-tensor([[ 0.3601, -0.7138, -1.8004],
-        [-0.2314, -0.3745,  0.3433]])
+tensor([[ 0.5022, -1.1496, -0.6783],
+        [ 0.7880, -0.0197,  1.7654]])
 </pre></div>
 </div>
 </div>
@@ -546,17 +680,20 @@ tensor([[ 0.3601, -0.7138, -1.8004],
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
 tensor([[0., 0., 0.],
         [0., 0., 0.]])
 Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
 tensor([[1., 1., 1.],
         [1., 1., 1.]])
 Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
 tensor([[5., 5., 5.],
         [5., 5., 5.]])
@@ -567,20 +704,41 @@ tensor([[5., 5., 5.],
 </div>
 <div class="section" id="creating-and-initialising-a-tensor-from-lists">
 <h3><span class="section-number">2.2.5. </span>Creating and initialising a tensor from lists<a class="headerlink" href="#creating-and-initialising-a-tensor-from-lists" title="Permalink to this headline">¶</a></h3>
+<p>Observe the type difference between the <code class="docutils literal notranslate"><span class="pre">torch.tensor()</span></code> and <code class="docutils literal notranslate"><span class="pre">torch.Tensor()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
                   <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
 <span class="n">describe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                  
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
 Values: 
-tensor([[1., 2., 3.],
-        [4., 5., 6.]])
+tensor([[1, 2, 3],
+        [4, 5, 6]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="n">describe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
+Shape:torch.Size([2, 3])
+Size():torch.Size([2, 3])
+Values: 
+tensor([[1, 2, 3],
+        [4, 5, 6]])
 </pre></div>
 </div>
 </div>
@@ -588,26 +746,158 @@ tensor([[1., 2., 3.],
 </div>
 <div class="section" id="creating-and-initialising-a-tensor-from-numpy">
 <h3><span class="section-number">2.2.6. </span>Creating and initialising a tensor from Numpy<a class="headerlink" href="#creating-and-initialising-a-tensor-from-numpy" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">from_numpy()</span></code> automatically inherits input array dtype. On the other hand, <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> is an alias for <code class="docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>.</p>
+<p>Therefore, if you pass int32 array to torch.Tensor, output tensor is float tensor and they wouldn’t share the storage. torch.from_numpy gives you torch.LongTensor as expected.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">npy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">npy</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.DoubleTensor
-Shape/size:torch.Size([2, 3])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.IntTensor
+Shape:torch.Size([10])
+Size():torch.Size([10])
 Values: 
-tensor([[0.6475, 0.9183, 0.0888],
-        [0.1407, 0.9231, 0.8320]], dtype=torch.float64)
+tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=torch.int32)
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
+Shape:torch.Size([10])
+Size():torch.Size([10])
+Values: 
+tensor([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.IntTensor
+Shape:torch.Size([10])
+Size():torch.Size([10])
+Values: 
+tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=torch.int32)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="subtleties-in-torch-memory-model">
+<h3><span class="section-number">2.2.7. </span>Subtleties in Torch Memory Model<a class="headerlink" href="#subtleties-in-torch-memory-model" title="Permalink to this headline">¶</a></h3>
+<p>Another way of creating tensor is to use <code class="docutils literal notranslate"><span class="pre">torch.as_tensor()</span></code>. What’s the difference between <code class="docutils literal notranslate"><span class="pre">torch.as_tensor()</span></code> and <code class="docutils literal notranslate"><span class="pre">torch.tensor()</span></code>?</p>
+<div class="tabbed-set docutils">
+<input checked="checked" id="40ac389a-537e-40da-8781-f7767f565b17" name="6c9e97ef-13e1-4c16-81ab-fce0dec7a796" type="radio">
+</input><label class="tabbed-label" for="40ac389a-537e-40da-8781-f7767f565b17">
+&lt;literal&gt;torch.tensor()&lt;/literal&gt;</label><div class="tabbed-content docutils">
+<p><code class="docutils literal notranslate"><span class="pre">torch.tensor</span></code> always copies the data. For example, <code class="docutils literal notranslate"><span class="pre">torch.tensor(x)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">x.clone().detach()</span></code>.</p>
+</div>
+<input id="f43a417c-3363-4340-9c57-df45b31af8cc" name="6c9e97ef-13e1-4c16-81ab-fce0dec7a796" type="radio">
+</input><label class="tabbed-label" for="f43a417c-3363-4340-9c57-df45b31af8cc">
+&lt;literal&gt;torch.as_tensor()&lt;/literal&gt;</label><div class="tabbed-content docutils">
+<p><code class="docutils literal notranslate"><span class="pre">torch.as_tensor</span></code> always tries to avoid copies of the data. One of the cases where <code class="docutils literal notranslate"><span class="pre">as_tensor</span></code> avoids copying the data is if the original data is a numpy array.</p>
+</div>
+</div>
+<p>It is not always necessary or a good idea to copy and create a new tensor, especially when the tensor is large.</p>
+</div>
+<div class="section" id="reshaping-a-tensor">
+<h3><span class="section-number">2.2.8. </span>Reshaping a tensor<a class="headerlink" href="#reshaping-a-tensor" title="Permalink to this headline">¶</a></h3>
+<p>The same subtle difference exists between the methods that change the shape of a tensor, i.e. <code class="docutils literal notranslate"><span class="pre">view()</span></code> and <code class="docutils literal notranslate"><span class="pre">reshape()</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">view()</span></code> method only returns a tensor with the
+desired shape that shares the underlying data with the original
+tensor - it <strong>DOES NOT</strong> create a new, independent, tensor!</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">reshape()</span></code> method <strong>may or may not</strong> create a copy! The
+reasons behind this apparently weird behavior are beyond the
+scope of this section - but this behavior is the reason why view()
+is preferred :-)</p>
+</div>
+<p>Why does it matter? Using <code class="docutils literal notranslate"><span class="pre">view()</span></code>, we get the same tensor with a different shape, any modification to the reshaped tensor will change the original tensor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We get a tensor with a different shape but it still is</span>
+<span class="c1"># the SAME tensor</span>
+<span class="n">same_matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="c1"># If we change one of its elements...</span>
+<span class="n">same_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span>
+<span class="c1"># It changes both variables: matrix and same_matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">same_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 2., 1.],
+        [1., 1., 1.]])
+tensor([[1., 2., 1., 1., 1., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>To copy all data into a separate independent tensor in the memory, so future operations will not affect the orignal, we will need to use <code class="docutils literal notranslate"><span class="pre">new_tensor()</span></code> or <code class="docutils literal notranslate"><span class="pre">clone()</span></code> methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can use &quot;new_tensor&quot; method to REALLY copy it into a new one</span>
+<span class="n">different_matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># Now, if we change one of its elements...</span>
+<span class="n">different_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.</span>
+<span class="c1"># The original tensor (matrix) is left untouched!</span>
+<span class="c1"># But we get a &quot;warning&quot; from PyTorch telling us</span>
+<span class="c1"># to use &quot;clone()&quot; instead!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">different_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 2., 1.],
+        [1., 1., 1.]])
+tensor([[1., 3., 1., 1., 1., 1.]])
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_10816/887542709.py:2: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than tensor.new_tensor(sourceTensor).
+  different_matrix = matrix.new_tensor(matrix.view(1, 6))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As from the warning message, we in fact should use <code class="docutils literal notranslate"><span class="pre">matrix.clone().detach()</span></code> to copy a tensor into a new duplicate, rather than <code class="docutils literal notranslate"><span class="pre">matrix.new_tensor()</span></code>.</p>
+</div>
+<p>In summary, the preferred functions are:</p>
+<ul class="simple">
+<li><p>from a list of values, use <code class="docutils literal notranslate"><span class="pre">torch.tensor(values,</span> <span class="pre">dtype=&quot;&quot;)</span></code></p></li>
+<li><p>from numpy, use <code class="docutils literal notranslate"><span class="pre">torch.from_numpy()</span></code> or <code class="docutils literal notranslate"><span class="pre">torch.as_tensor()</span></code> to avoid data copying.</p></li>
+<li><p>from numpy, use <code class="docutils literal notranslate"><span class="pre">torch.tensor()</span></code> to copy it into a new tensor.</p></li>
+<li><p>from an existing tensor, <code class="docutils literal notranslate"><span class="pre">sourceTensor.view()</span></code> to avoid copying.</p></li>
+<li><p>from an existing tensor, <code class="docutils literal notranslate"><span class="pre">sourceTensor.clone().detach()</span></code> for a fresh duplicate.</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="tensor-slicing-indexing-and-joining">
@@ -816,6 +1106,10 @@ tensor([[0., 1., 2.],
 </div>
 </div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">torch.arange()</span></code> creates LongTensor, for <code class="docutils literal notranslate"><span class="pre">torch.mm()</span></code>, we need to convert the LongTensor to FloatTensor by using <code class="docutils literal notranslate"><span class="pre">x.float()</span></code>.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -855,12 +1149,25 @@ tensor([[ 3.,  6.],
 </div>
 <div class="section" id="cuda-tensors">
 <h2><span class="section-number">2.4. </span>CUDA tensors<a class="headerlink" href="#cuda-tensors" title="Permalink to this headline">¶</a></h2>
+<p>So far, we have only created CPU tensors. What does it mean? It means the data in
+the tensor is stored in the computer’s main memory and any operations performed
+on it are going to be handled by its CPU (the Central Processing Unit, for instance,
+an Intel® Core™ i7 Processor). So, although the data is, technically speaking, in the memory, we’re still calling this kind of tensor a CPU tensor.</p>
+<p>A GPU (which stands for Graphics Processing Unit)
+is the processor of a graphics card. These tensors store their data in the graphics
+card’s memory and operations on top of them are performed by the GPU.</p>
+<p>If you have a graphics card from NVIDIA, you can use the power of its GPU to speed up model training. PyTorch supports the use of these GPUs for model
+training using CUDA (Compute Unified Device Architecture), which needs to be
+previously installed and configured (please refer to the Setup Guide for more
+information on this).</p>
+<p>If you do have a GPU (and you managed to install CUDA), we’re getting to the part
+where you get to use it with PyTorch. But, even if you do not have a GPU, you
+should stick around in this section anyway… why? First, you can use a free GPU
+from Google Colab and, second, you should always make your code GPU-ready,
+that is, it should automatically run in a GPU, if one is available.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">describe</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -885,6 +1192,26 @@ tensor([[ 3.,  6.],
 </div>
 </div>
 </div>
+<p>So, if you don’t have a GPU, your device is called cpu. If you do have a <strong>GPU</strong>, your
+device is called <strong>cuda</strong> or <strong>cuda:0</strong>.</p>
+<p>If you have multiple GPUs, and want to check how many GPUs it
+has, or which model they are, you can figure it out using <code class="docutils literal notranslate"><span class="pre">cuda.device_count()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">cuda.get_device_name()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cudas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cudas</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NVIDIA GeForce RTX 3080
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">.to(device)</span></code> to turn our tensor to a GPU tensor if you have a GPU device.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
@@ -896,9 +1223,9 @@ tensor([[ 3.,  6.],
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.cuda.FloatTensor
 Shape/size:torch.Size([3, 2])
 Values: 
-tensor([[0.5107, 0.8196],
-        [0.9484, 0.2701],
-        [0.1767, 0.9292]], device=&#39;cuda:0&#39;)
+tensor([[0.3817, 0.3665],
+        [0.9877, 0.7927],
+        [0.9034, 0.5782]], device=&#39;cuda:0&#39;)
 </pre></div>
 </div>
 </div>
@@ -917,7 +1244,7 @@ tensor([[0.5107, 0.8196],
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_25968</span><span class="o">/</span><span class="mf">1126695582.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_10816</span><span class="o">/</span><span class="mf">1126695582.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 
@@ -946,10 +1273,6 @@ tensor([[0.5107, 0.8196],
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>It is expensive to move data back and forth from the GPU. Best practice is to carry out as much computation on GPU as possible and then just transfering the final results to CPU.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p><code class="docutils literal notranslate"><span class="pre">torch.arange()</span></code> creates LongTensor, for <code class="docutils literal notranslate"><span class="pre">torch.mm()</span></code>, we need to convert the LongTensor to FloatTensor by using <code class="docutils literal notranslate"><span class="pre">x.float()</span></code>.</p>
 </div>
 </div>
 </div>
@@ -983,7 +1306,7 @@ tensor([[0.5107, 0.8196],
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="linear_model_numpy.html" title="previous page"><span class="section-number">1. </span>Linear Models in Numpy</a>
-    <a class='right-next' id="next-link" href="activations.html" title="next page"><span class="section-number">3. </span>Activation Functions and their derivatives</a>
+    <a class='right-next' id="next-link" href="linear_model_pytorch.html" title="next page"><span class="section-number">3. </span>Linear Models in Pytorch</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
