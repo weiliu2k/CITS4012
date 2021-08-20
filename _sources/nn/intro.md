@@ -1,6 +1,6 @@
 Lab05: Introduction to Neural Networks and Pytorch
 ===================================================
-In this lab, we will introduce the basic training steps of neural networks by starting with simple linear models in Numpy. Then we will introduce basic Pytorch data types, and re-implement the linear model in Pytorch. A number of a important Pytorch functions are introduced in the lab. 
+In this lab, we will introduce the basic training steps of neural networks by starting with simple linear models in Numpy. Then we will introduce basic Pytorch data types, and re-implement the linear model in Pytorch. A number of important Pytorch functions are introduced in this lab. 
 
 ```{figure} ../images/artificial_neuron.gif
 :alt: Atifical Neuron Animation
