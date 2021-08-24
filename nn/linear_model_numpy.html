@@ -639,12 +639,15 @@ have only two, <span class="math notranslate nohighlight">\(b\)</span> and <span
 is, the average of all squared errors, that is, the average of all squared differences between labels (<span class="math notranslate nohighlight">\(y\)</span>) and predictions (<span class="math notranslate nohighlight">\(b + wx\)</span>).</p>
 <p>For a regression problem, the loss is given by the Mean Squared Error (MSE), that
 is, the average of all squared errors, that is, the average of all squared differences between labels (y) and predictions (b + wx).</p>
-<p>\begin{flalign}
-MSE &amp; =\frac{1}{n} \sum_{i=1}^n error_i^2 \
-&amp; = \frac{1}{n} \sum_{i=1}^n (\hat{y}<em>i - y_i)
-^2\
-&amp; = \frac{1}{n} \sum</em>{i=1}^n (b + wx_i - y_i)^2\
-\end{flalign}</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+MSE &amp; =\frac{1}{n} \sum_{i=1}^n error_i^2 \\
+ &amp; = \frac{1}{n} \sum_{i=1}^n (\hat{y}_i - y_i)
+ ^2\\
+ &amp; = \frac{1}{n} \sum_{i=1}^n (b + wx_i - y_i)^2\\
+\end{align}
+\end{split}\]</div>
 <p>In the code below, we are using all data points of the training set to compute the
 loss, so <span class="math notranslate nohighlight">\(n = N = 80\)</span>, meaning we are performing batch gradient descent.</p>
 <div class="cell docutils container">
