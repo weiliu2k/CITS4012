@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lab07: Introduction to Pytorch (DRAFT) &#8212; CITS4012 Natural Language Processing</title>
+    <title>Lab06: Neural Network Building Blocks &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,6 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Activation Functions and their derivatives" href="activations.html" />
+    <link rel="prev" title="3. Linear Models in Pytorch" href="../nn/linear_model_pytorch.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -248,6 +250,35 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Lab06: Neural Network Building Blocks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="loss.html">
+     2. Loss Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="computational_graph.html">
+     3. Computational Graph
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sentiment_yelp.html">
+     4. Classifying Yelp Reviews
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -320,12 +351,13 @@
         
               <div>
                 
-  <div class="section" id="lab07-introduction-to-pytorch-draft">
-<h1>Lab07: Introduction to Pytorch (DRAFT)<a class="headerlink" href="#lab07-introduction-to-pytorch-draft" title="Permalink to this headline">¶</a></h1>
-<p>Pytorch is an optimised <code class="docutils literal notranslate"><span class="pre">tensor</span></code> manipulation library that offers an array of packages for deep learning. As compared to static frameworks such as Theano, Caffe and Tensorflow, Pytorch is in the family of dynamic frameworks, which does not require pre-defined computational graphs. This allows for a more flexible, imperative style of development, as it does not require the computational graphs to be first declared, compiled, and then excuted. However, this is potentially at the cost of computational efficiency, which makes it not as advantageous for production and mobile settings, but extremely useful during research and development.</p>
+  <div class="section" id="lab06-neural-network-building-blocks">
+<h1>Lab06: Neural Network Building Blocks<a class="headerlink" href="#lab06-neural-network-building-blocks" title="Permalink to this headline">¶</a></h1>
 <a class="bg-primary mb-1 reference internal image-reference" href="../_images/nlp_pytorch_book1.jpg"><img alt="Pytorch for NLP Book" class="bg-primary mb-1 align-left" src="../_images/nlp_pytorch_book1.jpg" style="width: 200px;" /></a>
 <a class="bg-primary mb-1 reference internal image-reference" href="../_images/logo_pytorch1.jpeg"><img alt="Pytorch Logo" class="bg-primary mb-1 align-right" src="../_images/logo_pytorch1.jpeg" style="width: 100px;" /></a>
 <p>Reference: <em>Natural Lanuage Processing with PyTorch</em> - Building intelligent lanaguage applications using deep learning, by Delip Rao and Brian McMahan (copyright O’REILLY Feb 2019)</p>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -356,6 +388,8 @@
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="../nn/linear_model_pytorch.html" title="previous page"><span class="section-number">3. </span>Linear Models in Pytorch</a>
+    <a class='right-next' id="next-link" href="activations.html" title="next page"><span class="section-number">1. </span>Activation Functions and their derivatives</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

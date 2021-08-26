@@ -1,7 +1,5 @@
-Lab07: Introduction to Pytorch (DRAFT)
-===============================
-
-Pytorch is an optimised `tensor` manipulation library that offers an array of packages for deep learning. As compared to static frameworks such as Theano, Caffe and Tensorflow, Pytorch is in the family of dynamic frameworks, which does not require pre-defined computational graphs. This allows for a more flexible, imperative style of development, as it does not require the computational graphs to be first declared, compiled, and then excuted. However, this is potentially at the cost of computational efficiency, which makes it not as advantageous for production and mobile settings, but extremely useful during research and development.
+Lab06: Neural Network Building Blocks
+======================================
 
 ```{image} ../images/nlp_pytorch_book.jpg
 :alt: Pytorch for NLP Book
