@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Computational Graph &#8212; CITS4012 Natural Language Processing</title>
+    <title>3. Dynamic Computational Graph in PyTorch &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -267,7 +267,7 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     3. Computational Graph
+     3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
@@ -364,6 +364,46 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-data-preparation">
+   3.1. Training Data Preparation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-torchviz-to-visualise-computation-graph">
+   3.2. Using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     torchviz
+    </span>
+   </code>
+   to visualise computation graph
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#no-gradient-tracking-for-b">
+   3.3. No gradient tracking for
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     b
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computational-graph-with-branches">
+   3.4. Computational Graph with branches
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -371,8 +411,10 @@
         
               <div>
                 
-  <div class="section" id="computational-graph">
-<h1><span class="section-number">3. </span>Computational Graph<a class="headerlink" href="#computational-graph" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dynamic-computational-graph-in-pytorch">
+<h1><span class="section-number">3. </span>Dynamic Computational Graph in PyTorch<a class="headerlink" href="#dynamic-computational-graph-in-pytorch" title="Permalink to this headline">¶</a></h1>
+<p>Computational Graphs allow a deep learning framework to do additional bookkeeping to implement automatic gradient differentiation needed to obtain gradients of parameters during training. A computational graph is a DAG (directed acyclic graph), where the nodes are the mathematical operations, such as multiplication and addition. The inputs to the operations are the incoming edges and the output of each operation is the outgoing edge.</p>
+<p>Static frameworks such as Teano, Caffe and TensorFlow (&lt; v1.7) require the computational graphs to be first declared , compiled and the excuted. Although this leads to extremely efficient implementations (useful in production and mobile settings), it can become quite cumberson during research and development. Modern frames like Chainer, DyNet and Pytorch, implement Dynamic Computational Graphs to allow for a more flexible, imperative style of development, without needing to compile the models before every excution. Dynamic computational graphs are especially useful in modelling NLP tasks as each input could potentially result in a different graph structure. As of Version 1.7, TensorFlow has an eager excution that <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code> objects reference concrete values instead of symbolic handles to nodes in a computational graph. This is a similar to the PyTorch’s dynamic computational graph idea.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -383,6 +425,9 @@
 </div>
 </div>
 </div>
+<div class="section" id="training-data-preparation">
+<h2><span class="section-number">3.1. </span>Training Data Preparation<a class="headerlink" href="#training-data-preparation" title="Permalink to this headline">¶</a></h2>
+<p>We use the same linear model data preparation process here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_b</span> <span class="o">=</span> <span class="mi">1</span>
@@ -414,6 +459,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="using-torchviz-to-visualise-computation-graph">
+<h2><span class="section-number">3.2. </span>Using <code class="docutils literal notranslate"><span class="pre">torchviz</span></code> to visualise computation graph<a class="headerlink" href="#using-torchviz-to-visualise-computation-graph" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
@@ -443,7 +491,70 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/computational_graph_4_0.svg" src="../_images/computational_graph_4_0.svg" /></div>
+<img alt="../_images/computational_graph_6_0.svg" src="../_images/computational_graph_6_0.svg" /></div>
+</div>
+<p>Let’s take a closer look at its components:</p>
+<ul class="simple">
+<li><p>blue boxes ((1)s): these boxes correspond to the tensors we use as parameters, the ones we’re asking PyTorch to compute gradients for</p></li>
+<li><p>gray boxes (MulBackward0 and AddBackward0): a Python operation that involves a gradient-computing tensor or its dependencies</p></li>
+<li><p>green box ((80, 1)): the tensor used as the starting point for the computation of gradients (assuming the backward() method is called from the variable used to visualize the graph) — they are computed from the bottom-up in a graph</p></li>
+</ul>
+<p>Now, take a closer look at the gray box (AddBackward0) at the bottom of the graph: two arrows are
+pointing to it since it is adding up two variables, <span class="math notranslate nohighlight">\(b\)</span>, and <span class="math notranslate nohighlight">\(w\times x\)</span>. But the gray box (MulBackward0) of the same graph: it is performing a multiplication, namely, <span class="math notranslate nohighlight">\(w \times x\)</span>. But there is only one arrow pointing to it! The arrow comes from the blue box that corresponds to our parameter <span class="math notranslate nohighlight">\(w\)</span>.</p>
+<div class="tip admonition">
+<p class="admonition-title">“Why don’t we have a box for our data (x)?”</p>
+<p>The answer is: we do not compute gradients for it!</p>
+</div>
+</div>
+<div class="section" id="no-gradient-tracking-for-b">
+<h2><span class="section-number">3.3. </span>No gradient tracking for <code class="docutils literal notranslate"><span class="pre">b</span></code><a class="headerlink" href="#no-gradient-tracking-for-b" title="Permalink to this headline">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Even though there are more tensors involved in the operations performed by
+the computation graph, it only shows <strong>gradient-computing tensors</strong> and its
+dependencies.</p>
+</div>
+<p>Let’s try to set b to be a non-gradient computing tensor and visualise the computational graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b_nograd</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> \
+<span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> \
+<span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">b_nograd</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train_tensor</span>
+<span class="n">make_dot</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/computational_graph_9_0.svg" src="../_images/computational_graph_9_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="computational-graph-with-branches">
+<h2><span class="section-number">3.4. </span>Computational Graph with branches<a class="headerlink" href="#computational-graph-with-branches" title="Permalink to this headline">¶</a></h2>
+<p>Let’s look at how computational graph deals with if statement. Note the code does not do anything sensible, purely for visualisation and demonstration purposes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> \
+<span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> \
+<span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train_tensor</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">yhat</span> <span class="o">-</span> <span class="n">y_train_tensor</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># this makes no sense!!</span>
+<span class="k">if</span> <span class="n">loss</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">yhat2</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x_train_tensor</span>
+    <span class="n">error2</span> <span class="o">=</span> <span class="n">yhat2</span> <span class="o">-</span> <span class="n">y_train_tensor</span>
+<span class="c1"># neither does this :-)</span>
+<span class="n">loss</span> <span class="o">+=</span> <span class="n">error2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">make_dot</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/computational_graph_11_0.svg" src="../_images/computational_graph_11_0.svg" /></div>
+</div>
 </div>
 </div>
 

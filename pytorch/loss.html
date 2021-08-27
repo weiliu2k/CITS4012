@@ -56,7 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Computational Graph" href="computational_graph.html" />
+    <link rel="next" title="3. Dynamic Computational Graph in PyTorch" href="computational_graph.html" />
     <link rel="prev" title="1. Activation Functions and their derivatives" href="activations.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -267,7 +267,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="computational_graph.html">
-     3. Computational Graph
+     3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
@@ -502,6 +502,8 @@
 </div>
 <div class="section" id="perceptron">
 <h2><span class="section-number">2.1. </span>Perceptron<a class="headerlink" href="#perceptron" title="Permalink to this headline">¶</a></h2>
+<p>Each node in a neural network is called a perceptron unit, which has three “knobs”, a set of weights (<span class="math notranslate nohighlight">\(w\)</span>), a bias (<span class="math notranslate nohighlight">\(b\)</span>), and an activation function (<span class="math notranslate nohighlight">\(f\)</span>). The weights and bias are learned from the data, and the activation function is hand picked depending on the network designer’s intuition of the network and its target outputs. Mathematically,</p>
+<p><span class="math notranslate nohighlight">\(y = f(wx + b)\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Perceptron</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1124,7 +1126,7 @@ mask a particular label that is not relevant to the classification task.</p>
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="activations.html" title="previous page"><span class="section-number">1. </span>Activation Functions and their derivatives</a>
-    <a class='right-next' id="next-link" href="computational_graph.html" title="next page"><span class="section-number">3. </span>Computational Graph</a>
+    <a class='right-next' id="next-link" href="computational_graph.html" title="next page"><span class="section-number">3. </span>Dynamic Computational Graph in PyTorch</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Example 3-1" href="loss.html" />
-    <link rel="prev" title="Lab06:" href="intro.html" />
+    <link rel="next" title="2. Loss Functions" href="loss.html" />
+    <link rel="prev" title="Lab06: Neural Network Building Blocks" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -252,7 +252,7 @@
  </li>
  <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="intro.html">
-   Lab06:
+   Lab06: Neural Network Building Blocks
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2 current active">
@@ -262,67 +262,17 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="loss.html">
-     2. Example 3-1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-2">
-     3. Example 3-2
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-3">
-     4. Example 3-3
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-4">
-     5. Example 3-4
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-6">
-     6. Example 3-6
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-7">
-     7. Example 3-7
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-8">
-     8. Example 3-8
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#example-3-9">
-     9. Example 3-9
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#log-softmax">
-     10. Log Softmax
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#logsoftmax">
-     11. LogSoftmax
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="loss.html#negative-loglikelihood-loss">
-     12. Negative Loglikelihood Loss
+     2. Loss Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="computational_graph.html">
-     13. Computational Graph
+     3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="sentiment_yelp.html">
-     14. Classifying Yelp Reviews
+     4. Classifying Yelp Reviews
     </a>
    </li>
   </ul>
@@ -501,7 +451,7 @@
 <div class="math notranslate nohighlight">
 \[t = f(z) = \frac{1}{1+e^{-z}}\]</div>
 <div class="math notranslate nohighlight">
-\[\frac{dt}{dz} = \frac{e^{-z}}{(1+e^{-z})^2}t*(1-t) \]</div>
+\[\frac{dt}{dz} = \frac{e^{-z}}{(1+e^{-z})^2} = t*(1-t) \]</div>
 <div class="section" id="in-plain-python-with-numpy">
 <h3><span class="section-number">1.1.1. </span>In Plain Python with Numpy<a class="headerlink" href="#in-plain-python-with-numpy" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
@@ -531,7 +481,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_3424/4051736159.py:21: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_15812/3857614770.py:21: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
   fig.show()
 </pre></div>
 </div>
@@ -640,7 +590,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_3424/3684840425.py:25: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_15812/1006845169.py:25: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
   fig.show()
 </pre></div>
 </div>
@@ -730,7 +680,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_3424/1351231205.py:26: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_15812/1318022484.py:26: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
   fig.show()
 </pre></div>
 </div>
@@ -826,7 +776,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-12-42168a7efe00&gt;:26: UserWarning: Matplotlib is currently using module://ipykernel.pylab.backend_inline, which is a non-GUI backend, so cannot show the figure.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\wei\AppData\Local\Temp/ipykernel_15812/586447431.py:26: UserWarning: Matplotlib is currently using module://matplotlib_inline.backend_inline, which is a non-GUI backend, so cannot show the figure.
   fig.show()
 </pre></div>
 </div>
@@ -872,8 +822,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1.4162, 0.9940, 1.4615]])
-tensor([[0.3701, 0.2426, 0.3872]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0027,  1.0101, -0.9370]])
+tensor([[0.2412, 0.6641, 0.0947]])
 tensor([1.])
 </pre></div>
 </div>
@@ -911,8 +861,8 @@ tensor([1.])
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab06:</a>
-    <a class='right-next' id="next-link" href="loss.html" title="next page"><span class="section-number">2. </span>Example 3-1</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab06: Neural Network Building Blocks</a>
+    <a class='right-next' id="next-link" href="loss.html" title="next page"><span class="section-number">2. </span>Loss Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

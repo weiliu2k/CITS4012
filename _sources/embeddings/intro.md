@@ -1,2 +1,2 @@
-Lab05: Word Embeddings
+Lab07: Word Embeddings
 ======================
