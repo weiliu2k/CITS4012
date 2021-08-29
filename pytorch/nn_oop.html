@@ -372,27 +372,27 @@
   <a class="reference internal nav-link" href="#a-neural-network-with-one-hidden-layer">
    4.1. A neural network with one hidden layer
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#defining-the-model-class">
-   4.2. Defining the model class
-  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-the-model-class">
+     4.1.1. Defining the model class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#object-orientation-in-pytorch">
-     4.2.1. Object Orientation in PyTorch
+     4.1.2. Object Orientation in PyTorch
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#xor-model">
-   4.3. XOR Model
+   4.2. XOR Model
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#obtain-all-model-parameters-using-state-dict">
-     4.3.1. Obtain all model parameters using
+     4.2.1. Obtain all model parameters using
      <code class="docutils literal notranslate">
       <span class="pre">
        state_dict()
@@ -402,46 +402,66 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#model-and-data-need-to-be-on-the-same-device">
-     4.3.2. Model and Data need to be on the same device
+     4.2.2. Model and Data need to be on the same device
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-xor">
-   4.4. Training XOR
+   4.3. Training XOR
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-data-preparation">
-     4.4.1. Training Data Preparation
+     4.3.1. Training Data Preparation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#hyperparameter-setup">
-     4.4.2. Hyperparameter setup
+     4.3.2. Hyperparameter setup
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training">
-     4.4.3. Training
+     4.3.3. Training
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#inference-forward-pass">
-     4.4.4. Inference (Forward Pass)
+     4.3.4. Inference (Forward Pass)
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#logging-the-model-training-for-visualisation-in-tensorboard">
-   4.5. Logging the model training for Visualisation in TensorBoard
+   4.4. Logging the model training for Visualisation in TensorBoard
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tensorboard-running-in-jupyter-notebook">
+     4.4.1. TensorBoard running in Jupyter Notebook
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summarywriter">
+     4.4.2. SummaryWriter
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-graph">
+     4.4.3.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       add_graph
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#add-scalar">
-     4.5.1.
+     4.4.4.
      <code class="docutils literal notranslate">
       <span class="pre">
        add_scalar
@@ -484,9 +504,8 @@ one set between the input and the hidden layer with two nodes, another set betwe
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="defining-the-model-class">
-<h2><span class="section-number">4.2. </span>Defining the model class<a class="headerlink" href="#defining-the-model-class" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">4.1.1. </span>Defining the model class<a class="headerlink" href="#defining-the-model-class" title="Permalink to this headline">¶</a></h3>
 <p>Let’s define the XOR neural network model inherited from the <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> class using an Object Oriented approach.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -522,8 +541,9 @@ one set between the input and the hidden layer with two nodes, another set betwe
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="object-orientation-in-pytorch">
-<h3><span class="section-number">4.2.1. </span>Object Orientation in PyTorch<a class="headerlink" href="#object-orientation-in-pytorch" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.1.2. </span>Object Orientation in PyTorch<a class="headerlink" href="#object-orientation-in-pytorch" title="Permalink to this headline">¶</a></h3>
 <p>In PyTorch, a model (e.g. the <code class="docutils literal notranslate"><span class="pre">XOR</span></code> model) is represented by a regular Python class that inherits from the Module class.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -546,7 +566,7 @@ your own.</p>
 </div>
 </div>
 <div class="section" id="xor-model">
-<h2><span class="section-number">4.3. </span>XOR Model<a class="headerlink" href="#xor-model" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>XOR Model<a class="headerlink" href="#xor-model" title="Permalink to this headline">¶</a></h2>
 <p>Now let’s create a Linear Model with two inputs (features) and one output.</p>
 <p>Calling the XOR constructor with an <code class="docutils literal notranslate"><span class="pre">input_dim=2</span></code> and <code class="docutils literal notranslate"><span class="pre">output_dim=1</span></code>, namely <code class="docutils literal notranslate"><span class="pre">XOR(2,1)</span></code> results in two fully connected linear models, one <code class="docutils literal notranslate"><span class="pre">nn.Linear(2,2)</span></code> and ``nn.Linear(2,1)`, which will create a model with two input features, one output feature with biases at the input layer, hidden layer and output layer.</p>
 <div class="cell docutils container">
@@ -557,7 +577,7 @@ your own.</p>
 </div>
 </div>
 <div class="section" id="obtain-all-model-parameters-using-state-dict">
-<h3><span class="section-number">4.3.1. </span>Obtain all model parameters using <code class="docutils literal notranslate"><span class="pre">state_dict()</span></code><a class="headerlink" href="#obtain-all-model-parameters-using-state-dict" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.2.1. </span>Obtain all model parameters using <code class="docutils literal notranslate"><span class="pre">state_dict()</span></code><a class="headerlink" href="#obtain-all-model-parameters-using-state-dict" title="Permalink to this headline">¶</a></h3>
 <p>We can get the current values of all parameters using our model’s
 state_dict() method.</p>
 <div class="cell docutils container">
@@ -603,7 +623,7 @@ state, as well as other hyper-parameters. Let’s take a quick look at it:</p>
 </div>
 </div>
 <div class="section" id="model-and-data-need-to-be-on-the-same-device">
-<h3><span class="section-number">4.3.2. </span>Model and Data need to be on the same device<a class="headerlink" href="#model-and-data-need-to-be-on-the-same-device" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.2.2. </span>Model and Data need to be on the same device<a class="headerlink" href="#model-and-data-need-to-be-on-the-same-device" title="Permalink to this headline">¶</a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>We need to send our model to the same device
@@ -627,10 +647,10 @@ must “live” inside the GPU as well.</p>
 </div>
 </div>
 <div class="section" id="training-xor">
-<h2><span class="section-number">4.4. </span>Training XOR<a class="headerlink" href="#training-xor" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.3. </span>Training XOR<a class="headerlink" href="#training-xor" title="Permalink to this headline">¶</a></h2>
 <p>Now let’s put it all together to train an neural XOR model.</p>
 <div class="section" id="training-data-preparation">
-<h3><span class="section-number">4.4.1. </span>Training Data Preparation<a class="headerlink" href="#training-data-preparation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.3.1. </span>Training Data Preparation<a class="headerlink" href="#training-data-preparation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training data preparation</span>
@@ -659,7 +679,7 @@ must “live” inside the GPU as well.</p>
 </div>
 </div>
 <div class="section" id="hyperparameter-setup">
-<h3><span class="section-number">4.4.2. </span>Hyperparameter setup<a class="headerlink" href="#hyperparameter-setup" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.3.2. </span>Hyperparameter setup<a class="headerlink" href="#hyperparameter-setup" title="Permalink to this headline">¶</a></h3>
 <p>We need to set up the learning rate and the number of epochs, and then select the three key compoenents of a neural model: model, optimiser and loss function before training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -688,7 +708,7 @@ must “live” inside the GPU as well.</p>
 </div>
 </div>
 <div class="section" id="training">
-<h3><span class="section-number">4.4.3. </span>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.3.3. </span>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>Now we are ready to train.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -941,7 +961,7 @@ training and evaluation phases.</p>
 </div>
 </div>
 <div class="section" id="inference-forward-pass">
-<h3><span class="section-number">4.4.4. </span>Inference (Forward Pass)<a class="headerlink" href="#inference-forward-pass" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.3.4. </span>Inference (Forward Pass)<a class="headerlink" href="#inference-forward-pass" title="Permalink to this headline">¶</a></h3>
 <p>Instead of verifying it maually, we can test out our XOR model, with input [0,1] by called the model with the input. Note we do not call the forward function directly, instead we provide input to the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -958,7 +978,7 @@ training and evaluation phases.</p>
 </div>
 </div>
 <div class="section" id="logging-the-model-training-for-visualisation-in-tensorboard">
-<h2><span class="section-number">4.5. </span>Logging the model training for Visualisation in TensorBoard<a class="headerlink" href="#logging-the-model-training-for-visualisation-in-tensorboard" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4. </span>Logging the model training for Visualisation in TensorBoard<a class="headerlink" href="#logging-the-model-training-for-visualisation-in-tensorboard" title="Permalink to this headline">¶</a></h2>
 <p>TensorBoard by TensorFlow is a very useful tool for visualising training progress and model architectures, despite being a competiting platform, PyTorch provides classes and methods for us to integrate it with our model.</p>
 <p>TensorBoard can be loaded inside Jupyter notebooks, or can be started externally from a command line. Before we run TensorBoard, we need to change to the directory of your model code, and create a folder, e.g. <code class="docutils literal notranslate"><span class="pre">runs</span></code> to keep a log of the training progress.</p>
 <p>The examples in this lab are running Tensorboard inside a notebook, but it is a good idea to run TensorBoard on the command line by giving the log directory. Assuming you are one level up the <code class="docutils literal notranslate"><span class="pre">runs</span></code> directory:</p>
@@ -973,32 +993,25 @@ training and evaluation phases.</p>
 </div>
 </div>
 </div>
+<div class="section" id="tensorboard-running-in-jupyter-notebook">
+<h3><span class="section-number">4.4.1. </span>TensorBoard running in Jupyter Notebook<a class="headerlink" href="#tensorboard-running-in-jupyter-notebook" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">tensorboard</span> --logdir runs
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:49:58 ago. (Use &#39;!kill 9500&#39; to kill it.)
-</pre></div>
 </div>
-<div class="output text_html">
-<iframe id="tensorboard-frame-ef014d80aa2af95c" width="100%" height="800" frameborder="0">
-</iframe>
-<script>
-  (function() {
-    const frame = document.getElementById("tensorboard-frame-ef014d80aa2af95c");
-    const url = new URL("http://localhost");
-    const port = 6006;
-    if (port) {
-      url.port = port;
-    }
-    frame.src = url;
-  })();
-</script>
-</div></div>
+<div class="figure align-default">
+<a class="bg-primary mb-1 reference internal image-reference" href="../_images/tensorboard_1.png"><img alt="TensorBoard" class="bg-primary mb-1" src="../_images/tensorboard_1.png" style="width: 600px;" /></a>
 </div>
+</div>
+<div class="section" id="summarywriter">
+<h3><span class="section-number">4.4.2. </span>SummaryWriter<a class="headerlink" href="#summarywriter" title="Permalink to this headline">¶</a></h3>
+<p>It all starts with the creation of a SummaryWriter. TensorBoard to look for logs inside the <code class="docutils literal notranslate"><span class="pre">runs</span></code> folder, it only makes sense to actually log to that folder. Moreover, to be able to distinguish between different experiments or models, we should also specify a sub-folder: test.</p>
+<p>If we do not specify any folder, TensorBoard will default to <code class="docutils literal notranslate"><span class="pre">runs/CURRENT_DATETIME_HOSTNAME</span></code>, which is not such a great name if you’d be looking for your experiment results in the future.</p>
+<p>So, it is recommended to try to name it in a more meaningful way, like runs/test or runs/simple_linear_regression. It will then create a subfolder inside runs (the folder we specified when we started TensorBoard).</p>
+<p>Even better, you should name it in a meaningful way and add datetime or a sequential number as a suffix, like <code class="docutils literal notranslate"><span class="pre">runs/test_001</span></code> or <code class="docutils literal notranslate"><span class="pre">runs/test_20200502172130</span></code>, to avoid writing data of multiple runs into the same folder (we’ll see why this is bad in the add_scalars section below).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
@@ -1007,6 +1020,10 @@ training and evaluation phases.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="add-graph">
+<h3><span class="section-number">4.4.3. </span><code class="docutils literal notranslate"><span class="pre">add_graph</span></code><a class="headerlink" href="#add-graph" title="Permalink to this headline">¶</a></h3>
+<p>It will produce an input-output graph that allows you to interactively inspect parameters, which is different from the TorchViz’s computation graph (a static visualisation - not interactive).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">writer</span><span class="o">.</span><span class="n">add_graph</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_train_tensor</span><span class="p">)</span>
@@ -1014,28 +1031,13 @@ training and evaluation phases.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:49:58 ago. (Use &#39;!kill 9500&#39; to kill it.)
-</pre></div>
 </div>
-<div class="output text_html">
-<iframe id="tensorboard-frame-8c5501fd92428567" width="100%" height="800" frameborder="0">
-</iframe>
-<script>
-  (function() {
-    const frame = document.getElementById("tensorboard-frame-8c5501fd92428567");
-    const url = new URL("http://localhost");
-    const port = 6006;
-    if (port) {
-      url.port = port;
-    }
-    frame.src = url;
-  })();
-</script>
-</div></div>
+<div class="figure align-default">
+<a class="bg-primary mb-1 reference internal image-reference" href="../_images/tensorboard_2.png"><img alt="TensorBoard" class="bg-primary mb-1" src="../_images/tensorboard_2.png" style="width: 600px;" /></a>
+</div>
 </div>
 <div class="section" id="add-scalar">
-<h3><span class="section-number">4.5.1. </span><code class="docutils literal notranslate"><span class="pre">add_scalar</span></code><a class="headerlink" href="#add-scalar" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.4.4. </span><code class="docutils literal notranslate"><span class="pre">add_scalar</span></code><a class="headerlink" href="#add-scalar" title="Permalink to this headline">¶</a></h3>
 <p>We can send the loss values to TensorBoard using the <code class="docutils literal notranslate"><span class="pre">add_scalars</span></code> method to send multiple scalar values at once, and it needs three arguments:</p>
 <ul class="simple">
 <li><p>main_tag: the parent name of the tags or, the “group tag”</p></li>
@@ -1060,25 +1062,9 @@ training and evaluation phases.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:49:58 ago. (Use &#39;!kill 9500&#39; to kill it.)
-</pre></div>
 </div>
-<div class="output text_html">
-<iframe id="tensorboard-frame-de5f5206eb1e385e" width="100%" height="800" frameborder="0">
-</iframe>
-<script>
-  (function() {
-    const frame = document.getElementById("tensorboard-frame-de5f5206eb1e385e");
-    const url = new URL("http://localhost");
-    const port = 6006;
-    if (port) {
-      url.port = port;
-    }
-    frame.src = url;
-  })();
-</script>
-</div></div>
+<div class="figure align-default">
+<a class="bg-primary mb-1 reference internal image-reference" href="../_images/tensorboard_3.png"><img alt="TensorBoard" class="bg-primary mb-1" src="../_images/tensorboard_3.png" style="width: 600px;" /></a>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1172,25 +1158,9 @@ Epoch: 9500, Loss: 0.0011413537431508303,
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:50:08 ago. (Use &#39;!kill 9500&#39; to kill it.)
-</pre></div>
 </div>
-<div class="output text_html">
-<iframe id="tensorboard-frame-b5aa5c453c9ec402" width="100%" height="800" frameborder="0">
-</iframe>
-<script>
-  (function() {
-    const frame = document.getElementById("tensorboard-frame-b5aa5c453c9ec402");
-    const url = new URL("http://localhost");
-    const port = 6006;
-    if (port) {
-      url.port = port;
-    }
-    frame.src = url;
-  })();
-</script>
-</div></div>
+<div class="figure align-default">
+<a class="bg-primary mb-1 reference internal image-reference" href="../_images/tensorboard_4.png"><img alt="TensorBoard" class="bg-primary mb-1" src="../_images/tensorboard_4.png" style="width: 600px;" /></a>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
