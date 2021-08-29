@@ -271,8 +271,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="sentiment_yelp.html">
-     4. Classifying Yelp Reviews
+    <a class="reference internal" href="nn_oop.html">
+     4. Neural Networks in PyTorch
     </a>
    </li>
   </ul>
@@ -344,20 +344,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#perceptron">
-   Perceptron
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -367,9 +353,7 @@
                 
   <div class="section" id="lab06-neural-network-building-blocks">
 <h1>Lab06: Neural Network Building Blocks<a class="headerlink" href="#lab06-neural-network-building-blocks" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="perceptron">
-<h2>Perceptron<a class="headerlink" href="#perceptron" title="Permalink to this headline">¶</a></h2>
-<p>Each node in a neural network is called a perceptron unit, which has three “knobs”, a set of weights (<span class="math notranslate nohighlight">\(w\)</span>), a bias (<span class="math notranslate nohighlight">\(b\)</span>), and an activation function (<span class="math notranslate nohighlight">\(f\)</span>). The weights and bias are learned from the data, and the activation function is hand picked depending on the network designer’s intuition of the network and its target outputs. Mathematically,</p>
+<p>Each node in a neural network is called a <strong>perceptron</strong> unit, which has three “knobs”, a set of weights (<span class="math notranslate nohighlight">\(w\)</span>), a bias (<span class="math notranslate nohighlight">\(b\)</span>), and an activation function (<span class="math notranslate nohighlight">\(f\)</span>). The weights and bias are learned from the data, and the activation function is hand picked depending on the network designer’s intuition of the network and its target outputs. Mathematically,</p>
 <p><span class="math notranslate nohighlight">\(y = f(wx + b)\)</span></p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">A skeleton of a Perceptron</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
@@ -417,15 +401,13 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            the resulting tensor. tensor.shape should be (batch,).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-<span class="hll">        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x_in</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="hll">        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x_in</span><span class="p">))</span>
 </span></pre></div>
 </td></tr></table></div>
 </div>
-<a class="bg-primary mb-1 reference internal image-reference" href="../_images/nlp_pytorch_book1.jpg"><img alt="Pytorch for NLP Book" class="bg-primary mb-1 align-left" src="../_images/nlp_pytorch_book1.jpg" style="width: 200px;" /></a>
-<a class="bg-primary mb-1 reference internal image-reference" href="../_images/logo_pytorch1.jpeg"><img alt="Pytorch Logo" class="bg-primary mb-1 align-right" src="../_images/logo_pytorch1.jpeg" style="width: 100px;" /></a>
-<p>Reference: <em>Natural Lanuage Processing with PyTorch</em> - Building intelligent lanaguage applications using deep learning, by Delip Rao and Brian McMahan (copyright O’REILLY Feb 2019)</p>
+<p>In this lab, we will look at the activation functions, and loss functions in more detail, and finish with building and train a simple neural network in PyTorch for simulating the XOR binary operator with Object-orientation in mind.</p>
+<p>Reference: <a class="reference external" href="https://leanpub.com/pytorch"><em>Deep Learning in PyTorch, Step by Step A Beginner’s Guide</em> by Daniel Voigt Godoy</a> - Chapter 2 and 3.</p>
 <div class="toctree-wrapper compound">
-</div>
 </div>
 </div>
 

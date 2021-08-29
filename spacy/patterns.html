@@ -252,7 +252,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../pytorch/intro.html">
-   Lab06:
+   Lab06: Neural Network Building Blocks
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -262,67 +262,17 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/loss.html">
-     2. Example 3-1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-2">
-     3. Example 3-2
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-3">
-     4. Example 3-3
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-4">
-     5. Example 3-4
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-6">
-     6. Example 3-6
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-7">
-     7. Example 3-7
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-8">
-     8. Example 3-8
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-9">
-     9. Example 3-9
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#log-softmax">
-     10. Log Softmax
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#logsoftmax">
-     11. LogSoftmax
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#negative-loglikelihood-loss">
-     12. Negative Loglikelihood Loss
+     2. Loss Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/computational_graph.html">
-     13. Computational Graph
+     3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/sentiment_yelp.html">
-     14. Classifying Yelp Reviews
+    <a class="reference internal" href="../pytorch/nn_oop.html">
+     4. Neural Networks in PyTorch
     </a>
    </li>
   </ul>
@@ -461,19 +411,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="2439e72a-094c-491f-a54f-4618f0911396" name="8be9169d-a2a1-4ac4-b390-897fb489a453" type="radio">
-</input><label class="tabbed-label" for="2439e72a-094c-491f-a54f-4618f0911396">
+<input checked="checked" id="ca38718c-fc2b-48db-8565-44e14972ce6c" name="07fed930-b89b-469c-a77d-fffe50ab0188" type="radio">
+</input><label class="tabbed-label" for="ca38718c-fc2b-48db-8565-44e14972ce6c">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="06e15edb-d2a2-4789-8a5d-966b657b896a" name="8be9169d-a2a1-4ac4-b390-897fb489a453" type="radio">
-</input><label class="tabbed-label" for="06e15edb-d2a2-4789-8a5d-966b657b896a">
+<input id="433311c3-91e5-449e-846c-be2fab166944" name="07fed930-b89b-469c-a77d-fffe50ab0188" type="radio">
+</input><label class="tabbed-label" for="433311c3-91e5-449e-846c-be2fab166944">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="602a9765-c0b6-4e16-be59-e6680c915f03" name="8be9169d-a2a1-4ac4-b390-897fb489a453" type="radio">
-</input><label class="tabbed-label" for="602a9765-c0b6-4e16-be59-e6680c915f03">
+<input id="2b6fc605-fde5-4c14-9b4e-895f00d2853a" name="07fed930-b89b-469c-a77d-fffe50ab0188" type="radio">
+</input><label class="tabbed-label" for="2b6fc605-fde5-4c14-9b4e-895f00d2853a">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

@@ -1,8 +1,6 @@
 Lab06: Neural Network Building Blocks
 ======================================
-## Perceptron
-
-Each node in a neural network is called a perceptron unit, which has three "knobs", a set of weights ($w$), a bias ($b$), and an activation function ($f$). The weights and bias are learned from the data, and the activation function is hand picked depending on the network designer's intuition of the network and its target outputs. Mathematically,
+Each node in a neural network is called a **perceptron** unit, which has three "knobs", a set of weights ($w$), a bias ($b$), and an activation function ($f$). The weights and bias are learned from the data, and the activation function is hand picked depending on the network designer's intuition of the network and its target outputs. Mathematically,
 
 $y = f(wx + b)$
 
@@ -35,20 +33,8 @@ class Perceptron(nn.Module):
         Returns:
             the resulting tensor. tensor.shape should be (batch,).
         """
-        return torch.sigmoid(self.fc1(x_in)).squeeze()
-
+        return torch.sigmoid(self.fc1(x_in))
 ```        
+In this lab, we will look at the activation functions, and loss functions in more detail, and finish with building and train a simple neural network in PyTorch for simulating the XOR binary operator with Object-orientation in mind. 
 
-```{image} ../images/nlp_pytorch_book.jpg
-:alt: Pytorch for NLP Book
-:class: bg-primary mb-1
-:width: 200px
-:align: left
-```
-```{image} ../images/logo_pytorch.jpeg
-:alt: Pytorch Logo
-:class: bg-primary mb-1
-:width: 100px
-:align: right
-```
-Reference: *Natural Lanuage Processing with PyTorch* - Building intelligent lanaguage applications using deep learning, by Delip Rao and Brian McMahan (copyright O'REILLY Feb 2019)
+Reference: [*Deep Learning in PyTorch, Step by Step A Beginner's Guide* by Daniel Voigt Godoy](https://leanpub.com/pytorch) - Chapter 2 and 3. 

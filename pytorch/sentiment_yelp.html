@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. Classifying Yelp Reviews &#8212; CITS4012 Natural Language Processing</title>
+    <title>Classifying Yelp Reviews &#8212; CITS4012 Natural Language Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="3. Computational Graph" href="computational_graph.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -93,7 +92,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -249,11 +248,11 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 current active collapsible-parent">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="intro.html">
    Lab06: Neural Network Building Blocks
   </a>
-  <ul class="current collapse-ul">
+  <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="activations.html">
      1. Activation Functions and their derivatives
@@ -266,12 +265,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="computational_graph.html">
-     3. Computational Graph
+     3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     4. Classifying Yelp Reviews
+   <li class="toctree-l2">
+    <a class="reference internal" href="nn_oop.html">
+     4. Neural Networks in PyTorch
     </a>
    </li>
   </ul>
@@ -370,81 +369,81 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#imports">
-   4.1. Imports
+   Imports
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-vectorization-classes">
-   4.2. Data Vectorization classes
+   Data Vectorization classes
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-vocabulary">
-     4.2.1. The Vocabulary
+     The Vocabulary
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-vectorizer">
-     4.2.2. The Vectorizer
+     The Vectorizer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-dataset">
-     4.2.3. The Dataset
+     The Dataset
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-model-reviewclassifier">
-   4.3. The Model: ReviewClassifier
+   The Model: ReviewClassifier
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine">
-   4.4. Training Routine
+   Training Routine
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#helper-functions">
-     4.4.1. Helper functions
+     Helper functions
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#general-utilities">
-       4.4.1.1. General utilities
+       General utilities
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#settings-and-some-prep-work">
-     4.4.2. Settings and some prep work
+     Settings and some prep work
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#initializations">
-     4.4.3. Initializations
+     Initializations
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-loop">
-     4.4.4. Training loop
+     Training loop
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#inference">
-     4.4.5. Inference
+     Inference
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#interpretability">
-     4.4.6. Interpretability
+     Interpretability
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#end">
-     4.4.7. End
+     End
     </a>
    </li>
   </ul>
@@ -461,9 +460,9 @@
               <div>
                 
   <div class="section" id="classifying-yelp-reviews">
-<h1><span class="section-number">4. </span>Classifying Yelp Reviews<a class="headerlink" href="#classifying-yelp-reviews" title="Permalink to this headline">¶</a></h1>
+<h1>Classifying Yelp Reviews<a class="headerlink" href="#classifying-yelp-reviews" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="imports">
-<h2><span class="section-number">4.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
@@ -487,9 +486,9 @@
 </div>
 </div>
 <div class="section" id="data-vectorization-classes">
-<h2><span class="section-number">4.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
+<h2>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="the-vocabulary">
-<h3><span class="section-number">4.2.1. </span>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
+<h3>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -597,7 +596,7 @@
 </div>
 </div>
 <div class="section" id="the-vectorizer">
-<h3><span class="section-number">4.2.2. </span>The Vectorizer<a class="headerlink" href="#the-vectorizer" title="Permalink to this headline">¶</a></h3>
+<h3>The Vectorizer<a class="headerlink" href="#the-vectorizer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -685,7 +684,7 @@
 </div>
 </div>
 <div class="section" id="the-dataset">
-<h3><span class="section-number">4.2.3. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
+<h3>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -828,7 +827,7 @@
 </div>
 </div>
 <div class="section" id="the-model-reviewclassifier">
-<h2><span class="section-number">4.3. </span>The Model: ReviewClassifier<a class="headerlink" href="#the-model-reviewclassifier" title="Permalink to this headline">¶</a></h2>
+<h2>The Model: ReviewClassifier<a class="headerlink" href="#the-model-reviewclassifier" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -863,9 +862,9 @@
 </div>
 </div>
 <div class="section" id="training-routine">
-<h2><span class="section-number">4.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<h2>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="helper-functions">
-<h3><span class="section-number">4.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
+<h3>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -934,7 +933,7 @@
 </div>
 </div>
 <div class="section" id="general-utilities">
-<h4><span class="section-number">4.4.1.1. </span>General utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
+<h4>General utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -953,7 +952,7 @@
 </div>
 </div>
 <div class="section" id="settings-and-some-prep-work">
-<h3><span class="section-number">4.4.2. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
+<h3>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
@@ -1016,7 +1015,7 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="initializations">
-<h3><span class="section-number">4.4.3. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
+<h3>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">reload_from_files</span><span class="p">:</span>
@@ -1043,7 +1042,7 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="training-loop">
-<h3><span class="section-number">4.4.4. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<h3>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -1232,7 +1231,7 @@ Test Accuracy: 91.81
 </div>
 </div>
 <div class="section" id="inference">
-<h3><span class="section-number">4.4.5. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
@@ -1292,7 +1291,7 @@ Test Accuracy: 91.81
 </div>
 </div>
 <div class="section" id="interpretability">
-<h3><span class="section-number">4.4.6. </span>Interpretability<a class="headerlink" href="#interpretability" title="Permalink to this headline">¶</a></h3>
+<h3>Interpretability<a class="headerlink" href="#interpretability" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span><span class="o">.</span><span class="n">fc1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span>
@@ -1384,7 +1383,7 @@ underwhelmed
 </div>
 </div>
 <div class="section" id="end">
-<h3><span class="section-number">4.4.7. </span>End<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h3>
+<h3>End<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
@@ -1417,7 +1416,6 @@ underwhelmed
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="computational_graph.html" title="previous page"><span class="section-number">3. </span>Computational Graph</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

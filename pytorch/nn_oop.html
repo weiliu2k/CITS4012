@@ -1,0 +1,1256 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Neural Networks in PyTorch &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="3. Dynamic Computational Graph in PyTorch" href="computational_graph.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_pytorch.html">
+     3. Linear Models in Pytorch
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab06: Neural Network Building Blocks
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="loss.html">
+     2. Loss Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="computational_graph.html">
+     3. Dynamic Computational Graph in PyTorch
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4. Neural Networks in PyTorch
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/pytorch/nn_oop.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/pytorch/nn_oop.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-neural-network-with-one-hidden-layer">
+   4.1. A neural network with one hidden layer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-the-model-class">
+   4.2. Defining the model class
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#object-orientation-in-pytorch">
+     4.2.1. Object Orientation in PyTorch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#xor-model">
+   4.3. XOR Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#obtain-all-model-parameters-using-state-dict">
+     4.3.1. Obtain all model parameters using
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       state_dict()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-and-data-need-to-be-on-the-same-device">
+     4.3.2. Model and Data need to be on the same device
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-xor">
+   4.4. Training XOR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-data-preparation">
+     4.4.1. Training Data Preparation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hyperparameter-setup">
+     4.4.2. Hyperparameter setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training">
+     4.4.3. Training
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inference-forward-pass">
+     4.4.4. Inference (Forward Pass)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logging-the-model-training-for-visualisation-in-tensorboard">
+   4.5. Logging the model training for Visualisation in TensorBoard
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-scalar">
+     4.5.1.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       add_scalar
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="neural-networks-in-pytorch">
+<h1><span class="section-number">4. </span>Neural Networks in PyTorch<a class="headerlink" href="#neural-networks-in-pytorch" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a-neural-network-with-one-hidden-layer">
+<h2><span class="section-number">4.1. </span>A neural network with one hidden layer<a class="headerlink" href="#a-neural-network-with-one-hidden-layer" title="Permalink to this headline">¶</a></h2>
+<p>Extending the simple perceptron in the openning page of this lab, let’s build a simple neural network that takes two binary inputs, and simulate the logical operation of XOR. The network has two sets of weights and biases,
+one set between the input and the hidden layer with two nodes, another set between the hidden layer and the single output, as shown in the figure below.</p>
+<div class="figure align-default">
+<a class="bg-primary mb-1 reference internal image-reference" href="../_images/neural-network-xor.png"><img alt="The XOR Neural Network" class="bg-primary mb-1" src="../_images/neural-network-xor.png" style="width: 400px;" /></a>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Compare the code below with the <code class="docutils literal notranslate"><span class="pre">Perceptron</span></code> code at the front page of this lab to have a better understanding of the building blocks.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="defining-the-model-class">
+<h2><span class="section-number">4.2. </span>Defining the model class<a class="headerlink" href="#defining-the-model-class" title="Permalink to this headline">¶</a></h2>
+<p>Let’s define the XOR neural network model inherited from the <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> class using an Object Oriented approach.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">XOR</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An XOR is similuated using neural network with </span>
+<span class="sd">    two fully connected linear layers </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            input_dim (int): size of the input features</span>
+<span class="sd">            output_dim (int): size of the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">XOR</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_in</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The forward pass of the perceptron</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x_in (torch.Tensor): an input data tensor</span>
+<span class="sd">                x_in.shape should be (batch, num_features)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the resulting tensor. tensor.shape should be (batch,).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hidden</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x_in</span><span class="p">))</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">hidden</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">yhat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="object-orientation-in-pytorch">
+<h3><span class="section-number">4.2.1. </span>Object Orientation in PyTorch<a class="headerlink" href="#object-orientation-in-pytorch" title="Permalink to this headline">¶</a></h3>
+<p>In PyTorch, a model (e.g. the <code class="docutils literal notranslate"><span class="pre">XOR</span></code> model) is represented by a regular Python class that inherits from the Module class.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>IMPORTANT: If you are uncomfortable with object-oriented
+programming (OOP) concepts like <em>classes</em>, <em>constructors</em>, <em>methods/class methods</em>, <em>instances</em>, and <em>attributes</em>, it is strongly recommended to follow tutorials such as <a class="reference external" href="https://realpython.com/python3-object-oriented-programming/">Real Python’s Objected-Oriented Programming (OOP) in Python 3</a></p>
+</div>
+<p>The most fundamental methods a model class needs to implement are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(self)</span></code>: it defines the parts that make up the model — in our case,
+two parameters, b and w.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forward(self,</span> <span class="pre">x)</span></code>: it performs the actual computation, that is, it outputs a
+prediction, given the input x.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Do not forget to include <code class="docutils literal notranslate"><span class="pre">super().__init__()</span></code> to execute
+the <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method of the parent class <code class="docutils literal notranslate"><span class="pre">(nn.Module)</span></code> before
+your own.</p>
+</div>
+</div>
+</div>
+<div class="section" id="xor-model">
+<h2><span class="section-number">4.3. </span>XOR Model<a class="headerlink" href="#xor-model" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s create a Linear Model with two inputs (features) and one output.</p>
+<p>Calling the XOR constructor with an <code class="docutils literal notranslate"><span class="pre">input_dim=2</span></code> and <code class="docutils literal notranslate"><span class="pre">output_dim=1</span></code>, namely <code class="docutils literal notranslate"><span class="pre">XOR(2,1)</span></code> results in two fully connected linear models, one <code class="docutils literal notranslate"><span class="pre">nn.Linear(2,2)</span></code> and ``nn.Linear(2,1)`, which will create a model with two input features, one output feature with biases at the input layer, hidden layer and output layer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="obtain-all-model-parameters-using-state-dict">
+<h3><span class="section-number">4.3.1. </span>Obtain all model parameters using <code class="docutils literal notranslate"><span class="pre">state_dict()</span></code><a class="headerlink" href="#obtain-all-model-parameters-using-state-dict" title="Permalink to this headline">¶</a></h3>
+<p>We can get the current values of all parameters using our model’s
+state_dict() method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;fc1.weight&#39;,
+              tensor([[ 0.5827,  0.0717],
+                      [-0.2969, -0.1214]])),
+             (&#39;fc1.bias&#39;, tensor([-0.5186, -0.6406])),
+             (&#39;fc2.weight&#39;, tensor([[0.3564, 0.5904]])),
+             (&#39;fc2.bias&#39;, tensor([0.3660]))])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We used to manually assign random values to these weights and biases. Now PyTorch does it for us automatically.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">state_dict()</span></code> of a given model is simply a Python dictionary that maps each attribute/parameter to its corresponding tensor. But only learnable parameters are included, as its purpose is to keep track of parameters that are going to be updated by the optimizer.</p>
+<p>The optimizer itself has a <code class="docutils literal notranslate"><span class="pre">state_dict()</span></code> too, which contains its internal
+state, as well as other hyper-parameters. Let’s take a quick look at it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span> 
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;state&#39;: {},
+ &#39;param_groups&#39;: [{&#39;lr&#39;: 0.01,
+   &#39;momentum&#39;: 0,
+   &#39;dampening&#39;: 0,
+   &#39;weight_decay&#39;: 0,
+   &#39;nesterov&#39;: False,
+   &#39;params&#39;: [0, 1, 2, 3]}]}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="model-and-data-need-to-be-on-the-same-device">
+<h3><span class="section-number">4.3.2. </span>Model and Data need to be on the same device<a class="headerlink" href="#model-and-data-need-to-be-on-the-same-device" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>We need to send our model to the same device
+where the data is. If our data is made of GPU tensors, our model
+must “live” inside the GPU as well.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-xor">
+<h2><span class="section-number">4.4. </span>Training XOR<a class="headerlink" href="#training-xor" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s put it all together to train an neural XOR model.</p>
+<div class="section" id="training-data-preparation">
+<h3><span class="section-number">4.4.1. </span>Training Data Preparation<a class="headerlink" href="#training-data-preparation" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training data preparation</span>
+
+<span class="n">x_train_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">y_train_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+<span class="n">x_val_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">x_train_tensor</span><span class="p">)</span>
+<span class="n">y_val_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">y_train_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verify the shape of the output tensor</span>
+<span class="n">y_train_tensor</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([4, 1])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="hyperparameter-setup">
+<h3><span class="section-number">4.4.2. </span>Hyperparameter setup<a class="headerlink" href="#hyperparameter-setup" title="Permalink to this headline">¶</a></h3>
+<p>We need to set up the learning rate and the number of epochs, and then select the three key compoenents of a neural model: model, optimiser and loss function before training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sets learning rate - this is &quot;eta&quot; ~ the &quot;n&quot; like</span>
+<span class="c1"># Greek letter</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># Step 0 - Initializes parameters &quot;b&quot; and &quot;w&quot; randomly</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Now we can create a model and send it at once to the device</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Defines a SGD optimizer to update the parameters</span>
+<span class="c1"># (now retrieved directly from the model)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="c1"># Defines a MSE loss function</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="c1"># Defines number of epochs</span>
+<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">100000</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training">
+<h3><span class="section-number">4.4.3. </span>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>Now we are ready to train.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="c1">#for j in range(steps):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span> <span class="c1"># What is this?!?</span>
+
+    <span class="c1"># Step 1 - Computes model&#39;s predicted output - forward pass</span>
+    <span class="c1"># No more manual prediction!</span>
+    <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_train_tensor</span><span class="p">)</span>
+
+    <span class="c1"># Step 2 - Computes the loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y_train_tensor</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot; parameters</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># Step 4 - Updates parameters using gradients and</span>
+    <span class="c1"># the learning rate</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epoch: </span><span class="si">{0}</span><span class="s2">, Loss: </span><span class="si">{1}</span><span class="s2">, &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+
+<span class="c1"># We can also inspect its parameters using its state_dict</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch: 0, Loss: 0.27375736832618713, 
+Epoch: 500, Loss: 0.2555079460144043, 
+Epoch: 1000, Loss: 0.25011080503463745, 
+Epoch: 1500, Loss: 0.24655020236968994, 
+Epoch: 2000, Loss: 0.24295492470264435, 
+Epoch: 2500, Loss: 0.238966703414917, 
+Epoch: 3000, Loss: 0.23448437452316284, 
+Epoch: 3500, Loss: 0.22930260002613068, 
+Epoch: 4000, Loss: 0.2232476770877838, 
+Epoch: 4500, Loss: 0.21623794734477997, 
+Epoch: 5000, Loss: 0.20812170207500458, 
+Epoch: 5500, Loss: 0.19883160293102264, 
+Epoch: 6000, Loss: 0.18850544095039368, 
+Epoch: 6500, Loss: 0.1771014928817749, 
+Epoch: 7000, Loss: 0.16488364338874817, 
+Epoch: 7500, Loss: 0.15211743116378784, 
+Epoch: 8000, Loss: 0.139143705368042, 
+Epoch: 8500, Loss: 0.12626223266124725, 
+Epoch: 9000, Loss: 0.11392521113157272, 
+Epoch: 9500, Loss: 0.10234947502613068, 
+Epoch: 10000, Loss: 0.09172774851322174, 
+Epoch: 10500, Loss: 0.08199518918991089, 
+Epoch: 11000, Loss: 0.0733182281255722, 
+Epoch: 11500, Loss: 0.06560301780700684, 
+Epoch: 12000, Loss: 0.05884382501244545, 
+Epoch: 12500, Loss: 0.05294763296842575, 
+Epoch: 13000, Loss: 0.04782135412096977, 
+Epoch: 13500, Loss: 0.04328809678554535, 
+Epoch: 14000, Loss: 0.039366669952869415, 
+Epoch: 14500, Loss: 0.03590844199061394, 
+Epoch: 15000, Loss: 0.03286368399858475, 
+Epoch: 15500, Loss: 0.030230185016989708, 
+Epoch: 16000, Loss: 0.02787426859140396, 
+Epoch: 16500, Loss: 0.025831308215856552, 
+Epoch: 17000, Loss: 0.02391224540770054, 
+Epoch: 17500, Loss: 0.02228483371436596, 
+Epoch: 18000, Loss: 0.02080184407532215, 
+Epoch: 18500, Loss: 0.019479243084788322, 
+Epoch: 19000, Loss: 0.018279727548360825, 
+Epoch: 19500, Loss: 0.017226679250597954, 
+Epoch: 20000, Loss: 0.01625426858663559, 
+Epoch: 20500, Loss: 0.01537842396646738, 
+Epoch: 21000, Loss: 0.014549647457897663, 
+Epoch: 21500, Loss: 0.01378196757286787, 
+Epoch: 22000, Loss: 0.01309845969080925, 
+Epoch: 22500, Loss: 0.01248301099985838, 
+Epoch: 23000, Loss: 0.011914841830730438, 
+Epoch: 23500, Loss: 0.011366013437509537, 
+Epoch: 24000, Loss: 0.01088915579020977, 
+Epoch: 24500, Loss: 0.010406192392110825, 
+Epoch: 25000, Loss: 0.010014466941356659, 
+Epoch: 25500, Loss: 0.009598497301340103, 
+Epoch: 26000, Loss: 0.009224366396665573, 
+Epoch: 26500, Loss: 0.008882050402462482, 
+Epoch: 27000, Loss: 0.008561154827475548, 
+Epoch: 27500, Loss: 0.008238466456532478, 
+Epoch: 28000, Loss: 0.007974416017532349, 
+Epoch: 28500, Loss: 0.007680158130824566, 
+Epoch: 29000, Loss: 0.0074332160875201225, 
+Epoch: 29500, Loss: 0.007197014521807432, 
+Epoch: 30000, Loss: 0.006972037721425295, 
+Epoch: 30500, Loss: 0.0067596533335745335, 
+Epoch: 31000, Loss: 0.006562951020896435, 
+Epoch: 31500, Loss: 0.006372722331434488, 
+Epoch: 32000, Loss: 0.006173261906951666, 
+Epoch: 32500, Loss: 0.005995258688926697, 
+Epoch: 33000, Loss: 0.005834578536450863, 
+Epoch: 33500, Loss: 0.005697771906852722, 
+Epoch: 34000, Loss: 0.005533096380531788, 
+Epoch: 34500, Loss: 0.005399664863944054, 
+Epoch: 35000, Loss: 0.005252258852124214, 
+Epoch: 35500, Loss: 0.0051279375329613686, 
+Epoch: 36000, Loss: 0.005004711449146271, 
+Epoch: 36500, Loss: 0.00487515376880765, 
+Epoch: 37000, Loss: 0.004761365242302418, 
+Epoch: 37500, Loss: 0.004653751850128174, 
+Epoch: 38000, Loss: 0.004538621753454208, 
+Epoch: 38500, Loss: 0.004451357759535313, 
+Epoch: 39000, Loss: 0.004348565824329853, 
+Epoch: 39500, Loss: 0.004250797443091869, 
+Epoch: 40000, Loss: 0.0041722762398421764, 
+Epoch: 40500, Loss: 0.00408073328435421, 
+Epoch: 41000, Loss: 0.004001058172434568, 
+Epoch: 41500, Loss: 0.003916418645530939, 
+Epoch: 42000, Loss: 0.0038418788462877274, 
+Epoch: 42500, Loss: 0.0037747276946902275, 
+Epoch: 43000, Loss: 0.003688385244458914, 
+Epoch: 43500, Loss: 0.003622728865593672, 
+Epoch: 44000, Loss: 0.0035602175630629063, 
+Epoch: 44500, Loss: 0.003489775350317359, 
+Epoch: 45000, Loss: 0.003426765091717243, 
+Epoch: 45500, Loss: 0.003366705495864153, 
+Epoch: 46000, Loss: 0.0033056712709367275, 
+Epoch: 46500, Loss: 0.0032519223168492317, 
+Epoch: 47000, Loss: 0.0031912513077259064, 
+Epoch: 47500, Loss: 0.0031480954494327307, 
+Epoch: 48000, Loss: 0.003087468910962343, 
+Epoch: 48500, Loss: 0.0030377130024135113, 
+Epoch: 49000, Loss: 0.0029869868885725737, 
+Epoch: 49500, Loss: 0.0029457740020006895, 
+Epoch: 50000, Loss: 0.0028982609510421753, 
+Epoch: 50500, Loss: 0.0028544270899146795, 
+Epoch: 51000, Loss: 0.0028089506085962057, 
+Epoch: 51500, Loss: 0.0027682341169565916, 
+Epoch: 52000, Loss: 0.0027215657755732536, 
+Epoch: 52500, Loss: 0.0026850481517612934, 
+Epoch: 53000, Loss: 0.002641090890392661, 
+Epoch: 53500, Loss: 0.0026040119118988514, 
+Epoch: 54000, Loss: 0.0025728303007781506, 
+Epoch: 54500, Loss: 0.0025344102177768946, 
+Epoch: 55000, Loss: 0.0024971726816147566, 
+Epoch: 55500, Loss: 0.002462733769789338, 
+Epoch: 56000, Loss: 0.002433920744806528, 
+Epoch: 56500, Loss: 0.002397480420768261, 
+Epoch: 57000, Loss: 0.0023658026475459337, 
+Epoch: 57500, Loss: 0.002332453615963459, 
+Epoch: 58000, Loss: 0.002302789594978094, 
+Epoch: 58500, Loss: 0.002273410093039274, 
+Epoch: 59000, Loss: 0.002243262715637684, 
+Epoch: 59500, Loss: 0.0022170250304043293, 
+Epoch: 60000, Loss: 0.002190019004046917, 
+Epoch: 60500, Loss: 0.002158280462026596, 
+Epoch: 61000, Loss: 0.0021350218448787928, 
+Epoch: 61500, Loss: 0.0021104959305375814, 
+Epoch: 62000, Loss: 0.0020827956032007933, 
+Epoch: 62500, Loss: 0.002065179403871298, 
+Epoch: 63000, Loss: 0.002039001788944006, 
+Epoch: 63500, Loss: 0.0020126295275986195, 
+Epoch: 64000, Loss: 0.0019906111992895603, 
+Epoch: 64500, Loss: 0.0019670012407004833, 
+Epoch: 65000, Loss: 0.0019415951101109385, 
+Epoch: 65500, Loss: 0.0019239818211644888, 
+Epoch: 66000, Loss: 0.0019025187939405441, 
+Epoch: 66500, Loss: 0.001879572868347168, 
+Epoch: 67000, Loss: 0.0018573695560917258, 
+Epoch: 67500, Loss: 0.0018442103173583746, 
+Epoch: 68000, Loss: 0.0018211827846243978, 
+Epoch: 68500, Loss: 0.0017985039157792926, 
+Epoch: 69000, Loss: 0.0017842620145529509, 
+Epoch: 69500, Loss: 0.001763233682140708, 
+Epoch: 70000, Loss: 0.0017411105800420046, 
+Epoch: 70500, Loss: 0.0017304448410868645, 
+Epoch: 71000, Loss: 0.0017097863601520658, 
+Epoch: 71500, Loss: 0.001695991144515574, 
+Epoch: 72000, Loss: 0.0016756795812398195, 
+Epoch: 72500, Loss: 0.0016603447729721665, 
+Epoch: 73000, Loss: 0.0016442921478301287, 
+Epoch: 73500, Loss: 0.0016290463972836733, 
+Epoch: 74000, Loss: 0.0016133070457726717, 
+Epoch: 74500, Loss: 0.0015992799308151007, 
+Epoch: 75000, Loss: 0.001579604228027165, 
+Epoch: 75500, Loss: 0.0015679539646953344, 
+Epoch: 76000, Loss: 0.0015530944801867008, 
+Epoch: 76500, Loss: 0.0015387125313282013, 
+Epoch: 77000, Loss: 0.0015230522258207202, 
+Epoch: 77500, Loss: 0.0015115310670807958, 
+Epoch: 78000, Loss: 0.0014988419134169817, 
+Epoch: 78500, Loss: 0.0014816472539678216, 
+Epoch: 79000, Loss: 0.0014696801081299782, 
+Epoch: 79500, Loss: 0.00145495415199548, 
+Epoch: 80000, Loss: 0.0014449709560722113, 
+Epoch: 80500, Loss: 0.001434221281670034, 
+Epoch: 81000, Loss: 0.0014170538634061813, 
+Epoch: 81500, Loss: 0.0014048947487026453, 
+Epoch: 82000, Loss: 0.001396734151057899, 
+Epoch: 82500, Loss: 0.0013808537041768432, 
+Epoch: 83000, Loss: 0.0013706223107874393, 
+Epoch: 83500, Loss: 0.001362814218737185, 
+Epoch: 84000, Loss: 0.0013511404395103455, 
+Epoch: 84500, Loss: 0.0013351887464523315, 
+Epoch: 85000, Loss: 0.0013270438648760319, 
+Epoch: 85500, Loss: 0.0013187713921070099, 
+Epoch: 86000, Loss: 0.0013084793463349342, 
+Epoch: 86500, Loss: 0.0012941481545567513, 
+Epoch: 87000, Loss: 0.0012852461077272892, 
+Epoch: 87500, Loss: 0.0012746803695335984, 
+Epoch: 88000, Loss: 0.0012681942898780107, 
+Epoch: 88500, Loss: 0.0012594859581440687, 
+Epoch: 89000, Loss: 0.0012420803541317582, 
+Epoch: 89500, Loss: 0.0012359283864498138, 
+Epoch: 90000, Loss: 0.0012270398437976837, 
+Epoch: 90500, Loss: 0.001218495424836874, 
+Epoch: 91000, Loss: 0.0012108510127291083, 
+Epoch: 91500, Loss: 0.0012005458120256662, 
+Epoch: 92000, Loss: 0.001190779497846961, 
+Epoch: 92500, Loss: 0.001179547980427742, 
+Epoch: 93000, Loss: 0.001171827781945467, 
+Epoch: 93500, Loss: 0.001165188499726355, 
+Epoch: 94000, Loss: 0.0011571240611374378, 
+Epoch: 94500, Loss: 0.001148390700109303, 
+Epoch: 95000, Loss: 0.0011400426737964153, 
+Epoch: 95500, Loss: 0.001132698031142354, 
+Epoch: 96000, Loss: 0.0011260239407420158, 
+Epoch: 96500, Loss: 0.0011176535626873374, 
+Epoch: 97000, Loss: 0.0011106508318334818, 
+Epoch: 97500, Loss: 0.0011001934763044119, 
+Epoch: 98000, Loss: 0.0010945061221718788, 
+Epoch: 98500, Loss: 0.0010835299035534263, 
+Epoch: 99000, Loss: 0.001077619381248951, 
+Epoch: 99500, Loss: 0.0010701098944991827, 
+OrderedDict([(&#39;fc1.weight&#39;, tensor([[ 0.2956, -2.3485],
+        [-0.1467,  4.8632]], device=&#39;cuda:0&#39;)), (&#39;fc1.bias&#39;, tensor([ 0.7222, -2.1771], device=&#39;cuda:0&#39;)), (&#39;fc2.weight&#39;, tensor([[-2.9656,  6.3072]], device=&#39;cuda:0&#39;)), (&#39;fc2.bias&#39;, tensor([-1.8895], device=&#39;cuda:0&#39;))])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In PyTorch, models have a train() method which, somewhat
+disappointingly, does NOT perform a training step. Its only
+purpose is to set the model to <strong>training mode</strong>.
+Why is this important? Some models may use mechanisms like
+Dropout, for instance, which have distinct behaviors during
+training and evaluation phases.</p>
+</div>
+<p>It is good practice to call <code class="docutils literal notranslate"><span class="pre">model.train()</span></code> in the training loop. It is also possible to set a model to evaluation mode. We will see this in later labs.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Put the returned weights and biases into the XOR neural network diagram and try to work out the output when the input is <code class="docutils literal notranslate"><span class="pre">[0,0]</span></code>.</p>
+</div>
+</div>
+<div class="section" id="inference-forward-pass">
+<h3><span class="section-number">4.4.4. </span>Inference (Forward Pass)<a class="headerlink" href="#inference-forward-pass" title="Permalink to this headline">¶</a></h3>
+<p>Instead of verifying it maually, we can test out our XOR model, with input [0,1] by called the model with the input. Note we do not call the forward function directly, instead we provide input to the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.9715], device=&#39;cuda:0&#39;, grad_fn=&lt;SigmoidBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="logging-the-model-training-for-visualisation-in-tensorboard">
+<h2><span class="section-number">4.5. </span>Logging the model training for Visualisation in TensorBoard<a class="headerlink" href="#logging-the-model-training-for-visualisation-in-tensorboard" title="Permalink to this headline">¶</a></h2>
+<p>TensorBoard by TensorFlow is a very useful tool for visualising training progress and model architectures, despite being a competiting platform, PyTorch provides classes and methods for us to integrate it with our model.</p>
+<p>TensorBoard can be loaded inside Jupyter notebooks, or can be started externally from a command line. Before we run TensorBoard, we need to change to the directory of your model code, and create a folder, e.g. <code class="docutils literal notranslate"><span class="pre">runs</span></code> to keep a log of the training progress.</p>
+<p>The examples in this lab are running Tensorboard inside a notebook, but it is a good idea to run TensorBoard on the command line by giving the log directory. Assuming you are one level up the <code class="docutils literal notranslate"><span class="pre">runs</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorboard</span> <span class="o">--</span><span class="n">logdir</span> <span class="n">runs</span>
+</pre></div>
+</div>
+<p>If successful, it will say that <code class="docutils literal notranslate"><span class="pre">TensorBoard</span> <span class="pre">2.6.0</span> <span class="pre">at</span> <span class="pre">http://localhost:6006/</span> <span class="pre">(Press</span> <span class="pre">CTRL+C</span> <span class="pre">to</span> <span class="pre">quit)</span></code>, copy and paste the URL to your browser to see TensorBoard in action.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> tensorboard
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">tensorboard</span> --logdir runs
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:49:58 ago. (Use &#39;!kill 9500&#39; to kill it.)
+</pre></div>
+</div>
+<div class="output text_html">
+<iframe id="tensorboard-frame-ef014d80aa2af95c" width="100%" height="800" frameborder="0">
+</iframe>
+<script>
+  (function() {
+    const frame = document.getElementById("tensorboard-frame-ef014d80aa2af95c");
+    const url = new URL("http://localhost");
+    const port = 6006;
+    if (port) {
+      url.port = port;
+    }
+    frame.src = url;
+  })();
+</script>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="s1">&#39;runs/test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">writer</span><span class="o">.</span><span class="n">add_graph</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_train_tensor</span><span class="p">)</span>
+<span class="o">%</span><span class="k">tensorboard</span> --logdir runs
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:49:58 ago. (Use &#39;!kill 9500&#39; to kill it.)
+</pre></div>
+</div>
+<div class="output text_html">
+<iframe id="tensorboard-frame-8c5501fd92428567" width="100%" height="800" frameborder="0">
+</iframe>
+<script>
+  (function() {
+    const frame = document.getElementById("tensorboard-frame-8c5501fd92428567");
+    const url = new URL("http://localhost");
+    const port = 6006;
+    if (port) {
+      url.port = port;
+    }
+    frame.src = url;
+  })();
+</script>
+</div></div>
+</div>
+<div class="section" id="add-scalar">
+<h3><span class="section-number">4.5.1. </span><code class="docutils literal notranslate"><span class="pre">add_scalar</span></code><a class="headerlink" href="#add-scalar" title="Permalink to this headline">¶</a></h3>
+<p>We can send the loss values to TensorBoard using the <code class="docutils literal notranslate"><span class="pre">add_scalars</span></code> method to send multiple scalar values at once, and it needs three arguments:</p>
+<ul class="simple">
+<li><p>main_tag: the parent name of the tags or, the “group tag”</p></li>
+<li><p>tag_scalar_dict: the dictionary containing the key: value pairs for the scalars you want to keep track of (can be training and validation losses)</p></li>
+<li><p>global_step: step value, that is, the index you’re associating with the values you’re sending in the dictionary - the epoch comes to mind in our case, as losses are computed for each epoch</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">writer</span><span class="o">.</span><span class="n">add_scalars</span><span class="p">(</span><span class="n">main_tag</span><span class="o">=</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span>
+    <span class="n">tag_scalar_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;training&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">,</span>
+                    <span class="s1">&#39;validation&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">},</span>
+    <span class="n">global_step</span><span class="o">=</span><span class="n">epoch</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you run the code above after performing the model training, it will just send both loss values computed for the last epoch.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">tensorboard</span> --logdir runs
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:49:58 ago. (Use &#39;!kill 9500&#39; to kill it.)
+</pre></div>
+</div>
+<div class="output text_html">
+<iframe id="tensorboard-frame-de5f5206eb1e385e" width="100%" height="800" frameborder="0">
+</iframe>
+<script>
+  (function() {
+    const frame = document.getElementById("tensorboard-frame-de5f5206eb1e385e");
+    const url = new URL("http://localhost");
+    const port = 6006;
+    if (port) {
+      url.port = port;
+    }
+    frame.src = url;
+  })();
+</script>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="c1"># Sets learning rate - this is &quot;eta&quot; ~ the &quot;n&quot; like</span>
+<span class="c1"># Greek letter</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="c1"># Step 0 - Initializes parameters &quot;b&quot; and &quot;w&quot; randomly</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Now we can create a model and send it at once to the device</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Defines a SGD optimizer to update the parameters</span>
+<span class="c1"># (now retrieved directly from the model)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="c1"># Defines a MSE loss function</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="c1"># Tensorboard setup</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="s1">&#39;runs/XOR&#39;</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">))</span>
+<span class="n">writer</span><span class="o">.</span><span class="n">add_graph</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_train_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+
+<span class="c1"># Defines number of epochs</span>
+<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">10000</span>
+
+<span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">val_losses</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># note we did not use the validation data</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="c1">#for j in range(steps):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span> <span class="c1"># What is this?!?</span>
+
+    <span class="c1"># Step 1 - Computes model&#39;s predicted output - forward pass</span>
+    <span class="c1"># No more manual prediction!</span>
+    <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_train_tensor</span><span class="p">)</span>
+
+    <span class="c1"># Step 2 - Computes the loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y_train_tensor</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3 - Computes gradients for both &quot;b&quot; and &quot;w&quot; parameters</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># Step 4 - Updates parameters using gradients and</span>
+    <span class="c1"># the learning rate</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epoch: </span><span class="si">{0}</span><span class="s2">, Loss: </span><span class="si">{1}</span><span class="s2">, &quot;</span><span class="o">.</span>
+            <span class="nb">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+
+    <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">add_scalars</span><span class="p">(</span><span class="n">main_tag</span><span class="o">=</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> 
+                       <span class="n">tag_scalar_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;training&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">,</span>
+                                      <span class="s1">&#39;validation&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">},</span>
+                       <span class="n">global_step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+
+<span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                        
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch: 0, Loss: 0.27375736832618713, 
+Epoch: 500, Loss: 0.2081705629825592, 
+Epoch: 1000, Loss: 0.09176724404096603, 
+Epoch: 1500, Loss: 0.03289078176021576, 
+Epoch: 2000, Loss: 0.016263967379927635, 
+Epoch: 2500, Loss: 0.009998900815844536, 
+Epoch: 3000, Loss: 0.006978640332818031, 
+Epoch: 3500, Loss: 0.005261328537017107, 
+Epoch: 4000, Loss: 0.00416548689827323, 
+Epoch: 4500, Loss: 0.0034290249459445477, 
+Epoch: 5000, Loss: 0.002894176635891199, 
+Epoch: 5500, Loss: 0.002497166395187378, 
+Epoch: 6000, Loss: 0.0021936693228781223, 
+Epoch: 6500, Loss: 0.0019435270223766565, 
+Epoch: 7000, Loss: 0.0017444714903831482, 
+Epoch: 7500, Loss: 0.0015824229922145605, 
+Epoch: 8000, Loss: 0.001446553273126483, 
+Epoch: 8500, Loss: 0.0013299942947924137, 
+Epoch: 9000, Loss: 0.00122724543325603, 
+Epoch: 9500, Loss: 0.0011413537431508303, 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">tensorboard</span> --logdir runs
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reusing TensorBoard on port 6006 (pid 9500), started 1 day, 14:50:08 ago. (Use &#39;!kill 9500&#39; to kill it.)
+</pre></div>
+</div>
+<div class="output text_html">
+<iframe id="tensorboard-frame-b5aa5c453c9ec402" width="100%" height="800" frameborder="0">
+</iframe>
+<script>
+  (function() {
+    const frame = document.getElementById("tensorboard-frame-b5aa5c453c9ec402");
+    const url = new URL("http://localhost");
+    const port = 6006;
+    if (port) {
+      url.port = port;
+    }
+    frame.src = url;
+  })();
+</script>
+</div></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the TensorBoard logged run, we increased the learning rate and shortened the number of epochs. Play with these two parameters to see what you can get. Or change the loss function to BCE or BCEWithLogits to see how your training loss changes.</p>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./pytorch"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="computational_graph.html" title="previous page"><span class="section-number">3. </span>Dynamic Computational Graph in PyTorch</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

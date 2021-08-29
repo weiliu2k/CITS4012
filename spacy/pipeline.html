@@ -252,7 +252,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../pytorch/intro.html">
-   Lab06:
+   Lab06: Neural Network Building Blocks
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -262,67 +262,17 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/loss.html">
-     2. Example 3-1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-2">
-     3. Example 3-2
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-3">
-     4. Example 3-3
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-4">
-     5. Example 3-4
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-6">
-     6. Example 3-6
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-7">
-     7. Example 3-7
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-8">
-     8. Example 3-8
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#example-3-9">
-     9. Example 3-9
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#log-softmax">
-     10. Log Softmax
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#logsoftmax">
-     11. LogSoftmax
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/loss.html#negative-loglikelihood-loss">
-     12. Negative Loglikelihood Loss
+     2. Loss Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../pytorch/computational_graph.html">
-     13. Computational Graph
+     3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../pytorch/sentiment_yelp.html">
-     14. Classifying Yelp Reviews
+    <a class="reference internal" href="../pytorch/nn_oop.html">
+     4. Neural Networks in PyTorch
     </a>
    </li>
   </ul>
@@ -572,13 +522,13 @@
 <p>spaCy allows you to load a selected set of pipeline components, dis-abling those that aren’t necessary.</p>
 <p>You can do this either when creating a nlp object or disable it after the nlp object is created.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="5d601f16-9793-4879-9128-f5e97c8dff21" name="8abcd26c-0e1a-442a-a9d5-d9f1deaf63d1" type="radio">
-</input><label class="tabbed-label" for="5d601f16-9793-4879-9128-f5e97c8dff21">
+<input checked="checked" id="ceaf3d52-5ef4-48d7-b00b-1041163998a0" name="db8e5dda-1f3c-40a6-ab59-baaaf15a18fa" type="radio">
+</input><label class="tabbed-label" for="ceaf3d52-5ef4-48d7-b00b-1041163998a0">
 Disabling when create</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp</span> <span class="pre">=</span> <span class="pre">spacy.load('en_core_web_sm',disable=['parser'])</span></code></p>
 </div>
-<input id="a402ac12-d7b3-43ff-92a8-f8179010e0ed" name="8abcd26c-0e1a-442a-a9d5-d9f1deaf63d1" type="radio">
-</input><label class="tabbed-label" for="a402ac12-d7b3-43ff-92a8-f8179010e0ed">
+<input id="80ccf498-def6-4d6d-88f4-5db7735f38c5" name="db8e5dda-1f3c-40a6-ab59-baaaf15a18fa" type="radio">
+</input><label class="tabbed-label" for="80ccf498-def6-4d6d-88f4-5db7735f38c5">
 Disabling after creation</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('tagger')</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('parser')</span></code></p>
