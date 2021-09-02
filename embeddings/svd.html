@@ -1,0 +1,1206 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Word Vectors from Word-Word Coocurrence Matrix &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. GloVe: Global Vectors for Word Representation" href="glove.html" />
+    <link rel="prev" title="Lab07: Word Embeddings" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks and Pytorch
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_pytorch.html">
+     3. Linear Models in Pytorch
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Lab06: Neural Network Building Blocks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/loss.html">
+     2. Loss Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     3. Dynamic Computational Graph in PyTorch
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/nn_oop.html">
+     4. Neural Networks in PyTorch
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro.html">
+   Lab07: Word Embeddings
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     1. Word Vectors from Word-Word Coocurrence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="glove.html">
+     2. GloVe: Global Vectors for Word Representation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="word2vec.html">
+     3. Word2Vec
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/embeddings/svd.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/embeddings/svd.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#co-occurrence-matrix-revisited">
+   1.1. Co-Occurrence Matrix - Revisited
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting-co-occurrence-word-embeddings">
+   1.2. Plotting Co-Occurrence Word Embeddings
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#find-distinct-words">
+   1.3. Find
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     distinct_words
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compute-co-occurrence-matrix">
+   1.4.
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     compute_co_occurrence_matrix
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-svd-to-reduce-to-k-dim">
+   1.5. Using SVD to
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     reduce_to_k_dim
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualise-the-embeddings-using-plot-embeddings">
+   1.6. Visualise the embeddings using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     plot_embeddings
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="word-vectors-from-word-word-coocurrence-matrix">
+<h1><span class="section-number">1. </span>Word Vectors from Word-Word Coocurrence Matrix<a class="headerlink" href="#word-vectors-from-word-word-coocurrence-matrix" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To run the code in this notebook, you will need the cits4012_py37 environment.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># All Import Statements Defined Here</span>
+<span class="c1"># ----------------</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">assert</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span>
+<span class="k">assert</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">5</span>
+
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">KeyedVectors</span>
+<span class="kn">from</span> <span class="nn">gensim.test.utils</span> <span class="kn">import</span> <span class="n">datapath</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;reuters&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">reuters</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="n">START_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&lt;START&gt;&#39;</span>
+<span class="n">END_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&lt;END&gt;&#39;</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># ----------------</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package reuters to
+[nltk_data]     C:\Users\wei\AppData\Roaming\nltk_data...
+[nltk_data]   Package reuters is already up-to-date!
+</pre></div>
+</div>
+</div>
+</div>
+<p>Most word vector models start from the following idea:</p>
+<p><em>You shall know a word by the company it keeps (<a class="reference external" href="https://en.wikipedia.org/wiki/John_Rupert_Firth">Firth, J. R. 1957:11</a>)</em></p>
+<p>Many word vector implementations are driven by the idea that similar words, i.e., (near) synonyms, will be used in similar contexts. As a result, similar words will often be spoken or written along with a shared subset of words, i.e.,  contexts. By examining these contexts, we can try to develop embeddings for our words. With this intuition in mind, many “old school” approaches to constructing word vectors relied on word counts. Here we elaborate upon one of those strategies, <em>co-occurrence matrices</em> (for more information, see <a class="reference external" href="http://web.stanford.edu/class/cs124/lec/vectorsemantics.video.pdf">here</a> or <a class="reference external" href="https://medium.com/data-science-group-iitr/word-embedding-2d05d270b285">here</a>).</p>
+<div class="section" id="co-occurrence-matrix-revisited">
+<h2><span class="section-number">1.1. </span>Co-Occurrence Matrix - Revisited<a class="headerlink" href="#co-occurrence-matrix-revisited" title="Permalink to this headline">¶</a></h2>
+<p>A co-occurrence matrix counts how often things co-occur in some environment. Given some word <span class="math notranslate nohighlight">\(w_i\)</span> occurring in the document, we consider the <em>context window</em> surrounding <span class="math notranslate nohighlight">\(w_i\)</span>. Supposing our fixed window size is <span class="math notranslate nohighlight">\(n\)</span>, then this is the <span class="math notranslate nohighlight">\(n\)</span> preceding and <span class="math notranslate nohighlight">\(n\)</span> subsequent words in that document, i.e. words <span class="math notranslate nohighlight">\(w_{i-n} \dots w_{i-1}\)</span> and <span class="math notranslate nohighlight">\(w_{i+1} \dots w_{i+n}\)</span>. We build a <em>co-occurrence matrix</em> <span class="math notranslate nohighlight">\(M\)</span>, which is a symmetric word-by-word matrix in which <span class="math notranslate nohighlight">\(M_{ij}\)</span> is the number of times <span class="math notranslate nohighlight">\(w_j\)</span> appears inside <span class="math notranslate nohighlight">\(w_i\)</span>’s window among all documents.</p>
+<p><strong>Example: Co-Occurrence with Fixed Window of n=1</strong>:</p>
+<p>Document 1: “all that glitters is not gold”</p>
+<p>Document 2: “all is well that ends well”</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>*</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">&lt;START&gt;</span></code></p></th>
+<th class="head"><p>all</p></th>
+<th class="head"><p>that</p></th>
+<th class="head"><p>glitters</p></th>
+<th class="head"><p>is</p></th>
+<th class="head"><p>not</p></th>
+<th class="head"><p>gold</p></th>
+<th class="head"><p>well</p></th>
+<th class="head"><p>ends</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">&lt;END&gt;</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;START&gt;</span></code></p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>all</p></td>
+<td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>that</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>glitters</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>is</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>not</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>gold</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>well</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>ends</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;END&gt;</span></code></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> In NLP, we often add <code class="docutils literal notranslate"><span class="pre">&lt;START&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;END&gt;</span></code> tokens to represent the beginning and end of sentences, paragraphs or documents. In thise case we imagine <code class="docutils literal notranslate"><span class="pre">&lt;START&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;END&gt;</span></code> tokens encapsulating each document, e.g., “<code class="docutils literal notranslate"><span class="pre">&lt;START&gt;</span></code> All that glitters is not gold <code class="docutils literal notranslate"><span class="pre">&lt;END&gt;</span></code>”, and include these tokens in our co-occurrence counts.</p>
+<p>The rows (or columns) of this matrix provide one type of word vectors (those based on word-word co-occurrence), but the vectors will be large in general (linear in the number of distinct words in a corpus). Thus, our next step is to run <em>dimensionality reduction</em>. In particular, we will run <em>SVD (Singular Value Decomposition)</em>, which is a kind of generalized <em>PCA (Principal Components Analysis)</em> to select the top <span class="math notranslate nohighlight">\(k\)</span> principal components. Here’s a visualization of dimensionality reduction with SVD. In this picture our co-occurrence matrix is <span class="math notranslate nohighlight">\(A\)</span> with <span class="math notranslate nohighlight">\(n\)</span> rows corresponding to <span class="math notranslate nohighlight">\(n\)</span> words. We obtain a full matrix decomposition, with the singular values ordered in the diagonal <span class="math notranslate nohighlight">\(S\)</span> matrix, and our new, shorter length-<span class="math notranslate nohighlight">\(k\)</span> word vectors in <span class="math notranslate nohighlight">\(U_k\)</span>.</p>
+<p><img alt="Picture of an SVD" src="embeddings\images/svd.png" /></p>
+<p>This reduced-dimensionality co-occurrence representation preserves semantic relationships between words, e.g. <em>doctor</em> and <em>hospital</em> will be closer than <em>doctor</em> and <em>dog</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you can barely remember what an eigenvalue is, here’s <a class="reference external" href="https://davetang.org/file/Singular_Value_Decomposition_Tutorial.pdf">a slow, friendly introduction to SVD</a>. If you want to learn more thoroughly about PCA or SVD, feel free to check out lectures <a class="reference external" href="https://web.stanford.edu/class/cs168/l/l7.pdf">7</a>, <a class="reference external" href="http://theory.stanford.edu/~tim/s15/l/l8.pdf">8</a>, and <a class="reference external" href="https://web.stanford.edu/class/cs168/l/l9.pdf">9</a> of CS168. These course notes provide a great high-level treatment of these general purpose algorithms. Though, for the purpose of this class, you only need to know how to extract the k-dimensional embeddings by utilizing pre-programmed implementations of these algorithms from the numpy, scipy, or sklearn python packages. In practice, it is challenging to apply full SVD to large corpora because of the memory needed to perform PCA or SVD. However, if you only want the top <span class="math notranslate nohighlight">\(k\)</span> vector components for relatively small <span class="math notranslate nohighlight">\(k\)</span> — known as <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Truncated_SVD">Truncated SVD</a> — then there are reasonably scalable techniques to compute those iteratively.</p>
+</div>
+</div>
+<div class="section" id="plotting-co-occurrence-word-embeddings">
+<h2><span class="section-number">1.2. </span>Plotting Co-Occurrence Word Embeddings<a class="headerlink" href="#plotting-co-occurrence-word-embeddings" title="Permalink to this headline">¶</a></h2>
+<p>Here, we will be using the Reuters (business and financial news) corpus. If you haven’t run the import cell at the top of this page, please run it now (click it and press SHIFT-RETURN). The corpus consists of 10,788 news documents totaling 1.3 million words. These documents span 90 categories and are split into train and test. For more details, please see <a class="reference external" href="https://www.nltk.org/book/ch02.html">https://www.nltk.org/book/ch02.html</a>. We provide a <code class="docutils literal notranslate"><span class="pre">read_corpus</span></code> function below that pulls out only articles from the “crude” (i.e. news articles about oil, gas, etc.) category. The function also adds <code class="docutils literal notranslate"><span class="pre">&lt;START&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;END&gt;</span></code> tokens to each of the documents, and lowercases words. You do <strong>not</strong> have to perform any other kind of pre-processing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_corpus</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="s2">&quot;crude&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Read files from the specified Reuter&#39;s category.</span>
+<span class="sd">        Params:</span>
+<span class="sd">            category (string): category name</span>
+<span class="sd">        Return:</span>
+<span class="sd">            list of lists, with words from each of the processed files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">reuters</span><span class="o">.</span><span class="n">fileids</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">START_TOKEN</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">reuters</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">f</span><span class="p">))]</span> <span class="o">+</span> <span class="p">[</span><span class="n">END_TOKEN</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s have a look what these documents are like….</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reuters_corpus</span> <span class="o">=</span> <span class="n">read_corpus</span><span class="p">()</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">reuters_corpus</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&#39;&lt;START&gt;&#39;, &#39;japan&#39;, &#39;to&#39;, &#39;revise&#39;, &#39;long&#39;, &#39;-&#39;, &#39;term&#39;, &#39;energy&#39;, &#39;demand&#39;, &#39;downwards&#39;, &#39;the&#39;,
+  &#39;ministry&#39;, &#39;of&#39;, &#39;international&#39;, &#39;trade&#39;, &#39;and&#39;, &#39;industry&#39;, &#39;(&#39;, &#39;miti&#39;, &#39;)&#39;, &#39;will&#39;, &#39;revise&#39;,
+  &#39;its&#39;, &#39;long&#39;, &#39;-&#39;, &#39;term&#39;, &#39;energy&#39;, &#39;supply&#39;, &#39;/&#39;, &#39;demand&#39;, &#39;outlook&#39;, &#39;by&#39;, &#39;august&#39;, &#39;to&#39;,
+  &#39;meet&#39;, &#39;a&#39;, &#39;forecast&#39;, &#39;downtrend&#39;, &#39;in&#39;, &#39;japanese&#39;, &#39;energy&#39;, &#39;demand&#39;, &#39;,&#39;, &#39;ministry&#39;,
+  &#39;officials&#39;, &#39;said&#39;, &#39;.&#39;, &#39;miti&#39;, &#39;is&#39;, &#39;expected&#39;, &#39;to&#39;, &#39;lower&#39;, &#39;the&#39;, &#39;projection&#39;, &#39;for&#39;,
+  &#39;primary&#39;, &#39;energy&#39;, &#39;supplies&#39;, &#39;in&#39;, &#39;the&#39;, &#39;year&#39;, &#39;2000&#39;, &#39;to&#39;, &#39;550&#39;, &#39;mln&#39;, &#39;kilolitres&#39;,
+  &#39;(&#39;, &#39;kl&#39;, &#39;)&#39;, &#39;from&#39;, &#39;600&#39;, &#39;mln&#39;, &#39;,&#39;, &#39;they&#39;, &#39;said&#39;, &#39;.&#39;, &#39;the&#39;, &#39;decision&#39;, &#39;follows&#39;,
+  &#39;the&#39;, &#39;emergence&#39;, &#39;of&#39;, &#39;structural&#39;, &#39;changes&#39;, &#39;in&#39;, &#39;japanese&#39;, &#39;industry&#39;, &#39;following&#39;,
+  &#39;the&#39;, &#39;rise&#39;, &#39;in&#39;, &#39;the&#39;, &#39;value&#39;, &#39;of&#39;, &#39;the&#39;, &#39;yen&#39;, &#39;and&#39;, &#39;a&#39;, &#39;decline&#39;, &#39;in&#39;, &#39;domestic&#39;,
+  &#39;electric&#39;, &#39;power&#39;, &#39;demand&#39;, &#39;.&#39;, &#39;miti&#39;, &#39;is&#39;, &#39;planning&#39;, &#39;to&#39;, &#39;work&#39;, &#39;out&#39;, &#39;a&#39;, &#39;revised&#39;,
+  &#39;energy&#39;, &#39;supply&#39;, &#39;/&#39;, &#39;demand&#39;, &#39;outlook&#39;, &#39;through&#39;, &#39;deliberations&#39;, &#39;of&#39;, &#39;committee&#39;,
+  &#39;meetings&#39;, &#39;of&#39;, &#39;the&#39;, &#39;agency&#39;, &#39;of&#39;, &#39;natural&#39;, &#39;resources&#39;, &#39;and&#39;, &#39;energy&#39;, &#39;,&#39;, &#39;the&#39;,
+  &#39;officials&#39;, &#39;said&#39;, &#39;.&#39;, &#39;they&#39;, &#39;said&#39;, &#39;miti&#39;, &#39;will&#39;, &#39;also&#39;, &#39;review&#39;, &#39;the&#39;, &#39;breakdown&#39;,
+  &#39;of&#39;, &#39;energy&#39;, &#39;supply&#39;, &#39;sources&#39;, &#39;,&#39;, &#39;including&#39;, &#39;oil&#39;, &#39;,&#39;, &#39;nuclear&#39;, &#39;,&#39;, &#39;coal&#39;, &#39;and&#39;,
+  &#39;natural&#39;, &#39;gas&#39;, &#39;.&#39;, &#39;nuclear&#39;, &#39;energy&#39;, &#39;provided&#39;, &#39;the&#39;, &#39;bulk&#39;, &#39;of&#39;, &#39;japan&#39;, &quot;&#39;&quot;, &#39;s&#39;,
+  &#39;electric&#39;, &#39;power&#39;, &#39;in&#39;, &#39;the&#39;, &#39;fiscal&#39;, &#39;year&#39;, &#39;ended&#39;, &#39;march&#39;, &#39;31&#39;, &#39;,&#39;, &#39;supplying&#39;,
+  &#39;an&#39;, &#39;estimated&#39;, &#39;27&#39;, &#39;pct&#39;, &#39;on&#39;, &#39;a&#39;, &#39;kilowatt&#39;, &#39;/&#39;, &#39;hour&#39;, &#39;basis&#39;, &#39;,&#39;, &#39;followed&#39;,
+  &#39;by&#39;, &#39;oil&#39;, &#39;(&#39;, &#39;23&#39;, &#39;pct&#39;, &#39;)&#39;, &#39;and&#39;, &#39;liquefied&#39;, &#39;natural&#39;, &#39;gas&#39;, &#39;(&#39;, &#39;21&#39;, &#39;pct&#39;, &#39;),&#39;,
+  &#39;they&#39;, &#39;noted&#39;, &#39;.&#39;, &#39;&lt;END&gt;&#39;],
+ [&#39;&lt;START&gt;&#39;, &#39;energy&#39;, &#39;/&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;petrochemical&#39;, &#39;industry&#39;, &#39;cheap&#39;, &#39;oil&#39;,
+  &#39;feedstocks&#39;, &#39;,&#39;, &#39;the&#39;, &#39;weakened&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;dollar&#39;, &#39;and&#39;, &#39;a&#39;, &#39;plant&#39;,
+  &#39;utilization&#39;, &#39;rate&#39;, &#39;approaching&#39;, &#39;90&#39;, &#39;pct&#39;, &#39;will&#39;, &#39;propel&#39;, &#39;the&#39;, &#39;streamlined&#39;, &#39;u&#39;,
+  &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;petrochemical&#39;, &#39;industry&#39;, &#39;to&#39;, &#39;record&#39;, &#39;profits&#39;, &#39;this&#39;, &#39;year&#39;, &#39;,&#39;,
+  &#39;with&#39;, &#39;growth&#39;, &#39;expected&#39;, &#39;through&#39;, &#39;at&#39;, &#39;least&#39;, &#39;1990&#39;, &#39;,&#39;, &#39;major&#39;, &#39;company&#39;,
+  &#39;executives&#39;, &#39;predicted&#39;, &#39;.&#39;, &#39;this&#39;, &#39;bullish&#39;, &#39;outlook&#39;, &#39;for&#39;, &#39;chemical&#39;, &#39;manufacturing&#39;,
+  &#39;and&#39;, &#39;an&#39;, &#39;industrywide&#39;, &#39;move&#39;, &#39;to&#39;, &#39;shed&#39;, &#39;unrelated&#39;, &#39;businesses&#39;, &#39;has&#39;, &#39;prompted&#39;,
+  &#39;gaf&#39;, &#39;corp&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;, &#39;gaf&#39;, &#39;&gt;,&#39;, &#39;privately&#39;, &#39;-&#39;, &#39;held&#39;, &#39;cain&#39;, &#39;chemical&#39;, &#39;inc&#39;,
+  &#39;,&#39;, &#39;and&#39;, &#39;other&#39;, &#39;firms&#39;, &#39;to&#39;, &#39;aggressively&#39;, &#39;seek&#39;, &#39;acquisitions&#39;, &#39;of&#39;, &#39;petrochemical&#39;,
+  &#39;plants&#39;, &#39;.&#39;, &#39;oil&#39;, &#39;companies&#39;, &#39;such&#39;, &#39;as&#39;, &#39;ashland&#39;, &#39;oil&#39;, &#39;inc&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;, &#39;ash&#39;,
+  &#39;&gt;,&#39;, &#39;the&#39;, &#39;kentucky&#39;, &#39;-&#39;, &#39;based&#39;, &#39;oil&#39;, &#39;refiner&#39;, &#39;and&#39;, &#39;marketer&#39;, &#39;,&#39;, &#39;are&#39;, &#39;also&#39;,
+  &#39;shopping&#39;, &#39;for&#39;, &#39;money&#39;, &#39;-&#39;, &#39;making&#39;, &#39;petrochemical&#39;, &#39;businesses&#39;, &#39;to&#39;, &#39;buy&#39;, &#39;.&#39;, &#39;&quot;&#39;,
+  &#39;i&#39;, &#39;see&#39;, &#39;us&#39;, &#39;poised&#39;, &#39;at&#39;, &#39;the&#39;, &#39;threshold&#39;, &#39;of&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;period&#39;, &#39;,&quot;&#39;, &#39;said&#39;,
+  &#39;paul&#39;, &#39;oreffice&#39;, &#39;,&#39;, &#39;chairman&#39;, &#39;of&#39;, &#39;giant&#39;, &#39;dow&#39;, &#39;chemical&#39;, &#39;co&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;,
+  &#39;dow&#39;, &#39;&gt;,&#39;, &#39;adding&#39;, &#39;,&#39;, &#39;&quot;&#39;, &#39;there&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;no&#39;, &#39;major&#39;, &#39;plant&#39;, &#39;capacity&#39;, &#39;being&#39;,
+  &#39;added&#39;, &#39;around&#39;, &#39;the&#39;, &#39;world&#39;, &#39;now&#39;, &#39;.&#39;, &#39;the&#39;, &#39;whole&#39;, &#39;game&#39;, &#39;is&#39;, &#39;bringing&#39;, &#39;out&#39;,
+  &#39;new&#39;, &#39;products&#39;, &#39;and&#39;, &#39;improving&#39;, &#39;the&#39;, &#39;old&#39;, &#39;ones&#39;, &#39;.&quot;&#39;, &#39;analysts&#39;, &#39;say&#39;, &#39;the&#39;,
+  &#39;chemical&#39;, &#39;industry&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;biggest&#39;, &#39;customers&#39;, &#39;,&#39;, &#39;automobile&#39;, &#39;manufacturers&#39;,
+  &#39;and&#39;, &#39;home&#39;, &#39;builders&#39;, &#39;that&#39;, &#39;use&#39;, &#39;a&#39;, &#39;lot&#39;, &#39;of&#39;, &#39;paints&#39;, &#39;and&#39;, &#39;plastics&#39;, &#39;,&#39;,
+  &#39;are&#39;, &#39;expected&#39;, &#39;to&#39;, &#39;buy&#39;, &#39;quantities&#39;, &#39;this&#39;, &#39;year&#39;, &#39;.&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;,
+  &#39;petrochemical&#39;, &#39;plants&#39;, &#39;are&#39;, &#39;currently&#39;, &#39;operating&#39;, &#39;at&#39;, &#39;about&#39;, &#39;90&#39;, &#39;pct&#39;,
+  &#39;capacity&#39;, &#39;,&#39;, &#39;reflecting&#39;, &#39;tighter&#39;, &#39;supply&#39;, &#39;that&#39;, &#39;could&#39;, &#39;hike&#39;, &#39;product&#39;, &#39;prices&#39;,
+  &#39;by&#39;, &#39;30&#39;, &#39;to&#39;, &#39;40&#39;, &#39;pct&#39;, &#39;this&#39;, &#39;year&#39;, &#39;,&#39;, &#39;said&#39;, &#39;john&#39;, &#39;dosher&#39;, &#39;,&#39;, &#39;managing&#39;,
+  &#39;director&#39;, &#39;of&#39;, &#39;pace&#39;, &#39;consultants&#39;, &#39;inc&#39;, &#39;of&#39;, &#39;houston&#39;, &#39;.&#39;, &#39;demand&#39;, &#39;for&#39;, &#39;some&#39;,
+  &#39;products&#39;, &#39;such&#39;, &#39;as&#39;, &#39;styrene&#39;, &#39;could&#39;, &#39;push&#39;, &#39;profit&#39;, &#39;margins&#39;, &#39;up&#39;, &#39;by&#39;, &#39;as&#39;,
+  &#39;much&#39;, &#39;as&#39;, &#39;300&#39;, &#39;pct&#39;, &#39;,&#39;, &#39;he&#39;, &#39;said&#39;, &#39;.&#39;, &#39;oreffice&#39;, &#39;,&#39;, &#39;speaking&#39;, &#39;at&#39;, &#39;a&#39;,
+  &#39;meeting&#39;, &#39;of&#39;, &#39;chemical&#39;, &#39;engineers&#39;, &#39;in&#39;, &#39;houston&#39;, &#39;,&#39;, &#39;said&#39;, &#39;dow&#39;, &#39;would&#39;, &#39;easily&#39;,
+  &#39;top&#39;, &#39;the&#39;, &#39;741&#39;, &#39;mln&#39;, &#39;dlrs&#39;, &#39;it&#39;, &#39;earned&#39;, &#39;last&#39;, &#39;year&#39;, &#39;and&#39;, &#39;predicted&#39;, &#39;it&#39;,
+  &#39;would&#39;, &#39;have&#39;, &#39;the&#39;, &#39;best&#39;, &#39;year&#39;, &#39;in&#39;, &#39;its&#39;, &#39;history&#39;, &#39;.&#39;, &#39;in&#39;, &#39;1985&#39;, &#39;,&#39;, &#39;when&#39;,
+  &#39;oil&#39;, &#39;prices&#39;, &#39;were&#39;, &#39;still&#39;, &#39;above&#39;, &#39;25&#39;, &#39;dlrs&#39;, &#39;a&#39;, &#39;barrel&#39;, &#39;and&#39;, &#39;chemical&#39;,
+  &#39;exports&#39;, &#39;were&#39;, &#39;adversely&#39;, &#39;affected&#39;, &#39;by&#39;, &#39;the&#39;, &#39;strong&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;dollar&#39;,
+  &#39;,&#39;, &#39;dow&#39;, &#39;had&#39;, &#39;profits&#39;, &#39;of&#39;, &#39;58&#39;, &#39;mln&#39;, &#39;dlrs&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;i&#39;, &#39;believe&#39;, &#39;the&#39;,
+  &#39;entire&#39;, &#39;chemical&#39;, &#39;industry&#39;, &#39;is&#39;, &#39;headed&#39;, &#39;for&#39;, &#39;a&#39;, &#39;record&#39;, &#39;year&#39;, &#39;or&#39;, &#39;close&#39;,
+  &#39;to&#39;, &#39;it&#39;, &#39;,&quot;&#39;, &#39;oreffice&#39;, &#39;said&#39;, &#39;.&#39;, &#39;gaf&#39;, &#39;chairman&#39;, &#39;samuel&#39;, &#39;heyman&#39;, &#39;estimated&#39;,
+  &#39;that&#39;, &#39;the&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;chemical&#39;, &#39;industry&#39;, &#39;would&#39;, &#39;report&#39;, &#39;a&#39;, &#39;20&#39;, &#39;pct&#39;,
+  &#39;gain&#39;, &#39;in&#39;, &#39;profits&#39;, &#39;during&#39;, &#39;1987&#39;, &#39;.&#39;, &#39;last&#39;, &#39;year&#39;, &#39;,&#39;, &#39;the&#39;, &#39;domestic&#39;,
+  &#39;industry&#39;, &#39;earned&#39;, &#39;a&#39;, &#39;total&#39;, &#39;of&#39;, &#39;13&#39;, &#39;billion&#39;, &#39;dlrs&#39;, &#39;,&#39;, &#39;a&#39;, &#39;54&#39;, &#39;pct&#39;, &#39;leap&#39;,
+  &#39;from&#39;, &#39;1985&#39;, &#39;.&#39;, &#39;the&#39;, &#39;turn&#39;, &#39;in&#39;, &#39;the&#39;, &#39;fortunes&#39;, &#39;of&#39;, &#39;the&#39;, &#39;once&#39;, &#39;-&#39;, &#39;sickly&#39;,
+  &#39;chemical&#39;, &#39;industry&#39;, &#39;has&#39;, &#39;been&#39;, &#39;brought&#39;, &#39;about&#39;, &#39;by&#39;, &#39;a&#39;, &#39;combination&#39;, &#39;of&#39;, &#39;luck&#39;,
+  &#39;and&#39;, &#39;planning&#39;, &#39;,&#39;, &#39;said&#39;, &#39;pace&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;john&#39;, &#39;dosher&#39;, &#39;.&#39;, &#39;dosher&#39;, &#39;said&#39;, &#39;last&#39;,
+  &#39;year&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;fall&#39;, &#39;in&#39;, &#39;oil&#39;, &#39;prices&#39;, &#39;made&#39;, &#39;feedstocks&#39;, &#39;dramatically&#39;, &#39;cheaper&#39;,
+  &#39;and&#39;, &#39;at&#39;, &#39;the&#39;, &#39;same&#39;, &#39;time&#39;, &#39;the&#39;, &#39;american&#39;, &#39;dollar&#39;, &#39;was&#39;, &#39;weakening&#39;, &#39;against&#39;,
+  &#39;foreign&#39;, &#39;currencies&#39;, &#39;.&#39;, &#39;that&#39;, &#39;helped&#39;, &#39;boost&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;chemical&#39;,
+  &#39;exports&#39;, &#39;.&#39;, &#39;also&#39;, &#39;helping&#39;, &#39;to&#39;, &#39;bring&#39;, &#39;supply&#39;, &#39;and&#39;, &#39;demand&#39;, &#39;into&#39;, &#39;balance&#39;,
+  &#39;has&#39;, &#39;been&#39;, &#39;the&#39;, &#39;gradual&#39;, &#39;market&#39;, &#39;absorption&#39;, &#39;of&#39;, &#39;the&#39;, &#39;extra&#39;, &#39;chemical&#39;,
+  &#39;manufacturing&#39;, &#39;capacity&#39;, &#39;created&#39;, &#39;by&#39;, &#39;middle&#39;, &#39;eastern&#39;, &#39;oil&#39;, &#39;producers&#39;, &#39;in&#39;,
+  &#39;the&#39;, &#39;early&#39;, &#39;1980s&#39;, &#39;.&#39;, &#39;finally&#39;, &#39;,&#39;, &#39;virtually&#39;, &#39;all&#39;, &#39;major&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;,
+  &#39;chemical&#39;, &#39;manufacturers&#39;, &#39;have&#39;, &#39;embarked&#39;, &#39;on&#39;, &#39;an&#39;, &#39;extensive&#39;, &#39;corporate&#39;,
+  &#39;restructuring&#39;, &#39;program&#39;, &#39;to&#39;, &#39;mothball&#39;, &#39;inefficient&#39;, &#39;plants&#39;, &#39;,&#39;, &#39;trim&#39;, &#39;the&#39;,
+  &#39;payroll&#39;, &#39;and&#39;, &#39;eliminate&#39;, &#39;unrelated&#39;, &#39;businesses&#39;, &#39;.&#39;, &#39;the&#39;, &#39;restructuring&#39;, &#39;touched&#39;,
+  &#39;off&#39;, &#39;a&#39;, &#39;flurry&#39;, &#39;of&#39;, &#39;friendly&#39;, &#39;and&#39;, &#39;hostile&#39;, &#39;takeover&#39;, &#39;attempts&#39;, &#39;.&#39;, &#39;gaf&#39;, &#39;,&#39;,
+  &#39;which&#39;, &#39;made&#39;, &#39;an&#39;, &#39;unsuccessful&#39;, &#39;attempt&#39;, &#39;in&#39;, &#39;1985&#39;, &#39;to&#39;, &#39;acquire&#39;, &#39;union&#39;,
+  &#39;carbide&#39;, &#39;corp&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;, &#39;uk&#39;, &#39;&gt;,&#39;, &#39;recently&#39;, &#39;offered&#39;, &#39;three&#39;, &#39;billion&#39;, &#39;dlrs&#39;,
+  &#39;for&#39;, &#39;borg&#39;, &#39;warner&#39;, &#39;corp&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;, &#39;bor&#39;, &#39;&gt;,&#39;, &#39;a&#39;, &#39;chicago&#39;, &#39;manufacturer&#39;,
+  &#39;of&#39;, &#39;plastics&#39;, &#39;and&#39;, &#39;chemicals&#39;, &#39;.&#39;, &#39;another&#39;, &#39;industry&#39;, &#39;powerhouse&#39;, &#39;,&#39;, &#39;w&#39;, &#39;.&#39;,
+  &#39;r&#39;, &#39;.&#39;, &#39;grace&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;, &#39;gra&#39;, &#39;&gt;&#39;, &#39;has&#39;, &#39;divested&#39;, &#39;its&#39;, &#39;retailing&#39;, &#39;,&#39;,
+  &#39;restaurant&#39;, &#39;and&#39;, &#39;fertilizer&#39;, &#39;businesses&#39;, &#39;to&#39;, &#39;raise&#39;, &#39;cash&#39;, &#39;for&#39;, &#39;chemical&#39;,
+  &#39;acquisitions&#39;, &#39;.&#39;, &#39;but&#39;, &#39;some&#39;, &#39;experts&#39;, &#39;worry&#39;, &#39;that&#39;, &#39;the&#39;, &#39;chemical&#39;, &#39;industry&#39;,
+  &#39;may&#39;, &#39;be&#39;, &#39;headed&#39;, &#39;for&#39;, &#39;trouble&#39;, &#39;if&#39;, &#39;companies&#39;, &#39;continue&#39;, &#39;turning&#39;, &#39;their&#39;,
+  &#39;back&#39;, &#39;on&#39;, &#39;the&#39;, &#39;manufacturing&#39;, &#39;of&#39;, &#39;staple&#39;, &#39;petrochemical&#39;, &#39;commodities&#39;, &#39;,&#39;, &#39;such&#39;,
+  &#39;as&#39;, &#39;ethylene&#39;, &#39;,&#39;, &#39;in&#39;, &#39;favor&#39;, &#39;of&#39;, &#39;more&#39;, &#39;profitable&#39;, &#39;specialty&#39;, &#39;chemicals&#39;,
+  &#39;that&#39;, &#39;are&#39;, &#39;custom&#39;, &#39;-&#39;, &#39;designed&#39;, &#39;for&#39;, &#39;a&#39;, &#39;small&#39;, &#39;group&#39;, &#39;of&#39;, &#39;buyers&#39;, &#39;.&#39;, &#39;&quot;&#39;,
+  &#39;companies&#39;, &#39;like&#39;, &#39;dupont&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;, &#39;dd&#39;, &#39;&gt;&#39;, &#39;and&#39;, &#39;monsanto&#39;, &#39;co&#39;, &#39;&amp;&#39;, &#39;lt&#39;, &#39;;&#39;,
+  &#39;mtc&#39;, &#39;&gt;&#39;, &#39;spent&#39;, &#39;the&#39;, &#39;past&#39;, &#39;two&#39;, &#39;or&#39;, &#39;three&#39;, &#39;years&#39;, &#39;trying&#39;, &#39;to&#39;, &#39;get&#39;, &#39;out&#39;,
+  &#39;of&#39;, &#39;the&#39;, &#39;commodity&#39;, &#39;chemical&#39;, &#39;business&#39;, &#39;in&#39;, &#39;reaction&#39;, &#39;to&#39;, &#39;how&#39;, &#39;badly&#39;, &#39;the&#39;,
+  &#39;market&#39;, &#39;had&#39;, &#39;deteriorated&#39;, &#39;,&quot;&#39;, &#39;dosher&#39;, &#39;said&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;but&#39;, &#39;i&#39;, &#39;think&#39;, &#39;they&#39;,
+  &#39;will&#39;, &#39;eventually&#39;, &#39;kill&#39;, &#39;the&#39;, &#39;margins&#39;, &#39;on&#39;, &#39;the&#39;, &#39;profitable&#39;, &#39;chemicals&#39;, &#39;in&#39;,
+  &#39;the&#39;, &#39;niche&#39;, &#39;market&#39;, &#39;.&quot;&#39;, &#39;some&#39;, &#39;top&#39;, &#39;chemical&#39;, &#39;executives&#39;, &#39;share&#39;, &#39;the&#39;,
+  &#39;concern&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;the&#39;, &#39;challenge&#39;, &#39;for&#39;, &#39;our&#39;, &#39;industry&#39;, &#39;is&#39;, &#39;to&#39;, &#39;keep&#39;, &#39;from&#39;,
+  &#39;getting&#39;, &#39;carried&#39;, &#39;away&#39;, &#39;and&#39;, &#39;repeating&#39;, &#39;past&#39;, &#39;mistakes&#39;, &#39;,&quot;&#39;, &#39;gaf&#39;, &quot;&#39;&quot;, &#39;s&#39;,
+  &#39;heyman&#39;, &#39;cautioned&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;the&#39;, &#39;shift&#39;, &#39;from&#39;, &#39;commodity&#39;, &#39;chemicals&#39;, &#39;may&#39;, &#39;be&#39;,
+  &#39;ill&#39;, &#39;-&#39;, &#39;advised&#39;, &#39;.&#39;, &#39;specialty&#39;, &#39;businesses&#39;, &#39;do&#39;, &#39;not&#39;, &#39;stay&#39;, &#39;special&#39;, &#39;long&#39;,
+  &#39;.&quot;&#39;, &#39;houston&#39;, &#39;-&#39;, &#39;based&#39;, &#39;cain&#39;, &#39;chemical&#39;, &#39;,&#39;, &#39;created&#39;, &#39;this&#39;, &#39;month&#39;, &#39;by&#39;, &#39;the&#39;,
+  &#39;sterling&#39;, &#39;investment&#39;, &#39;banking&#39;, &#39;group&#39;, &#39;,&#39;, &#39;believes&#39;, &#39;it&#39;, &#39;can&#39;, &#39;generate&#39;, &#39;700&#39;,
+  &#39;mln&#39;, &#39;dlrs&#39;, &#39;in&#39;, &#39;annual&#39;, &#39;sales&#39;, &#39;by&#39;, &#39;bucking&#39;, &#39;the&#39;, &#39;industry&#39;, &#39;trend&#39;, &#39;.&#39;,
+  &#39;chairman&#39;, &#39;gordon&#39;, &#39;cain&#39;, &#39;,&#39;, &#39;who&#39;, &#39;previously&#39;, &#39;led&#39;, &#39;a&#39;, &#39;leveraged&#39;, &#39;buyout&#39;, &#39;of&#39;,
+  &#39;dupont&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;conoco&#39;, &#39;inc&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;chemical&#39;, &#39;business&#39;, &#39;,&#39;, &#39;has&#39;, &#39;spent&#39;, &#39;1&#39;,
+  &#39;.&#39;, &#39;1&#39;, &#39;billion&#39;, &#39;dlrs&#39;, &#39;since&#39;, &#39;january&#39;, &#39;to&#39;, &#39;buy&#39;, &#39;seven&#39;, &#39;petrochemical&#39;, &#39;plants&#39;,
+  &#39;along&#39;, &#39;the&#39;, &#39;texas&#39;, &#39;gulf&#39;, &#39;coast&#39;, &#39;.&#39;, &#39;the&#39;, &#39;plants&#39;, &#39;produce&#39;, &#39;only&#39;, &#39;basic&#39;,
+  &#39;commodity&#39;, &#39;petrochemicals&#39;, &#39;that&#39;, &#39;are&#39;, &#39;the&#39;, &#39;building&#39;, &#39;blocks&#39;, &#39;of&#39;, &#39;specialty&#39;,
+  &#39;products&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;this&#39;, &#39;kind&#39;, &#39;of&#39;, &#39;commodity&#39;, &#39;chemical&#39;, &#39;business&#39;, &#39;will&#39;, &#39;never&#39;,
+  &#39;be&#39;, &#39;a&#39;, &#39;glamorous&#39;, &#39;,&#39;, &#39;high&#39;, &#39;-&#39;, &#39;margin&#39;, &#39;business&#39;, &#39;,&quot;&#39;, &#39;cain&#39;, &#39;said&#39;, &#39;,&#39;,
+  &#39;adding&#39;, &#39;that&#39;, &#39;demand&#39;, &#39;is&#39;, &#39;expected&#39;, &#39;to&#39;, &#39;grow&#39;, &#39;by&#39;, &#39;about&#39;, &#39;three&#39;, &#39;pct&#39;,
+  &#39;annually&#39;, &#39;.&#39;, &#39;garo&#39;, &#39;armen&#39;, &#39;,&#39;, &#39;an&#39;, &#39;analyst&#39;, &#39;with&#39;, &#39;dean&#39;, &#39;witter&#39;, &#39;reynolds&#39;, &#39;,&#39;,
+  &#39;said&#39;, &#39;chemical&#39;, &#39;makers&#39;, &#39;have&#39;, &#39;also&#39;, &#39;benefitted&#39;, &#39;by&#39;, &#39;increasing&#39;, &#39;demand&#39;, &#39;for&#39;,
+  &#39;plastics&#39;, &#39;as&#39;, &#39;prices&#39;, &#39;become&#39;, &#39;more&#39;, &#39;competitive&#39;, &#39;with&#39;, &#39;aluminum&#39;, &#39;,&#39;, &#39;wood&#39;,
+  &#39;and&#39;, &#39;steel&#39;, &#39;products&#39;, &#39;.&#39;, &#39;armen&#39;, &#39;estimated&#39;, &#39;the&#39;, &#39;upturn&#39;, &#39;in&#39;, &#39;the&#39;, &#39;chemical&#39;,
+  &#39;business&#39;, &#39;could&#39;, &#39;last&#39;, &#39;as&#39;, &#39;long&#39;, &#39;as&#39;, &#39;four&#39;, &#39;or&#39;, &#39;five&#39;, &#39;years&#39;, &#39;,&#39;, &#39;provided&#39;,
+  &#39;the&#39;, &#39;u&#39;, &#39;.&#39;, &#39;s&#39;, &#39;.&#39;, &#39;economy&#39;, &#39;continues&#39;, &#39;its&#39;, &#39;modest&#39;, &#39;rate&#39;, &#39;of&#39;, &#39;growth&#39;, &#39;.&#39;,
+  &#39;&lt;END&gt;&#39;],
+ [&#39;&lt;START&gt;&#39;, &#39;turkey&#39;, &#39;calls&#39;, &#39;for&#39;, &#39;dialogue&#39;, &#39;to&#39;, &#39;solve&#39;, &#39;dispute&#39;, &#39;turkey&#39;, &#39;said&#39;,
+  &#39;today&#39;, &#39;its&#39;, &#39;disputes&#39;, &#39;with&#39;, &#39;greece&#39;, &#39;,&#39;, &#39;including&#39;, &#39;rights&#39;, &#39;on&#39;, &#39;the&#39;,
+  &#39;continental&#39;, &#39;shelf&#39;, &#39;in&#39;, &#39;the&#39;, &#39;aegean&#39;, &#39;sea&#39;, &#39;,&#39;, &#39;should&#39;, &#39;be&#39;, &#39;solved&#39;, &#39;through&#39;,
+  &#39;negotiations&#39;, &#39;.&#39;, &#39;a&#39;, &#39;foreign&#39;, &#39;ministry&#39;, &#39;statement&#39;, &#39;said&#39;, &#39;the&#39;, &#39;latest&#39;, &#39;crisis&#39;,
+  &#39;between&#39;, &#39;the&#39;, &#39;two&#39;, &#39;nato&#39;, &#39;members&#39;, &#39;stemmed&#39;, &#39;from&#39;, &#39;the&#39;, &#39;continental&#39;, &#39;shelf&#39;,
+  &#39;dispute&#39;, &#39;and&#39;, &#39;an&#39;, &#39;agreement&#39;, &#39;on&#39;, &#39;this&#39;, &#39;issue&#39;, &#39;would&#39;, &#39;effect&#39;, &#39;the&#39;, &#39;security&#39;,
+  &#39;,&#39;, &#39;economy&#39;, &#39;and&#39;, &#39;other&#39;, &#39;rights&#39;, &#39;of&#39;, &#39;both&#39;, &#39;countries&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;as&#39;, &#39;the&#39;,
+  &#39;issue&#39;, &#39;is&#39;, &#39;basicly&#39;, &#39;political&#39;, &#39;,&#39;, &#39;a&#39;, &#39;solution&#39;, &#39;can&#39;, &#39;only&#39;, &#39;be&#39;, &#39;found&#39;, &#39;by&#39;,
+  &#39;bilateral&#39;, &#39;negotiations&#39;, &#39;,&quot;&#39;, &#39;the&#39;, &#39;statement&#39;, &#39;said&#39;, &#39;.&#39;, &#39;greece&#39;, &#39;has&#39;, &#39;repeatedly&#39;,
+  &#39;said&#39;, &#39;the&#39;, &#39;issue&#39;, &#39;was&#39;, &#39;legal&#39;, &#39;and&#39;, &#39;could&#39;, &#39;be&#39;, &#39;solved&#39;, &#39;at&#39;, &#39;the&#39;,
+  &#39;international&#39;, &#39;court&#39;, &#39;of&#39;, &#39;justice&#39;, &#39;.&#39;, &#39;the&#39;, &#39;two&#39;, &#39;countries&#39;, &#39;approached&#39;, &#39;armed&#39;,
+  &#39;confrontation&#39;, &#39;last&#39;, &#39;month&#39;, &#39;after&#39;, &#39;greece&#39;, &#39;announced&#39;, &#39;it&#39;, &#39;planned&#39;, &#39;oil&#39;,
+  &#39;exploration&#39;, &#39;work&#39;, &#39;in&#39;, &#39;the&#39;, &#39;aegean&#39;, &#39;and&#39;, &#39;turkey&#39;, &#39;said&#39;, &#39;it&#39;, &#39;would&#39;, &#39;also&#39;,
+  &#39;search&#39;, &#39;for&#39;, &#39;oil&#39;, &#39;.&#39;, &#39;a&#39;, &#39;face&#39;, &#39;-&#39;, &#39;off&#39;, &#39;was&#39;, &#39;averted&#39;, &#39;when&#39;, &#39;turkey&#39;,
+  &#39;confined&#39;, &#39;its&#39;, &#39;research&#39;, &#39;to&#39;, &#39;territorrial&#39;, &#39;waters&#39;, &#39;.&#39;, &#39;&quot;&#39;, &#39;the&#39;, &#39;latest&#39;,
+  &#39;crises&#39;, &#39;created&#39;, &#39;an&#39;, &#39;historic&#39;, &#39;opportunity&#39;, &#39;to&#39;, &#39;solve&#39;, &#39;the&#39;, &#39;disputes&#39;, &#39;between&#39;,
+  &#39;the&#39;, &#39;two&#39;, &#39;countries&#39;, &#39;,&quot;&#39;, &#39;the&#39;, &#39;foreign&#39;, &#39;ministry&#39;, &#39;statement&#39;, &#39;said&#39;, &#39;.&#39;, &#39;turkey&#39;,
+  &quot;&#39;&quot;, &#39;s&#39;, &#39;ambassador&#39;, &#39;in&#39;, &#39;athens&#39;, &#39;,&#39;, &#39;nazmi&#39;, &#39;akiman&#39;, &#39;,&#39;, &#39;was&#39;, &#39;due&#39;, &#39;to&#39;, &#39;meet&#39;,
+  &#39;prime&#39;, &#39;minister&#39;, &#39;andreas&#39;, &#39;papandreou&#39;, &#39;today&#39;, &#39;for&#39;, &#39;the&#39;, &#39;greek&#39;, &#39;reply&#39;, &#39;to&#39;, &#39;a&#39;,
+  &#39;message&#39;, &#39;sent&#39;, &#39;last&#39;, &#39;week&#39;, &#39;by&#39;, &#39;turkish&#39;, &#39;prime&#39;, &#39;minister&#39;, &#39;turgut&#39;, &#39;ozal&#39;, &#39;.&#39;,
+  &#39;the&#39;, &#39;contents&#39;, &#39;of&#39;, &#39;the&#39;, &#39;message&#39;, &#39;were&#39;, &#39;not&#39;, &#39;disclosed&#39;, &#39;.&#39;, &#39;&lt;END&gt;&#39;]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="find-distinct-words">
+<h2><span class="section-number">1.3. </span>Find <code class="docutils literal notranslate"><span class="pre">distinct_words</span></code><a class="headerlink" href="#find-distinct-words" title="Permalink to this headline">¶</a></h2>
+<p>Let’s write a method to work out the distinct words (word types) that occur in the corpus. You can do this with <code class="docutils literal notranslate"><span class="pre">for</span></code> loops, but it’s more efficient to do it with <strong>Python list comprehensions</strong>. In particular, <a class="reference external" href="https://coderwall.com/p/rcmaea/flatten-a-list-of-lists-in-one-line-in-python">this</a> may be useful to flatten a list of lists. If you’re not familiar with Python list comprehensions in general, here’s <a class="reference external" href="https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Comprehensions.html">more information</a>.</p>
+<p>You may find it useful to use <a class="reference external" href="https://www.w3schools.com/python/python_sets.asp">Python sets</a> to remove duplicate words.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">distinct_words</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Determine a list of distinct words for the corpus.</span>
+<span class="sd">        Params:</span>
+<span class="sd">            corpus (list of list of strings): corpus of documents</span>
+<span class="sd">        Return:</span>
+<span class="sd">            corpus_words (list of strings): list of distinct words across the corpus, sorted (using python &#39;sorted&#39; function)</span>
+<span class="sd">            num_corpus_words (integer): number of distinct words across the corpus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">corpus_words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">num_corpus_words</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    
+    <span class="c1"># ------------------</span>
+    <span class="c1"># Write your implementation here.</span>
+    <span class="n">corpus_words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">corpus</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])))</span>
+<span class="c1">#     corpus_words = [y for x in corpus for y in x] </span>
+<span class="c1">#     corpus_words = list(set(corpus_words)) # unique words </span>
+<span class="c1">#     corpus_words = sorted(corpus_words) # sorts</span>
+    <span class="n">num_corpus_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus_words</span><span class="p">)</span>
+    <span class="c1"># ------------------</span>
+
+    <span class="k">return</span> <span class="n">corpus_words</span><span class="p">,</span> <span class="n">num_corpus_words</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">{Test-driven coding practice}</p>
+<p>A good practice is to write test code to validate your program output against expected output.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---------------------</span>
+<span class="c1"># Run this sanity check</span>
+<span class="c1"># Note that this not an exhaustive check for correctness.</span>
+<span class="c1"># Very simple tokenization using the Python string split </span>
+<span class="c1"># with space - string.split(&quot; &quot;). </span>
+<span class="c1"># ---------------------</span>
+
+<span class="c1"># Define toy corpus</span>
+<span class="n">test_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> All that glitters isn&#39;t gold </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> All&#39;s well that ends well </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)]</span>
+<span class="n">test_corpus_words</span><span class="p">,</span> <span class="n">num_corpus_words</span> <span class="o">=</span> <span class="n">distinct_words</span><span class="p">(</span><span class="n">test_corpus</span><span class="p">)</span>
+
+<span class="c1"># Correct answers</span>
+<span class="n">ans_test_corpus_words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;ends&quot;</span><span class="p">,</span> <span class="s2">&quot;that&quot;</span><span class="p">,</span> <span class="s2">&quot;gold&quot;</span><span class="p">,</span> <span class="s2">&quot;All&#39;s&quot;</span><span class="p">,</span> <span class="s2">&quot;glitters&quot;</span><span class="p">,</span> <span class="s2">&quot;isn&#39;t&quot;</span><span class="p">,</span> <span class="s2">&quot;well&quot;</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">])</span>
+<span class="n">ans_num_corpus_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans_test_corpus_words</span><span class="p">)</span>
+
+<span class="c1"># Test correct number of words</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">num_corpus_words</span> <span class="o">==</span> <span class="n">ans_num_corpus_words</span><span class="p">),</span> <span class="s2">&quot;Incorrect number of distinct words. Correct: </span><span class="si">{}</span><span class="s2">. Yours: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ans_num_corpus_words</span><span class="p">,</span> <span class="n">num_corpus_words</span><span class="p">)</span>
+
+<span class="c1"># Test correct words</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">test_corpus_words</span> <span class="o">==</span> <span class="n">ans_test_corpus_words</span><span class="p">),</span> <span class="s2">&quot;Incorrect corpus_words.</span><span class="se">\n</span><span class="s2">Correct: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">Yours:   </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ans_test_corpus_words</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">test_corpus_words</span><span class="p">))</span>
+
+<span class="c1"># Print Success</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Passed All Tests!&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+Passed All Tests!
+--------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="compute-co-occurrence-matrix">
+<h2><span class="section-number">1.4. </span><code class="docutils literal notranslate"><span class="pre">compute_co_occurrence_matrix</span></code><a class="headerlink" href="#compute-co-occurrence-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Write a method that constructs a co-occurrence matrix for a certain window-size <span class="math notranslate nohighlight">\(n\)</span> (with a default of 4), considering words <span class="math notranslate nohighlight">\(n\)</span> before and <span class="math notranslate nohighlight">\(n\)</span> after the word in the center of the window. Here, we start to use <code class="docutils literal notranslate"><span class="pre">numpy</span> <span class="pre">(np)</span></code> to represent vectors, matrices, and tensors. If you’re not familiar with NumPy, there’s a NumPy tutorial <a class="reference external" href="http://cs231n.github.io/python-numpy-tutorial/">Python NumPy tutorial</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_co_occurrence_matrix</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Compute co-occurrence matrix for the given corpus and window_size (default of 4).</span>
+<span class="sd">    </span>
+<span class="sd">        Note: Each word in a document should be at the center of a window. Words near edges will have a smaller</span>
+<span class="sd">              number of co-occurring words.</span>
+<span class="sd">              </span>
+<span class="sd">              For example, if we take the document &quot;&lt;START&gt; All that glitters is not gold &lt;END&gt;&quot; with window size of 4,</span>
+<span class="sd">              &quot;All&quot; will co-occur with &quot;&lt;START&gt;&quot;, &quot;that&quot;, &quot;glitters&quot;, &quot;is&quot;, and &quot;not&quot;.</span>
+<span class="sd">    </span>
+<span class="sd">        Params:</span>
+<span class="sd">            corpus (list of list of strings): corpus of documents</span>
+<span class="sd">            window_size (int): size of context window</span>
+<span class="sd">        Return:</span>
+<span class="sd">            M (a symmetric numpy matrix of shape (number of unique words in the corpus , number of unique words in the corpus)): </span>
+<span class="sd">                Co-occurence matrix of word counts. </span>
+<span class="sd">                The ordering of the words in the rows/columns should be the same as the ordering of the words given by the distinct_words function.</span>
+<span class="sd">            word2Ind (dict): dictionary that maps word to index (i.e. row/column number) for matrix M.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">words</span><span class="p">,</span> <span class="n">num_words</span> <span class="o">=</span> <span class="n">distinct_words</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">word2Ind</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># ------------------</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_words</span><span class="p">,</span> <span class="n">num_words</span><span class="p">))</span>
+    <span class="n">word2Ind</span> <span class="o">=</span> <span class="p">{</span><span class="n">w</span> <span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">)}</span>
+
+
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cen_w_i</span><span class="p">,</span> <span class="n">cen_w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span> <span class="c1"># center word</span>
+            <span class="k">for</span> <span class="n">con_w_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cen_w_i</span><span class="o">-</span><span class="n">window_size</span><span class="p">,</span> <span class="n">cen_w_i</span><span class="o">+</span><span class="n">window_size</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># context word</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">cen_w_i</span><span class="o">!=</span><span class="n">con_w_i</span> <span class="ow">and</span> <span class="n">con_w_i</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">con_w_i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)):</span>
+                    
+                    <span class="n">ce</span> <span class="o">=</span> <span class="n">word2Ind</span><span class="p">[</span><span class="n">cen_w</span><span class="p">]</span>
+                    <span class="n">co</span> <span class="o">=</span> <span class="n">word2Ind</span><span class="p">[</span><span class="n">sentence</span><span class="p">[</span><span class="n">con_w_i</span><span class="p">]]</span>
+                    
+                    <span class="n">M</span><span class="p">[</span><span class="n">ce</span><span class="p">][</span><span class="n">co</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">ce</span><span class="p">][</span><span class="n">co</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># ------------------</span>
+
+    <span class="k">return</span> <span class="n">M</span><span class="p">,</span> <span class="n">word2Ind</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---------------------</span>
+<span class="c1"># Run this sanity check</span>
+<span class="c1"># Note that this is not an exhaustive check for correctness.</span>
+<span class="c1"># ---------------------</span>
+
+<span class="c1"># Define toy corpus and get student&#39;s co-occurrence matrix</span>
+<span class="n">test_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> All that glitters isn&#39;t gold </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> All&#39;s well that ends well </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)]</span>
+<span class="n">M_test</span><span class="p">,</span> <span class="n">word2Ind_test</span> <span class="o">=</span> <span class="n">compute_co_occurrence_matrix</span><span class="p">(</span><span class="n">test_corpus</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Correct M and word2Ind</span>
+<span class="n">M_test_ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> 
+    <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,],</span>
+     <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,]]</span>
+<span class="p">)</span>
+<span class="n">ans_test_corpus_words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;ends&quot;</span><span class="p">,</span> <span class="s2">&quot;that&quot;</span><span class="p">,</span> <span class="s2">&quot;gold&quot;</span><span class="p">,</span> <span class="s2">&quot;All&#39;s&quot;</span><span class="p">,</span> <span class="s2">&quot;glitters&quot;</span><span class="p">,</span> <span class="s2">&quot;isn&#39;t&quot;</span><span class="p">,</span> <span class="s2">&quot;well&quot;</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">])</span>
+<span class="n">word2Ind_ans</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ans_test_corpus_words</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ans_test_corpus_words</span><span class="p">))))</span>
+
+<span class="c1"># Test correct word2Ind</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">word2Ind_ans</span> <span class="o">==</span> <span class="n">word2Ind_test</span><span class="p">),</span> <span class="s2">&quot;Your word2Ind is incorrect:</span><span class="se">\n</span><span class="s2">Correct: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">Yours: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">word2Ind_ans</span><span class="p">,</span> <span class="n">word2Ind_test</span><span class="p">)</span>
+
+<span class="c1"># Test correct M shape</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">M_test</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">M_test_ans</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="s2">&quot;M matrix has incorrect shape.</span><span class="se">\n</span><span class="s2">Correct: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">Yours: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">M_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">M_test_ans</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Test correct M values</span>
+<span class="k">for</span> <span class="n">w1</span> <span class="ow">in</span> <span class="n">word2Ind_ans</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">idx1</span> <span class="o">=</span> <span class="n">word2Ind_ans</span><span class="p">[</span><span class="n">w1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">w2</span> <span class="ow">in</span> <span class="n">word2Ind_ans</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">idx2</span> <span class="o">=</span> <span class="n">word2Ind_ans</span><span class="p">[</span><span class="n">w2</span><span class="p">]</span>
+        <span class="n">student</span> <span class="o">=</span> <span class="n">M_test</span><span class="p">[</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">]</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">M_test_ans</span><span class="p">[</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">student</span> <span class="o">!=</span> <span class="n">correct</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correct M:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">M_test_ans</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Your M: &quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">M_test</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Incorrect count at index (</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">)=(</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">) in matrix M. Yours has </span><span class="si">{}</span><span class="s2"> but should have </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">correct</span><span class="p">))</span>
+
+<span class="c1"># Print Success</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Passed All Tests!&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+Passed All Tests!
+--------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-svd-to-reduce-to-k-dim">
+<h2><span class="section-number">1.5. </span>Using SVD to <code class="docutils literal notranslate"><span class="pre">reduce_to_k_dim</span></code><a class="headerlink" href="#using-svd-to-reduce-to-k-dim" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s construct a method that performs dimensionality reduction on the matrix to produce k-dimensional embeddings. Use SVD to take the top k components and produce a new matrix of k-dimensional embeddings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All of numpy, scipy, and scikit-learn (<code class="docutils literal notranslate"><span class="pre">sklearn</span></code>) provide <em>some</em> implementation of SVD, but only scipy and sklearn provide an implementation of Truncated SVD, and only sklearn provides an efficient randomized algorithm for calculating large-scale Truncated SVD. So please use <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html">sklearn.decomposition.TruncatedSVD</a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="k">def</span> <span class="nf">reduce_to_k_dim</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Reduce a co-occurence count matrix of dimensionality (num_corpus_words, num_corpus_words)</span>
+<span class="sd">        to a matrix of dimensionality (num_corpus_words, k) using the following SVD function from Scikit-Learn:</span>
+<span class="sd">            - http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html</span>
+<span class="sd">    </span>
+<span class="sd">        Params:</span>
+<span class="sd">            M (numpy matrix of shape (number of unique words in the corpus , number of unique words in the corpus)): co-occurence matrix of word counts</span>
+<span class="sd">            k (int): embedding size of each word after dimension reduction</span>
+<span class="sd">        Return:</span>
+<span class="sd">            M_reduced (numpy matrix of shape (number of corpus words, k)): matrix of k-dimensioal word embeddings.</span>
+<span class="sd">                    In terms of the SVD from math class, this actually returns U * S</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">n_iters</span> <span class="o">=</span> <span class="mi">10</span>     <span class="c1"># Use this parameter in your call to `TruncatedSVD`</span>
+    <span class="n">M_reduced</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running Truncated SVD over </span><span class="si">%i</span><span class="s2"> words...&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+        <span class="c1"># ------------------</span>
+        <span class="c1"># Write your implementation here.</span>
+    <span class="n">M_r</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">decomposition</span><span class="o">.</span><span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+                                           <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;randomized&#39;</span><span class="p">,</span> 
+                                           <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iters</span><span class="p">,</span> 
+                                           <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                           <span class="n">tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">M_reduced</span> <span class="o">=</span> <span class="n">M_r</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="c1"># ------------------</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">M_reduced</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---------------------</span>
+<span class="c1"># Run this sanity check</span>
+<span class="c1"># Note that this is not an exhaustive check for correctness </span>
+<span class="c1"># In fact we only check that your M_reduced has the right dimensions.</span>
+<span class="c1"># ---------------------</span>
+
+<span class="c1"># Define toy corpus and run student code</span>
+<span class="n">test_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> All that glitters isn&#39;t gold </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> All&#39;s well that ends well </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)]</span>
+<span class="n">M_test</span><span class="p">,</span> <span class="n">word2Ind_test</span> <span class="o">=</span> <span class="n">compute_co_occurrence_matrix</span><span class="p">(</span><span class="n">test_corpus</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">M_test_reduced</span> <span class="o">=</span> <span class="n">reduce_to_k_dim</span><span class="p">(</span><span class="n">M_test</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Test proper dimensions</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">M_test_reduced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">10</span><span class="p">),</span> <span class="s2">&quot;M_reduced has </span><span class="si">{}</span><span class="s2"> rows; should have </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">M_test_reduced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">M_test_reduced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;M_reduced has </span><span class="si">{}</span><span class="s2"> columns; should have </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">M_test_reduced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Print Success</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Passed All Tests!&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running Truncated SVD over 10 words...
+Done.
+--------------------------------------------------------------------------------
+Passed All Tests!
+--------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="visualise-the-embeddings-using-plot-embeddings">
+<h2><span class="section-number">1.6. </span>Visualise the embeddings using <code class="docutils literal notranslate"><span class="pre">plot_embeddings</span></code><a class="headerlink" href="#visualise-the-embeddings-using-plot-embeddings" title="Permalink to this headline">¶</a></h2>
+<p>We can now write a function to plot a set of 2D vectors in 2D space. For graphs, we will use Matplotlib (<code class="docutils literal notranslate"><span class="pre">plt</span></code>).</p>
+<p>For this example, you may find it useful to adapt <a class="reference external" href="https://www.pythonmembers.club/2018/05/08/matplotlib-scatter-plot-annotate-set-text-at-label-each-point/">this code</a>. In the future, a good way to make a plot is to look at <a class="reference external" href="https://matplotlib.org/gallery/index.html">the Matplotlib gallery</a>, find a plot that looks somewhat like what you want, and adapt the code they give.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_embeddings</span><span class="p">(</span><span class="n">M_reduced</span><span class="p">,</span> <span class="n">word2Ind</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Plot in a scatterplot the embeddings of the words specified in the list &quot;words&quot;.</span>
+<span class="sd">        NOTE: do not plot all the words listed in M_reduced / word2Ind.</span>
+<span class="sd">        Include a label next to each point.</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">            M_reduced (numpy matrix of shape (number of unique words in the corpus , 2)): matrix of 2-dimensioal word embeddings</span>
+<span class="sd">            word2Ind (dict): dictionary that maps word to indices for matrix M</span>
+<span class="sd">            words (list of strings): words whose embeddings we want to visualize</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+    <span class="n">x_coords</span> <span class="o">=</span> <span class="n">M_reduced</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y_coords</span> <span class="o">=</span> <span class="n">M_reduced</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">word2Ind</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x_coords</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y_coords</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># ------------------</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---------------------</span>
+<span class="c1"># Run this sanity check</span>
+<span class="c1"># Note that this is not an exhaustive check for correctness.</span>
+<span class="c1"># The plot produced should look like the &quot;test solution plot&quot; depicted below. </span>
+<span class="c1"># ---------------------</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Outputted Plot:&quot;</span><span class="p">)</span>
+
+<span class="n">M_reduced_plot_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">word2Ind_plot_test</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test1&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;test4&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;test5&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">,</span> <span class="s1">&#39;test4&#39;</span><span class="p">,</span> <span class="s1">&#39;test5&#39;</span><span class="p">]</span>
+<span class="n">plot_embeddings</span><span class="p">(</span><span class="n">M_reduced_plot_test</span><span class="p">,</span> <span class="n">word2Ind_plot_test</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+Outputted Plot:
+</pre></div>
+</div>
+<img alt="../_images/svd_20_1.svg" src="../_images/svd_20_1.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./embeddings"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Lab07: Word Embeddings</a>
+    <a class='right-next' id="next-link" href="glove.html" title="next page"><span class="section-number">2. </span>GloVe: Global Vectors for Word Representation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
