@@ -368,6 +368,47 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#environment-update-with-more-packages">
+   Environment Update with more packages
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-gensim">
+     Install gensim
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-import-ipynb">
+     Install import-ipynb
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-python-levenshtein-similarity">
+     Install Python Levenshtein Similarity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-interactive-visualisation-bokeh">
+     Install interactive visualisation bokeh
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-bs4-to-get-beautifulsoup-for-web-crawling">
+     Install bs4 to get BeautifulSoup for web crawling
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -377,7 +418,49 @@
                 
   <div class="section" id="lab07-word-embeddings">
 <h1>Lab07: Word Embeddings<a class="headerlink" href="#lab07-word-embeddings" title="Permalink to this headline">¶</a></h1>
+<p>Word Vectors are often used as a fundamental component for downstream NLP tasks, e.g. question answering, text generation, translation, etc., so it is important to build some intuitions as to their strengths and weaknesses. Here, you will explore two types of word vectors: those derived from <em>co-occurrence matrices</em>, and those derived via <em>GloVe</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The terms “word vectors” and “word embeddings” are often used interchangeably. The term “embedding” refers to the fact that we are encoding aspects of a word’s meaning in a lower dimensional space. As <a class="reference external" href="https://en.wikipedia.org/wiki/Word_embedding">Wikipedia</a> states, “<em>conceptually it involves a mathematical embedding from a space with one dimension per word (one-hot encoding) to a continuous vector space with a much lower dimension</em>”.</p>
+</div>
+<p>In this lab, we will look at how to use SVD on Word-Word co-ocurrence matrix to obtain word embeddings, and then visualising pretrained word embeddings using Matplotlib and TSNE, finally we train our own embeddings using a document crawled from the Web, and copmare with the pre-trained embeddings.</p>
+<p>Credit: the notebooks are adapted from <a class="reference external" href="http://web.stanford.edu/class/cs224n/assignments/a1_preview/exploring_word_vectors.html">the Stanford CS224N Assignment on Exploring Word Vectors</a>.</p>
+<div class="section" id="environment-update-with-more-packages">
+<h2>Environment Update with more packages<a class="headerlink" href="#environment-update-with-more-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-gensim">
+<h3>Install gensim<a class="headerlink" href="#install-gensim" title="Permalink to this headline">¶</a></h3>
+<p>Note this will install the latest gensim 4.x</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">gensim</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-import-ipynb">
+<h3>Install import-ipynb<a class="headerlink" href="#install-import-ipynb" title="Permalink to this headline">¶</a></h3>
+<p>This is a package to import functions from other Jupyter Notebooks.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">import</span><span class="o">-</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-python-levenshtein-similarity">
+<h3>Install Python Levenshtein Similarity<a class="headerlink" href="#install-python-levenshtein-similarity" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">Levenshtein</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-interactive-visualisation-bokeh">
+<h3>Install interactive visualisation bokeh<a class="headerlink" href="#install-interactive-visualisation-bokeh" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">bokeh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-bs4-to-get-beautifulsoup-for-web-crawling">
+<h3>Install bs4 to get BeautifulSoup for web crawling<a class="headerlink" href="#install-bs4-to-get-beautifulsoup-for-web-crawling" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">bs4</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
+</div>
+</div>
 </div>
 </div>
 

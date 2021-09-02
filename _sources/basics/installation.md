@@ -164,6 +164,38 @@ python -c "import sklearn; sklearn.show_versions()"
 pip install matplotlib
 ```
 
+#### Install gensim
+
+Note this will install the latest gensim 4.x
+
+```
+conda install -c conda-forge gensim
+```
+#### Install import-ipynb
+
+This is a package to import functions from other Jupyter Notebooks.
+```
+pip install import-ipynb
+```
+
+#### Install Python Levenshtein Similarity
+
+```
+pip install python-Levenshtein
+```
+
+#### Install interactive visualisation bokeh
+
+```
+pip install bokeh
+```
+
+#### Install bs4 to get BeautifulSoup for web crawling
+
+```
+pip install bs4
+```
+
 #### Finally Export Environment into an YAML file
 ```
 conda env export -p c:\envs\cits4012 --no-builds -f cits4012.yml
