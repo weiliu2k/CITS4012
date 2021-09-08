@@ -1,5 +1,5 @@
-Lab03: spaCy NLP pipelines
-===================================
+# Lab03: spaCy NLP pipelines
+
 spaCy makes use of two core types of objects to support various NLP tasks. 
 
 A **container** object in spaCy groups multiple elements into a single
@@ -14,4 +14,4 @@ In this lab, we will look at these two types of objects in spaCy to get a more i
 
 **Reference:** (The book code works with spaCy v2.2, our lab code is compiled on spaCy v3.0.5)
 
-![image](../images/spacy-book-cover.jfif)
+![image](../images/spacy-book-cover.png)

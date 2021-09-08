@@ -1,5 +1,4 @@
-Lab06: Neural Network Building Blocks
-======================================
+# Lab06: Neural Network Building Blocks
 Each node in a neural network is called a **perceptron** unit, which has three "knobs", a set of weights ($w$), a bias ($b$), and an activation function ($f$). The weights and bias are learned from the data, and the activation function is hand picked depending on the network designer's intuition of the network and its target outputs. Mathematically,
 
 $y = f(wx + b)$
