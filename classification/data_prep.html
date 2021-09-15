@@ -756,9 +756,7 @@ mini-batch every time.</p>
         <span class="c1"># Step 1 - Computes model&#39;s predictions - forward pass</span>
         <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_batch</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
         <span class="n">y_batch</span> <span class="o">=</span> <span class="n">y_batch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">yhat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">y_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    
         <span class="c1"># Step 2 - Computes the loss</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">)</span>
         <span class="c1"># Step 3 - Computes gradients for parameters</span>
