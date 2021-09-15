@@ -5,9 +5,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. IDEs and Git &#8212; CITS4012 Natural Language Processing</title>
+    <title>Getting Data! &#8212; CITS4012 Natural Language Processing</title>
     
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -34,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -44,10 +41,8 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
         const thebe_selector_input = "pre,.cell_input div.highlight"
@@ -56,14 +51,14 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
-
-
-
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -72,32 +67,37 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  <img src="_static/logo_ntlp.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/logo_ntlp.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="index.html">
    HOME
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1 collapsible-parent">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
   </a>
-  <ul class="collapse-ul">
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="basics/installation.html">
      1. CITS4012 Base Environment
@@ -134,14 +134,17 @@
     </a>
    </li>
   </ul>
-  <i class="fas fa-chevron-down">
-  </i>
  </li>
- <li class="toctree-l1 collapsible-parent">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="NLTK/intro.html">
    Lab02: NLTK
   </a>
-  <ul class="collapse-ul">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="NLTK/start.html">
      1. Starting with NLTK
@@ -168,14 +171,17 @@
     </a>
    </li>
   </ul>
-  <i class="fas fa-chevron-down">
-  </i>
  </li>
- <li class="toctree-l1 collapsible-parent">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="spacy/intro.html">
    Lab03: spaCy NLP pipelines
   </a>
-  <ul class="collapse-ul">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="spacy/container.html">
      1. Container Objects in spaCy
@@ -202,14 +208,17 @@
     </a>
    </li>
   </ul>
-  <i class="fas fa-chevron-down">
-  </i>
  </li>
- <li class="toctree-l1 collapsible-parent">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="gensim/intro.html">
    Lab04: Count-Based Models
   </a>
-  <ul class="collapse-ul">
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="gensim/tf-idf.html">
      1. TF-IDF in scikit-learn and Gensim
@@ -221,14 +230,17 @@
     </a>
    </li>
   </ul>
-  <i class="fas fa-chevron-down">
-  </i>
  </li>
- <li class="toctree-l1 collapsible-parent">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="nn/intro.html">
    Lab05: Introduction to Neural Networks and Pytorch
   </a>
-  <ul class="collapse-ul">
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="nn/linear_model_numpy.html">
      1. Linear Models in Numpy
@@ -245,11 +257,79 @@
     </a>
    </li>
   </ul>
-  <i class="fas fa-chevron-down">
-  </i>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="pytorch/intro.html">
+   Lab06: Neural Network Building Blocks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pytorch/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pytorch/loss.html">
+     2. Loss Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pytorch/computational_graph.html">
+     3. Dynamic Computational Graph in PyTorch
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pytorch/nn_oop.html">
+     4. Neural Networks in PyTorch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="embeddings/intro.html">
+   Lab07: Word Embeddings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="embeddings/svd.html">
+     1. Word Vectors from Word-Word Coocurrence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="embeddings/glove.html">
+     2. GloVe: Global Vectors for Word Representation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="embeddings/word2vec.html">
+     3. Word2Vec
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification/perceptron.html">
+   Perceptron
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/weiliu2k/CITS4012/raw/master/CITS4012LabBook.pdf">
+   PDF
+  </a>
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -265,21 +345,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -297,153 +377,63 @@
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
-    </div>
-
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
         </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   1. IDEs and Git
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downloading-and-creating-folders-manually">
+   Downloading and creating folders manually
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#installing-visual-studio-code">
-     1.1 Installing Visual Studio Code
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#installing-extensions-for-visual-studio-code">
-       Installing Extensions for Visual Studio Code
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-git">
-     1.2 Install git
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#yelp">
+     Yelp
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#conda-and-unit-specific-packages">
-   2. Conda and Unit Specific Packages
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#installing-anaconda">
-     2.1 Installing Anaconda
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#surnames">
+     Surnames
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-from-an-environment-yaml-file">
-     2.2 Install from an environment YAML file
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#frankenstein">
+     Frankenstein
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-packages-step-by-step-from-scratch">
-     2.3 Install packages step by step from scratch
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ag-news">
+     AG News
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#create-anaconda-environment">
-       Create Anaconda Environment
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#use-the-virtual-environment-in-vscode">
-       Use the virtual environment in VSCode
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#install-spacy">
-       2.3.1 Install Spacy
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#install-pytorch">
-       2.3.2 Install PyTorch
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#check-for-cuda-compatible-graphics-card-on-windows">
-         Check for Cuda compatible Graphics Card on Windows
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id1">
-         Install Pytorch
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#install-tensorboard">
-         Install Tensorboard
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#install-graphviz-on-windows">
-         Install GraphViz on Windows
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#install-torchviz">
-         Install torchviz
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#install-nltk">
-       2.3.3 Install NLTK
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#install-truecase">
-         Install truecase
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#install-jupyterlab">
-       2.3.4 Install Jupyterlab
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#install-scikit-learn">
-       2.3.5 Install Scikit-learn
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#finally-export-environment-into-an-yaml-file">
-       2.3.6 Finally Export Environment into an YAML file
-      </a>
-     </li>
-    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#english-french-text">
+     English-French text
+    </a>
    </li>
   </ul>
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -451,161 +441,52 @@
         
               <div>
                 
-  <div class="section" id="ides-and-git">
-<h1>1. IDEs and Git<a class="headerlink" href="#ides-and-git" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="installing-visual-studio-code">
-<h2>1.1 Installing Visual Studio Code<a class="headerlink" href="#installing-visual-studio-code" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://code.visualstudio.com/download">Visual Studio Code Download</a></p></li>
-<li><p>64 bit System Installer (<code class="docutils literal notranslate"><span class="pre">VSCodeSetup-x64-1.57.1.exe</span></code> - 78KB)</p></li>
-<li><p>Default Installation Path (<code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Microsoft</span> <span class="pre">VS</span> <span class="pre">Code</span></code>)</p></li>
-<li><p>Installation Time (~5 mins)</p></li>
-</ul>
-<img width="50%" alt="vscode_python_extension" src="https://user-images.githubusercontent.com/1005582/122739187-53191b80-d2b5-11eb-892c-6bb43e0ea1dc.png">
-<div class="section" id="installing-extensions-for-visual-studio-code">
-<h3>Installing Extensions for Visual Studio Code<a class="headerlink" href="#installing-extensions-for-visual-studio-code" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://code.visualstudio.com/docs/python/python-tutorial#_install-visual-studio-code-and-the-python-extension">Python Extension for VSCode Instruction</a></p></li>
-<li><p>Remote - SSH Extension</p></li>
-<li><p>Remote X11 (SSH) Extension</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="install-git">
-<h2>1.2 Install git<a class="headerlink" href="#install-git" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://git-scm.com/download/win">Latest Version of Git for Windows</a></p></li>
-<li><p>Don’t forget to add git to the system PATH</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="conda-and-unit-specific-packages">
-<h1>2. Conda and Unit Specific Packages<a class="headerlink" href="#conda-and-unit-specific-packages" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="installing-anaconda">
-<h2>2.1 Installing Anaconda<a class="headerlink" href="#installing-anaconda" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://docs.anaconda.com/anaconda/install/windows/">Anaconda Installation Instructions</a></p></li>
-<li><p>Individual Version (<code class="docutils literal notranslate"><span class="pre">Anaconda3-2021.05-Windows-x86_64.exe</span></code> - 488KB)</p></li>
-<li><p>Installation Size (2.9 GB)</p></li>
-<li><p>Installed for all users at <code class="docutils literal notranslate"><span class="pre">C:\ProgramData\Anaconda3</span></code></p></li>
-<li><p>Installation Time (~30 mins)</p></li>
-<li><p>Launch Anaconda Navigator</p></li>
-</ul>
-<img width="50%" alt="anaconda_navigator" src="https://user-images.githubusercontent.com/1005582/122739014-1f3df600-d2b5-11eb-95db-4cf21f80c1d5.png">
-<p>You can start a CMD or POWERSHELL console using the navigator, or following the steps 1 and 2 in the screenshot below to start a CMD or POWERSHELL. If you are intalling packages, you can right click the arrow to bring up a pop-up menu, <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">as</span> <span class="pre">adminstrator</span></code> (Step 3a) or <code class="docutils literal notranslate"><span class="pre">pin</span> <span class="pre">on</span> <span class="pre">taskbar</span></code> (Step 3b) for future convenience.</p>
-<img width="50%" alt="conda_powershell" src="https://user-images.githubusercontent.com/1005582/123036101-110be900-d41f-11eb-8162-ffa8f300c694.png">
-</div>
-<div class="section" id="install-from-an-environment-yaml-file">
-<h2>2.2 Install from an environment YAML file<a class="headerlink" href="#install-from-an-environment-yaml-file" title="Permalink to this headline">¶</a></h2>
-<p>If we install from this YAML file, then we can ignore all the following steps in Section 2.3.</p>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012</span> <span class="pre">--file</span> <span class="pre">cits4012.yml</span></code></p>
-<p>If this is successful, you can ignore the rest of the steps below.</p>
-</div>
-<div class="section" id="install-packages-step-by-step-from-scratch">
-<h2>2.3 Install packages step by step from scratch<a class="headerlink" href="#install-packages-step-by-step-from-scratch" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="create-anaconda-environment">
-<h3>Create Anaconda Environment<a class="headerlink" href="#create-anaconda-environment" title="Permalink to this headline">¶</a></h3>
-<p>Need admin access to write to C drive (Run Conda Powershell as Administrator - right click on the icon)</p>
+  <div class="section" id="getting-data">
+<h1>Getting Data!<a class="headerlink" href="#getting-data" title="Permalink to this headline">¶</a></h1>
+<p>We have tried to make getting the data as simple as possible.  Run the shell script (<code class="docutils literal notranslate"><span class="pre">get-all-data.sh</span></code>) provided in this folder to create the subfolder structure and download the data files needed for the notebooks. The files are hosted on google drive.  Alternatively, you can follow the download links below and create the directory structure yourself!</p>
+<p>There is one data file that we do not re-host: the GloVe word embeddings.  Please download from the stanford website: <a class="reference external" href="http://nlp.stanford.edu/data/glove.6B.zip">http://nlp.stanford.edu/data/glove.6B.zip</a>.  Then, unzip and put the 100d version into a subfolder named <code class="docutils literal notranslate"><span class="pre">glove</span></code> to result in the following file path: <code class="docutils literal notranslate"><span class="pre">data/glove/glove.6B.100d.txt</span></code></p>
+<div class="section" id="downloading-and-creating-folders-manually">
+<h2>Downloading and creating folders manually<a class="headerlink" href="#downloading-and-creating-folders-manually" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="yelp">
+<h3>Yelp<a class="headerlink" href="#yelp" title="Permalink to this headline">¶</a></h3>
+<p>Folder: <code class="docutils literal notranslate"><span class="pre">data/yelp</span></code></p>
 <ol class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012</span> <span class="pre">python=3.8</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">c:\envs\cits4012</span></code></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1xeUnqkhuzGGzZKThzPeXe2Vf6Uu_g_xM">raw_train.csv</a></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1G42LXv72DrhK4QKJoFhabVL4IU6v2ZvB">raw_test.csv</a></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1Lmv4rsJiCWVs1nzs4ywA9YI-ADsTf6WB">reviews_with_splits_lite.csv</a></p></li>
 </ol>
 </div>
-<div class="section" id="use-the-virtual-environment-in-vscode">
-<h3>Use the virtual environment in VSCode<a class="headerlink" href="#use-the-virtual-environment-in-vscode" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://code.visualstudio.com/docs/python/environments#_conda-environments">Instructions on how to use environment in VSCode</a></p></li>
-<li><p>Test to see if the CITS4012_base environment is available from VSCode</p></li>
-</ul>
-</div>
-<div class="section" id="install-spacy">
-<h3>2.3.1 Install Spacy<a class="headerlink" href="#install-spacy" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="surnames">
+<h3>Surnames<a class="headerlink" href="#surnames" title="Permalink to this headline">¶</a></h3>
+<p>Folder: <code class="docutils literal notranslate"><span class="pre">data/surnames</span></code></p>
 <ol class="simple">
-<li><p>Go back to Conda CMD.exe, check to see if you have <code class="docutils literal notranslate"><span class="pre">pip</span></code> installed using</p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1MBiOU5UCaGpJw2keXAqOLL8PCJg_uZaU">surnames.csv</a></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1T1la2tYO1O7XkMRawG8VcFcvtjbxDqU-">surnames_with_splits.csv</a></p></li>
 </ol>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">spacy</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">spacy</span> <span class="pre">download</span> <span class="pre">en_core_web_sm</span></code></p></li>
-</ul>
+</div>
+<div class="section" id="frankenstein">
+<h3>Frankenstein<a class="headerlink" href="#frankenstein" title="Permalink to this headline">¶</a></h3>
+<p>Folder: <code class="docutils literal notranslate"><span class="pre">data/books</span></code></p>
 <ol class="simple">
-<li><p>Find the Spacy version (we want v3+):</p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1XvNPAjooMyt6vdxknU9VO_ySAFR6LpAP">frankenstein.txt</a></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1dRi4LQSFZHy40l7ZE85fSDqb3URqh1Om">frankenstein_with_splits.csv</a></p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Windows CMD
-C:\&gt; conda list | findstr &quot;spacy&quot;`
-
-# Windows PowerShell
-C:\&gt; conda list | Select-String &quot;spacy&quot;
-
-# Linux
-$ conda list | grep &quot;spacy&quot;
-</pre></div>
 </div>
-</div>
-<div class="section" id="install-pytorch">
-<h3>2.3.2 Install PyTorch<a class="headerlink" href="#install-pytorch" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="check-for-cuda-compatible-graphics-card-on-windows">
-<h4>Check for Cuda compatible Graphics Card on Windows<a class="headerlink" href="#check-for-cuda-compatible-graphics-card-on-windows" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="ag-news">
+<h3>AG News<a class="headerlink" href="#ag-news" title="Permalink to this headline">¶</a></h3>
+<p>Folder: <code class="docutils literal notranslate"><span class="pre">data/ag_news</span></code></p>
 <ol class="simple">
-<li><p>Click Start.</p></li>
-<li><p>On the Start menu, click Run.</p></li>
-<li><p>In the Open box, type “dxdiag” (without the quotation marks), and then click OK.</p></li>
-<li><p>The DirectX Diagnostic Tool opens. …</p></li>
-<li><p>On the Display tab, information about your graphics card is shown in the Device section.</p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1hjAZJJVyez-tjaUSwQyMBMVbW68Kgyzn">news.csv</a></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1Z4fOgvrNhcn6pYlOxrEuxrPNxT-bLh7T">news_with_splits.csv</a></p></li>
 </ol>
-<p>My laptop has NVIDIA GeForce MX130.</p>
 </div>
-<div class="section" id="id1">
-<h4>Install Pytorch<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<p><a class="reference external" href="https://pytorch.org">Pytorch Website</a></p>
-<ul class="simple">
-<li><p>with GPU</p></li>
-</ul>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pytorch</span> <span class="pre">torchvision</span> <span class="pre">torchaudio</span> <span class="pre">torchtext</span> <span class="pre">cudatoolkit=11.1</span> <span class="pre">-c</span> <span class="pre">pytorch</span> <span class="pre">-c</span> <span class="pre">conda-forge</span></code></p>
-<ul class="simple">
-<li><p>CPU only</p></li>
-</ul>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pytorch</span> <span class="pre">torchvision</span> <span class="pre">torchaudio</span> <span class="pre">torchtext</span> <span class="pre">cpuonly</span> <span class="pre">-c</span> <span class="pre">pytorch</span> <span class="pre">-c</span> <span class="pre">conda-forge</span></code></p>
-</div>
-<div class="section" id="install-tensorboard">
-<h4>Install Tensorboard<a class="headerlink" href="#install-tensorboard" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">tensorboard</span></code></p>
-</div>
-<div class="section" id="install-graphviz-on-windows">
-<h4>Install GraphViz on Windows<a class="headerlink" href="#install-graphviz-on-windows" title="Permalink to this headline">¶</a></h4>
-<p><a class="reference external" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/2.47.3/stable_windows_10_cmake_Release_x64_graphviz-install-2.47.3-win64.exe">2.47.3 EXE installer for Windows 10 (64-bit)</a></p>
-<p>Download the exe file and install, make sure it is added to the system PATH (Windows - Edit the Windows Environment Variables.</p>
-<img width="50%" alt="GraphVizInstall" src="https://user-images.githubusercontent.com/1005582/122881303-9767f280-d36d-11eb-8188-0163c59eab01.png">
-</div>
-<div class="section" id="install-torchviz">
-<h4>Install torchviz<a class="headerlink" href="#install-torchviz" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">torchviz</span></code></p>
-</div>
-</div>
-<div class="section" id="install-nltk">
-<h3>2.3.3 Install NLTK<a class="headerlink" href="#install-nltk" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">nltk</span></code></p>
-<p>and then download the data and models</p>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">nltk.downloader</span> <span class="pre">-d</span> <span class="pre">c:\envs\cits4012\nltk_data</span> <span class="pre">all</span></code></p>
-<div class="section" id="install-truecase">
-<h4>Install truecase<a class="headerlink" href="#install-truecase" title="Permalink to this headline">¶</a></h4>
-<p>install this after NLTK installation pls.</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">truecase</span></code></p>
-</div>
-</div>
-<div class="section" id="install-jupyterlab">
-<h3>2.3.4 Install Jupyterlab<a class="headerlink" href="#install-jupyterlab" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">jupyterlab</span></code></p>
-</div>
-<div class="section" id="install-scikit-learn">
-<h3>2.3.5 Install Scikit-learn<a class="headerlink" href="#install-scikit-learn" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">scikit-learn</span></code></p>
-<p>Verify if it works:</p>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">sklearn;</span> <span class="pre">sklearn.show_versions()&quot;</span></code></p>
-</div>
-<div class="section" id="finally-export-environment-into-an-yaml-file">
-<h3>2.3.6 Finally Export Environment into an YAML file<a class="headerlink" href="#finally-export-environment-into-an-yaml-file" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">export</span> <span class="pre">-p</span> <span class="pre">c:\envs\cits4012</span> <span class="pre">--no-builds</span> <span class="pre">-f</span> <span class="pre">cits4012.yml</span></code></p>
+<div class="section" id="english-french-text">
+<h3>English-French text<a class="headerlink" href="#english-french-text" title="Permalink to this headline">¶</a></h3>
+<p>Folder: <code class="docutils literal notranslate"><span class="pre">data/nmt</span></code></p>
+<ol class="simple">
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1o2ac0EliUod63sYUdpow_Dh-OqS3hF5Z">eng-fra.txt</a></p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1jLx6dZllBQ3LXZkCjZ4VciMQkZUInU10">simplest_eng_fra.csv</a></p></li>
+</ol>
 </div>
 </div>
 </div>
@@ -632,13 +513,17 @@ $ conda list | grep &quot;spacy&quot;
 
               </div>
               
-        </div>
-    </div>
-    
-    
-    <div class='prev-next-bottom'>
         
+            
 
+
+
+<div class='prev-next-bottom'>
+    
+
+</div>
+        
+        </div>
     </div>
     <footer class="footer mt-5 mt-md-0">
     <div class="container">
@@ -655,11 +540,9 @@ $ conda list | grep &quot;spacy&quot;
 
       </div>
     </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
+  
   </body>
 </html>

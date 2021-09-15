@@ -321,6 +321,16 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../classification/perceptron.html">
+   Perceptron
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/weiliu2k/CITS4012/raw/master/CITS4012LabBook.pdf">
+   PDF
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -454,19 +464,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="a077234c-eca2-49d2-b4ce-733d8a64a6f4" name="f41408bc-884f-458e-996f-7663f44f35b0" type="radio">
-</input><label class="tabbed-label" for="a077234c-eca2-49d2-b4ce-733d8a64a6f4">
+<input checked="checked" id="be11e1d0-f324-48cf-a88d-54d454b09722" name="740df691-b318-4f41-af77-cc2f30c64e51" type="radio">
+</input><label class="tabbed-label" for="be11e1d0-f324-48cf-a88d-54d454b09722">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="1e6bfe09-4d5f-4d15-b8dd-52f848237bbf" name="f41408bc-884f-458e-996f-7663f44f35b0" type="radio">
-</input><label class="tabbed-label" for="1e6bfe09-4d5f-4d15-b8dd-52f848237bbf">
+<input id="eacc8e10-28f1-4346-81cb-81ff8e5a6919" name="740df691-b318-4f41-af77-cc2f30c64e51" type="radio">
+</input><label class="tabbed-label" for="eacc8e10-28f1-4346-81cb-81ff8e5a6919">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="c6de7199-d35e-4f79-8333-66f61d2b0f7c" name="f41408bc-884f-458e-996f-7663f44f35b0" type="radio">
-</input><label class="tabbed-label" for="c6de7199-d35e-4f79-8333-66f61d2b0f7c">
+<input id="b9c46713-921d-43d2-ad9c-65b2040c81ba" name="740df691-b318-4f41-af77-cc2f30c64e51" type="radio">
+</input><label class="tabbed-label" for="b9c46713-921d-43d2-ad9c-65b2040c81ba">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

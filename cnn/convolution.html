@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
+    <title>Convolution Basics &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -42,6 +42,8 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -317,6 +319,38 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../classification/intro.html">
+   Lab08: Document Classification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/perceptron.html">
+     1. Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/data_prep.html">
+     2. Dataset and DataLoader
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/yelp.html">
+     3. Yelp Review Dataset - Document Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/weiliu2k/CITS4012/raw/master/CITS4012LabBook.pdf">
+   PDF
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -378,6 +412,26 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/cnn/convolution.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -387,7 +441,68 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convolution-in-raw-numpy-code">
+   Convolution in Raw Numpy Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convolving-in-pytorch">
+   Convolving in PyTorch
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#force-to-use-a-pre-defined-filter">
+     Force to use a pre-defined filter
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-hyperparameters-in-convolution">
+   Key hyperparameters in convolution
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dilation">
+     Dilation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#padding">
+     Padding
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#replication-padding">
+       Replication Padding
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reflection-padding">
+       Reflection Padding
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#circular-padding">
+       Circular Padding
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pooling-to-shrink-images">
+     Pooling to Shrink Images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#flatterning">
+     Flatterning
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -399,7 +514,639 @@
         
               <div>
                 
-  
+  <div class="section" id="convolution-basics">
+<h1>Convolution Basics<a class="headerlink" href="#convolution-basics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="convolution-in-raw-numpy-code">
+<h2>Convolution in Raw Numpy Code<a class="headerlink" href="#convolution-in-raw-numpy-code" title="Permalink to this headline">¶</a></h2>
+<p>There is one image, one channel, six by six pixels in size (shape $1\times 1\times 1 \times 6 \times 6). There is one filter, one channel, three by three pixels in size.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[[[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]]</span>
+<span class="p">)</span>
+<span class="n">single</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 1, 6, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[[[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]]</span>
+    <span class="p">)</span>
+<span class="nb">filter</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 1, 3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">region</span> <span class="o">=</span> <span class="n">single</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">filtered_region</span> <span class="o">=</span> <span class="n">region</span> <span class="o">*</span> <span class="nb">filter</span>
+<span class="n">total</span> <span class="o">=</span> <span class="n">filtered_region</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_region</span> <span class="o">=</span> <span class="n">single</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="p">):(</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_filtered_region</span> <span class="o">=</span> <span class="n">new_region</span> <span class="o">*</span> <span class="nb">filter</span>
+<span class="n">new_total</span> <span class="o">=</span> <span class="n">new_filtered_region</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">new_total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">last_horizontal_region</span> <span class="o">=</span> <span class="n">single</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="p">):(</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">last_horizontal_region</span> <span class="o">*</span> <span class="nb">filter</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_10920</span><span class="o">/</span><span class="mf">1958888837.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">last_horizontal_region</span> <span class="o">*</span> <span class="nb">filter</span>
+
+<span class="ne">ValueError</span>: operands could not be broadcast together with shapes (1,1,3,2) (1,1,3,3) 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">last_horizontal_region</span> <span class="o">=</span> <span class="n">single</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="o">+</span><span class="mi">4</span><span class="p">):(</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Applying a filter always produces a single value, the reduction is equal to the filter size minus one when stride is 1. For example, the above matrix is <span class="math notranslate nohighlight">\(6\times 6\)</span>, the filter size is <span class="math notranslate nohighlight">\(3 \times 3\)</span>, the reduction is <span class="math notranslate nohighlight">\(3-1=2\)</span>, the the resulting matrix is <span class="math notranslate nohighlight">\(4 \times 4\)</span>.</p>
+<p>How do we generalise this to a <span class="math notranslate nohighlight">\(n \times m\)</span> matrix, with a filter size <span class="math notranslate nohighlight">\(k \times l\)</span> and a stride <span class="math notranslate nohighlight">\(d\)</span>. The shape of the newly reduced matrix is then:</p>
+<div class="math notranslate nohighlight">
+\[ h \times w = n - (k-1) - (d-1) \times m - (l-1) - (d-1)\]</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Based on the code above, write a function conv() that takes
+Arguments:
+input - a matrix to be converted<br />
+filter - a filter matrix
+stride - the number of places to move during convolution
+Returns: result - the resulting matrix after convolution</p>
+</div>
+<p>Make sure you take the border conditions into account.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conv</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">stride</span><span class="p">):</span>
+    <span class="c1"># Setting up</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="n">m</span><span class="o">-</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">//</span><span class="n">stride</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="p">(</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">//</span><span class="n">stride</span><span class="p">])</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">row_idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># keep track of the row index of the output</span>
+    <span class="n">col_idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># keep track of the column index of the output</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">stride</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">stride</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">n</span> <span class="ow">and</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">l</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">m</span> <span class="ow">and</span> <span class="n">col_idx</span><span class="o">&lt;</span><span class="n">w</span> <span class="ow">and</span> <span class="n">row_idx</span><span class="o">&lt;</span><span class="n">h</span> <span class="p">):</span>
+                <span class="n">result</span><span class="p">[:,:,</span><span class="n">row_idx</span><span class="p">,</span><span class="n">col_idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">input</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="nb">filter</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">col_idx</span> <span class="o">=</span> <span class="n">col_idx</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">row_idx</span> <span class="o">=</span> <span class="n">row_idx</span> <span class="o">+</span> <span class="mi">1</span> 
+        <span class="n">col_idx</span> <span class="o">=</span> <span class="mi">0</span>     
+    <span class="k">return</span> <span class="n">result</span>            
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conv</span><span class="p">(</span><span class="n">single</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 1, 4, 4)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[[9., 5., 0., 7.],
+         [0., 2., 4., 6.],
+         [7., 6., 6., 8.],
+         [3., 8., 5., 1.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conv</span><span class="p">(</span><span class="n">single</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 1, 2, 2)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[[9., 0.],
+         [7., 6.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="convolving-in-pytorch">
+<h2>Convolving in PyTorch<a class="headerlink" href="#convolving-in-pytorch" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">kernel</span></code> and <code class="docutils literal notranslate"><span class="pre">filter</span></code> are often used interchangably to refer to the matrix that will be applied over the original input matrix.</p>
+<p>Just like the activation functions and loss functions we’ve seen in earlier labs, convolutions also come in two flavors: functional and module. There is a fundamental difference between the two, though: the functional convolution takes the kernel/filter as an argument while the module has weights to represent the kernel/filter. Let’s use the functional convolution, <code class="docutils literal notranslate"><span class="pre">F.conv2d</span></code>, to apply the filter to our input matrix (notice we’re using stride=1 since we moved the region around one
+pixel at a time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We need to convert Numpy arrays into Torch Tensors before we can make use the <code class="docutils literal notranslate"><span class="pre">F.conv2d</span></code> function.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">single</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">convolved</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">convolved</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[9., 5., 0., 7.],
+          [0., 2., 4., 6.],
+          [7., 6., 6., 8.],
+          [3., 8., 5., 1.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s turn our attention to PyTorch’s convolution module, <code class="docutils literal notranslate"><span class="pre">nn.Conv2d</span></code>. It has many arguments, let’s focus on the first four of them:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">in_channels</span></code>: number of channels of the input image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">out_channels</span></code>: number of channels produced by the convolution</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kernel_size</span></code>: size of the (square) convolution filter/kernel</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stride</span></code>: the size of the movement of the selected region</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul class="simple">
+<li><p>First, there is no argument for the kernel/filter itself, there is only a <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code> argument. This is because the actual filter is learned through training rather than specified.</p></li>
+<li><p>Second, it is possible to produce multiple channels as output. It simply means the module is going to learn multiple filters. Each filter is going to produce a different result, which is being called a channel here.</p></li>
+</ul>
+</div>
+<p>For a single channel matrix (you can think of 2D matrices are images) as input, and applying one filter (size three by three) to it, moving one pixel at a time, resulting in one output/channel. This is what it looks like in <code class="docutils literal notranslate"><span class="pre">nn.Conv2d</span></code> code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">conv</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[-1.0575, -2.6052, -2.2154, -1.7589],
+          [ 1.7594,  0.5861,  1.2595,  0.6742],
+          [ 1.0704,  1.4473,  1.1077, -2.0348],
+          [-1.6991, -1.5751, -1.4593, -3.0604]]]],
+       grad_fn=&lt;ThnnConv2DBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>These results are randomly initalised weights representing the kernel/filter. Yours will be different from this.</p>
+</div>
+<p>This is the whole point of the convolutional module: it will learn the kernel/filter on its own. In traditional computer vision, people would develop different filters for different purposes: blurring, sharpening, edge
+detection, and so on. But, instead of being clever and trying to manually devise a filter that does the trick for a given problem, why not outsource the filter definition to the neural network as well? This way the network will come up with filters that highlight features that are relevant to the task at hand.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The resulting matrix shows a grad_fn attribute now: it will be used to compute gradients so the network can
+actually learn how to change the weights representing the filter.</p>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Try changing the output channels to 2, and see how many filters have been randomly initialised.</p>
+</div>
+<div class="section" id="force-to-use-a-pre-defined-filter">
+<h3>Force to use a pre-defined filter<a class="headerlink" href="#force-to-use-a-pre-defined-filter" title="Permalink to this headline">¶</a></h3>
+<p>We can also force a convolutional module to use a particular filter by setting its
+weights.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Setting the weights is a strictly no-gradient operation, so you should always use the no_grad context
+manager.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">conv</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel</span>
+    <span class="n">conv</span><span class="o">.</span><span class="n">bias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> 
+
+<span class="n">conv</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[9., 5., 0., 7.],
+          [0., 2., 4., 6.],
+          [7., 6., 6., 8.],
+          [3., 8., 5., 1.]]]], grad_fn=&lt;ThnnConv2DBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="key-hyperparameters-in-convolution">
+<h2>Key hyperparameters in convolution<a class="headerlink" href="#key-hyperparameters-in-convolution" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dilation">
+<h3>Dilation<a class="headerlink" href="#dilation" title="Permalink to this headline">¶</a></h3>
+<p>Instead of a <em>contiguous</em> kernel, <strong>dilation</strong> controls the number of rows and columns to skip when the convolutional kernel is applied to the input matrix. In the code below, a dilation of two stretch the <span class="math notranslate nohighlight">\(2\time 2\)</span> kernel into a <code class="docutils literal notranslate"><span class="pre">holed</span></code> <span class="math notranslate nohighlight">\(3\times 3\)</span> kernel. The shape of the output feature map is therefore <span class="math notranslate nohighlight">\(4\times 4\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conv_dilated</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+          <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dilation</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">conv_dilated</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>  <span class="c1"># [1x1x6x6] tensor as input        </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[ 2.0450, -0.8075,  2.1801,  1.3727],
+          [-1.0471,  2.2050,  0.2247, -0.7972],
+          [ 0.4034, -1.2558,  0.9169,  1.2028],
+          [ 2.2282,  3.4014,  2.7813,  2.8520]]]],
+       grad_fn=&lt;SlowConvDilated2DBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="padding">
+<h3>Padding<a class="headerlink" href="#padding" title="Permalink to this headline">¶</a></h3>
+<p>By adding columns and rows of zeros around it, we expand the input image such that the gray region starts centered in the actual top left corner of the input image. This simple trick can be used to preserve the original size of the
+image. In code, as usual, PyTorch gives us two options: functional (F.pad) and module
+(nn.ConstantPad2d). Let’s start with the module version this time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">constant_padder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ConstantPad2d</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">constant_padder</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[0., 0., 0., 0., 0., 0., 0., 0.],
+          [0., 5., 0., 8., 7., 8., 1., 0.],
+          [0., 1., 9., 5., 0., 7., 7., 0.],
+          [0., 6., 0., 2., 4., 6., 6., 0.],
+          [0., 9., 7., 6., 6., 8., 4., 0.],
+          [0., 8., 3., 8., 5., 1., 3., 0.],
+          [0., 7., 2., 7., 0., 1., 0., 0.],
+          [0., 0., 0., 0., 0., 0., 0., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>One can also do asymmetric padding, by specifying a tuple in the padding
+argument representing (left, right, top, bottom). So, if we were to stuff our
+image on left and right sides only, the argument would go like this: (1, 1, 0, 0).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">padded</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">padded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[0., 0., 0., 0., 0., 0., 0., 0.],
+          [0., 5., 0., 8., 7., 8., 1., 0.],
+          [0., 1., 9., 5., 0., 7., 7., 0.],
+          [0., 6., 0., 2., 4., 6., 6., 0.],
+          [0., 9., 7., 6., 6., 8., 4., 0.],
+          [0., 8., 3., 8., 5., 1., 3., 0.],
+          [0., 7., 2., 7., 0., 1., 0., 0.],
+          [0., 0., 0., 0., 0., 0., 0., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are three other modes: replicate, reflect, and circular.
+<img alt="Three Modes of Paddings" src="cnn/images/paddings.png" /></p>
+<div class="section" id="replication-padding">
+<h4>Replication Padding<a class="headerlink" href="#replication-padding" title="Permalink to this headline">¶</a></h4>
+<p>In the replication padding, the padded pixels will have the same value as the
+closest real pixel. The padded corners will have the same value as the real corners.
+The other columns (left and right) and rows (top and bottom) will replicate the
+corresponding values of the original image. The values used in the replication are in
+a darker shade of orange.</p>
+<p>In PyTorch, one can use the functional form <code class="docutils literal notranslate"><span class="pre">F.pad</span></code> with <code class="docutils literal notranslate"><span class="pre">mode=&quot;replicate&quot;</span></code>, or use
+the module version <code class="docutils literal notranslate"><span class="pre">nn.ReplicationPad2d</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">replication_padder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReplicationPad2d</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">replication_padder</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[5., 5., 0., 8., 7., 8., 1., 1.],
+          [5., 5., 0., 8., 7., 8., 1., 1.],
+          [1., 1., 9., 5., 0., 7., 7., 7.],
+          [6., 6., 0., 2., 4., 6., 6., 6.],
+          [9., 9., 7., 6., 6., 8., 4., 4.],
+          [8., 8., 3., 8., 5., 1., 3., 3.],
+          [7., 7., 2., 7., 0., 1., 0., 0.],
+          [7., 7., 2., 7., 0., 1., 0., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;replicate&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[5., 5., 0., 8., 7., 8., 1., 1.],
+          [5., 5., 0., 8., 7., 8., 1., 1.],
+          [1., 1., 9., 5., 0., 7., 7., 7.],
+          [6., 6., 0., 2., 4., 6., 6., 6.],
+          [9., 9., 7., 6., 6., 8., 4., 4.],
+          [8., 8., 3., 8., 5., 1., 3., 3.],
+          [7., 7., 2., 7., 0., 1., 0., 0.],
+          [7., 7., 2., 7., 0., 1., 0., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="reflection-padding">
+<h4>Reflection Padding<a class="headerlink" href="#reflection-padding" title="Permalink to this headline">¶</a></h4>
+<p>In the reflection padding, the outer columns and rows are used as axes for the reflection. So, the left padded column (forget about the corners for now) will reflect the second column (since the first column is the axis of reflection). The same reasoning goes for the right padded column. Similarly, the top padded row will reflect the second row (since the first row is the axis of reflection), and the same reasoning goes for the bottom padded row. The values used in the reflection are in a darker shade of orange. The corners will have the same values as the intersection of the reflected rows and columns of the original image, or the diagnol value when the original corners are used as a reflection point.</p>
+<p>In PyTorch, you can use the functional form <code class="docutils literal notranslate"><span class="pre">F.pad</span></code> with <code class="docutils literal notranslate"><span class="pre">mode=&quot;reflect&quot;</span></code>, or use the
+module version <code class="docutils literal notranslate"><span class="pre">nn.ReflectionPad2d</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reflection_padder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReflectionPad2d</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">reflection_padder</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[9., 1., 9., 5., 0., 7., 7., 7.],
+          [0., 5., 0., 8., 7., 8., 1., 8.],
+          [9., 1., 9., 5., 0., 7., 7., 7.],
+          [0., 6., 0., 2., 4., 6., 6., 6.],
+          [7., 9., 7., 6., 6., 8., 4., 8.],
+          [3., 8., 3., 8., 5., 1., 3., 1.],
+          [2., 7., 2., 7., 0., 1., 0., 1.],
+          [3., 8., 3., 8., 5., 1., 3., 1.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[9., 1., 9., 5., 0., 7., 7., 7.],
+          [0., 5., 0., 8., 7., 8., 1., 8.],
+          [9., 1., 9., 5., 0., 7., 7., 7.],
+          [0., 6., 0., 2., 4., 6., 6., 6.],
+          [7., 9., 7., 6., 6., 8., 4., 8.],
+          [3., 8., 3., 8., 5., 1., 3., 1.],
+          [2., 7., 2., 7., 0., 1., 0., 1.],
+          [3., 8., 3., 8., 5., 1., 3., 1.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="circular-padding">
+<h4>Circular Padding<a class="headerlink" href="#circular-padding" title="Permalink to this headline">¶</a></h4>
+<p>In the circular padding, the left-most (right-most) column gets copied as the right
+(left) padded column (forget about the corners for now too). Similarly, the topmost
+(bottom-most) row gets copied as the bottom (top) padded row. The corners
+will receive the values of the diametrically opposed corner: the top-left padded
+pixel receives the value of the bottom-right corner of the original image. Once
+again, the values used in the padding are in a darker shade of orange.</p>
+<p>In PyTorch, you must use the functional form <code class="docutils literal notranslate"><span class="pre">F.pad</span></code> with <code class="docutils literal notranslate"><span class="pre">mode=&quot;circular&quot;</span></code> since
+there is no module version of the circular padding (at time of writing):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;circular&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[0., 7., 2., 7., 0., 1., 0., 7.],
+          [1., 5., 0., 8., 7., 8., 1., 5.],
+          [7., 1., 9., 5., 0., 7., 7., 1.],
+          [6., 6., 0., 2., 4., 6., 6., 6.],
+          [4., 9., 7., 6., 6., 8., 4., 9.],
+          [3., 8., 3., 8., 5., 1., 3., 8.],
+          [0., 7., 2., 7., 0., 1., 0., 7.],
+          [1., 5., 0., 8., 7., 8., 1., 5.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="pooling-to-shrink-images">
+<h3>Pooling to Shrink Images<a class="headerlink" href="#pooling-to-shrink-images" title="Permalink to this headline">¶</a></h3>
+<p>Another way of shrinking images is to use <strong>pooling</strong>. It is different from the
+former operations: it splits the image into tiny chunks, performs an operation on
+each chunk (that yields a single value), and puts the chunks together as the
+resulting image. For example, a <span class="math notranslate nohighlight">\(6\times 6\)</span> image can be reduced to <span class="math notranslate nohighlight">\(3\times 3\)</span> by splitting the original image to 9 chunks.</p>
+<p>In PyTorch, as usual, we have both forms: <code class="docutils literal notranslate"><span class="pre">F.max_pool2d</span></code> and <code class="docutils literal notranslate"><span class="pre">nn.MaxPool2d</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pooled</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pooled</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\Anaconda3\envs\cits4012\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[5., 8., 8., 1.],
+          [6., 9., 7., 7.],
+          [9., 8., 8., 4.],
+          [7., 7., 1., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>A pooling kernel of two-by-two results in an image whose dimensions are half of
+the original.</p></li>
+<li><p>A pooling kernel of three-by-three makes the resulting image one third
+the size of the original, and so on.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>only full chunks count: if we try a
+kernel of five-by-five in our eight-by-eight image, only one chunk fits, and the resulting
+image would have a single pixel.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maxpool5</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">pooled5</span> <span class="o">=</span> <span class="n">maxpool5</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+<span class="n">pooled5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[9.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Besides max-pooling, average pooling is also fairly common. As the name
+suggests, it will output the average pixel value for each chunk. In PyTorch, we have
+<code class="docutils literal notranslate"><span class="pre">F.avg_pool2d</span></code> and <code class="docutils literal notranslate"><span class="pre">nn.AvgPool2d</span></code>.</p>
+<p>You can also use a stride greater than 1 just like applying a convolution kernel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">padded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[0., 0., 0., 0., 0., 0., 0., 0.],
+          [0., 5., 0., 8., 7., 8., 1., 0.],
+          [0., 1., 9., 5., 0., 7., 7., 0.],
+          [0., 6., 0., 2., 4., 6., 6., 0.],
+          [0., 9., 7., 6., 6., 8., 4., 0.],
+          [0., 8., 3., 8., 5., 1., 3., 0.],
+          [0., 7., 2., 7., 0., 1., 0., 0.],
+          [0., 0., 0., 0., 0., 0., 0., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[5., 8., 8., 1.],
+          [6., 9., 7., 7.],
+          [9., 8., 8., 4.],
+          [7., 7., 1., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="flatterning">
+<h3>Flatterning<a class="headerlink" href="#flatterning" title="Permalink to this headline">¶</a></h3>
+<p>It simply flattens a tensor, by appending the values of each row to its previous row. It has a module version <code class="docutils literal notranslate"><span class="pre">nn.Flatten()</span></code>. There is no functional version of it, as it can achieved by the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pooled</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[5., 8., 8., 1.],
+          [6., 9., 7., 7.],
+          [9., 8., 8., 4.],
+          [7., 7., 1., 0.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flatterned</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()(</span><span class="n">pooled</span><span class="p">)</span>
+<span class="n">flatterned</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[5., 8., 8., 1., 6., 9., 7., 7., 9., 8., 8., 4., 7., 7., 1., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pooled</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[5., 8., 8., 1., 6., 9., 7., 7., 9., 8., 8., 4., 7., 7., 1., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
