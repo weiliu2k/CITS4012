@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
+    <title>3. Yelp Dataset at a glance &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Yelp Review Dataset - Document Classification" href="yelp.html" />
+    <link rel="prev" title="2. Dataset and DataLoader" href="data_prep.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -87,7 +89,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -317,16 +319,16 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="intro.html">
    Lab08: Document Classification
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="perceptron.html">
      1. Perceptron
@@ -337,9 +339,14 @@
      2. Dataset and DataLoader
     </a>
    </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3. Yelp Dataset at a glance
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="yelp.html">
-     3. Yelp Review Dataset - Document Classification
+     4. Yelp Review Dataset - Document Classification
     </a>
    </li>
   </ul>
@@ -439,7 +446,33 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#group-all-initial-settings-together">
+   3.1. Group all initial settings together
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#use-pandas-read-csv-to-process-csv-files">
+   3.2. Use
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pandas.read_csv
+    </span>
+   </code>
+   to process CSV files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#splitting-the-training-dataset">
+   3.3. Splitting the training dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simple-preprocessing-and-write-to-file">
+   3.4. Simple preprocessing and Write to file
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -451,7 +484,10 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="yelp-dataset-at-a-glance">
+<h1><span class="section-number">3. </span>Yelp Dataset at a glance<a class="headerlink" href="#yelp-dataset-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<p>The Yelp dataset, pairs review texts with their sentiment labels (positive or negative). In this notebook, we take a look at the dataset by loading a csv file into a Pandas Data Frame, which will give us the foundation of motivating a more object-oriented data handling in PyTorch.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -463,20 +499,25 @@
 </div>
 </div>
 </div>
+<div class="section" id="group-all-initial-settings-together">
+<h2><span class="section-number">3.1. </span>Group all initial settings together<a class="headerlink" href="#group-all-initial-settings-together" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
-    <span class="n">raw_train_dataset_csv</span><span class="o">=</span><span class="s2">&quot;data/yelp/raw_train.csv&quot;</span><span class="p">,</span>
-    <span class="n">raw_test_dataset_csv</span><span class="o">=</span><span class="s2">&quot;data/yelp/raw_test.csv&quot;</span><span class="p">,</span>
+    <span class="n">raw_train_dataset_csv</span><span class="o">=</span><span class="s2">&quot;../data/yelp/raw_train.csv&quot;</span><span class="p">,</span>
+    <span class="n">raw_test_dataset_csv</span><span class="o">=</span><span class="s2">&quot;../data/yelp/raw_test.csv&quot;</span><span class="p">,</span>
     <span class="n">train_proportion</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">val_proportion</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
-    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;data/yelp/reviews_with_splits_full.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;../data/yelp/reviews_with_splits_full.csv&quot;</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="use-pandas-read-csv-to-process-csv-files">
+<h2><span class="section-number">3.2. </span>Use <code class="docutils literal notranslate"><span class="pre">pandas.read_csv</span></code> to process CSV files<a class="headerlink" href="#use-pandas-read-csv-to-process-csv-files" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read raw data</span>
@@ -619,6 +660,10 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="splitting-the-training-dataset">
+<h2><span class="section-number">3.3. </span>Splitting the training dataset<a class="headerlink" href="#splitting-the-training-dataset" title="Permalink to this headline">¶</a></h2>
+<p>For turning the hyper-parameters, we often want to retain a small proportion of validation data from the original training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Splitting train by rating</span>
@@ -667,17 +712,13 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="simple-preprocessing-and-write-to-file">
+<h2><span class="section-number">3.4. </span>Simple preprocessing and Write to file<a class="headerlink" href="#simple-preprocessing-and-write-to-file" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write split data to file</span>
-<span class="n">final_reviews</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">final_list</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_reviews</span><span class="o">.</span><span class="n">split</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_reviews</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">final_list</span><span class="p">)</span>
+<span class="n">final_reviews</span><span class="o">.</span><span class="n">split</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -745,6 +786,7 @@ Name: review, dtype: object
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preprocess the reviews</span>
+<span class="c1"># You can come up with better pre-processing</span>
 <span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -837,6 +879,8 @@ Name: review, dtype: object
 </div>
 </div>
 </div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -847,16 +891,16 @@ Name: review, dtype: object
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "nlpbook"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "nlpbook",
+            kernelName: "python3",
             path: "./classification"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'nlpbook'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -867,6 +911,24 @@ Name: review, dtype: object
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="data_prep.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title"><span class="section-number">2. </span>Dataset and DataLoader</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="yelp.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>Yelp Review Dataset - Document Classification</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

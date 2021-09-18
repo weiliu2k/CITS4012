@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Yelp Review Dataset - Document Classification &#8212; CITS4012 Natural Language Processing</title>
+    <title>4. Yelp Review Dataset - Document Classification &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="2. Dataset and DataLoader" href="data_prep.html" />
+    <link rel="prev" title="3. Yelp Dataset at a glance" href="yelp_preprocessing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -338,9 +338,14 @@
      2. Dataset and DataLoader
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="yelp_preprocessing.html">
+     3. Yelp Dataset at a glance
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     3. Yelp Review Dataset - Document Classification
+     4. Yelp Review Dataset - Document Classification
     </a>
    </li>
   </ul>
@@ -442,34 +447,102 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-vocabulary-class">
-   3.1. The
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     Vocabulary
-    </span>
-   </code>
-   Class
+  <a class="reference internal nav-link" href="#converting-text-inputs-to-vectorized-minibatches">
+   4.1. Converting Text Inputs to Vectorized Minibatches
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#vectorizer">
-   3.2. Vectorizer
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dataloader">
-   3.3. Dataloader
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataset">
+     4.1.1. Dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-vocabulary-class">
+     4.1.2. The
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Vocabulary
+      </span>
+     </code>
+     Class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vectorizer">
+     4.1.3. Vectorizer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataloader">
+     4.1.4. Dataloader
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-perceptron-classifier">
-   3.4. A perceptron classifier
+   4.2. A perceptron classifier
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training">
-   3.5. Training
+   4.3. Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initial-setup">
+     4.3.1. Initial Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-preparation">
+     4.3.2. Training Preparation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     4.3.3. Training
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation-inference-and-inspection">
+   4.4. Evaluation, Inference, and Inspection
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluating-on-test-data">
+     4.4.1. EVALUATING ON TEST DATA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inference-and-classifying-new-data-points">
+     4.4.2. INFERENCE AND CLASSIFYING NEW DATA POINTS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inspecting-model-weights">
+     4.4.3. INSPECTING MODEL WEIGHTS
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#top-20-influential-words-in-positive-reviews">
+       4.4.3.1. Top 20 Influential Words in Positive Reviews
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#top-20-influential-words-in-negative-reviews">
+       4.4.3.2. Top 20 Influential Words in Negative Reviews
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#your-turn">
+   4.5. Your Turn
   </a>
  </li>
 </ul>
@@ -484,16 +557,18 @@
               <div>
                 
   <div class="section" id="yelp-review-dataset-document-classification">
-<h1><span class="section-number">3. </span>Yelp Review Dataset - Document Classification<a class="headerlink" href="#yelp-review-dataset-document-classification" title="Permalink to this headline">¶</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code>, the <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code>, and the <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> are three classes that we use in nearly
-every example later in this unit to perform a crucial pipeline: converting text inputs to vectorized
-minibatches. The pipeline starts with preprocessed text; each data point is a collection of tokens. In this example, the tokens happen to be words, but tokens can also be characters.</p>
+<h1><span class="section-number">4. </span>Yelp Review Dataset - Document Classification<a class="headerlink" href="#yelp-review-dataset-document-classification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="converting-text-inputs-to-vectorized-minibatches">
+<h2><span class="section-number">4.1. </span>Converting Text Inputs to Vectorized Minibatches<a class="headerlink" href="#converting-text-inputs-to-vectorized-minibatches" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code>, the <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code>, and the <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> are three classes to perform a crucial pipeline for PyTorch based NLP tasks: converting text inputs to vectorized minibatches. The pipeline starts with preprocessed text; each data point is a collection of tokens. In this example, the tokens happen to be words, but tokens can also be characters.</p>
 <p>The three classes presented in this notebook are responsible for</p>
 <ul class="simple">
 <li><p>mapping each token to an integer to create a  <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code>,</p></li>
 <li><p>applying this mapping to each data point to create a vectorized form using <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code>, and</p></li>
 <li><p>grouping the vectorized data points into a minibatch for the model through <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>.</p></li>
 </ul>
+<div class="section" id="dataset">
+<h3><span class="section-number">4.1.1. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
@@ -564,8 +639,9 @@ minibatches. The pipeline starts with preprocessed text; each data point is a c
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="the-vocabulary-class">
-<h2><span class="section-number">3.1. </span>The <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> Class<a class="headerlink" href="#the-vocabulary-class" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">4.1.2. </span>The <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> Class<a class="headerlink" href="#the-vocabulary-class" title="Permalink to this headline">¶</a></h3>
 <p>The first stage to map each token to a numerical version of itself. The standard methodology is to have a bijection - a mapping that can be reversed between the tokens and integers. In Python, this is simply two dictionaries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -648,7 +724,7 @@ minibatches. The pipeline starts with preprocessed text; each data point is a c
 </div>
 </div>
 <div class="section" id="vectorizer">
-<h2><span class="section-number">3.2. </span>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">4.1.3. </span>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h3>
 <p>The second stage of going from a text dataset to a vectorized minibatch is to iterate through the tokens of an input data point and convert each token to its integer form. The result of this iteration should be a vector. Because this vector will be combined with vectors from other data points, there is a constraint that the vectors produced by the Vectorizer should always have the same length.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -724,7 +800,7 @@ minibatches. The pipeline starts with preprocessed text; each data point is a c
 </div>
 </div>
 <div class="section" id="dataloader">
-<h2><span class="section-number">3.3. </span>Dataloader<a class="headerlink" href="#dataloader" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">4.1.4. </span>Dataloader<a class="headerlink" href="#dataloader" title="Permalink to this headline">¶</a></h3>
 <p>The final stage of the text to vectorized minibatch pipeline is to actually group the vectorized data
 points.</p>
 <div class="cell docutils container">
@@ -747,8 +823,10 @@ points.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="a-perceptron-classifier">
-<h2><span class="section-number">3.4. </span>A perceptron classifier<a class="headerlink" href="#a-perceptron-classifier" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>A perceptron classifier<a class="headerlink" href="#a-perceptron-classifier" title="Permalink to this headline">¶</a></h2>
+<p>This is a simple one hidden layer Perceptron that we have seen many times by now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
@@ -776,7 +854,7 @@ points.</p>
         <span class="n">y_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x_in</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
         
         <span class="k">if</span> <span class="n">apply_sigmoid</span><span class="p">:</span>
-            <span class="n">y_out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_out</span><span class="p">)</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_out</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">y_out</span>
 </pre></div>
 </div>
@@ -784,7 +862,9 @@ points.</p>
 </div>
 </div>
 <div class="section" id="training">
-<h2><span class="section-number">3.5. </span>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.3. </span>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="initial-setup">
+<h3><span class="section-number">4.3.1. </span>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
@@ -792,7 +872,7 @@ points.</p>
     <span class="c1"># Data and path information</span>
     <span class="n">frequency_cutoff</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
     <span class="n">model_state_file</span><span class="o">=</span><span class="s1">&#39;model.pth&#39;</span><span class="p">,</span>
-    <span class="n">review_csv</span><span class="o">=</span><span class="s1">&#39;../data/yelp/reviews_with_splits_lite.csv&#39;</span><span class="p">,</span>
+    <span class="n">review_csv</span><span class="o">=</span><span class="s1">&#39;../data/yelp/reviews_with_splits_full.csv&#39;</span><span class="p">,</span>
     <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;model_storage/yelp/&#39;</span><span class="p">,</span>
     <span class="n">vectorizer_file</span><span class="o">=</span><span class="s1">&#39;vectorizer.json&#39;</span><span class="p">,</span>
     <span class="c1"># No model hyperparameters</span>
@@ -810,6 +890,15 @@ points.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="training-preparation">
+<h3><span class="section-number">4.3.2. </span>Training Preparation<a class="headerlink" href="#training-preparation" title="Permalink to this headline">¶</a></h3>
+<p>Recall that three key components that we need prepare for a training are:</p>
+<ul class="simple">
+<li><p>model</p></li>
+<li><p>loss function</p></li>
+<li><p>optimizer</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -845,8 +934,27 @@ points.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">((</span><span class="n">yhat</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span><span class="o">==</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_target</span><span class="p">):</span>
+    <span class="n">y_target</span> <span class="o">=</span> <span class="n">y_target</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+    <span class="n">y_pred_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">long</span><span class="p">()</span><span class="c1">#.max(dim=1)[1]</span>
+    <span class="n">n_correct</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">y_pred_indices</span><span class="p">,</span> <span class="n">y_target</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">n_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred_indices</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3><span class="section-number">4.3.3. </span>Training<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This is the most time-consuming cell. Training on a NVIDIA RTX3070 GPU with the full dataset took 9237.4 seconds (rougly 3 hours). You should changes the <code class="docutils literal notranslate"><span class="pre">args</span></code> settings to use the LITE dataset first with a reduced number of epochs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">9237.4</span><span class="o">/</span><span class="mi">60</span><span class="o">/</span><span class="mi">60</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.5659444444444444
 </pre></div>
 </div>
 </div>
@@ -910,6 +1018,206 @@ points.</p>
 </div>
 </div>
 </div>
+<div class="section" id="evaluation-inference-and-inspection">
+<h2><span class="section-number">4.4. </span>Evaluation, Inference, and Inspection<a class="headerlink" href="#evaluation-inference-and-inspection" title="Permalink to this headline">¶</a></h2>
+<p>After you have a trained model, the next steps are to either evaluate how it did against some heldout
+portion of the data, use it to do inference on new data, or inspect the model weights to see what it is has learned. In this section, we will show you all three steps.</p>
+<div class="section" id="evaluating-on-test-data">
+<h3><span class="section-number">4.4.1. </span>EVALUATING ON TEST DATA<a class="headerlink" href="#evaluating-on-test-data" title="Permalink to this headline">¶</a></h3>
+<p>To evaluate the data on the heldout test set, the code is exactly the same as the validation loop in the training routine we saw in the previous example, but with one minor difference: the split is set to be ‘test’ rather than ‘val’. The difference between the two partitions of the dataset comes from the fact that the test set should be run as little as possible. Each time you run a trained model on the test set, make a new model decision (such as changing the size of the layers), and remeasure the new retrained model on the test set, you are biasing your modeling decisions toward the test data. In other words, if you repeat that process often enough, the test set will become meaningless as an accurate measure of truly heldout data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">batch_generator</span> <span class="o">=</span> <span class="n">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span><span class="n">device</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">running_acc</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">batch_index</span><span class="p">,</span> <span class="n">batch_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_generator</span><span class="p">):</span>
+    <span class="c1"># compute the output</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+    <span class="c1"># compute the loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+    <span class="n">loss_batch</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss_batch</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># compute the accuracy</span>
+    <span class="n">acc_batch</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">])</span>
+    <span class="n">running_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">acc_batch</span> <span class="o">-</span> <span class="n">running_acc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_loss&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">running_loss</span>
+<span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_acc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">running_acc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test loss: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_loss&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_acc&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test loss: 0.243
+Test Accuracy: 92.45
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="inference-and-classifying-new-data-points">
+<h3><span class="section-number">4.4.2. </span>INFERENCE AND CLASSIFYING NEW DATA POINTS<a class="headerlink" href="#inference-and-classifying-new-data-points" title="Permalink to this headline">¶</a></h3>
+<p>Another method for evaluating the model is to do inference on new data and make qualitative judgments about whether the model is working.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="c1"># Preprocess the reviews</span>
+<span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([.,!?])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; \1 &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-zA-Z.,!?]+&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
+
+<span class="k">def</span> <span class="nf">predict_rating</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span><span class="n">decision_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Predict the rating of a review</span>
+<span class="sd">    Args:</span>
+<span class="sd">        review (str): the text of the review</span>
+<span class="sd">        classifier (ReviewClassifier): the trained model</span>
+<span class="sd">        vectorizer (ReviewVectorizer): the corresponding vectorizer</span>
+<span class="sd">        decision_threshold (float): The numerical boundary which</span>
+<span class="sd">                                    separates the rating classes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">review</span> <span class="o">=</span> <span class="n">preprocess_text</span><span class="p">(</span><span class="n">review</span><span class="p">)</span>
+    <span class="n">vectorized_review</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">review</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">vectorized_review</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">probability_value</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">probability_value</span> <span class="o">&lt;</span> <span class="n">decision_threshold</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">rating_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_review</span> <span class="o">=</span> <span class="s2">&quot;NLP is pretty awesome&quot;</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">predict_rating</span><span class="p">(</span><span class="n">test_review</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> &gt; </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_review</span><span class="p">,</span> <span class="n">prediction</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NLP is pretty awesome &gt; positive
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="inspecting-model-weights">
+<h3><span class="section-number">4.4.3. </span>INSPECTING MODEL WEIGHTS<a class="headerlink" href="#inspecting-model-weights" title="Permalink to this headline">¶</a></h3>
+<p>Finally, the last way to understand whether a model is doing well after it has finished training is to inspect the weights and make qualitative judgments about whether they seem correct.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sort weights</span>
+<span class="n">fc1_weights</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">fc1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">fc1_weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="top-20-influential-words-in-positive-reviews">
+<h4><span class="section-number">4.4.3.1. </span>Top 20 Influential Words in Positive Reviews<a class="headerlink" href="#top-20-influential-words-in-positive-reviews" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Top 20 words</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Influential words in Positive Reviews:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">review_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Influential words in Positive Reviews:
+
+pastys
+excellentes
+mmmmmmmm
+yummo
+teau
+excellents
+reina
+besten
+nhats
+soulful
+bovine
+nsupport
+bottling
+abel
+emplacement
+recyclable
+couleurs
+kouign
+whimsy
+couverte
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="top-20-influential-words-in-negative-reviews">
+<h4><span class="section-number">4.4.3.2. </span>Top 20 Influential Words in Negative Reviews<a class="headerlink" href="#top-20-influential-words-in-negative-reviews" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Top 20 negative words</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Influential words in Negative Reviews:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">indices</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">review_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Influential words in Negative Reviews:
+
+ception
+nlame
+nworse
+nnasty
+discusting
+discriminates
+ewwwww
+disputing
+crook
+demerits
+acrid
+scab
+nyuck
+nbland
+dishonesty
+unfresh
+lecturing
+poorest
+grossest
+condescendingly
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="your-turn">
+<h2><span class="section-number">4.5. </span>Your Turn<a class="headerlink" href="#your-turn" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Modify the vectorizer to use Word Embeddings (e.g. GloVe) to replace one-hot encoding. Observe the performance change. You may need to handle unknown words.</p>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -941,11 +1249,11 @@ points.</p>
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="data_prep.html" title="previous page">
+        <a class="left-prev" href="yelp_preprocessing.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">2. </span>Dataset and DataLoader</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Yelp Dataset at a glance</p>
             </div>
         </a>
     </div>

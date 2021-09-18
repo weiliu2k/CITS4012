@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Yelp Review Dataset - Document Classification" href="yelp.html" />
+    <link rel="next" title="3. Yelp Dataset at a glance" href="yelp_preprocessing.html" />
     <link rel="prev" title="1. Perceptron" href="perceptron.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -340,8 +340,13 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="yelp_preprocessing.html">
+     3. Yelp Dataset at a glance
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="yelp.html">
-     3. Yelp Review Dataset - Document Classification
+     4. Yelp Review Dataset - Document Classification
     </a>
    </li>
   </ul>
@@ -726,6 +731,10 @@ mini-batch every time.</p>
 <p>“What about the validation and test sets?” There is no need to shuffle them since we are not computing gradients with them.</p>
 </div>
 <p>There is more to a DataLoader, for example, it is also possible to use it together with a <code class="docutils literal notranslate"><span class="pre">sampler</span></code> to fetch mini-batches that compensate for imbalanced classes, for instance.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Note we put all data in one “mini-batch” because we set <code class="docutils literal notranslate"><span class="pre">batch_size=1000</span></code>. Set <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> to a smaller number and observe the training time and performance.</p>
+</div>
 </div>
 <div class="section" id="putting-it-all-together">
 <h2><span class="section-number">2.3. </span>Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
@@ -929,10 +938,10 @@ mini-batch every time.</p>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="yelp.html" title="next page">
+        <a class="right-next" href="yelp_preprocessing.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">3. </span>Yelp Review Dataset - Document Classification</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Yelp Dataset at a glance</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
