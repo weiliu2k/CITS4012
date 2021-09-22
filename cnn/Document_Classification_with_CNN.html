@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Classifying Yelp Reviews &#8212; CITS4012 Natural Language Processing</title>
+    <title>3. Using CNN for Document Classification with Embeddings &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -42,6 +42,8 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -51,6 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="dataset_AG_News_processing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -87,7 +90,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -259,7 +262,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="../pytorch/intro.html">
    Lab06: Neural Network Building Blocks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
@@ -269,22 +272,22 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="activations.html">
+    <a class="reference internal" href="../pytorch/activations.html">
      1. Activation Functions and their derivatives
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="loss.html">
+    <a class="reference internal" href="../pytorch/loss.html">
      2. Loss Functions
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="computational_graph.html">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
      3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="nn_oop.html">
+    <a class="reference internal" href="../pytorch/nn_oop.html">
      4. Neural Networks in PyTorch
     </a>
    </li>
@@ -349,28 +352,28 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../cnn/intro.html">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
    Lab09: CNN for NLP
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
   <label for="toctree-checkbox-9">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/CBOW.html">
+    <a class="reference internal" href="CBOW.html">
      1. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/convolution.html">
+    <a class="reference internal" href="convolution.html">
      2. Convolution Basics
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      3. Using CNN for Document Classification with Embeddings
     </a>
    </li>
@@ -427,7 +430,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/pytorch/sentiment_yelp.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/cnn/Document_Classification_with_CNN.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -452,7 +455,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/pytorch/sentiment_yelp.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/cnn/Document_Classification_with_CNN.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -479,81 +482,78 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#imports">
-   Imports
+   3.1. Imports
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-vectorization-classes">
-   Data Vectorization classes
+   3.2. Data Vectorization classes
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-vocabulary">
-     The Vocabulary
+     3.2.1. The Vocabulary
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-vectorizer">
-     The Vectorizer
+     3.2.2. The Vectorizer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-dataset">
-     The Dataset
+     3.2.3. The Dataset
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-model-reviewclassifier">
-   The Model: ReviewClassifier
+  <a class="reference internal nav-link" href="#the-model-newsclassifier">
+   3.3. The Model: NewsClassifier
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-elu-activation-function">
+     3.3.1. The ELU activation function
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine">
-   Training Routine
+   3.4. Training Routine
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#helper-functions">
-     Helper functions
+     3.4.1. Helper functions
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#general-utilities">
-       General utilities
+       3.4.1.1. general utilities
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#settings-and-some-prep-work">
-     Settings and some prep work
+     3.4.2. Settings and some prep work
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#initializations">
-     Initializations
+     3.4.3. Initializations
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-loop">
-     Training loop
+     3.4.4. Training loop
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#inference">
-     Inference
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#interpretability">
-     Interpretability
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#end">
-     End
+     3.4.5. Inference
     </a>
    </li>
   </ul>
@@ -569,16 +569,16 @@
         
               <div>
                 
-  <div class="section" id="classifying-yelp-reviews">
-<h1>Classifying Yelp Reviews<a class="headerlink" href="#classifying-yelp-reviews" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="using-cnn-for-document-classification-with-embeddings">
+<h1><span class="section-number">3. </span>Using CNN for Document Classification with Embeddings<a class="headerlink" href="#using-cnn-for-document-classification-with-embeddings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="imports">
-<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">string</span>
 
@@ -589,27 +589,25 @@
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="data-vectorization-classes">
-<h2>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="the-vocabulary">
-<h3>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.2.1. </span>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to process text and extract vocabulary for mapping&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_to_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_unk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unk_token</span><span class="o">=</span><span class="s2">&quot;&lt;UNK&gt;&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_to_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            token_to_idx (dict): a pre-existing map of tokens to indices</span>
-<span class="sd">            add_unk (bool): a flag that indicates whether to add the UNK token</span>
-<span class="sd">            unk_token (str): the UNK token to add into the Vocabulary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">token_to_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -619,19 +617,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_token</span> <span class="o">=</span> <span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="n">token</span> 
                               <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_unk</span> <span class="o">=</span> <span class="n">add_unk</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span> <span class="o">=</span> <span class="n">unk_token</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">add_unk</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">unk_token</span><span class="p">)</span> 
-        
-        
     <span class="k">def</span> <span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; returns a dictionary that can be serialized &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;token_to_idx&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">,</span> 
-                <span class="s1">&#39;add_unk&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_unk</span><span class="p">,</span> 
-                <span class="s1">&#39;unk_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;token_to_idx&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">}</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
@@ -653,7 +641,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_token</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
         <span class="k">return</span> <span class="n">index</span>
-    
+            
     <span class="k">def</span> <span class="nf">add_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add a list of tokens into the Vocabulary</span>
 <span class="sd">        </span>
@@ -666,20 +654,13 @@
 
     <span class="k">def</span> <span class="nf">lookup_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieve the index associated with the token </span>
-<span class="sd">          or the UNK index if token isn&#39;t present.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            token (str): the token to look up </span>
 <span class="sd">        Returns:</span>
 <span class="sd">            index (int): the index corresponding to the token</span>
-<span class="sd">        Notes:</span>
-<span class="sd">            `unk_index` needs to be &gt;=0 (having been added into the Vocabulary) </span>
-<span class="sd">              for the UNK functionality </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">lookup_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the token associated with the index</span>
@@ -704,116 +685,156 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="the-vectorizer">
-<h3>The Vectorizer<a class="headerlink" href="#the-vectorizer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; The Vectorizer which coordinates the Vocabularies and puts them to use&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">review_vocab</span><span class="p">,</span> <span class="n">rating_vocab</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Args:</span>
-<span class="sd">            review_vocab (Vocabulary): maps words to integers</span>
-<span class="sd">            rating_vocab (Vocabulary): maps class labels to integers</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">review_vocab</span> <span class="o">=</span> <span class="n">review_vocab</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rating_vocab</span> <span class="o">=</span> <span class="n">rating_vocab</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SequenceVocabulary</span><span class="p">(</span><span class="n">Vocabulary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_to_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unk_token</span><span class="o">=</span><span class="s2">&quot;&lt;UNK&gt;&quot;</span><span class="p">,</span>
+                 <span class="n">mask_token</span><span class="o">=</span><span class="s2">&quot;&lt;MASK&gt;&quot;</span><span class="p">,</span> <span class="n">begin_seq_token</span><span class="o">=</span><span class="s2">&quot;&lt;BEGIN&gt;&quot;</span><span class="p">,</span>
+                 <span class="n">end_seq_token</span><span class="o">=</span><span class="s2">&quot;&lt;END&gt;&quot;</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">vectorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">review</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a collapsed one-hit vector for the review</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SequenceVocabulary</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">token_to_idx</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mask_token</span> <span class="o">=</span> <span class="n">mask_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span> <span class="o">=</span> <span class="n">unk_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_begin_seq_token</span> <span class="o">=</span> <span class="n">begin_seq_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_end_seq_token</span> <span class="o">=</span> <span class="n">end_seq_token</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mask_token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin_seq_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_begin_seq_token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_seq_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_end_seq_token</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SequenceVocabulary</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">()</span>
+        <span class="n">contents</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;unk_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span><span class="p">,</span>
+                         <span class="s1">&#39;mask_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_token</span><span class="p">,</span>
+                         <span class="s1">&#39;begin_seq_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_begin_seq_token</span><span class="p">,</span>
+                         <span class="s1">&#39;end_seq_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_seq_token</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">contents</span>
+
+    <span class="k">def</span> <span class="nf">lookup_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the index associated with the token </span>
+<span class="sd">          or the UNK index if token isn&#39;t present.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            review (str): the review </span>
+<span class="sd">            token (str): the token to look up </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            one_hot (np.ndarray): the collapsed one-hot encoding </span>
+<span class="sd">            index (int): the index corresponding to the token</span>
+<span class="sd">        Notes:</span>
+<span class="sd">            `unk_index` needs to be &gt;=0 (having been added into the Vocabulary) </span>
+<span class="sd">              for the UNK functionality </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">one_hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">review_vocab</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        
-        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">review</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">:</span>
-                <span class="n">one_hot</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">review_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">token</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-vectorizer">
+<h3><span class="section-number">3.2.2. </span>The Vectorizer<a class="headerlink" href="#the-vectorizer" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewsVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The Vectorizer which coordinates the Vocabularies and puts them to use&quot;&quot;&quot;</span>    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title_vocab</span><span class="p">,</span> <span class="n">category_vocab</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title_vocab</span> <span class="o">=</span> <span class="n">title_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_vocab</span> <span class="o">=</span> <span class="n">category_vocab</span>
 
-        <span class="k">return</span> <span class="n">one_hot</span>
+    <span class="k">def</span> <span class="nf">vectorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">vector_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            title (str): the string of words separated by a space</span>
+<span class="sd">            vector_length (int): an argument for forcing the length of index vector</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the vetorized title (numpy.array)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">title_vocab</span><span class="o">.</span><span class="n">begin_seq_index</span><span class="p">]</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> 
+                       <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">title</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title_vocab</span><span class="o">.</span><span class="n">end_seq_index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">vector_length</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">vector_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+
+        <span class="n">out_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vector_length</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">out_vector</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)]</span> <span class="o">=</span> <span class="n">indices</span>
+        <span class="n">out_vector</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">):]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title_vocab</span><span class="o">.</span><span class="n">mask_index</span>
+
+        <span class="k">return</span> <span class="n">out_vector</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">review_df</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">news_df</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Instantiate the vectorizer from the dataset dataframe</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            review_df (pandas.DataFrame): the review dataset</span>
-<span class="sd">            cutoff (int): the parameter for frequency-based filtering</span>
+<span class="sd">            news_df (pandas.DataFrame): the target dataset</span>
+<span class="sd">            cutoff (int): frequency threshold for including in Vocabulary </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of the ReviewVectorizer</span>
+<span class="sd">            an instance of the NewsVectorizer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">review_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="n">add_unk</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">rating_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="n">add_unk</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        
-        <span class="c1"># Add ratings</span>
-        <span class="k">for</span> <span class="n">rating</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">review_df</span><span class="o">.</span><span class="n">rating</span><span class="p">)):</span>
-            <span class="n">rating_vocab</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">rating</span><span class="p">)</span>
+        <span class="n">category_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">()</span>        
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">news_df</span><span class="o">.</span><span class="n">category</span><span class="p">)):</span>
+            <span class="n">category_vocab</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
 
-        <span class="c1"># Add top words if count &gt; provided count</span>
         <span class="n">word_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="n">review_df</span><span class="o">.</span><span class="n">review</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">review</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">:</span>
-                    <span class="n">word_counts</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-               
-        <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">cutoff</span><span class="p">:</span>
-                <span class="n">review_vocab</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">review_vocab</span><span class="p">,</span> <span class="n">rating_vocab</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">news_df</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">title</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">:</span>
+                    <span class="n">word_counts</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="n">title_vocab</span> <span class="o">=</span> <span class="n">SequenceVocabulary</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">word_count</span> <span class="ow">in</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">word_count</span> <span class="o">&gt;=</span> <span class="n">cutoff</span><span class="p">:</span>
+                <span class="n">title_vocab</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">title_vocab</span><span class="p">,</span> <span class="n">category_vocab</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Instantiate a ReviewVectorizer from a serializable dictionary</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            contents (dict): the serializable dictionary</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            an instance of the ReviewVectorizer class</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">review_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="s1">&#39;review_vocab&#39;</span><span class="p">])</span>
-        <span class="n">rating_vocab</span> <span class="o">=</span>  <span class="n">Vocabulary</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="s1">&#39;rating_vocab&#39;</span><span class="p">])</span>
+        <span class="n">title_vocab</span> <span class="o">=</span> \
+            <span class="n">SequenceVocabulary</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="s1">&#39;title_vocab&#39;</span><span class="p">])</span>
+        <span class="n">category_vocab</span> <span class="o">=</span>  \
+            <span class="n">Vocabulary</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="s1">&#39;category_vocab&#39;</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">review_vocab</span><span class="o">=</span><span class="n">review_vocab</span><span class="p">,</span> <span class="n">rating_vocab</span><span class="o">=</span><span class="n">rating_vocab</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">title_vocab</span><span class="o">=</span><span class="n">title_vocab</span><span class="p">,</span> <span class="n">category_vocab</span><span class="o">=</span><span class="n">category_vocab</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create the serializable dictionary for caching</span>
-<span class="sd">        </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            contents (dict): the serializable dictionary</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;review_vocab&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">review_vocab</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">(),</span>
-                <span class="s1">&#39;rating_vocab&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">rating_vocab</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;title_vocab&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">title_vocab</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">(),</span>
+                <span class="s1">&#39;category_vocab&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_vocab</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">()}</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="the-dataset">
-<h3>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.2.3. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">review_df</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">news_df</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            review_df (pandas.DataFrame): the dataset</span>
-<span class="sd">            vectorizer (ReviewVectorizer): vectorizer instantiated from dataset</span>
+<span class="sd">            news_df (pandas.DataFrame): the dataset</span>
+<span class="sd">            vectorizer (NewsVectorizer): vectorizer instatiated from dataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">review_df</span> <span class="o">=</span> <span class="n">review_df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">news_df</span> <span class="o">=</span> <span class="n">news_df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span> <span class="o">=</span> <span class="n">vectorizer</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">review_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">review_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="c1"># +1 if only using begin_seq, +2 if using both begin and end seq tokens</span>
+        <span class="n">measure_len</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">measure_len</span><span class="p">,</span> <span class="n">news_df</span><span class="o">.</span><span class="n">title</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">news_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">news_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_df</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">val_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">review_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">review_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">news_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">news_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">validation_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_df</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">review_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">review_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">news_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">news_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_df</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_lookup_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_size</span><span class="p">),</span>
@@ -822,33 +843,42 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
+        <span class="c1"># Class weights</span>
+        <span class="n">class_counts</span> <span class="o">=</span> <span class="n">news_df</span><span class="o">.</span><span class="n">category</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">sort_key</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">category_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">sorted_counts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">class_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_key</span><span class="p">)</span>
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">count</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">sorted_counts</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        
+        
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">review_csv</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">news_csv</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load dataset and make a new vectorizer from scratch</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            review_csv (str): location of the dataset</span>
+<span class="sd">            surname_csv (str): location of the dataset</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of ReviewDataset</span>
+<span class="sd">            an instance of SurnameDataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">review_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">review_csv</span><span class="p">)</span>
-        <span class="n">train_review_df</span> <span class="o">=</span> <span class="n">review_df</span><span class="p">[</span><span class="n">review_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">review_df</span><span class="p">,</span> <span class="n">ReviewVectorizer</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">train_review_df</span><span class="p">))</span>
-    
+        <span class="n">news_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">news_csv</span><span class="p">)</span>
+        <span class="n">train_news_df</span> <span class="o">=</span> <span class="n">news_df</span><span class="p">[</span><span class="n">news_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">news_df</span><span class="p">,</span> <span class="n">NewsVectorizer</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">train_news_df</span><span class="p">))</span>
+
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">review_csv</span><span class="p">,</span> <span class="n">vectorizer_filepath</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">news_csv</span><span class="p">,</span> <span class="n">vectorizer_filepath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load dataset and the corresponding vectorizer. </span>
 <span class="sd">        Used in the case in the vectorizer has been cached for re-use</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            review_csv (str): location of the dataset</span>
+<span class="sd">            surname_csv (str): location of the dataset</span>
 <span class="sd">            vectorizer_filepath (str): location of the saved vectorizer</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of ReviewDataset</span>
+<span class="sd">            an instance of SurnameDataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">review_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">review_csv</span><span class="p">)</span>
+        <span class="n">news_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">news_csv</span><span class="p">)</span>
         <span class="n">vectorizer</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load_vectorizer_only</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">review_df</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">news_csv</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">load_vectorizer_only</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">):</span>
@@ -857,10 +887,10 @@
 <span class="sd">        Args:</span>
 <span class="sd">            vectorizer_filepath (str): the location of the serialized vectorizer</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of ReviewVectorizer</span>
+<span class="sd">            an instance of SurnameVectorizer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">ReviewVectorizer</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">NameVectorizer</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">save_vectorizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vectorizer_filepath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;saves the vectorizer to disk using json</span>
@@ -876,11 +906,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span>
 
     <span class="k">def</span> <span class="nf">set_split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; selects the splits in the dataset using a column in the dataframe </span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            split (str): one of &quot;train&quot;, &quot;val&quot;, or &quot;test&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; selects the splits in the dataset using a column in the dataframe &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_target_split</span> <span class="o">=</span> <span class="n">split</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_target_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lookup_dict</span><span class="p">[</span><span class="n">split</span><span class="p">]</span>
 
@@ -897,14 +923,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
-        <span class="n">review_vector</span> <span class="o">=</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">review</span><span class="p">)</span>
+        <span class="n">title_vector</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_length</span><span class="p">)</span>
 
-        <span class="n">rating_index</span> <span class="o">=</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">rating_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">rating</span><span class="p">)</span>
+        <span class="n">category_index</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">category_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x_data&#39;</span><span class="p">:</span> <span class="n">review_vector</span><span class="p">,</span>
-                <span class="s1">&#39;y_target&#39;</span><span class="p">:</span> <span class="n">rating_index</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x_data&#39;</span><span class="p">:</span> <span class="n">title_vector</span><span class="p">,</span>
+                <span class="s1">&#39;y_target&#39;</span><span class="p">:</span> <span class="n">category_index</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">get_num_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Given a batch size, return the number of batches in the dataset</span>
@@ -914,10 +940,10 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            number of batches in the dataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">//</span> <span class="n">batch_size</span>  
-    
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">//</span> <span class="n">batch_size</span>
+
 <span class="k">def</span> <span class="nf">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                     <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span>
+                     <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A generator function which wraps the PyTorch DataLoader. It will </span>
 <span class="sd">      ensure each tensor is on the write device location.</span>
@@ -936,45 +962,153 @@
 </div>
 </div>
 </div>
-<div class="section" id="the-model-reviewclassifier">
-<h2>The Model: ReviewClassifier<a class="headerlink" href="#the-model-reviewclassifier" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-model-newsclassifier">
+<h2><span class="section-number">3.3. </span>The Model: NewsClassifier<a class="headerlink" href="#the-model-newsclassifier" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-elu-activation-function">
+<h3><span class="section-number">3.3.1. </span>The ELU activation function<a class="headerlink" href="#the-elu-activation-function" title="Permalink to this headline">¶</a></h3>
+<p>ELU, Exponential Linear Unit, is a variation of the ReLU (Rectified Linear Unit) Actvation Function. ELU is very similiar to RELU except negative inputs. They are both in identity function form for non-negative inputs. On the other hand, ELU becomes smooth slowly until its output equal to -α whereas RELU sharply smoothes. It is based on the mathematical function:</p>
+<p>Once you see the shape it will become familar:</p>
+<table class="table" id="example-table">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ELU</p></th>
+<th class="head"><p>ELU Derivative</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><div class="math notranslate nohighlight">
+\[\begin{split}
+      ELU(x) =
+        \begin{cases}
+          x &amp; \text{if $x &gt; 0$}\\
+          \alpha \times (e^x -1) &amp; \text{if $x \leq 0$}\\
+        \end{cases}       
+    \end{split}\]</div>
+</td>
+<td><div class="math notranslate nohighlight">
+\[\begin{split}
+      ELU(x) =
+        \begin{cases}
+          1 &amp; \text{if $x &gt; 0$}\\
+          \alpha \times e^x &amp; \text{if $x &lt; 0$}\\
+        \end{cases}       
+    \end{split}\]</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><img alt="The ELU Activation Function" src="../_images/elu.png" /></p></td>
+<td><p><img alt="The ELU Derivative" src="images/elu-prime.png" /></p></td>
+</tr>
+</tbody>
+</table>
+<p>The ELU function tends to converge cost to zero faster and produce more accurate results. Different to other activation functions, ELU has a extra alpha constant which should be positive number.</p>
+<p><strong>Pros</strong></p>
+<ul class="simple">
+<li><p>ELU becomes smooth slowly until its output equal to -α whereas RELU sharply smoothes.</p></li>
+<li><p>ELU is a strong alternative to ReLU.</p></li>
+<li><p>Unlike ReLU, ELU can produce negative outputs.</p></li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(x &gt; 0\)</span>, same as ReLU it can blow up the activation with the output range of [0, inf].</p></li>
+</ul>
+<p><a class="reference external" href="https://ml-cheatsheet.readthedocs.io/en/latest/activation_functions.html">A summary of pros and cons of Activation Functions</a></p>
+<p><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ELU.html">Torch Documentation on <code class="docutils literal notranslate"><span class="pre">torch.nn.ELU</span></code></a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; a simple perceptron based classifier &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_features</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewsClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">num_embeddings</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">,</span> 
+                 <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">dropout_p</span><span class="p">,</span> 
+                 <span class="n">pretrained_embeddings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            num_features (int): the size of the input feature vector</span>
+<span class="sd">            embedding_size (int): size of the embedding vectors</span>
+<span class="sd">            num_embeddings (int): number of embedding vectors</span>
+<span class="sd">            filter_width (int): width of the convolutional kernels</span>
+<span class="sd">            num_channels (int): number of convolutional kernels per layer</span>
+<span class="sd">            hidden_dim (int): the size of the hidden dimension</span>
+<span class="sd">            num_classes (int): the number of classes in classification</span>
+<span class="sd">            dropout_p (float): a dropout parameter </span>
+<span class="sd">            pretrained_embeddings (numpy.array): previously trained word embeddings</span>
+<span class="sd">                default is None. If provided, </span>
+<span class="sd">            padding_idx (int): an index representing a null position</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ReviewClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span> 
-                             <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NewsClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_in</span><span class="p">,</span> <span class="n">apply_sigmoid</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pretrained_embeddings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">embedding_dim</span><span class="o">=</span><span class="n">embedding_size</span><span class="p">,</span>
+                                    <span class="n">num_embeddings</span><span class="o">=</span><span class="n">num_embeddings</span><span class="p">,</span>
+                                    <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">)</span>        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pretrained_embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pretrained_embeddings</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">embedding_dim</span><span class="o">=</span><span class="n">embedding_size</span><span class="p">,</span>
+                                    <span class="n">num_embeddings</span><span class="o">=</span><span class="n">num_embeddings</span><span class="p">,</span>
+                                    <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">,</span>
+                                    <span class="n">_weight</span><span class="o">=</span><span class="n">pretrained_embeddings</span><span class="p">)</span>
+        
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">convnet</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">embedding_size</span><span class="p">,</span> 
+                   <span class="n">out_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> 
+                   <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> 
+                   <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> 
+                   <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dropout_p</span> <span class="o">=</span> <span class="n">dropout_p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_in</span><span class="p">,</span> <span class="n">apply_softmax</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The forward pass of the classifier</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            x_in (torch.Tensor): an input data tensor. </span>
-<span class="sd">                x_in.shape should be (batch, num_features)</span>
-<span class="sd">            apply_sigmoid (bool): a flag for the sigmoid activation</span>
+<span class="sd">                x_in.shape should be (batch, dataset._max_seq_length)</span>
+<span class="sd">            apply_softmax (bool): a flag for the softmax activation</span>
 <span class="sd">                should be false if used with the Cross Entropy losses</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            the resulting tensor. tensor.shape should be (batch,)</span>
+<span class="sd">            the resulting tensor. tensor.shape should be (batch, num_classes)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">y_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x_in</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">apply_sigmoid</span><span class="p">:</span>
-            <span class="n">y_out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_out</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">y_out</span>
+        
+        <span class="c1"># embed and permute so features are channels</span>
+        <span class="n">x_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emb</span><span class="p">(</span><span class="n">x_in</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convnet</span><span class="p">(</span><span class="n">x_embedded</span><span class="p">)</span>
+
+        <span class="c1"># average and remove the extra dimension</span>
+        <span class="n">remaining_size</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">avg_pool1d</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">remaining_size</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dropout_p</span><span class="p">)</span>
+        
+        <span class="c1"># mlp classifier</span>
+        <span class="n">intermediate_vector</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dropout_p</span><span class="p">))</span>
+        <span class="n">prediction_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">intermediate_vector</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">apply_softmax</span><span class="p">:</span>
+            <span class="n">prediction_vector</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">prediction_vector</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">prediction_vector</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="training-routine">
-<h2>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="helper-functions">
-<h3>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -1034,8 +1168,7 @@
     <span class="k">return</span> <span class="n">train_state</span>
 
 <span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_target</span><span class="p">):</span>
-    <span class="n">y_target</span> <span class="o">=</span> <span class="n">y_target</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-    <span class="n">y_pred_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">long</span><span class="p">()</span><span class="c1">#.max(dim=1)[1]</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">y_pred_indices</span> <span class="o">=</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">n_correct</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">y_pred_indices</span><span class="p">,</span> <span class="n">y_target</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">n_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred_indices</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 </pre></div>
@@ -1043,7 +1176,7 @@
 </div>
 </div>
 <div class="section" id="general-utilities">
-<h4>General utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.4.1.1. </span>general utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1055,6 +1188,49 @@
 <span class="k">def</span> <span class="nf">handle_dirs</span><span class="p">(</span><span class="n">dirpath</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dirpath</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
+        
+<span class="k">def</span> <span class="nf">load_glove_from_file</span><span class="p">(</span><span class="n">glove_filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the GloVe embeddings </span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        glove_filepath (str): path to the glove embeddings file </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        word_to_index (dict), embeddings (numpy.ndarary)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">word_to_index</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">glove_filepath</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fp</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="c1"># each line: word num1 num2 ...</span>
+            <span class="n">word_to_index</span><span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">index</span> <span class="c1"># word = line[0] </span>
+            <span class="n">embedding_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+            <span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_embedding_matrix</span><span class="p">(</span><span class="n">glove_filepath</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create embedding matrix for a specific set of words.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        glove_filepath (str): file path to the glove embeddigns</span>
+<span class="sd">        words (list): list of words in the dataset</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">word_to_idx</span><span class="p">,</span> <span class="n">glove_embeddings</span> <span class="o">=</span> <span class="n">load_glove_from_file</span><span class="p">(</span><span class="n">glove_filepath</span><span class="p">)</span>
+    <span class="n">embedding_size</span> <span class="o">=</span> <span class="n">glove_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">final_embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">),</span> <span class="n">embedding_size</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_to_idx</span><span class="p">:</span>
+            <span class="n">final_embeddings</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">glove_embeddings</span><span class="p">[</span><span class="n">word_to_idx</span><span class="p">[</span><span class="n">word</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">embedding_i</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="n">embedding_i</span><span class="p">)</span>
+            <span class="n">final_embeddings</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">embedding_i</span>
+
+    <span class="k">return</span> <span class="n">final_embeddings</span>
 </pre></div>
 </div>
 </div>
@@ -1062,30 +1238,41 @@
 </div>
 </div>
 <div class="section" id="settings-and-some-prep-work">
-<h3>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.4.2. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
-    <span class="c1"># Data and Path information</span>
-    <span class="n">frequency_cutoff</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-    <span class="n">model_state_file</span><span class="o">=</span><span class="s1">&#39;model.pth&#39;</span><span class="p">,</span>
-    <span class="n">review_csv</span><span class="o">=</span><span class="s1">&#39;data/reviews_with_splits_lite.csv&#39;</span><span class="p">,</span>
-    <span class="c1"># review_csv=&#39;data/yelp/reviews_with_splits_full.csv&#39;,</span>
-    <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;model_storage/yelp/&#39;</span><span class="p">,</span>
-    <span class="n">vectorizer_file</span><span class="o">=</span><span class="s1">&#39;vectorizer.json&#39;</span><span class="p">,</span>
-    <span class="c1"># No Model hyper parameters</span>
-    <span class="c1"># Training hyper parameters</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">early_stopping_criteria</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-    <span class="n">num_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span><span class="p">,</span>
-    <span class="c1"># Runtime options</span>
-    <span class="n">catch_keyboard_interrupt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">cuda</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">expand_filepaths_to_save_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="c1"># Data and Path hyper parameters</span>
+    <span class="n">news_csv</span><span class="o">=</span><span class="s2">&quot;../data/ag_news/news_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">vectorizer_file</span><span class="o">=</span><span class="s2">&quot;vectorizer.json&quot;</span><span class="p">,</span>
+    <span class="n">model_state_file</span><span class="o">=</span><span class="s2">&quot;model.pth&quot;</span><span class="p">,</span>
+    <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;model_storage\document_classification&quot;</span><span class="p">,</span>
+    <span class="c1"># Model hyper parameters</span>
+    <span class="n">glove_filepath</span><span class="o">=</span><span class="s1">&#39;../data/glove.6B/glove.6B.100d.txt&#39;</span><span class="p">,</span> 
+    <span class="n">use_glove</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">embedding_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+    <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+    <span class="n">num_channels</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+    <span class="c1"># Training hyper parameter</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span><span class="p">,</span> 
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> 
+    <span class="n">dropout_p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> 
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+    <span class="n">num_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+    <span class="n">early_stopping_criteria</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="c1"># Runtime option</span>
+    <span class="n">cuda</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+    <span class="n">catch_keyboard_interrupt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
     <span class="n">reload_from_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span>
+    <span class="n">expand_filepaths_to_save_dir</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span> 
 
 <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">expand_filepaths_to_save_dir</span><span class="p">:</span>
     <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
@@ -1101,10 +1288,9 @@
 <span class="c1"># Check CUDA</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
     <span class="n">args</span><span class="o">.</span><span class="n">cuda</span> <span class="o">=</span> <span class="kc">False</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using CUDA: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">))</span>
-
+    
 <span class="n">args</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cuda</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using CUDA: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">))</span>
 
 <span class="c1"># Set seed for reproducibility</span>
 <span class="n">set_seed_everywhere</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">)</span>
@@ -1116,8 +1302,8 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expanded filepaths: 
-	model_storage/yelp/vectorizer.json
-	model_storage/yelp/model.pth
+	model_storage\document_classification\vectorizer.json
+	model_storage\document_classification\model.pth
 Using CUDA: True
 </pre></div>
 </div>
@@ -1125,43 +1311,67 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="initializations">
-<h3>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.4.3. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span><span class="o">.</span><span class="n">use_glove</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">reload_from_files</span><span class="p">:</span>
     <span class="c1"># training from a checkpoint</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading dataset and vectorizer&quot;</span><span class="p">)</span>
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">ReviewDataset</span><span class="o">.</span><span class="n">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">review_csv</span><span class="p">,</span>
-                                                            <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">NewsDataset</span><span class="o">.</span><span class="n">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">news_csv</span><span class="p">,</span>
+                                                              <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading dataset and creating vectorizer&quot;</span><span class="p">)</span>
     <span class="c1"># create dataset and vectorizer</span>
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">ReviewDataset</span><span class="o">.</span><span class="n">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">review_csv</span><span class="p">)</span>
-    <span class="n">dataset</span><span class="o">.</span><span class="n">save_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>    
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">NewsDataset</span><span class="o">.</span><span class="n">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">news_csv</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">save_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
 <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_vectorizer</span><span class="p">()</span>
 
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">ReviewClassifier</span><span class="p">(</span><span class="n">num_features</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">review_vocab</span><span class="p">))</span>
+<span class="c1"># Use GloVe or randomly initialized embeddings</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">use_glove</span><span class="p">:</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">title_vocab</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">make_embedding_matrix</span><span class="p">(</span><span class="n">glove_filepath</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">glove_filepath</span><span class="p">,</span> 
+                                       <span class="n">words</span><span class="o">=</span><span class="n">words</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using pre-trained embeddings&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not using pre-trained embeddings&quot;</span><span class="p">)</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">NewsClassifier</span><span class="p">(</span><span class="n">embedding_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">embedding_size</span><span class="p">,</span> 
+                            <span class="n">num_embeddings</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">title_vocab</span><span class="p">),</span>
+                            <span class="n">num_channels</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_channels</span><span class="p">,</span>
+                            <span class="n">hidden_dim</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">hidden_dim</span><span class="p">,</span> 
+                            <span class="n">num_classes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">category_vocab</span><span class="p">),</span> 
+                            <span class="n">dropout_p</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">dropout_p</span><span class="p">,</span>
+                            <span class="n">pretrained_embeddings</span><span class="o">=</span><span class="n">embeddings</span><span class="p">,</span>
+                            <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading dataset and creating vectorizer
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using pre-trained embeddings
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="training-loop">
-<h3>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.4.4. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<p>This takes 1008 seconds (around 17 mins).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-
-<span class="n">loss_func</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">class_weights</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    
+<span class="n">loss_func</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">class_weights</span><span class="p">)</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
 <span class="n">scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
-                                                 <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                                                 <span class="n">patience</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                                           <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                           <span class="n">patience</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">train_state</span> <span class="o">=</span> <span class="n">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
@@ -1187,6 +1397,7 @@ Using CUDA: True
         <span class="c1"># Iterate over training dataset</span>
 
         <span class="c1"># setup: batch generator, set loss and acc to 0, set train mode on</span>
+
         <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
         <span class="n">batch_generator</span> <span class="o">=</span> <span class="n">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> 
                                            <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> 
@@ -1203,10 +1414,10 @@ Using CUDA: True
             <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
 
             <span class="c1"># step 2. compute the output</span>
-            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">])</span>
 
             <span class="c1"># step 3. compute the loss</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">])</span>
             <span class="n">loss_t</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
             <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss_t</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -1221,8 +1432,7 @@ Using CUDA: True
             <span class="n">running_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">acc_t</span> <span class="o">-</span> <span class="n">running_acc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
             <span class="c1"># update bar</span>
-            <span class="n">train_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">running_loss</span><span class="p">,</span> 
-                                  <span class="n">acc</span><span class="o">=</span><span class="n">running_acc</span><span class="p">,</span> 
+            <span class="n">train_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">running_loss</span><span class="p">,</span> <span class="n">acc</span><span class="o">=</span><span class="n">running_acc</span><span class="p">,</span> 
                                   <span class="n">epoch</span><span class="o">=</span><span class="n">epoch_index</span><span class="p">)</span>
             <span class="n">train_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
@@ -1243,20 +1453,18 @@ Using CUDA: True
         <span class="k">for</span> <span class="n">batch_index</span><span class="p">,</span> <span class="n">batch_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_generator</span><span class="p">):</span>
 
             <span class="c1"># compute the output</span>
-            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+            <span class="n">y_pred</span> <span class="o">=</span>  <span class="n">classifier</span><span class="p">(</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">])</span>
 
             <span class="c1"># step 3. compute the loss</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">])</span>
             <span class="n">loss_t</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
             <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss_t</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
             <span class="c1"># compute the accuracy</span>
             <span class="n">acc_t</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">])</span>
             <span class="n">running_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">acc_t</span> <span class="o">-</span> <span class="n">running_acc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            
-            <span class="n">val_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">running_loss</span><span class="p">,</span> 
-                                <span class="n">acc</span><span class="o">=</span><span class="n">running_acc</span><span class="p">,</span> 
-                                <span class="n">epoch</span><span class="o">=</span><span class="n">epoch_index</span><span class="p">)</span>
+            <span class="n">val_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">running_loss</span><span class="p">,</span> <span class="n">acc</span><span class="o">=</span><span class="n">running_acc</span><span class="p">,</span> 
+                            <span class="n">epoch</span><span class="o">=</span><span class="n">epoch_index</span><span class="p">)</span>
             <span class="n">val_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
         <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_loss</span><span class="p">)</span>
@@ -1266,10 +1474,6 @@ Using CUDA: True
                                          <span class="n">train_state</span><span class="o">=</span><span class="n">train_state</span><span class="p">)</span>
 
         <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="n">train_bar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">val_bar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">epoch_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;stop_early&#39;</span><span class="p">]:</span>
             <span class="k">break</span>
@@ -1283,20 +1487,29 @@ Using CUDA: True
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "5b8d3ae2d8b7411f9e284ee5dbf9fdd2"}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "01caaf992e9d4065ad807ffd4a9d597e"}
-</script><script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "573565e47f1346d19026fa2f05acce42"}
-</script></div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_11896</span><span class="o">/</span><span class="mf">4152099490.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">train_state</span> <span class="o">=</span> <span class="n">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> 
+<span class="ne">---&gt; </span><span class="mi">12</span> <span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">13</span>                           <span class="n">total</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>                           <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;tqdm&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the loss &amp; accuracy on the test set using the best available model</span>
 
 <span class="n">classifier</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;model_filename&#39;</span><span class="p">]))</span>
+
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">class_weights</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loss_func</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">class_weights</span><span class="p">)</span>
 
 <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
 <span class="n">batch_generator</span> <span class="o">=</span> <span class="n">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> 
@@ -1308,10 +1521,10 @@ Using CUDA: True
 
 <span class="k">for</span> <span class="n">batch_index</span><span class="p">,</span> <span class="n">batch_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_generator</span><span class="p">):</span>
     <span class="c1"># compute the output</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
-
+    <span class="n">y_pred</span> <span class="o">=</span>  <span class="n">classifier</span><span class="p">(</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">])</span>
+    
     <span class="c1"># compute the loss</span>
-    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">])</span>
     <span class="n">loss_t</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
     <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss_t</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -1327,25 +1540,20 @@ Using CUDA: True
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test loss: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_loss&#39;</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_acc&#39;</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test loss: 0.214
-Test Accuracy: 91.81
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test loss: </span><span class="si">{}</span><span class="s2">;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_loss&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_acc&#39;</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="inference">
-<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.4.5. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preprocess the reviews</span>
+<span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([.,!?])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; \1 &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-zA-Z.,!?]+&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">text</span>
@@ -1355,145 +1563,62 @@ Test Accuracy: 91.81
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_rating</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span> <span class="n">decision_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Predict the rating of a review</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_category</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Predict a News category for a new title</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
-<span class="sd">        review (str): the text of the review</span>
-<span class="sd">        classifier (ReviewClassifier): the trained model</span>
-<span class="sd">        vectorizer (ReviewVectorizer): the corresponding vectorizer</span>
-<span class="sd">        decision_threshold (float): The numerical boundary which separates the rating classes</span>
+<span class="sd">        title (str): a raw title string</span>
+<span class="sd">        classifier (NewsClassifier): an instance of the trained classifier</span>
+<span class="sd">        vectorizer (NewsVectorizer): the corresponding vectorizer</span>
+<span class="sd">        max_length (int): the max sequence length</span>
+<span class="sd">            Note: CNNs are sensitive to the input data tensor size. </span>
+<span class="sd">                  This ensures to keep it the same size as the training data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">review</span> <span class="o">=</span> <span class="n">preprocess_text</span><span class="p">(</span><span class="n">review</span><span class="p">)</span>
-    
-    <span class="n">vectorized_review</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">review</span><span class="p">))</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">vectorized_review</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-    
-    <span class="n">probability_value</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">probability_value</span> <span class="o">&lt;</span> <span class="n">decision_threshold</span><span class="p">:</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">preprocess_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">vectorized_title</span> <span class="o">=</span> \
+        <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">vector_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">vectorized_title</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">apply_softmax</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">probability_values</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">predicted_category</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">category_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">indices</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
 
-    <span class="k">return</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">rating_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">predicted_category</span><span class="p">,</span> 
+            <span class="s1">&#39;probability&#39;</span><span class="p">:</span> <span class="n">probability_values</span><span class="o">.</span><span class="n">item</span><span class="p">()}</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_review</span> <span class="o">=</span> <span class="s2">&quot;this is a pretty awesome book&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_samples</span><span class="p">():</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">val_df</span><span class="o">.</span><span class="n">category</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">samples</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">val_df</span><span class="o">.</span><span class="n">title</span><span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">val_df</span><span class="o">.</span><span class="n">category</span><span class="o">==</span><span class="n">cat</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">samples</span>
 
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-<span class="n">prediction</span> <span class="o">=</span> <span class="n">predict_rating</span><span class="p">(</span><span class="n">test_review</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span> <span class="n">decision_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> -&gt; </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_review</span><span class="p">,</span> <span class="n">prediction</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>this is a pretty awesome book -&gt; positive
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\Anaconda3\envs\cits4012\lib\site-packages\torch\nn\functional.py:1805: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
-  warnings.warn(&quot;nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.&quot;)
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="interpretability">
-<h3>Interpretability<a class="headerlink" href="#interpretability" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span><span class="o">.</span><span class="n">fc1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([1, 7326])
+<span class="n">val_samples</span> <span class="o">=</span> <span class="n">get_samples</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sort weights</span>
-<span class="n">fc1_weights</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">fc1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">detach</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">fc1_weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">indices</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#title = input(&quot;Enter a news title to classify: &quot;)</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
 
-<span class="c1"># Top 20 words</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Influential words in Positive Reviews:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">review_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-    
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;====</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Top 20 negative words</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Influential words in Negative Reviews:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------&quot;</span><span class="p">)</span>
-<span class="n">indices</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">review_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Influential words in Positive Reviews:
---------------------------------------
-delicious
-fantastic
-pleasantly
-amazing
-great
-vegas
-excellent
-yum
-perfect
-awesome
-ngreat
-yummy
-love
-bomb
-solid
-pleased
-wonderful
-chinatown
-notch
-deliciousness
-====
-
-
-
-Influential words in Negative Reviews:
---------------------------------------
-worst
-mediocre
-bland
-horrible
-meh
-awful
-rude
-terrible
-tasteless
-overpriced
-disgusting
-unacceptable
-poorly
-slowest
-unfriendly
-nmaybe
-disappointing
-disappointment
-downhill
-underwhelmed
+<span class="k">for</span> <span class="n">truth</span><span class="p">,</span> <span class="n">sample_group</span> <span class="ow">in</span> <span class="n">val_samples</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True Category: </span><span class="si">{</span><span class="n">truth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">sample_group</span><span class="p">:</span>
+        <span class="n">prediction</span> <span class="o">=</span> <span class="n">predict_category</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> 
+                                      <span class="n">vectorizer</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_max_seq_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prediction: </span><span class="si">{}</span><span class="s2"> (p=</span><span class="si">{:0.2f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prediction</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">],</span>
+                                                  <span class="n">prediction</span><span class="p">[</span><span class="s1">&#39;probability&#39;</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> + Sample: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">30</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="end">
-<h3>End<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
@@ -1511,7 +1636,7 @@ underwhelmed
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./pytorch"
+            path: "./cnn"
         },
         predefinedOutput: true
     }
@@ -1527,6 +1652,15 @@ underwhelmed
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="dataset_AG_News_processing.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">&lt;no title&gt;</p>
+            </div>
+        </a>
+    </div>
 
 </div>
         

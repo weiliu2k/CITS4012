@@ -353,6 +353,33 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cnn/intro.html">
+   Lab09: CNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/CBOW.html">
+     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/convolution.html">
+     2. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+     3. Using CNN for Document Classification with Embeddings
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -496,19 +523,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="19886e51-55f3-45c3-9bf6-ae945d4fc560" name="383c2864-20a2-4ce3-bc66-254ae0c8f8b0" type="radio">
-</input><label class="tabbed-label" for="19886e51-55f3-45c3-9bf6-ae945d4fc560">
+<input checked="checked" id="8e9f47c7-7e2f-4f34-ac02-8db1b5a536d0" name="90a408d5-7988-4879-a79d-ff7eec822716" type="radio">
+</input><label class="tabbed-label" for="8e9f47c7-7e2f-4f34-ac02-8db1b5a536d0">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="6e7cab81-b6fb-4b53-9851-147a1cdb2ddc" name="383c2864-20a2-4ce3-bc66-254ae0c8f8b0" type="radio">
-</input><label class="tabbed-label" for="6e7cab81-b6fb-4b53-9851-147a1cdb2ddc">
+<input id="2a1faf8f-e600-4131-a212-21e254916798" name="90a408d5-7988-4879-a79d-ff7eec822716" type="radio">
+</input><label class="tabbed-label" for="2a1faf8f-e600-4131-a212-21e254916798">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="c5a31dc9-ad7e-4261-a07b-732b5393c8af" name="383c2864-20a2-4ce3-bc66-254ae0c8f8b0" type="radio">
-</input><label class="tabbed-label" for="c5a31dc9-ad7e-4261-a07b-732b5393c8af">
+<input id="099c18fb-2c1b-4039-a6f1-c409e028c09c" name="90a408d5-7988-4879-a79d-ff7eec822716" type="radio">
+</input><label class="tabbed-label" for="099c18fb-2c1b-4039-a6f1-c409e028c09c">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

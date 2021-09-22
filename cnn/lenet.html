@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exercise &#8212; CITS4012 Natural Language Processing</title>
+    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -210,7 +210,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="../gensim/intro.html">
    Lab04: Count-Based Models
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
@@ -220,12 +220,12 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="tf-idf.html">
+    <a class="reference internal" href="../gensim/tf-idf.html">
      1. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="classification.html">
+    <a class="reference internal" href="../gensim/classification.html">
      2. Document Classification
     </a>
    </li>
@@ -350,7 +350,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../cnn/intro.html">
+  <a class="reference internal" href="intro.html">
    Lab09: CNN for NLP
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
@@ -360,17 +360,17 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/CBOW.html">
+    <a class="reference internal" href="CBOW.html">
      1. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/convolution.html">
+    <a class="reference internal" href="convolution.html">
      2. Convolution Basics
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+    <a class="reference internal" href="Document_Classification_with_CNN.html">
      3. Using CNN for Document Classification with Embeddings
     </a>
    </li>
@@ -427,7 +427,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/gensim/exercise.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/cnn/lenet.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -447,11 +447,39 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/cnn/lenet.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -460,8 +488,48 @@
         
               <div>
                 
-  <div class="section" id="exercise">
-<h1>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h1>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lenet</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="c1"># Featurizer</span>
+<span class="c1"># Block 1: 1@28x28 -&gt; 6@28x28 -&gt; 6@14x14</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> 
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func1&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># Block 2: 6@14x14 -&gt; 16@10x10 -&gt; 16@5x5</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;S4&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># Block 3: 16@5x5 -&gt; 120@1x1</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+<span class="c1"># Flattening</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;flatten&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
+<span class="c1"># Classification</span>
+<span class="c1"># Hidden Layer</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;F6&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">84</span><span class="p">))</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func3&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+<span class="c1"># Output Layer</span>
+<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">,</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">84</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -477,7 +545,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./gensim"
+            path: "./cnn"
         },
         predefinedOutput: true
     }

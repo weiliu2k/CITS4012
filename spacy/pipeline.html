@@ -351,6 +351,33 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cnn/intro.html">
+   Lab09: CNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/CBOW.html">
+     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/convolution.html">
+     2. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+     3. Using CNN for Document Classification with Embeddings
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -605,13 +632,13 @@
 <p>spaCy allows you to load a selected set of pipeline components, dis-abling those that aren’t necessary.</p>
 <p>You can do this either when creating a nlp object or disable it after the nlp object is created.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="5ec9b260-c639-4b65-b995-555e783f43f6" name="c741c186-8003-4fa2-a42d-a99e4613ded9" type="radio">
-</input><label class="tabbed-label" for="5ec9b260-c639-4b65-b995-555e783f43f6">
+<input checked="checked" id="25f5c194-7572-4ab7-808d-7e89b9137f4d" name="8e320c1d-1804-48e5-8c2d-37b13aeb7224" type="radio">
+</input><label class="tabbed-label" for="25f5c194-7572-4ab7-808d-7e89b9137f4d">
 Disabling when create</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp</span> <span class="pre">=</span> <span class="pre">spacy.load('en_core_web_sm',disable=['parser'])</span></code></p>
 </div>
-<input id="85b3e2b7-4566-4376-9cbc-04e84054c06b" name="c741c186-8003-4fa2-a42d-a99e4613ded9" type="radio">
-</input><label class="tabbed-label" for="85b3e2b7-4566-4376-9cbc-04e84054c06b">
+<input id="73392d2f-e168-44ea-98da-e92cf49e6c40" name="8e320c1d-1804-48e5-8c2d-37b13aeb7224" type="radio">
+</input><label class="tabbed-label" for="73392d2f-e168-44ea-98da-e92cf49e6c40">
 Disabling after creation</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('tagger')</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('parser')</span></code></p>

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tensor Operations &#8212; CITS4012 Natural Language Processing</title>
+    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Learning Embeddings with Continuous Bag of Words (CBOW)" href="CBOW.html" />
+    <link rel="prev" title="Lab09: CNN for NLP" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -259,7 +261,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="../pytorch/intro.html">
    Lab06: Neural Network Building Blocks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
@@ -269,22 +271,22 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="activations.html">
+    <a class="reference internal" href="../pytorch/activations.html">
      1. Activation Functions and their derivatives
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="loss.html">
+    <a class="reference internal" href="../pytorch/loss.html">
      2. Loss Functions
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="computational_graph.html">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
      3. Dynamic Computational Graph in PyTorch
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="nn_oop.html">
+    <a class="reference internal" href="../pytorch/nn_oop.html">
      4. Neural Networks in PyTorch
     </a>
    </li>
@@ -350,7 +352,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../cnn/intro.html">
+  <a class="reference internal" href="intro.html">
    Lab09: CNN for NLP
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
@@ -360,17 +362,17 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/CBOW.html">
+    <a class="reference internal" href="CBOW.html">
      1. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/convolution.html">
+    <a class="reference internal" href="convolution.html">
      2. Convolution Basics
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+    <a class="reference internal" href="Document_Classification_with_CNN.html">
      3. Using CNN for Document Classification with Embeddings
     </a>
    </li>
@@ -427,7 +429,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/pytorch/tensor_operations.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/cnn/dataset_frankenstein_processing.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -452,7 +454,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/pytorch/tensor_operations.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/cnn/dataset_frankenstein_processing.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -476,17 +478,7 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#addition">
-   Addition
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dimension-based-tensor-operations">
-   Dimension based tensor operations
-  </a>
- </li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
 
             </nav>
@@ -498,143 +490,215 @@
         
               <div>
                 
-  <div class="section" id="tensor-operations">
-<h1>Tensor Operations<a class="headerlink" href="#tensor-operations" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="addition">
-<h2>Addition<a class="headerlink" href="#addition" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+  <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">describe</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">describe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
-Values: 
-tensor([[-0.7697,  1.3831,  0.7184],
-        [-2.2645,  0.4363,  1.7446]])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">nltk.data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
-Values: 
-tensor([[-1.5394,  2.7661,  1.4369],
-        [-4.5290,  0.8725,  3.4892]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.FloatTensor
-Shape/size:torch.Size([2, 3])
-Values: 
-tensor([[-1.5394,  2.7661,  1.4369],
-        [-4.5290,  0.8725,  3.4892]])
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="dimension-based-tensor-operations">
-<h2>Dimension based tensor operations<a class="headerlink" href="#dimension-based-tensor-operations" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">describe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
-Shape/size:torch.Size([6])
-Values: 
-tensor([0, 1, 2, 3, 4, 5])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
+    <span class="n">raw_dataset_txt</span><span class="o">=</span><span class="s2">&quot;data/books/frankenstein.txt&quot;</span><span class="p">,</span>
+    <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">train_proportion</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">val_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">test_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;data/books/frankenstein_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">describe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
-Shape/size:torch.Size([2, 3])
-Values: 
-tensor([[0, 1, 2],
-        [3, 4, 5]])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split the raw text book into sentences</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;tokenizers/punkt/english.pickle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">raw_dataset_txt</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">),</span> <span class="s2">&quot;sentences&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Sample:&quot;</span><span class="p">,</span> <span class="n">sentences</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
-Shape/size:torch.Size([3])
-Values: 
-tensor([3, 5, 7])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3427 sentences
+Sample: No incidents have hitherto befallen us that would make a figure in a
+letter.
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
-Shape/size:torch.Size([2])
-Values: 
-tensor([ 3, 12])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clean sentences</span>
+<span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([.,!?])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; \1 &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-zA-Z.,!?]+&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_sentences</span> <span class="o">=</span> <span class="p">[</span><span class="n">preprocess_text</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Global vars</span>
+<span class="n">MASK_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;MASK&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create windows</span>
+<span class="n">flatten</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">outer_list</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">inner_list</span> <span class="ow">in</span> <span class="n">outer_list</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">inner_list</span><span class="p">]</span>
+<span class="n">windows</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">ngrams</span><span class="p">([</span><span class="n">MASK_TOKEN</span><span class="p">]</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span> <span class="o">+</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> \
+    <span class="p">[</span><span class="n">MASK_TOKEN</span><span class="p">]</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> \
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">cleaned_sentences</span><span class="p">)])</span>
+
+<span class="c1"># Create cbow data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">windows</span><span class="p">):</span>
+    <span class="n">target_token</span> <span class="o">=</span> <span class="n">window</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">]</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">window</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="n">MASK_TOKEN</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">context</span><span class="p">),</span> <span class="n">target_token</span><span class="p">])</span>
+    
+            
+<span class="c1"># Convert to dataframe</span>
+<span class="n">cbow_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type:torch.LongTensor
-Shape/size:torch.Size([3, 2])
-Values: 
-tensor([[0, 3],
-        [1, 4],
-        [2, 5]])
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "1fd40a8ddcd54427898109cfd74b4798", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "3619638283c745ba96319ddb07156b6d", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create split data</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cbow_data</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_split</span><span class="p">(</span><span class="n">row_num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">row_num</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">train_proportion</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;train&#39;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">row_num</span> <span class="o">&gt;</span> <span class="n">n</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">train_proportion</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">row_num</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">train_proportion</span> <span class="o">+</span> <span class="n">n</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">val_proportion</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;val&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;test&#39;</span>
+<span class="n">cbow_data</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">cbow_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">get_split</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cbow_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>context</th>
+      <th>target</th>
+      <th>split</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>, or the modern prometheus</td>
+      <td>frankenstein</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>frankenstein or the modern prometheus by</td>
+      <td>,</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>frankenstein , the modern prometheus by mary</td>
+      <td>or</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>frankenstein , or modern prometheus by mary wo...</td>
+      <td>the</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>frankenstein , or the prometheus by mary wolls...</td>
+      <td>modern</td>
+      <td>train</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write split data to file</span>
+<span class="n">cbow_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_munged_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -648,16 +712,16 @@ tensor([[0, 3],
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "nlpbook"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./pytorch"
+            kernelName: "nlpbook",
+            path: "./cnn"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'nlpbook'</script>
 
               </div>
               
@@ -668,6 +732,24 @@ tensor([[0, 3],
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="intro.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Lab09: CNN for NLP</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="CBOW.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">1. </span>Learning Embeddings with Continuous Bag of Words (CBOW)</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
