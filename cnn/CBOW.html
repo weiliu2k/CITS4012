@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. Learning Embeddings with Continuous Bag of Words (CBOW) &#8212; CITS4012 Natural Language Processing</title>
+    <title>2. Learning Embeddings with Continuous Bag of Words (CBOW) &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Convolution Basics" href="convolution.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="dataset_frankenstein_processing.html" />
+    <link rel="next" title="3. Convolution Basics" href="convolution.html" />
+    <link rel="prev" title="1. Frankenstein Dataset At a Glance" href="dataset_frankenstein_processing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -361,19 +361,29 @@
    </i>
   </label>
   <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="dataset_frankenstein_processing.html">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="convolution.html">
-     2. Convolution Basics
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="dataset_AG_News_processing.html">
+     4. AG News Dataset at A Glance
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Document_Classification_with_CNN.html">
-     3. Using CNN for Document Classification with Embeddings
+     5. Using CNN for Document Classification with Embeddings
     </a>
    </li>
   </ul>
@@ -481,66 +491,66 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#imports">
-   1.1. Imports
+   2.1. Imports
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-vectorization-classes">
-   1.2. Data Vectorization classes
+   2.2. Data Vectorization classes
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-vocabulary">
-     1.2.1. The Vocabulary
+     2.2.1. The Vocabulary
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-dataset">
-     1.2.2. The Dataset
+     2.2.2. The Dataset
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-model-cbow">
-   1.3. The Model: CBOW
+   2.3. The Model: CBOW
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine">
-   1.4. Training Routine
+   2.4. Training Routine
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#helper-functions">
-     1.4.1. Helper functions
+     2.4.1. Helper functions
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#general-utilities">
-       1.4.1.1. general utilities
+       2.4.1.1. general utilities
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#settings-and-some-prep-work">
-     1.4.2. Settings and some prep work
+     2.4.2. Settings and some prep work
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#initializations">
-     1.4.3. Initializations
+     2.4.3. Initializations
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-loop">
-     1.4.4. Training loop
+     2.4.4. Training loop
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#trained-embeddings">
-     1.4.5. Trained Embeddings
+     2.4.5. Trained Embeddings
     </a>
    </li>
   </ul>
@@ -557,9 +567,9 @@
               <div>
                 
   <div class="section" id="learning-embeddings-with-continuous-bag-of-words-cbow">
-<h1><span class="section-number">1. </span>Learning Embeddings with Continuous Bag of Words (CBOW)<a class="headerlink" href="#learning-embeddings-with-continuous-bag-of-words-cbow" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">2. </span>Learning Embeddings with Continuous Bag of Words (CBOW)<a class="headerlink" href="#learning-embeddings-with-continuous-bag-of-words-cbow" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="imports">
-<h2><span class="section-number">1.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -583,9 +593,9 @@
 </div>
 </div>
 <div class="section" id="data-vectorization-classes">
-<h2><span class="section-number">1.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="the-vocabulary">
-<h3><span class="section-number">1.2.1. </span>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.1. </span>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -755,7 +765,7 @@
 </div>
 </div>
 <div class="section" id="the-dataset">
-<h3><span class="section-number">1.2.2. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.2. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CBOWDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -895,7 +905,7 @@
 </div>
 </div>
 <div class="section" id="the-model-cbow">
-<h2><span class="section-number">1.3. </span>The Model: CBOW<a class="headerlink" href="#the-model-cbow" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>The Model: CBOW<a class="headerlink" href="#the-model-cbow" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CBOWClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># Simplified cbow Model</span>
@@ -939,9 +949,9 @@
 </div>
 </div>
 <div class="section" id="training-routine">
-<h2><span class="section-number">1.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="helper-functions">
-<h3><span class="section-number">1.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -1009,7 +1019,7 @@
 </div>
 </div>
 <div class="section" id="general-utilities">
-<h4><span class="section-number">1.4.1.1. </span>general utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.4.1.1. </span>general utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1028,7 +1038,7 @@
 </div>
 </div>
 <div class="section" id="settings-and-some-prep-work">
-<h3><span class="section-number">1.4.2. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.4.2. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
@@ -1092,7 +1102,7 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="initializations">
-<h3><span class="section-number">1.4.3. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.4.3. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">reload_from_files</span><span class="p">:</span>
@@ -1119,7 +1129,7 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="training-loop">
-<h3><span class="section-number">1.4.4. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.4.4. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -1305,7 +1315,7 @@ Test Accuracy: 4.7720588235294095
 </div>
 </div>
 <div class="section" id="trained-embeddings">
-<h3><span class="section-number">1.4.5. </span>Trained Embeddings<a class="headerlink" href="#trained-embeddings" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.4.5. </span>Trained Embeddings<a class="headerlink" href="#trained-embeddings" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
@@ -1458,7 +1468,7 @@ Test Accuracy: 4.7720588235294095
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title"><span class="section-number">1. </span>Frankenstein Dataset At a Glance</p>
             </div>
         </a>
     </div>
@@ -1466,7 +1476,7 @@ Test Accuracy: 4.7720588235294095
         <a class="right-next" href="convolution.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">2. </span>Convolution Basics</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Convolution Basics</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

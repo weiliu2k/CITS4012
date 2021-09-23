@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Convolution Basics &#8212; CITS4012 Natural Language Processing</title>
+    <title>3. Convolution Basics &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -53,8 +53,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="dataset_AG_News_processing.html" />
-    <link rel="prev" title="1. Learning Embeddings with Continuous Bag of Words (CBOW)" href="CBOW.html" />
+    <link rel="next" title="4. AG News Dataset at A Glance" href="dataset_AG_News_processing.html" />
+    <link rel="prev" title="2. Learning Embeddings with Continuous Bag of Words (CBOW)" href="CBOW.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -364,18 +364,28 @@
   </label>
   <ul class="current">
    <li class="toctree-l2">
+    <a class="reference internal" href="dataset_frankenstein_processing.html">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="CBOW.html">
-     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     2. Convolution Basics
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="dataset_AG_News_processing.html">
+     4. AG News Dataset at A Glance
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Document_Classification_with_CNN.html">
-     3. Using CNN for Document Classification with Embeddings
+     5. Using CNN for Document Classification with Embeddings
     </a>
    </li>
   </ul>
@@ -483,61 +493,61 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convolution-in-raw-numpy-code">
-   2.1. Convolution in Raw Numpy Code
+   3.1. Convolution in Raw Numpy Code
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convolving-in-pytorch">
-   2.2. Convolving in PyTorch
+   3.2. Convolving in PyTorch
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#force-to-use-a-pre-defined-filter">
-     2.2.1. Force to use a pre-defined filter
+     3.2.1. Force to use a pre-defined filter
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#key-hyperparameters-in-convolution">
-   2.3. Key hyperparameters in convolution
+   3.3. Key hyperparameters in convolution
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#dilation">
-     2.3.1. Dilation
+     3.3.1. Dilation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#padding">
-     2.3.2. Padding
+     3.3.2. Padding
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#replication-padding">
-       2.3.2.1. Replication Padding
+       3.3.2.1. Replication Padding
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#reflection-padding">
-       2.3.2.2. Reflection Padding
+       3.3.2.2. Reflection Padding
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#circular-padding">
-       2.3.2.3. Circular Padding
+       3.3.2.3. Circular Padding
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pooling-to-shrink-images">
-     2.3.3. Pooling to Shrink Images
+     3.3.3. Pooling to Shrink Images
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#flatterning">
-     2.3.4. Flatterning
+     3.3.4. Flatterning
     </a>
    </li>
   </ul>
@@ -554,9 +564,9 @@
               <div>
                 
   <div class="section" id="convolution-basics">
-<h1><span class="section-number">2. </span>Convolution Basics<a class="headerlink" href="#convolution-basics" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3. </span>Convolution Basics<a class="headerlink" href="#convolution-basics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="convolution-in-raw-numpy-code">
-<h2><span class="section-number">2.1. </span>Convolution in Raw Numpy Code<a class="headerlink" href="#convolution-in-raw-numpy-code" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Convolution in Raw Numpy Code<a class="headerlink" href="#convolution-in-raw-numpy-code" title="Permalink to this headline">¶</a></h2>
 <p>There is one image, one channel, six by six pixels in size (shape $1\times 1\times 1 \times 6 \times 6). There is one filter, one channel, three by three pixels in size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -742,7 +752,7 @@ Returns: result - the resulting matrix after convolution</p>
 </div>
 </div>
 <div class="section" id="convolving-in-pytorch">
-<h2><span class="section-number">2.2. </span>Convolving in PyTorch<a class="headerlink" href="#convolving-in-pytorch" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Convolving in PyTorch<a class="headerlink" href="#convolving-in-pytorch" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">kernel</span></code> and <code class="docutils literal notranslate"><span class="pre">filter</span></code> are often used interchangably to refer to the matrix that will be applied over the original input matrix.</p>
 <p>Just like the activation functions and loss functions we’ve seen in earlier labs, convolutions also come in two flavors: functional and module. There is a fundamental difference between the two, though: the functional convolution takes the kernel/filter as an argument while the module has weights to represent the kernel/filter. Let’s use the functional convolution, <code class="docutils literal notranslate"><span class="pre">F.conv2d</span></code>, to apply the filter to our input matrix (notice we’re using stride=1 since we moved the region around one
 pixel at a time.</p>
@@ -819,7 +829,7 @@ actually learn how to change the weights representing the filter.</p>
 <p>Try changing the output channels to 2, and see how many filters have been randomly initialised.</p>
 </div>
 <div class="section" id="force-to-use-a-pre-defined-filter">
-<h3><span class="section-number">2.2.1. </span>Force to use a pre-defined filter<a class="headerlink" href="#force-to-use-a-pre-defined-filter" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.2.1. </span>Force to use a pre-defined filter<a class="headerlink" href="#force-to-use-a-pre-defined-filter" title="Permalink to this headline">¶</a></h3>
 <p>We can also force a convolutional module to use a particular filter by setting its
 weights.</p>
 <div class="admonition important">
@@ -849,9 +859,9 @@ manager.</p>
 </div>
 </div>
 <div class="section" id="key-hyperparameters-in-convolution">
-<h2><span class="section-number">2.3. </span>Key hyperparameters in convolution<a class="headerlink" href="#key-hyperparameters-in-convolution" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.3. </span>Key hyperparameters in convolution<a class="headerlink" href="#key-hyperparameters-in-convolution" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="dilation">
-<h3><span class="section-number">2.3.1. </span>Dilation<a class="headerlink" href="#dilation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.1. </span>Dilation<a class="headerlink" href="#dilation" title="Permalink to this headline">¶</a></h3>
 <p>Instead of a <em>contiguous</em> kernel, <strong>dilation</strong> controls the number of rows and columns to skip when the convolutional kernel is applied to the input matrix. In the code below, a dilation of two stretch the <span class="math notranslate nohighlight">\(2\time 2\)</span> kernel into a <code class="docutils literal notranslate"><span class="pre">holed</span></code> <span class="math notranslate nohighlight">\(3\times 3\)</span> kernel. The shape of the output feature map is therefore <span class="math notranslate nohighlight">\(4\times 4\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -873,7 +883,7 @@ manager.</p>
 </div>
 </div>
 <div class="section" id="padding">
-<h3><span class="section-number">2.3.2. </span>Padding<a class="headerlink" href="#padding" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.2. </span>Padding<a class="headerlink" href="#padding" title="Permalink to this headline">¶</a></h3>
 <p>By adding columns and rows of zeros around it, we expand the input image such that the gray region starts centered in the actual top left corner of the input image. This simple trick can be used to preserve the original size of the
 image. In code, as usual, PyTorch gives us two options: functional (F.pad) and module
 (nn.ConstantPad2d). Let’s start with the module version this time:</p>
@@ -923,7 +933,7 @@ image on left and right sides only, the argument would go like this: (1, 1, 0, 0
 <p>There are three other modes: replicate, reflect, and circular.
 <img alt="Three Modes of Paddings" src="cnn/images/paddings.png" /></p>
 <div class="section" id="replication-padding">
-<h4><span class="section-number">2.3.2.1. </span>Replication Padding<a class="headerlink" href="#replication-padding" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.3.2.1. </span>Replication Padding<a class="headerlink" href="#replication-padding" title="Permalink to this headline">¶</a></h4>
 <p>In the replication padding, the padded pixels will have the same value as the
 closest real pixel. The padded corners will have the same value as the real corners.
 The other columns (left and right) and rows (top and bottom) will replicate the
@@ -972,7 +982,7 @@ the module version <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="section" id="reflection-padding">
-<h4><span class="section-number">2.3.2.2. </span>Reflection Padding<a class="headerlink" href="#reflection-padding" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.3.2.2. </span>Reflection Padding<a class="headerlink" href="#reflection-padding" title="Permalink to this headline">¶</a></h4>
 <p>In the reflection padding, the outer columns and rows are used as axes for the reflection. So, the left padded column (forget about the corners for now) will reflect the second column (since the first column is the axis of reflection). The same reasoning goes for the right padded column. Similarly, the top padded row will reflect the second row (since the first row is the axis of reflection), and the same reasoning goes for the bottom padded row. The values used in the reflection are in a darker shade of orange. The corners will have the same values as the intersection of the reflected rows and columns of the original image, or the diagnol value when the original corners are used as a reflection point.</p>
 <p>In PyTorch, you can use the functional form <code class="docutils literal notranslate"><span class="pre">F.pad</span></code> with <code class="docutils literal notranslate"><span class="pre">mode=&quot;reflect&quot;</span></code>, or use the
 module version <code class="docutils literal notranslate"><span class="pre">nn.ReflectionPad2d</span></code>.</p>
@@ -1017,7 +1027,7 @@ module version <code class="docutils literal notranslate"><span class="pre">nn.R
 </div>
 </div>
 <div class="section" id="circular-padding">
-<h4><span class="section-number">2.3.2.3. </span>Circular Padding<a class="headerlink" href="#circular-padding" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.3.2.3. </span>Circular Padding<a class="headerlink" href="#circular-padding" title="Permalink to this headline">¶</a></h4>
 <p>In the circular padding, the left-most (right-most) column gets copied as the right
 (left) padded column (forget about the corners for now too). Similarly, the topmost
 (bottom-most) row gets copied as the bottom (top) padded row. The corners
@@ -1048,7 +1058,7 @@ there is no module version of the circular padding (at time of writing):</p>
 </div>
 </div>
 <div class="section" id="pooling-to-shrink-images">
-<h3><span class="section-number">2.3.3. </span>Pooling to Shrink Images<a class="headerlink" href="#pooling-to-shrink-images" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.3. </span>Pooling to Shrink Images<a class="headerlink" href="#pooling-to-shrink-images" title="Permalink to this headline">¶</a></h3>
 <p>Another way of shrinking images is to use <strong>pooling</strong>. It is different from the
 former operations: it splits the image into tiny chunks, performs an operation on
 each chunk (that yields a single value), and puts the chunks together as the
@@ -1140,7 +1150,7 @@ suggests, it will output the average pixel value for each chunk. In PyTorch, we 
 </div>
 </div>
 <div class="section" id="flatterning">
-<h3><span class="section-number">2.3.4. </span>Flatterning<a class="headerlink" href="#flatterning" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.3.4. </span>Flatterning<a class="headerlink" href="#flatterning" title="Permalink to this headline">¶</a></h3>
 <p>It simply flattens a tensor, by appending the values of each row to its previous row. It has a module version <code class="docutils literal notranslate"><span class="pre">nn.Flatten()</span></code>. There is no functional version of it, as it can achieved by the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1220,7 +1230,7 @@ suggests, it will output the average pixel value for each chunk. In PyTorch, we 
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">1. </span>Learning Embeddings with Continuous Bag of Words (CBOW)</p>
+                <p class="prevnext-title"><span class="section-number">2. </span>Learning Embeddings with Continuous Bag of Words (CBOW)</p>
             </div>
         </a>
     </div>
@@ -1228,7 +1238,7 @@ suggests, it will output the average pixel value for each chunk. In PyTorch, we 
         <a class="right-next" href="dataset_AG_News_processing.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>AG News Dataset at A Glance</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

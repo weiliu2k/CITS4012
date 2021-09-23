@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
+    <title>1. Frankenstein Dataset At a Glance &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="1. Learning Embeddings with Continuous Bag of Words (CBOW)" href="CBOW.html" />
+    <link rel="next" title="2. Learning Embeddings with Continuous Bag of Words (CBOW)" href="CBOW.html" />
     <link rel="prev" title="Lab09: CNN for NLP" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -89,7 +89,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -351,29 +351,39 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="intro.html">
    Lab09: CNN for NLP
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
   <label for="toctree-checkbox-9">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="CBOW.html">
-     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="convolution.html">
-     2. Convolution Basics
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="dataset_AG_News_processing.html">
+     4. AG News Dataset at A Glance
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Document_Classification_with_CNN.html">
-     3. Using CNN for Document Classification with Embeddings
+     5. Using CNN for Document Classification with Embeddings
     </a>
    </li>
   </ul>
@@ -474,14 +484,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -490,7 +492,9 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="frankenstein-dataset-at-a-glance">
+<h1><span class="section-number">1. </span>Frankenstein Dataset At a Glance<a class="headerlink" href="#frankenstein-dataset-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 
@@ -501,7 +505,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </pre></div>
 </div>
 </div>
@@ -509,12 +513,12 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
-    <span class="n">raw_dataset_txt</span><span class="o">=</span><span class="s2">&quot;data/books/frankenstein.txt&quot;</span><span class="p">,</span>
+    <span class="n">raw_dataset_txt</span><span class="o">=</span><span class="s2">&quot;../data/books/frankenstein.txt&quot;</span><span class="p">,</span>
     <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">train_proportion</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">val_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
     <span class="n">test_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
-    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;data/books/frankenstein_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;../data/books/frankenstein_with_splits.csv&quot;</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span>
 <span class="p">)</span>
 </pre></div>
@@ -580,11 +584,11 @@ letter.
 <span class="n">flatten</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">outer_list</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">inner_list</span> <span class="ow">in</span> <span class="n">outer_list</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">inner_list</span><span class="p">]</span>
 <span class="n">windows</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">ngrams</span><span class="p">([</span><span class="n">MASK_TOKEN</span><span class="p">]</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span> <span class="o">+</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> \
     <span class="p">[</span><span class="n">MASK_TOKEN</span><span class="p">]</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> \
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">cleaned_sentences</span><span class="p">)])</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">cleaned_sentences</span><span class="p">)])</span>
 
 <span class="c1"># Create cbow data</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">windows</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">windows</span><span class="p">):</span>
     <span class="n">target_token</span> <span class="o">=</span> <span class="n">window</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">]</span>
     <span class="n">context</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">window</span><span class="p">):</span>
@@ -602,16 +606,10 @@ letter.
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1fd40a8ddcd54427898109cfd74b4798", "version_major": 2, "version_minor": 0}
-</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "3619638283c745ba96319ddb07156b6d", "version_major": 2, "version_minor": 0}
-</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
+{"version_major": 2, "version_minor": 0, "model_id": "241f66ea897c4e0586e1803674af6545"}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "cb546847f5a04348b9e3a71dcdbadec2"}
+</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -702,6 +700,7 @@ letter.
 </div>
 </div>
 </div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -712,16 +711,16 @@ letter.
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "nlpbook"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "nlpbook",
+            kernelName: "python3",
             path: "./cnn"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'nlpbook'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -745,7 +744,7 @@ letter.
         <a class="right-next" href="CBOW.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">1. </span>Learning Embeddings with Continuous Bag of Words (CBOW)</p>
+                <p class="prevnext-title"><span class="section-number">2. </span>Learning Embeddings with Continuous Bag of Words (CBOW)</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

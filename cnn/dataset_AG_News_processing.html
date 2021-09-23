@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
+    <title>4. AG News Dataset at A Glance &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Using CNN for Document Classification with Embeddings" href="Document_Classification_with_CNN.html" />
-    <link rel="prev" title="2. Convolution Basics" href="convolution.html" />
+    <link rel="next" title="5. Using CNN for Document Classification with Embeddings" href="Document_Classification_with_CNN.html" />
+    <link rel="prev" title="3. Convolution Basics" href="convolution.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -89,7 +89,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -351,29 +351,39 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="intro.html">
    Lab09: CNN for NLP
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
   <label for="toctree-checkbox-9">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="dataset_frankenstein_processing.html">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="CBOW.html">
-     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="convolution.html">
-     2. Convolution Basics
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4. AG News Dataset at A Glance
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Document_Classification_with_CNN.html">
-     3. Using CNN for Document Classification with Embeddings
+     5. Using CNN for Document Classification with Embeddings
     </a>
    </li>
   </ul>
@@ -474,14 +484,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -490,7 +492,9 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="ag-news-dataset-at-a-glance">
+<h1><span class="section-number">4. </span>AG News Dataset at A Glance<a class="headerlink" href="#ag-news-dataset-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -505,11 +509,11 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
-    <span class="n">raw_dataset_csv</span><span class="o">=</span><span class="s2">&quot;data/ag_news/news.csv&quot;</span><span class="p">,</span>
+    <span class="n">raw_dataset_csv</span><span class="o">=</span><span class="s2">&quot;../data/ag_news/news.csv&quot;</span><span class="p">,</span>
     <span class="n">train_proportion</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">val_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
     <span class="n">test_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
-    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;data/ag_news/news_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;../data/ag_news/news_with_splits.csv&quot;</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span>
 <span class="p">)</span>
 </pre></div>
@@ -649,8 +653,8 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>train    84000
-test     18000
 val      18000
+test     18000
 Name: split, dtype: int64
 </pre></div>
 </div>
@@ -696,40 +700,40 @@ Name: split, dtype: int64
     <tr style="text-align: right;">
       <th></th>
       <th>category</th>
-      <th>split</th>
       <th>title</th>
+      <th>split</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>Business</td>
-      <td>train</td>
       <td>jobs , tax cuts key issues for bush</td>
+      <td>train</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Business</td>
-      <td>train</td>
       <td>jarden buying mr . coffee s maker</td>
+      <td>train</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Business</td>
-      <td>train</td>
       <td>retail sales show festive fervour</td>
+      <td>train</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Business</td>
-      <td>train</td>
       <td>intervoice s customers come calling</td>
+      <td>train</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Business</td>
-      <td>train</td>
       <td>boeing expects air force contract</td>
+      <td>train</td>
     </tr>
   </tbody>
 </table>
@@ -743,6 +747,7 @@ Name: split, dtype: int64
 </div>
 </div>
 </div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -753,16 +758,16 @@ Name: split, dtype: int64
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "nlpbook"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "nlpbook",
+            kernelName: "python3",
             path: "./cnn"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'nlpbook'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -778,7 +783,7 @@ Name: split, dtype: int64
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">2. </span>Convolution Basics</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Convolution Basics</p>
             </div>
         </a>
     </div>
@@ -786,7 +791,7 @@ Name: split, dtype: int64
         <a class="right-next" href="Document_Classification_with_CNN.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">3. </span>Using CNN for Document Classification with Embeddings</p>
+                <p class="prevnext-title"><span class="section-number">5. </span>Using CNN for Document Classification with Embeddings</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
