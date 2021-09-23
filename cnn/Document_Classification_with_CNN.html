@@ -1008,8 +1008,8 @@
     \end{split}\]</div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><img alt="The ELU Activation Function" src="../_images/elu.png" /></p></td>
-<td><p><img alt="The ELU Derivative" src="images/elu-prime.png" /></p></td>
+<tr class="row-odd"><td><p><img alt="The ELU Activation Function" src="../_images/ELU.png" /></p></td>
+<td><p><img alt="The ELU Derivative" src="../_images/elu_prime.png" /></p></td>
 </tr>
 </tbody>
 </table>
@@ -1334,7 +1334,7 @@ Using CUDA: True
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">reload_from_files</span><span class="p">:</span>
     <span class="c1"># training from a checkpoint</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">NewsDataset</span><span class="o">.</span><span class="n">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">news_csv</span><span class="p">,</span>
-                                                              <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
+                                                           <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="c1"># create dataset and vectorizer</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">NewsDataset</span><span class="o">.</span><span class="n">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">news_csv</span><span class="p">)</span>
@@ -1364,6 +1364,19 @@ Using CUDA: True
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using pre-trained embeddings
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of Classes</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">category_vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
 </pre></div>
 </div>
 </div>
