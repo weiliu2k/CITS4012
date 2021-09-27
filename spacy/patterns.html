@@ -364,18 +364,28 @@
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/dataset_frankenstein_processing.html">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../cnn/CBOW.html">
-     1. Learning Embeddings with Continuous Bag of Words (CBOW)
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../cnn/convolution.html">
-     2. Convolution Basics
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/dataset_AG_News_processing.html">
+     4. AG News Dataset at A Glance
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
-     3. Using CNN for Document Classification with Embeddings
+     5. Using CNN for Document Classification with Embeddings
     </a>
    </li>
   </ul>
@@ -523,19 +533,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="8e9f47c7-7e2f-4f34-ac02-8db1b5a536d0" name="90a408d5-7988-4879-a79d-ff7eec822716" type="radio">
-</input><label class="tabbed-label" for="8e9f47c7-7e2f-4f34-ac02-8db1b5a536d0">
+<input checked="checked" id="4cfa1284-93bc-4ea1-80a6-0b8c98efc1df" name="3fad41ff-40f8-4620-a946-4a6b54b0bb96" type="radio">
+</input><label class="tabbed-label" for="4cfa1284-93bc-4ea1-80a6-0b8c98efc1df">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="2a1faf8f-e600-4131-a212-21e254916798" name="90a408d5-7988-4879-a79d-ff7eec822716" type="radio">
-</input><label class="tabbed-label" for="2a1faf8f-e600-4131-a212-21e254916798">
+<input id="02da8146-ac30-43d8-9ac5-eb239552bfda" name="3fad41ff-40f8-4620-a946-4a6b54b0bb96" type="radio">
+</input><label class="tabbed-label" for="02da8146-ac30-43d8-9ac5-eb239552bfda">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="099c18fb-2c1b-4039-a6f1-c409e028c09c" name="90a408d5-7988-4879-a79d-ff7eec822716" type="radio">
-</input><label class="tabbed-label" for="099c18fb-2c1b-4039-a6f1-c409e028c09c">
+<input id="055c0565-8bdf-4bd7-80b2-1b495c94b84d" name="3fad41ff-40f8-4620-a946-4a6b54b0bb96" type="radio">
+</input><label class="tabbed-label" for="055c0565-8bdf-4bd7-80b2-1b495c94b84d">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

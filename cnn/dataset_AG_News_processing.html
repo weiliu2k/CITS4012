@@ -484,6 +484,34 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   4.1. Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setting-up">
+   4.2. Setting up
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#read-data">
+   4.3. Read Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-training-validation-and-test-split">
+   4.4. Create training, validation and test split
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -494,6 +522,18 @@
                 
   <div class="section" id="ag-news-dataset-at-a-glance">
 <h1><span class="section-number">4. </span>AG News Dataset at A Glance<a class="headerlink" href="#ag-news-dataset-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>AG News</strong> dataset is a collection of more than one million news articles collected in 2005 by academics for experimenting with data mining and information extraction methods. The goal of this
+example is to illustrate the effectiveness of pretrained word embeddings in classifying texts. For this example, we use a slimmed down version consisting of 120,000 news articles that are split evenly
+between four categories:</p>
+<ul class="simple">
+<li><p>Sports,</p></li>
+<li><p>Science/Technology,</p></li>
+<li><p>World, and</p></li>
+<li><p>Business.</p></li>
+</ul>
+<p>In addition to slimming down the dataset, we focus on the article headlines as our observations and create the multiclass classification task of predicting the category given the headline.</p>
+<div class="section" id="imports">
+<h2><span class="section-number">4.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
@@ -506,6 +546,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="setting-up">
+<h2><span class="section-number">4.2. </span>Setting up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
@@ -520,6 +563,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="read-data">
+<h2><span class="section-number">4.3. </span>Read Data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read raw data</span>
@@ -611,6 +657,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="create-training-validation-and-test-split">
+<h2><span class="section-number">4.4. </span>Create training, validation and test split<a class="headerlink" href="#create-training-validation-and-test-split" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create split data</span>
@@ -744,6 +793,7 @@ Name: split, dtype: int64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write munged data to CSV</span>
 <span class="n">final_news</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_munged_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

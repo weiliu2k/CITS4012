@@ -484,6 +484,39 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import">
+   1.1. Import
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setting-up">
+   1.2. Setting up
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preprocessing-tokenizer">
+   1.3. Preprocessing - Tokenizer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cbow-training-data-preparation">
+   1.4. CBOW training data preparation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-validation-and-test-data-split">
+   1.5. Training, Validation and Test data split
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -494,6 +527,11 @@
                 
   <div class="section" id="frankenstein-dataset-at-a-glance">
 <h1><span class="section-number">1. </span>Frankenstein Dataset At a Glance<a class="headerlink" href="#frankenstein-dataset-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<p>Here we will build a text dataset from a digitized version of Mary Shelley’s novel <em>Frankenstein</em>, available via <em>Project Gutenberg</em>. This section walks through the preprocessing; building
+a PyTorch Dataset class for this text dataset; and finally splitting the dataset into training,
+validation, and test sets.</p>
+<div class="section" id="import">
+<h2><span class="section-number">1.1. </span>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -510,6 +548,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="setting-up">
+<h2><span class="section-number">1.2. </span>Setting up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
@@ -525,6 +566,10 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="preprocessing-tokenizer">
+<h2><span class="section-number">1.3. </span>Preprocessing - Tokenizer<a class="headerlink" href="#preprocessing-tokenizer" title="Permalink to this headline">¶</a></h2>
+<p>Starting with the raw text file that Project Gutenberg distributes, the preprocessing is minimal: we use NLTK’s Punkt tokenizer to split the text into separate sentences, then each sentence is converted to lowercase and the punctuation is completely removed. This preprocessing allows for us to later split strings on whitespace in order to retrieve a list of tokens.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split the raw text book into sentences</span>
@@ -570,6 +615,14 @@ letter.
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="cbow-training-data-preparation">
+<h2><span class="section-number">1.4. </span>CBOW training data preparation<a class="headerlink" href="#cbow-training-data-preparation" title="Permalink to this headline">¶</a></h2>
+<p>As we know that CBOW is to use context in a specified window to predict the center word. We need to then to the list of tokens in each sentence and group them into context words in a specified window size, for each token as a center word.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a> instantly make your loops show a smart progress meter - just wrap any iterable with <code class="docutils literal notranslate"><span class="pre">tqdm(iterable)</span></code> in your <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, and you’ll see a progress bar when run the loop.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Global vars</span>
@@ -580,13 +633,13 @@ letter.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create windows</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create windows based on the window_size</span>
 <span class="n">flatten</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">outer_list</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">inner_list</span> <span class="ow">in</span> <span class="n">outer_list</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">inner_list</span><span class="p">]</span>
 <span class="n">windows</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">ngrams</span><span class="p">([</span><span class="n">MASK_TOKEN</span><span class="p">]</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span> <span class="o">+</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> \
     <span class="p">[</span><span class="n">MASK_TOKEN</span><span class="p">]</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">window_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> \
     <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">cleaned_sentences</span><span class="p">)])</span>
 
-<span class="c1"># Create cbow data</span>
+<span class="c1"># Create cbow data (extract target center word and context words)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">windows</span><span class="p">):</span>
     <span class="n">target_token</span> <span class="o">=</span> <span class="n">window</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">window_size</span><span class="p">]</span>
@@ -611,6 +664,9 @@ letter.
 {"version_major": 2, "version_minor": 0, "model_id": "cb546847f5a04348b9e3a71dcdbadec2"}
 </script></div>
 </div>
+</div>
+<div class="section" id="training-validation-and-test-data-split">
+<h2><span class="section-number">1.5. </span>Training, Validation and Test data split<a class="headerlink" href="#training-validation-and-test-data-split" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create split data</span>
@@ -697,6 +753,7 @@ letter.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write split data to file</span>
 <span class="n">cbow_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_munged_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

@@ -501,18 +501,29 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-vocabulary">
-     5.2.1. The Vocabulary
+    <a class="reference internal nav-link" href="#the-standard-vocabulary-class">
+     5.2.1. The Standard
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Vocabulary
+      </span>
+     </code>
+     Class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sequencevocabulary">
+     5.2.2. SequenceVocabulary
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-vectorizer">
-     5.2.2. The Vectorizer
+     5.2.3. The Vectorizer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-dataset">
-     5.2.3. The Dataset
+     5.2.4. The Dataset
     </a>
    </li>
   </ul>
@@ -581,6 +592,19 @@
                 
   <div class="section" id="using-cnn-for-document-classification-with-embeddings">
 <h1><span class="section-number">5. </span>Using CNN for Document Classification with Embeddings<a class="headerlink" href="#using-cnn-for-document-classification-with-embeddings" title="Permalink to this headline">¶</a></h1>
+<p>The CBOW example used an Embedding layer to do simple classification. This example builds on that in three ways:</p>
+<ul class="simple">
+<li><p>first by loading pretrained word embeddings, then</p></li>
+<li><p>by finetuning these pretrained embeddings by classifying entire news articles, and</p></li>
+<li><p>finally by using a convolutional neural network to capture the spatial relationships between words.</p></li>
+</ul>
+<div class="admonition-transfer-learning admonition">
+<p class="admonition-title">Transfer Learning</p>
+<p>In machine learning, using a model trained on one task as an initializer for another
+task is called <em>transfer learning</em>.</p>
+</div>
+<p>In this example, we use the AG News dataset. To model the sequences of words in AG News, we introduce a variant of the <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> class <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code>, to bundle several tokens vital for modeling sequences. The <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code> demonstrates how to use this class.</p>
+<p><a class="reference external" href="https://nlp.stanford.edu/data/glove.6B.zip">Download GloVe Pretrained Embeddings - glove.6B.zip</a></p>
 <div class="section" id="imports">
 <h2><span class="section-number">5.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -599,7 +623,7 @@
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </pre></div>
 </div>
 </div>
@@ -607,8 +631,9 @@
 </div>
 <div class="section" id="data-vectorization-classes">
 <h2><span class="section-number">5.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="the-vocabulary">
-<h3><span class="section-number">5.2.1. </span>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="the-standard-vocabulary-class">
+<h3><span class="section-number">5.2.1. </span>The Standard <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> Class<a class="headerlink" href="#the-standard-vocabulary-class" title="Permalink to this headline">¶</a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> object is able to look up an index for a token and vice versa, useful for constructing a one-hot vector for each word.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -695,6 +720,25 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="sequencevocabulary">
+<h3><span class="section-number">5.2.2. </span>SequenceVocabulary<a class="headerlink" href="#sequencevocabulary" title="Permalink to this headline">¶</a></h3>
+<p>When we deal with a sequence of words, it is often useful to have four special tokens</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">UNK</span></code> token,</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">MASK</span></code> token,</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">BEGINOFSEQUENCE</span></code> token, and</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">ENDOFSEQUENCE</span></code> token.</p></li>
+</ul>
+<p>They serve three different purposes.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">UNK</span></code> token (short for unknown), allows the model to learn a representation for rare words so that it can accommodate words that it has never seen at test time.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">MASK</span></code> token serves as a sentinel for Embedding layers and loss calculations when we have sequences of variable length (padding in the context of sequence modelling).</p></li>
+<li><p>Finally, the <code class="docutils literal notranslate"><span class="pre">BEGINOFSEQUENCE</span></code> and <code class="docutils literal notranslate"><span class="pre">ENDOFSEQUENCE</span></code> tokens give the neural network hints about the
+sequence boundaries.</p></li>
+</ul>
+<p>The figure below shows the result of using these special tokens in the broader vectorization pipeline.</p>
+<p><img alt="SequenceVocabulary Class" src="../_images/sequence_vocab.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SequenceVocabulary</span><span class="p">(</span><span class="n">Vocabulary</span><span class="p">):</span>
@@ -744,7 +788,16 @@
 </div>
 </div>
 <div class="section" id="the-vectorizer">
-<h3><span class="section-number">5.2.2. </span>The Vectorizer<a class="headerlink" href="#the-vectorizer" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.3. </span>The Vectorizer<a class="headerlink" href="#the-vectorizer" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code>, instantiates and encapsulates the use of the <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code>. In this example, the Vectorizer follows the pattern we demonstrated before of restricting the total set of words allowed in the Vocabulary by counting and thresholding on a certain frequency (<code class="docutils literal notranslate"><span class="pre">cutoff</span></code>). The core purpose of this action is to improve the signal quality for the model and limit the memory model’s memory usage by removing noisy, lowfrequency words.</p>
+<p>After instantiation, the <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code>’s <code class="docutils literal notranslate"><span class="pre">vectorize()</span></code> method takes as input a news title and
+returns a vector that is as long as the longest title in the dataset. It has two key behaviors.</p>
+<ul class="simple">
+<li><p>The first is that it stores the maximum sequence length locally. Normally, the dataset tracks the maximum sequence length, and at inference time, the length of the test sequence is taken as the length of the vector, for example in a Recurrent Neural Network (RNN) model. However, because we have a CNN model, it is important to maintain a static size even at inference time.</p></li>
+<li><p>The second key behavior, it outputs a zeropadded vector of integers (indices), which represent the words in the sequence.</p></li>
+<li><p>Additionally, this vector of integers has the integer for the BEGINOFSEQUENCE token prepended to the beginning and the integer for the ENDOFSEQUENCE token appended to the end.</p></li>
+</ul>
+<p>From the classifier’s perspective, these special tokens provide evidence of the sequence boundaries, allowing it to react to words near the boundary differently than to words near the center.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewsVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -820,7 +873,7 @@
 </div>
 </div>
 <div class="section" id="the-dataset">
-<h3><span class="section-number">5.2.3. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.4. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -974,6 +1027,14 @@
 </div>
 <div class="section" id="the-model-newsclassifier">
 <h2><span class="section-number">5.3. </span>The Model: NewsClassifier<a class="headerlink" href="#the-model-newsclassifier" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we demonstrate how to use pretrained word embeddings with CNN. Specifically, we use the Embedding layer, which maps the input token indices to a vector representation. We use the
+pretrained embedding subset by replacing the Embedding layer’s weight matrix. The embedding is then used in the forward() method to map from the indices to the vectors.</p>
+<p>The model uses a series of one-dimensional convolutions to compute incrementally more features that result in a single feature vector.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> module is a convenience wrapper that encapsulates a linear sequence of operations. In this case, we use it to encapsulate the application of the Conv1d sequence.</p>
+</div>
+<p>ELU is a nonlinearity similar to the ReLU activation function, but rather than clipping values below 0, it exponentiates them. ELU has been shown to be a promising nonlinearity to use between convolutional layers (Clevert et al., 2015).</p>
 <div class="section" id="the-elu-activation-function">
 <h3><span class="section-number">5.3.1. </span>The ELU activation function<a class="headerlink" href="#the-elu-activation-function" title="Permalink to this headline">¶</a></h3>
 <p>ELU, Exponential Linear Unit, is a variation of the ReLU (Rectified Linear Unit) Actvation Function. ELU is very similiar to RELU except negative inputs. They are both in identity function form for non-negative inputs. On the other hand, ELU becomes smooth slowly until its output equal to -α whereas RELU sharply smoothes. It is based on the mathematical function:</p>
@@ -1187,6 +1248,12 @@
 </div>
 <div class="section" id="general-utilities">
 <h4><span class="section-number">5.4.1.1. </span>general utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h4>
+<p>The process for using word embeddings as the initial embedding matrix involves first loading the embeddings from the disk (see the utlility function <code class="docutils literal notranslate"><span class="pre">load_glove_from_disk()</span></code> function), then selecting the correct subset of embeddings for the words that are actually present in the data, and finally setting the Embedding layer’s weight matrix as the loaded subset.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>How to deal with words that do not have pretrained word embeddings?
+One issue that commonly arises is the existence of words that are in the dataset but are not among the pretrained GloVe embeddings. One common method for handling this is to use an initialization method from the PyTorch library, such as the Xavier Uniform method (Glorot and Bengio, 2010). See the <code class="docutils literal notranslate"><span class="pre">make_embedding_matrix()</span></code> function.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1384,6 +1451,7 @@ Using CUDA: True
 </div>
 <div class="section" id="training-loop">
 <h3><span class="section-number">5.4.4. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<p>Training routines consist of the following now familiar sequence of operations: instantiate the dataset, instantiate the model, instantiate the loss function, instantiate the optimizer, iterate over the dataset’s training partition and update the model parameters, iterate over the dataset’s validation partition and measure the performance, and then repeat the dataset iterations a certain number of times.</p>
 <p>This takes 1008 seconds (around 17 mins).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1510,19 +1578,13 @@ Using CUDA: True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_11896</span><span class="o">/</span><span class="mf">4152099490.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">train_state</span> <span class="o">=</span> <span class="n">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> 
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">13</span>                           <span class="n">total</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>                           <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;tqdm&#39; is not defined
-</pre></div>
-</div>
-</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "ac68ef69488c4c8eb36a30df85b0c88a"}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "88bc6252b4d8451fa4f20e36141fae6e"}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "296da0fe0b314e00a8eb33453c4ba0d0"}
+</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
