@@ -495,8 +495,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-vectorization-classes">
-   2.2. Data Vectorization classes
+  <a class="reference internal nav-link" href="#data-vectorization-classes-from-text-to-vectorized-minibatches">
+   2.2. Data Vectorization classes (from text to vectorized minibatches)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -505,8 +505,13 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-dataset">
-     2.2.2. The Dataset
+    <a class="reference internal nav-link" href="#vectorizer">
+     2.2.2. Vectorizer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-dataset-with-dataloader">
+     2.2.3. The Dataset with DataLoader
     </a>
    </li>
   </ul>
@@ -568,6 +573,7 @@
                 
   <div class="section" id="learning-embeddings-with-continuous-bag-of-words-cbow">
 <h1><span class="section-number">2. </span>Learning Embeddings with Continuous Bag of Words (CBOW)<a class="headerlink" href="#learning-embeddings-with-continuous-bag-of-words-cbow" title="Permalink to this headline">¶</a></h1>
+<p>The pipeline from text to vectorized minibatch is mostly standard: both the Vocabulary and the DataLoader function exactly as they did in <a class="reference external" href="https://weiliu2k.github.io/CITS4012/classification/yelp.html">Example: Classifying Sentiment of Restaurant Reviews</a>. However, unlike the Vectorizers we saw there, the Vectorizer in this section does not construct onehot vectors. Instead, a vector of integers representing the indices of the context is constructed and returned.</p>
 <div class="section" id="imports">
 <h2><span class="section-number">2.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -587,15 +593,17 @@
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="data-vectorization-classes">
-<h2><span class="section-number">2.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-vectorization-classes-from-text-to-vectorized-minibatches">
+<h2><span class="section-number">2.2. </span>Data Vectorization classes (from text to vectorized minibatches)<a class="headerlink" href="#data-vectorization-classes-from-text-to-vectorized-minibatches" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="the-vocabulary">
 <h3><span class="section-number">2.2.1. </span>The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permalink to this headline">¶</a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> object allows the lookup of index by a token, and the lookup of token by index, and add tokens to the vocabulary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -706,6 +714,10 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="vectorizer">
+<h3><span class="section-number">2.2.2. </span>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h3>
+<p>The Vectorizer class build a vocabulary from the data frame using its class method <code class="docutils literal notranslate"><span class="pre">from_dataframe()</span></code>, then the <code class="docutils literal notranslate"><span class="pre">vectorize()</span></code> methods look up the input <code class="docutils literal notranslate"><span class="pre">contex</span></code> tokens, returns a list of indices of these tokens.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CBOWVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -764,8 +776,13 @@
 </div>
 </div>
 </div>
-<div class="section" id="the-dataset">
-<h3><span class="section-number">2.2.2. </span>The Dataset<a class="headerlink" href="#the-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="the-dataset-with-dataloader">
+<h3><span class="section-number">2.2.3. </span>The Dataset with DataLoader<a class="headerlink" href="#the-dataset-with-dataloader" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> class uses class method <code class="docutils literal notranslate"><span class="pre">load_dataset_and_make_vectorizer()</span></code> to read the input data into a data frame, then pass the data frame to the <code class="docutils literal notranslate"><span class="pre">Vectorizer</span></code> class to populate a Vocabulary object such that when the <code class="docutils literal notranslate"><span class="pre">vectorize()</span></code> method is called, it will perform the appropriate vectorization, in this case, return the vocabulary indices of the input context words.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">generate_batches()</span></code> method uses PyTorch build in <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> class to create mini-batches.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CBOWDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -906,6 +923,7 @@
 </div>
 <div class="section" id="the-model-cbow">
 <h2><span class="section-number">2.3. </span>The Model: CBOW<a class="headerlink" href="#the-model-cbow" title="Permalink to this headline">¶</a></h2>
+<p>The CBOW model uses an embedding layer <code class="docutils literal notranslate"><span class="pre">nn.Embedding()</span></code> which will have weights to be intialised randomly and updated through training. These weights will be the embeddings for each token after training. The model is a simple one hidden layer fully connected network.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CBOWClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># Simplified cbow Model</span>
@@ -1043,10 +1061,10 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
     <span class="c1"># Data and Path information</span>
-    <span class="n">cbow_csv</span><span class="o">=</span><span class="s2">&quot;data/books/frankenstein_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">cbow_csv</span><span class="o">=</span><span class="s2">&quot;../data/books/frankenstein_with_splits.csv&quot;</span><span class="p">,</span>
     <span class="n">vectorizer_file</span><span class="o">=</span><span class="s2">&quot;vectorizer.json&quot;</span><span class="p">,</span>
     <span class="n">model_state_file</span><span class="o">=</span><span class="s2">&quot;model.pth&quot;</span><span class="p">,</span>
-    <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;model_storage/ch5/cbow&quot;</span><span class="p">,</span>
+    <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;model_storage\cbow&quot;</span><span class="p">,</span>
     <span class="c1"># Model hyper parameters</span>
     <span class="n">embedding_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
     <span class="c1"># Training hyper parameters</span>
@@ -1093,8 +1111,8 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expanded filepaths: 
-	model_storage/ch5/cbow/vectorizer.json
-	model_storage/ch5/cbow/model.pth
+	model_storage\cbow\vectorizer.json
+	model_storage\cbow\model.pth
 Using CUDA: True
 </pre></div>
 </div>
@@ -1130,6 +1148,7 @@ Using CUDA: True
 </div>
 <div class="section" id="training-loop">
 <h3><span class="section-number">2.4.4. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<p>This takes 904 seconds (15 mins).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -1141,17 +1160,17 @@ Using CUDA: True
                                                  <span class="n">patience</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">train_state</span> <span class="o">=</span> <span class="n">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-<span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
+<span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
                           <span class="n">total</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">,</span>
                           <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
-<span class="n">train_bar</span> <span class="o">=</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=train&#39;</span><span class="p">,</span>
+<span class="n">train_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=train&#39;</span><span class="p">,</span>
                           <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_num_batches</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> 
                           <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
                           <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;val&#39;</span><span class="p">)</span>
-<span class="n">val_bar</span> <span class="o">=</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=val&#39;</span><span class="p">,</span>
+<span class="n">val_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=val&#39;</span><span class="p">,</span>
                         <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_num_batches</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> 
                         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
                         <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1254,15 +1273,12 @@ Using CUDA: True
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a9554f4cdbdb42a09e84106f394422de", "version_major": 2, "version_minor": 0}
+{"version_major": 2, "version_minor": 0, "model_id": "b209576af19948b2a87296e5cb15d7fe"}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6c3e39531d5b45d39ed075f513bfbf9e", "version_major": 2, "version_minor": 0}
+{"version_major": 2, "version_minor": 0, "model_id": "5524365a303b45a5a35b536f5d3264fc"}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "50fc5a60e4624a3792e8cc14d940b3ab", "version_major": 2, "version_minor": 0}
-</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exiting loop
-</pre></div>
-</div>
-</div>
+{"version_major": 2, "version_minor": 0, "model_id": "f84efa8ee8a847cd8cca2c3556dca2ba"}
+</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1307,11 +1323,15 @@ Using CUDA: True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test loss: 8.50410728903378;
-Test Accuracy: 4.7720588235294095
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test loss: 8.131561214222629;
+Test Accuracy: 11.551470588235299
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The accuracy is pretty low, this is largely to do with the small training set - only one book. In reality, the model needs to be trained with at least terabytes of data. We have shown in the lectures on how model performace are significantly affected by the data size. The larger the dataset, the better the performance.</p>
 </div>
 </div>
 <div class="section" id="trained-embeddings">
@@ -1348,7 +1368,7 @@ Test Accuracy: 4.7720588235294095
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">word</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Enter a word: &#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">word</span> <span class="o">=</span> <span class="s1">&#39;monster&#39;</span>
 <span class="n">embeddings</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span>
 <span class="n">word_to_idx</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">cbow_vocab</span><span class="o">.</span><span class="n">_token_to_idx</span>
 <span class="n">pretty_print</span><span class="p">(</span><span class="n">get_closest</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">word_to_idx</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
@@ -1356,13 +1376,12 @@ Test Accuracy: 4.7720588235294095
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Enter a word: monster
-...[7.88] - saw
-...[7.89] - kid
-...[7.97] - truly
-...[7.97] - ultimately
-...[7.99] - cares
-...[8.01] - confused
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>...[7.32] - cares
+...[7.58] - griefs
+...[7.63] - sickness
+...[7.66] - trifling
+...[7.69] - saw
+...[7.70] - prolong
 </pre></div>
 </div>
 </div>
@@ -1385,47 +1404,47 @@ Test Accuracy: 4.7720588235294095
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=======frankenstein=======
-...[6.90] - dead
-...[6.96] - slight
-...[6.97] - oppressive
-...[7.02] - discrimination
-...[7.03] - spurned
-...[7.10] - illustrate
+...[6.93] - discrimination
+...[6.99] - slight
+...[7.02] - oppressive
+...[7.05] - spurned
+...[7.11] - illustrate
+...[7.11] - wandering
 =======monster=======
-...[7.88] - saw
-...[7.89] - kid
-...[7.97] - truly
-...[7.97] - ultimately
-...[7.99] - cares
-...[8.01] - confused
+...[7.32] - cares
+...[7.58] - griefs
+...[7.63] - sickness
+...[7.66] - trifling
+...[7.69] - saw
+...[7.70] - prolong
 =======science=======
-...[7.07] - impression
-...[7.15] - mutual
-...[7.17] - darkened
-...[7.19] - mist
-...[7.33] - swelling
-...[7.39] - tempted
+...[6.85] - mutual
+...[6.93] - mist
+...[6.95] - swelling
+...[7.01] - impression
+...[7.06] - darkened
+...[7.06] - nearly
 =======sickness=======
 ...[6.37] - while
-...[6.56] - literally
-...[6.60] - foundations
-...[6.62] - probabilities
-...[6.69] - awoke
-...[6.69] - consoles
+...[6.45] - foundations
+...[6.61] - awoke
+...[6.65] - consoles
+...[6.70] - literally
+...[6.74] - depend
 =======lonely=======
-...[6.95] - moonlight
-...[6.97] - unveiled
-...[7.25] - ought
-...[7.26] - heartily
-...[7.30] - bed
-...[7.31] - undiscovered
+...[6.74] - unveiled
+...[6.88] - moonlight
+...[7.05] - ought
+...[7.08] - bed
+...[7.14] - superhuman
+...[7.14] - therefore
 =======happy=======
-...[6.48] - bottom
-...[6.56] - chimney
-...[6.56] - injury
-...[6.65] - evening
-...[6.67] - lingered
-...[6.69] - chivalry
+...[6.25] - bottom
+...[6.42] - injury
+...[6.49] - chivalry
+...[6.50] - altered
+...[6.51] - penetrated
+...[6.54] - danger
 </pre></div>
 </div>
 </div>
@@ -1443,16 +1462,16 @@ Test Accuracy: 4.7720588235294095
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "nlpbook"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "nlpbook",
+            kernelName: "python3",
             path: "./cnn"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'nlpbook'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               

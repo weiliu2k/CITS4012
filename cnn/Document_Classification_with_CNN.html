@@ -1630,6 +1630,12 @@ Using CUDA: True
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test loss: 0.5580926260777882;
+Test Accuracy: 83.09151785714283
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="inference">
@@ -1700,6 +1706,65 @@ Using CUDA: True
                                                   <span class="n">prediction</span><span class="p">[</span><span class="s1">&#39;probability&#39;</span><span class="p">]))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> + Sample: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">30</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True Category: Business
+==============================
+Prediction: Business (p=0.93)
+	 + Sample: az suspends marketing of cancer drug
+Prediction: Business (p=0.63)
+	 + Sample: business world has mixed reaction to perez move
+Prediction: Sports (p=0.65)
+	 + Sample: betting against bombay
+Prediction: Business (p=0.94)
+	 + Sample: malpractice insurers face a tough market
+Prediction: Business (p=0.50)
+	 + Sample: nvidia is vindicated
+------------------------------
+
+True Category: Sci/Tech
+==============================
+Prediction: World (p=0.79)
+	 + Sample: spies prize webcam s eyes
+Prediction: Sci/Tech (p=1.00)
+	 + Sample: sober worm causes headaches
+Prediction: Sci/Tech (p=0.95)
+	 + Sample: local search missing pieces falling into place
+Prediction: Sci/Tech (p=1.00)
+	 + Sample: hackers baiting internet users with beckham pix
+Prediction: Sci/Tech (p=0.95)
+	 + Sample: nokia adds blackberry support to series handsets
+------------------------------
+
+True Category: Sports
+==============================
+Prediction: Sports (p=0.99)
+	 + Sample: is meyer the man to get irish up ? 
+Prediction: Sports (p=0.99)
+	 + Sample: who ? who ? and clemens
+Prediction: Sports (p=0.99)
+	 + Sample: baseball today ap 
+Prediction: Sports (p=1.00)
+	 + Sample: mark kreidler yao ming epitomizes the chinese athlete who is lt b gt . . . lt b gt 
+Prediction: Sports (p=0.97)
+	 + Sample: no . miami rebounds to beat fsu in overtime
+------------------------------
+
+True Category: World
+==============================
+Prediction: World (p=1.00)
+	 + Sample: arafat in pain but expected to recover shaath
+Prediction: World (p=1.00)
+	 + Sample: maoist rebels bomb kathmandu building , no injuries reuters 
+Prediction: World (p=1.00)
+	 + Sample: son running for ill . rep . s house seat ap 
+Prediction: World (p=0.99)
+	 + Sample: strong quake hits in japan
+Prediction: World (p=1.00)
+	 + Sample: israel assassinates hamas militant in damascus
+------------------------------
 </pre></div>
 </div>
 </div>
