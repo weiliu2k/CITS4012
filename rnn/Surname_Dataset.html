@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exercise &#8212; CITS4012 Natural Language Processing</title>
+    <title>3. Surname Dataset Processing &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Surname Classification with RNN" href="Surname_Classification.html" />
+    <link rel="prev" title="2. Classifying Synthetic Sequences - The Square Model" href="elman_rnn_square.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -87,7 +89,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -210,7 +212,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="../gensim/intro.html">
    Lab04: Count-Based Models
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
@@ -220,12 +222,12 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="tf-idf.html">
+    <a class="reference internal" href="../gensim/tf-idf.html">
      1. TF-IDF in scikit-learn and Gensim
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="classification.html">
+    <a class="reference internal" href="../gensim/classification.html">
      2. Document Classification
     </a>
    </li>
@@ -386,24 +388,34 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../rnn/intro.html">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
    Lab10: RNN for NLP
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
   <label for="toctree-checkbox-10">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="../rnn/rnn.html">
+    <a class="reference internal" href="rnn.html">
      1. Recurrent Neural Networks - Introduction
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../rnn/elman_rnn_square.html">
+    <a class="reference internal" href="elman_rnn_square.html">
      2. Classifying Synthetic Sequences - The Square Model
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3. Surname Dataset Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Surname_Classification.html">
+     4. Surname Classification with RNN
     </a>
    </li>
   </ul>
@@ -459,7 +471,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/gensim/exercise.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/rnn/Surname_Dataset.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -479,11 +491,44 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/rnn/Surname_Dataset.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   3.1. Imports
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -492,8 +537,267 @@
         
               <div>
                 
-  <div class="section" id="exercise">
-<h1>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="surname-dataset-processing">
+<h1><span class="section-number">3. </span>Surname Dataset Processing<a class="headerlink" href="#surname-dataset-processing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="imports">
+<h2><span class="section-number">3.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
+    <span class="n">raw_dataset_csv</span><span class="o">=</span><span class="s2">&quot;../data/surnames/surnames.csv&quot;</span><span class="p">,</span>
+    <span class="n">train_proportion</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">val_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">test_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;../data/surnames/surnames_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read raw data</span>
+<span class="n">surnames</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">raw_dataset_csv</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surnames</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>surname</th>
+      <th>nationality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Woodford</td>
+      <td>English</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Coté</td>
+      <td>French</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kore</td>
+      <td>English</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Koury</td>
+      <td>Arabic</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Lebzak</td>
+      <td>Russian</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unique classes</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">surnames</span><span class="o">.</span><span class="n">nationality</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Arabic&#39;,
+ &#39;Chinese&#39;,
+ &#39;Czech&#39;,
+ &#39;Dutch&#39;,
+ &#39;English&#39;,
+ &#39;French&#39;,
+ &#39;German&#39;,
+ &#39;Greek&#39;,
+ &#39;Irish&#39;,
+ &#39;Italian&#39;,
+ &#39;Japanese&#39;,
+ &#39;Korean&#39;,
+ &#39;Polish&#39;,
+ &#39;Portuguese&#39;,
+ &#39;Russian&#39;,
+ &#39;Scottish&#39;,
+ &#39;Spanish&#39;,
+ &#39;Vietnamese&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Splitting train by nationality</span>
+<span class="c1"># Create dict</span>
+<span class="n">by_nationality</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">surnames</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">by_nationality</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">nationality</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create split data</span>
+<span class="n">final_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">item_list</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">by_nationality</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">item_list</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item_list</span><span class="p">)</span>
+    <span class="n">n_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_proportion</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">val_proportion</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n_test</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">test_proportion</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    
+    <span class="c1"># Give data point a split attribute</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">[:</span><span class="n">n_train</span><span class="p">]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">[</span><span class="n">n_train</span><span class="p">:</span><span class="n">n_train</span><span class="o">+</span><span class="n">n_val</span><span class="p">]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;val&#39;</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">[</span><span class="n">n_train</span><span class="o">+</span><span class="n">n_val</span><span class="p">:]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>  
+    
+    <span class="c1"># Add to final list</span>
+    <span class="n">final_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">item_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write split data to file</span>
+<span class="n">final_surnames</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">final_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_surnames</span><span class="o">.</span><span class="n">split</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>train    7680
+test     1660
+val      1640
+Name: split, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_surnames</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>surname</th>
+      <th>nationality</th>
+      <th>split</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Gerges</td>
+      <td>Arabic</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Nassar</td>
+      <td>Arabic</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kanaan</td>
+      <td>Arabic</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Hadad</td>
+      <td>Arabic</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Tannous</td>
+      <td>Arabic</td>
+      <td>train</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write munged data to CSV</span>
+<span class="n">final_surnames</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_munged_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -509,7 +813,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./gensim"
+            path: "./rnn"
         },
         predefinedOutput: true
     }
@@ -525,6 +829,24 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="elman_rnn_square.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title"><span class="section-number">2. </span>Classifying Synthetic Sequences - The Square Model</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="Surname_Classification.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>Surname Classification with RNN</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
