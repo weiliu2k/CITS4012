@@ -598,6 +598,41 @@
                 
   <div class="section" id="classifying-synthetic-sequences-the-square-model">
 <h1><span class="section-number">2. </span>Classifying Synthetic Sequences - The Square Model<a class="headerlink" href="#classifying-synthetic-sequences-the-square-model" title="Permalink to this headline">¶</a></h1>
+<p>Download these utility functions first and place them in the same directory as this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">FileLink</span><span class="p">,</span> <span class="n">FileLinks</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;plots.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='plots.py' target='_blank'>plots.py</a><br></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;util.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='util.py' target='_blank'>util.py</a><br></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;replay.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='replay.py' target='_blank'>replay.py</a><br></div></div>
+</div>
 <div class="section" id="setting-up">
 <h2><span class="section-number">2.1. </span>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -649,7 +684,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_6_0.png" src="../_images/elman_rnn_square_6_0.png" />
+<img alt="../_images/elman_rnn_square_10_0.png" src="../_images/elman_rnn_square_10_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -659,7 +694,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_7_0.png" src="../_images/elman_rnn_square_7_0.png" />
+<img alt="../_images/elman_rnn_square_11_0.png" src="../_images/elman_rnn_square_11_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -669,7 +704,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_8_0.png" src="../_images/elman_rnn_square_8_0.png" />
+<img alt="../_images/elman_rnn_square_12_0.png" src="../_images/elman_rnn_square_12_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -686,7 +721,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_10_0.png" src="../_images/elman_rnn_square_10_0.png" />
+<img alt="../_images/elman_rnn_square_14_0.png" src="../_images/elman_rnn_square_14_0.png" />
 </div>
 </div>
 </div>
@@ -787,7 +822,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_22_0.png" src="../_images/elman_rnn_square_22_0.png" />
+<img alt="../_images/elman_rnn_square_26_0.png" src="../_images/elman_rnn_square_26_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -831,7 +866,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_27_0.png" src="../_images/elman_rnn_square_27_0.png" />
+<img alt="../_images/elman_rnn_square_31_0.png" src="../_images/elman_rnn_square_31_0.png" />
 </div>
 </div>
 </div>
@@ -844,7 +879,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_29_0.png" src="../_images/elman_rnn_square_29_0.png" />
+<img alt="../_images/elman_rnn_square_33_0.png" src="../_images/elman_rnn_square_33_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -854,7 +889,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_30_0.png" src="../_images/elman_rnn_square_30_0.png" />
+<img alt="../_images/elman_rnn_square_34_0.png" src="../_images/elman_rnn_square_34_0.png" />
 </div>
 </div>
 </div>
@@ -867,7 +902,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_32_0.png" src="../_images/elman_rnn_square_32_0.png" />
+<img alt="../_images/elman_rnn_square_36_0.png" src="../_images/elman_rnn_square_36_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -891,7 +926,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_34_0.png" src="../_images/elman_rnn_square_34_0.png" />
+<img alt="../_images/elman_rnn_square_38_0.png" src="../_images/elman_rnn_square_38_0.png" />
 </div>
 </div>
 </div>
