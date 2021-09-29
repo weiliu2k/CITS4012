@@ -350,7 +350,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="../cnn/intro.html">
    Lab09: CNN for NLP
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
@@ -360,34 +360,34 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="dataset_frankenstein_processing.html">
+    <a class="reference internal" href="../cnn/dataset_frankenstein_processing.html">
      1. Frankenstein Dataset At a Glance
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="CBOW.html">
+    <a class="reference internal" href="../cnn/CBOW.html">
      2. Learning Embeddings with Continuous Bag of Words (CBOW)
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="convolution.html">
+    <a class="reference internal" href="../cnn/convolution.html">
      3. Convolution Basics
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="dataset_AG_News_processing.html">
+    <a class="reference internal" href="../cnn/dataset_AG_News_processing.html">
      4. AG News Dataset at A Glance
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Document_Classification_with_CNN.html">
+    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
      5. Using CNN for Document Classification with Embeddings
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../rnn/intro.html">
+  <a class="reference internal" href="intro.html">
    Lab10: RNN for NLP
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
@@ -397,12 +397,12 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../rnn/rnn.html">
+    <a class="reference internal" href="rnn.html">
      1. Recurrent Neural Networks - Introduction
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../rnn/elman_rnn_square.html">
+    <a class="reference internal" href="elman_rnn_square.html">
      2. Classifying Synthetic Sequences - The Square Model
     </a>
    </li>
@@ -459,7 +459,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/cnn/lenet.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/rnn/Surname-Dataset.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -484,7 +484,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/cnn/lenet.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/rnn/Surname-Dataset.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -522,43 +522,256 @@
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lenet</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-<span class="c1"># Featurizer</span>
-<span class="c1"># Block 1: 1@28x28 -&gt; 6@28x28 -&gt; 6@14x14</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> 
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
+    <span class="n">raw_dataset_csv</span><span class="o">=</span><span class="s2">&quot;data/surnames/surnames.csv&quot;</span><span class="p">,</span>
+    <span class="n">train_proportion</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">val_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">test_proportion</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">output_munged_csv</span><span class="o">=</span><span class="s2">&quot;data/surnames/surnames_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span>
 <span class="p">)</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func1&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-<span class="c1"># Block 2: 6@14x14 -&gt; 16@10x10 -&gt; 16@5x5</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;S4&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-<span class="c1"># Block 3: 16@5x5 -&gt; 120@1x1</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;C5&#39;</span><span class="p">,</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
-<span class="c1"># Flattening</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;flatten&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
-<span class="c1"># Classification</span>
-<span class="c1"># Hidden Layer</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;F6&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">84</span><span class="p">))</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;func3&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
-<span class="c1"># Output Layer</span>
-<span class="n">lenet</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;OUTPUT&#39;</span><span class="p">,</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">84</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read raw data</span>
+<span class="n">surnames</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">raw_dataset_csv</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surnames</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>surname</th>
+      <th>nationality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Woodford</td>
+      <td>English</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Coté</td>
+      <td>French</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kore</td>
+      <td>English</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Koury</td>
+      <td>Arabic</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Lebzak</td>
+      <td>Russian</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unique classes</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">surnames</span><span class="o">.</span><span class="n">nationality</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Arabic&#39;,
+ &#39;Chinese&#39;,
+ &#39;Czech&#39;,
+ &#39;Dutch&#39;,
+ &#39;English&#39;,
+ &#39;French&#39;,
+ &#39;German&#39;,
+ &#39;Greek&#39;,
+ &#39;Irish&#39;,
+ &#39;Italian&#39;,
+ &#39;Japanese&#39;,
+ &#39;Korean&#39;,
+ &#39;Polish&#39;,
+ &#39;Portuguese&#39;,
+ &#39;Russian&#39;,
+ &#39;Scottish&#39;,
+ &#39;Spanish&#39;,
+ &#39;Vietnamese&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Splitting train by nationality</span>
+<span class="c1"># Create dict</span>
+<span class="n">by_nationality</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">surnames</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">by_nationality</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">nationality</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create split data</span>
+<span class="n">final_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">item_list</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">by_nationality</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">item_list</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item_list</span><span class="p">)</span>
+    <span class="n">n_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_proportion</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">val_proportion</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n_test</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">test_proportion</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    
+    <span class="c1"># Give data point a split attribute</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">[:</span><span class="n">n_train</span><span class="p">]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">[</span><span class="n">n_train</span><span class="p">:</span><span class="n">n_train</span><span class="o">+</span><span class="n">n_val</span><span class="p">]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;val&#39;</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">[</span><span class="n">n_train</span><span class="o">+</span><span class="n">n_val</span><span class="p">:]:</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>  
+    
+    <span class="c1"># Add to final list</span>
+    <span class="n">final_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">item_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write split data to file</span>
+<span class="n">final_surnames</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">final_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_surnames</span><span class="o">.</span><span class="n">split</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>train    7680
+test     1660
+val      1640
+Name: split, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_surnames</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nationality</th>
+      <th>split</th>
+      <th>surname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Arabic</td>
+      <td>train</td>
+      <td>Totah</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Arabic</td>
+      <td>train</td>
+      <td>Abboud</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Arabic</td>
+      <td>train</td>
+      <td>Fakhoury</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Arabic</td>
+      <td>train</td>
+      <td>Srour</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Arabic</td>
+      <td>train</td>
+      <td>Sayegh</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write munged data to CSV</span>
+<span class="n">final_surnames</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_munged_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -573,16 +786,16 @@
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "nlpbook"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./cnn"
+            kernelName: "nlpbook",
+            path: "./rnn"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'nlpbook'</script>
 
               </div>
               

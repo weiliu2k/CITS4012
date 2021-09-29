@@ -53,6 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab10: RNN for NLP" href="../rnn/intro.html" />
     <link rel="prev" title="4. AG News Dataset at A Glance" href="dataset_AG_News_processing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -385,6 +386,28 @@
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      5. Using CNN for Document Classification with Embeddings
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../rnn/intro.html">
+   Lab10: RNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/rnn.html">
+     1. Recurrent Neural Networks - Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/elman_rnn_square.html">
+     2. Classifying Synthetic Sequences - The Square Model
     </a>
    </li>
   </ul>
@@ -920,9 +943,9 @@ returns a vector that is as long as the longest title in the dataset. It has two
         <span class="sd">&quot;&quot;&quot;Load dataset and make a new vectorizer from scratch</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            surname_csv (str): location of the dataset</span>
+<span class="sd">            news_csv (str): location of the dataset</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of SurnameDataset</span>
+<span class="sd">            an instance of NewsDataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">news_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">news_csv</span><span class="p">)</span>
         <span class="n">train_news_df</span> <span class="o">=</span> <span class="n">news_df</span><span class="p">[</span><span class="n">news_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
@@ -934,10 +957,10 @@ returns a vector that is as long as the longest title in the dataset. It has two
 <span class="sd">        Used in the case in the vectorizer has been cached for re-use</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            surname_csv (str): location of the dataset</span>
+<span class="sd">            news_csv (str): location of the dataset</span>
 <span class="sd">            vectorizer_filepath (str): location of the saved vectorizer</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of SurnameDataset</span>
+<span class="sd">            an instance of NewsDataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">news_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">news_csv</span><span class="p">)</span>
         <span class="n">vectorizer</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load_vectorizer_only</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">)</span>
@@ -950,7 +973,7 @@ returns a vector that is as long as the longest title in the dataset. It has two
 <span class="sd">        Args:</span>
 <span class="sd">            vectorizer_filepath (str): the location of the serialized vectorizer</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            an instance of SurnameVectorizer</span>
+<span class="sd">            an instance of NewsVectorizer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NameVectorizer</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
@@ -1811,6 +1834,15 @@ Prediction: World (p=1.00)
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="../rnn/intro.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Lab10: RNN for NLP</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

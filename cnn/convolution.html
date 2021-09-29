@@ -390,6 +390,28 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../rnn/intro.html">
+   Lab10: RNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/rnn.html">
+     1. Recurrent Neural Networks - Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/elman_rnn_square.html">
+     2. Classifying Synthetic Sequences - The Square Model
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -551,6 +573,11 @@
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#d-convolution">
+   3.4. 1D Convolution
+  </a>
  </li>
 </ul>
 
@@ -1190,6 +1217,113 @@ suggests, it will output the average pixel value for each chunk. In PyTorch, we 
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[5., 8., 8., 1., 6., 9., 7., 7., 9., 8., 8., 4., 7., 7., 1., 0.]])
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="d-convolution">
+<h2><span class="section-number">3.4. </span>1D Convolution<a class="headerlink" href="#d-convolution" title="Permalink to this headline">¶</a></h2>
+<p>Give a sequence of daily temperature readings, let’s use a window (filter) of size five, like in the figure below. In its first step, the window is over days one to five. In the next step, since it can only move to the right, it will be over days two to six. The size of our movement to the
+right is, the stride.</p>
+<p>Now, let’s assign the same value (0.2 = <span class="math notranslate nohighlight">\(\frac{1}{5}\)</span>) for every weight in our filter and use
+PyTorch’s F.conv1d to convolve the filter with our sequence (the shape is the NCL: the <strong>N</strong>umber of sequences, the number of <strong>C</strong>hannels and the <strong>L</strong>ength of the sequence.):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span>
+<span class="n">F</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">temperatures</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+         <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[8.4000, 8.0000, 6.4000, 3.4000, 2.2000, 1.8000, 2.0000, 1.8000,
+          2.0000]]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a moving average, as we have the same weight (<span class="math notranslate nohighlight">\(\frac{1}{window\_size}\)</span>) for the weighted sum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.2000, 0.2000, 0.2000, 0.2000, 0.2000])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+<span class="n">conv_seq</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">conv_seq</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">conv_seq</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(Parameter containing:
+ tensor([[[-0.0294,  0.0157],
+          [ 0.1477, -0.1682],
+          [-0.2105,  0.0221],
+          ...,
+          [-0.0651, -0.1261],
+          [-0.2236, -0.1607],
+          [ 0.0448,  0.0294]],
+ 
+         [[-0.1812, -0.1802],
+          [-0.0575, -0.2116],
+          [-0.1365,  0.1271],
+          ...,
+          [ 0.2072,  0.0923],
+          [ 0.1267,  0.1031],
+          [-0.0246, -0.0949]],
+ 
+         [[-0.1262, -0.1012],
+          [ 0.1101, -0.0824],
+          [-0.0500,  0.1758],
+          ...,
+          [-0.1602,  0.0048],
+          [ 0.1420, -0.1564],
+          [ 0.1490, -0.1395]],
+ 
+         ...,
+ 
+         [[ 0.1480, -0.1971],
+          [-0.1273,  0.0995],
+          [-0.0726, -0.1250],
+          ...,
+          [ 0.1296,  0.1590],
+          [-0.0313,  0.1204],
+          [-0.1540, -0.0166]],
+ 
+         [[ 0.1235,  0.2034],
+          [ 0.0404, -0.0861],
+          [ 0.0900, -0.1462],
+          ...,
+          [ 0.0307,  0.1345],
+          [-0.1840, -0.1889],
+          [-0.0731,  0.0381]],
+ 
+         [[ 0.1546, -0.0249],
+          [-0.1551,  0.0903],
+          [-0.0173, -0.1090],
+          ...,
+          [ 0.1704,  0.2202],
+          [-0.2147,  0.2092],
+          [-0.1115,  0.1248]]], requires_grad=True),
+ torch.Size([100, 10, 2]))
+</pre></div>
 </div>
 </div>
 </div>
