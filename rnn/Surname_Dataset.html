@@ -539,6 +539,12 @@
                 
   <div class="section" id="surname-dataset-processing">
 <h1><span class="section-number">3. </span>Surname Dataset Processing<a class="headerlink" href="#surname-dataset-processing" title="Permalink to this headline">¶</a></h1>
+<p>In this example, we introduce the surnames dataset, a collection of 10,000 surnames from 18 different nationalities collected by the authors from different name sources on the internet. This dataset has several properties that make it interesting.</p>
+<ul class="simple">
+<li><p>The first property is that it is fairly imbalanced. The top three classes account for more than 60% of the data: 27% are English, 21% are Russian, and 14% are Arabic. The remaining 15 nationalities have decreasing frequency - a property that is endemic to language, as well.</p></li>
+<li><p>The second property is that there is a valid and intuitive relationship between nationality of origin and surname orthography
+(spelling). There are spelling variations that are strongly tied to nation of origin (such in <code class="docutils literal notranslate"><span class="pre">O'Neill</span></code>, <code class="docutils literal notranslate"><span class="pre">Antonopoulos</span></code>, <code class="docutils literal notranslate"><span class="pre">Nagasawa</span></code>, or <code class="docutils literal notranslate"><span class="pre">Zhu</span></code>).</p></li>
+</ul>
 <div class="section" id="imports">
 <h2><span class="section-number">3.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -796,6 +802,10 @@ Name: split, dtype: int64
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Visualise the distribution of nationalities to observe the class imbalance in this dataset. What can you do to create a balanced dataset?</p>
 </div>
 </div>
 </div>

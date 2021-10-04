@@ -42,6 +42,8 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -522,43 +524,48 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   1.1. Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rnn-cell">
-   1.1. RNN Cell
+   1.2. RNN Cell
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rnn-layer">
-   1.2. RNN Layer
+   1.3. RNN Layer
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sequence-first-shape-default-in-rnn">
-   1.3. Sequence-first shape default in RNN
+   1.4. Sequence-first shape default in RNN
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#generate-some-synthetic-data">
-     1.3.1. Generate some synthetic data
+     1.4.1. Generate some synthetic data
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#batch-first-tensor">
-     1.3.2. Batch-first tensor
+     1.4.2. Batch-first tensor
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#how-to-use-rnn-with-correctly-shaped-tensors">
-     1.3.3. How to use RNN with correctly shaped tensors
+     1.4.3. How to use RNN with correctly shaped tensors
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#option-1">
-       1.3.3.1. Option 1
+       1.4.3.1. Option 1
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#option-2">
-       1.3.3.2. Option 2
+       1.4.3.2. Option 2
       </a>
      </li>
     </ul>
@@ -567,41 +574,41 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#stacked-rnn-with-two-layers">
-   1.4. Stacked RNN with Two Layers
+   1.5. Stacked RNN with Two Layers
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#manually-stacking-two-rnns">
-     1.4.1. Manually Stacking Two RNNs
+     1.5.1. Manually Stacking Two RNNs
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#bidirectional-rnn">
-   1.5. Bidirectional RNN
+   1.6. Bidirectional RNN
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#manually-created-bidirectional-rnn">
-     1.5.1. Manually Created Bidirectional RNN
+     1.6.1. Manually Created Bidirectional RNN
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#step-0-a-batch-sequence-and-its-reverse">
-       1.5.1.1. Step 0: A batch sequence and its reverse
+       1.6.1.1. Step 0: A batch sequence and its reverse
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#step-1-feed-each-rnn-with-its-corresponding-sequence">
-       1.5.1.2. Step 1: Feed each RNN with its corresponding sequence
+       1.6.1.2. Step 1: Feed each RNN with its corresponding sequence
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#step-2-tidy-up-the-output">
-     1.5.2. Step 2: Tidy up the output
+     1.6.2. Step 2: Tidy up the output
     </a>
    </li>
   </ul>
@@ -619,8 +626,9 @@
                 
   <div class="section" id="recurrent-neural-networks-introduction">
 <h1><span class="section-number">1. </span>Recurrent Neural Networks - Introduction<a class="headerlink" href="#recurrent-neural-networks-introduction" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://github.com/bentrevett/pytorch-sentiment-analysis">https://github.com/bentrevett/pytorch-sentiment-analysis</a></p>
 <p>In this notebook, we will look at the basics of how to use <code class="docutils literal notranslate"><span class="pre">nn.RNNCell</span></code> and <code class="docutils literal notranslate"><span class="pre">nn.RNN</span></code> to create RNN Cells and RNN layers, and illustrate the important tensor shape expectation of RNN.</p>
+<div class="section" id="imports">
+<h2><span class="section-number">1.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -629,8 +637,11 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="rnn-cell">
-<h2><span class="section-number">1.1. </span>RNN Cell<a class="headerlink" href="#rnn-cell" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.2. </span>RNN Cell<a class="headerlink" href="#rnn-cell" title="Permalink to this headline">¶</a></h2>
+<p>Given an input feature <span class="math notranslate nohighlight">\(n\)</span>, and a hidden dimension <span class="math notranslate nohighlight">\(d\)</span>, if the transformed dimension is m, then the dimensionality of <span class="math notranslate nohighlight">\(W_{ih}\)</span> should be <span class="math notranslate nohighlight">\(m \times n\)</span>, and the <span class="math notranslate nohighlight">\(W_{hh}\)</span> should be <span class="math notranslate nohighlight">\(m \times d\)</span>.</p>
+<p>The following code randomly initialised a (<span class="math notranslate nohighlight">\(2\times 2\)</span>) hidden to hidden matrix, and a (<span class="math notranslate nohighlight">\(2\times 2\)</span>) input to hidden matrix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_features</span> <span class="o">=</span> <span class="mi">2</span>
@@ -655,9 +666,15 @@
 </div>
 </div>
 </div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Modify the input feature and hidden dimension, to observe how the weight matrices change.</p>
+</div>
 </div>
 <div class="section" id="rnn-layer">
-<h2><span class="section-number">1.2. </span>RNN Layer<a class="headerlink" href="#rnn-layer" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.3. </span>RNN Layer<a class="headerlink" href="#rnn-layer" title="Permalink to this headline">¶</a></h2>
+<p>RNN cell requires us manually feed the cell hidden layer as one of the two inputs (previous hidden state and current input) to the same RNN cell in a for loop. See the <code class="docutils literal notranslate"><span class="pre">forward()</span></code> method in the <a class="reference external" href="https://weiliu2k.github.io/CITS4012/rnn/Surname_Classification.html#model">ElmanRNN model class</a> as an example. Luckily PyTorch has a <code class="docutils literal notranslate"><span class="pre">nn.RNN()</span></code> function that looks after this recurrent behaviour for us.</p>
+<p>The example below creates the same set of weights, but with <code class="docutils literal notranslate"><span class="pre">l0</span></code> suffix for the weight matrix keys, to indicate these weights are the first layer of RNN.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_features</span> <span class="o">=</span> <span class="mi">2</span>
@@ -684,9 +701,9 @@
 </div>
 </div>
 <div class="section" id="sequence-first-shape-default-in-rnn">
-<h2><span class="section-number">1.3. </span>Sequence-first shape default in RNN<a class="headerlink" href="#sequence-first-shape-default-in-rnn" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.4. </span>Sequence-first shape default in RNN<a class="headerlink" href="#sequence-first-shape-default-in-rnn" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="generate-some-synthetic-data">
-<h3><span class="section-number">1.3.1. </span>Generate some synthetic data<a class="headerlink" href="#generate-some-synthetic-data" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.1. </span>Generate some synthetic data<a class="headerlink" href="#generate-some-synthetic-data" title="Permalink to this headline">¶</a></h3>
 <p>The code below generate random sequences of four points (<code class="docutils literal notranslate"><span class="pre">points</span></code> e.g. A, B, C, D) Each point has two values, which can be think of a data point in a 2D space. The sequence are points in sequence that are ordered either clock-wise or counter-wise (<code class="docutils literal notranslate"><span class="pre">direction</span></code>). This is a simplified version of sentences,</p>
 <ul class="simple">
 <li><p>sentences are sequences (of words);</p></li>
@@ -722,7 +739,7 @@
 </div>
 </div>
 <div class="section" id="batch-first-tensor">
-<h3><span class="section-number">1.3.2. </span>Batch-first tensor<a class="headerlink" href="#batch-first-tensor" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.2. </span>Batch-first tensor<a class="headerlink" href="#batch-first-tensor" title="Permalink to this headline">¶</a></h3>
 <p>We now take three (N=3) sequences, each sequence has four data points (L=4), with two features (F=2) representing each data point. This is an example of batch-first input tensor (N,L,F), as shown in the example below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -739,14 +756,14 @@
 </div>
 </div>
 <div class="section" id="how-to-use-rnn-with-correctly-shaped-tensors">
-<h3><span class="section-number">1.3.3. </span>How to use RNN with correctly shaped tensors<a class="headerlink" href="#how-to-use-rnn-with-correctly-shaped-tensors" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.3. </span>How to use RNN with correctly shaped tensors<a class="headerlink" href="#how-to-use-rnn-with-correctly-shaped-tensors" title="Permalink to this headline">¶</a></h3>
 <p>However, RNN uses <em>sequence-first</em> by default (L,N,F), we need to make our tensor <strong>RNN friendly</strong>. Two options:</p>
 <ol class="simple">
 <li><p>We could explicitly change the shape of the batch using <code class="docutils literal notranslate"><span class="pre">permute()</span></code> to flip the first two dimensions.</p></li>
 <li><p>We could use the <code class="docutils literal notranslate"><span class="pre">batch_first</span></code> argument in the RNN layer construction.</p></li>
 </ol>
 <div class="section" id="option-1">
-<h4><span class="section-number">1.3.3.1. </span>Option 1<a class="headerlink" href="#option-1" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.4.3.1. </span>Option 1<a class="headerlink" href="#option-1" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From a batch-first tensor to sequence-first</span>
@@ -798,7 +815,7 @@ shape:</p>
 </div>
 </div>
 <div class="section" id="option-2">
-<h4><span class="section-number">1.3.3.2. </span>Option 2<a class="headerlink" href="#option-2" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.4.3.2. </span>Option 2<a class="headerlink" href="#option-2" title="Permalink to this headline">¶</a></h4>
 <p>Option 1 is a lot of work to keep track of, we can instead set RNN’s <code class="docutils literal notranslate"><span class="pre">batch_first</span></code> argument to True so we can use the batch above without any modifications.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -851,7 +868,7 @@ handle the hidden state, we will highlight the difference in shapes once again.<
 </div>
 </div>
 <div class="section" id="stacked-rnn-with-two-layers">
-<h2><span class="section-number">1.4. </span>Stacked RNN with Two Layers<a class="headerlink" href="#stacked-rnn-with-two-layers" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.5. </span>Stacked RNN with Two Layers<a class="headerlink" href="#stacked-rnn-with-two-layers" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
@@ -884,7 +901,7 @@ handle the hidden state, we will highlight the difference in shapes once again.<
 </div>
 </div>
 <div class="section" id="manually-stacking-two-rnns">
-<h3><span class="section-number">1.4.1. </span>Manually Stacking Two RNNs<a class="headerlink" href="#manually-stacking-two-rnns" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.5.1. </span>Manually Stacking Two RNNs<a class="headerlink" href="#manually-stacking-two-rnns" title="Permalink to this headline">¶</a></h3>
 <p>Let’s replicate the above with two RNNs, “manually” stacked together.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1053,7 +1070,7 @@ dimensions to batch-first as well:</p>
 </div>
 </div>
 <div class="section" id="bidirectional-rnn">
-<h2><span class="section-number">1.5. </span>Bidirectional RNN<a class="headerlink" href="#bidirectional-rnn" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.6. </span>Bidirectional RNN<a class="headerlink" href="#bidirectional-rnn" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
@@ -1086,7 +1103,7 @@ dimensions to batch-first as well:</p>
 </div>
 </div>
 <div class="section" id="manually-created-bidirectional-rnn">
-<h3><span class="section-number">1.5.1. </span>Manually Created Bidirectional RNN<a class="headerlink" href="#manually-created-bidirectional-rnn" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.6.1. </span>Manually Created Bidirectional RNN<a class="headerlink" href="#manually-created-bidirectional-rnn" title="Permalink to this headline">¶</a></h3>
 <p>Once again, we can create two simple RNNs, and use the weights and biases above to
 set their weights accordingly. Each RNN will behave as one of the layers from the
 bidirectional one:</p>
@@ -1106,7 +1123,7 @@ bidirectional one:</p>
 </div>
 </div>
 <div class="section" id="step-0-a-batch-sequence-and-its-reverse">
-<h4><span class="section-number">1.5.1.1. </span>Step 0: A batch sequence and its reverse<a class="headerlink" href="#step-0-a-batch-sequence-and-its-reverse" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.6.1.1. </span>Step 0: A batch sequence and its reverse<a class="headerlink" href="#step-0-a-batch-sequence-and-its-reverse" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
@@ -1131,7 +1148,7 @@ tensor([[[-0.8670,  0.9342],
 </div>
 </div>
 <div class="section" id="step-1-feed-each-rnn-with-its-corresponding-sequence">
-<h4><span class="section-number">1.5.1.2. </span>Step 1: Feed each RNN with its corresponding sequence<a class="headerlink" href="#step-1-feed-each-rnn-with-its-corresponding-sequence" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.6.1.2. </span>Step 1: Feed each RNN with its corresponding sequence<a class="headerlink" href="#step-1-feed-each-rnn-with-its-corresponding-sequence" title="Permalink to this headline">¶</a></h4>
 <p>Since there is no dependency between the two layers, we just need to feed each
 layer its corresponding sequence (regular and reversed) and remember to reverse
 back the sequence of hidden states.</p>
@@ -1147,7 +1164,7 @@ back the sequence of hidden states.</p>
 </div>
 </div>
 <div class="section" id="step-2-tidy-up-the-output">
-<h3><span class="section-number">1.5.2. </span>Step 2: Tidy up the output<a class="headerlink" href="#step-2-tidy-up-the-output" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.6.2. </span>Step 2: Tidy up the output<a class="headerlink" href="#step-2-tidy-up-the-output" title="Permalink to this headline">¶</a></h3>
 <p>The overall output of the bidirectional RNN must have two elements as well:</p>
 <ul class="simple">
 <li><p>a concatenation side-by-side of both sequences of hidden states (out and

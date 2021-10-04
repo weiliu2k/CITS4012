@@ -42,6 +42,8 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -522,19 +524,31 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setting-up">
-   2.1. Setting Up
+  <a class="reference internal nav-link" href="#download-untility-files-for-plotting-and-data-generation">
+   2.1. Download Untility Files for Plotting and Data Generation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-generation">
-   2.2. Data Generation
+  <a class="reference internal nav-link" href="#imports">
+   2.2. Imports
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   2.3. Data Generation
+  <a class="reference internal nav-link" href="#synthetic-data-generation">
+   2.3. Synthetic Data Generation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sequence-generation-function">
+     2.3.1. Sequence Generation Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-does-the-sequence-data-look-like">
+     2.3.2. How does the sequence data look like
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#square-model">
@@ -542,8 +556,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     2.4.1. Data Generation
+    <a class="reference internal nav-link" href="#dataset-preparation">
+     2.4.1. Dataset Preparation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -598,6 +612,17 @@
                 
   <div class="section" id="classifying-synthetic-sequences-the-square-model">
 <h1><span class="section-number">2. </span>Classifying Synthetic Sequences - The Square Model<a class="headerlink" href="#classifying-synthetic-sequences-the-square-model" title="Permalink to this headline">¶</a></h1>
+<p>This is a simplified example of sequence modelling for classification. In this example, each sequence contains exactly four symbols, A, B, C, D, which can be ordered either clockwise or counter clockwise. Given a collection of sequences, the task is to classify if the symbols are in clockwise order (target variable <span class="math notranslate nohighlight">\(y=1\)</span>) or counter clockwise (target variable <span class="math notranslate nohighlight">\(y=0\)</span>).</p>
+<p>The simplifications made include:</p>
+<ul class="simple">
+<li><p>binary classification (a slightly more complex scenario is multi-class classification);</p></li>
+<li><p>uniform sequence length, all sequences are of the same length 4, so no padding is needed;</p></li>
+<li><p>the vocabulary size is tiny, 4 in this case;</p></li>
+<li><p>the feature/embeding space for each symbol/token is 2 so that we can visualise in a Cartesian coordinate system. Word Embeddings are at 50+ dimensions.</p></li>
+<li><p>similarly for convenience of visualisation, the hidden dimension chosen is also 2.</p></li>
+</ul>
+<div class="section" id="download-untility-files-for-plotting-and-data-generation">
+<h2><span class="section-number">2.1. </span>Download Untility Files for Plotting and Data Generation<a class="headerlink" href="#download-untility-files-for-plotting-and-data-generation" title="Permalink to this headline">¶</a></h2>
 <p>Download these utility functions first and place them in the same directory as this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -633,8 +658,9 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><a href='replay.py' target='_blank'>replay.py</a><br></div></div>
 </div>
-<div class="section" id="setting-up">
-<h2><span class="section-number">2.1. </span>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="imports">
+<h2><span class="section-number">2.2. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -653,8 +679,11 @@
 </div>
 </div>
 </div>
-<div class="section" id="data-generation">
-<h2><span class="section-number">2.2. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="synthetic-data-generation">
+<h2><span class="section-number">2.3. </span>Synthetic Data Generation<a class="headerlink" href="#synthetic-data-generation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sequence-generation-function">
+<h3><span class="section-number">2.3.1. </span>Sequence Generation Function<a class="headerlink" href="#sequence-generation-function" title="Permalink to this headline">¶</a></h3>
+<p>This function generate sequences, each of four data points, located close to a perfect square with four corners at <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">-1],</span> <span class="pre">[-1,</span> <span class="pre">1],</span> <span class="pre">[1,</span> <span class="pre">1],</span> <span class="pre">[1,</span> <span class="pre">-1]</span></code>, respectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -675,8 +704,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2><span class="section-number">2.3. </span>Data Generation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-does-the-sequence-data-look-like">
+<h3><span class="section-number">2.3.2. </span>How does the sequence data look like<a class="headerlink" href="#how-does-the-sequence-data-look-like" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">counter_vs_clock</span><span class="p">(</span><span class="n">draw_arrows</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -725,10 +754,11 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="square-model">
 <h2><span class="section-number">2.4. </span>Square Model<a class="headerlink" href="#square-model" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3><span class="section-number">2.4.1. </span>Data Generation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="dataset-preparation">
+<h3><span class="section-number">2.4.1. </span>Dataset Preparation<a class="headerlink" href="#dataset-preparation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_points</span><span class="p">,</span> <span class="n">test_directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">19</span><span class="p">)</span>
@@ -755,6 +785,11 @@
 </div>
 <div class="section" id="model-configuration">
 <h3><span class="section-number">2.4.3. </span>Model Configuration<a class="headerlink" href="#model-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">SquareModel</span></code> creates a single layered RNN with fully connected layer as classifier.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Note in the model, we did not use a sigmoid function, so what loss function should we use for binary classification?</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SquareModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -785,6 +820,10 @@
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">BCEWithLogitsLoss()</span></code> loss function. Modify the model and change the loss function, and see if you can still achieve the same results.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -822,7 +861,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_26_0.png" src="../_images/elman_rnn_square_26_0.png" />
+<img alt="../_images/elman_rnn_square_27_0.png" src="../_images/elman_rnn_square_27_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -866,7 +905,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_31_0.png" src="../_images/elman_rnn_square_31_0.png" />
+<img alt="../_images/elman_rnn_square_32_0.png" src="../_images/elman_rnn_square_32_0.png" />
 </div>
 </div>
 </div>
@@ -879,7 +918,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_33_0.png" src="../_images/elman_rnn_square_33_0.png" />
+<img alt="../_images/elman_rnn_square_34_0.png" src="../_images/elman_rnn_square_34_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -889,7 +928,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_34_0.png" src="../_images/elman_rnn_square_34_0.png" />
+<img alt="../_images/elman_rnn_square_35_0.png" src="../_images/elman_rnn_square_35_0.png" />
 </div>
 </div>
 </div>
@@ -902,7 +941,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_36_0.png" src="../_images/elman_rnn_square_36_0.png" />
+<img alt="../_images/elman_rnn_square_37_0.png" src="../_images/elman_rnn_square_37_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -926,7 +965,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/elman_rnn_square_38_0.png" src="../_images/elman_rnn_square_38_0.png" />
+<img alt="../_images/elman_rnn_square_39_0.png" src="../_images/elman_rnn_square_39_0.png" />
 </div>
 </div>
 </div>

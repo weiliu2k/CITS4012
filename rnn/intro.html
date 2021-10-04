@@ -507,6 +507,12 @@
   <div class="section" id="lab10-rnn-for-nlp">
 <h1>Lab10: RNN for NLP<a class="headerlink" href="#lab10-rnn-for-nlp" title="Permalink to this headline">¶</a></h1>
 <p>This set of notebooks introduce the vanilla Elman Recurrent Neural Networks (RNNs) and how to use an Elman RNN as the featuriser for classification tasks.</p>
+<p>We first introduce the basics of an Elman RNN in PyTorch, and illustrate how it can be used in a binary classification of simple synthetic sequences. Then we apply this a character sequence modelling for surname nationality classification with the objective of introducing general sequence modelling - where the last hidden state represent the sequence in the general sense:</p>
+<ul class="simple">
+<li><p>A word is a sequence of characters</p></li>
+<li><p>A sentence is a sequence of words</p></li>
+<li><p>A document is a sequence of sentences</p></li>
+</ul>
 <p>Credit: the notebooks are adapted from:</p>
 <ul class="simple">
 <li><p>Chpater 8 of <a class="reference external" href="https://github.com/dvgodoy/PyTorchStepByStep">Deep Learning with PyTorch Step-by-Step</a></p></li>

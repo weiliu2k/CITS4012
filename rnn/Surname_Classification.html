@@ -529,6 +529,18 @@
   <a class="reference internal nav-link" href="#model">
    4.2. Model
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#retrieving-the-last-vector-of-each-sequence">
+     4.2.1. Retrieving the last vector of each sequence
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-elmanrnn-model">
+     4.2.2. The ElmanRNN model
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#settings">
@@ -560,8 +572,8 @@
                 
   <div class="section" id="surname-classification-with-rnn">
 <h1><span class="section-number">4. </span>Surname Classification with RNN<a class="headerlink" href="#surname-classification-with-rnn" title="Permalink to this headline">¶</a></h1>
-<p>In this example, we see surname classification.</p>
-<p>This is a modified version of the main example in which we use the PackedSequences data structure that PyTorch provides.  While PackedSequences is a useful data structure, seeing what’s happening with column indexing is very useful.</p>
+<p>In this example, we see surname classification in which character sequences (surnames) are classified to nationality of origin.</p>
+<p>Inferring demographic information (like nationality) from publicly observable data has applications from product recommendations to ensuring fair outcomes for users across different demographics. However, demographic and other self­-identifying attributes are collectively called “protected attributes”. We must exercise care in the use of such attributes in modeling and in products. We begin by splitting the characters of each surname and treating them the same way we treated words. Aside from the data difference, character­ level models are mostly similar to word­based models in structure and implementation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
@@ -582,6 +594,7 @@
 </div>
 <div class="section" id="vocabulary-vectorizer-dataset">
 <h2><span class="section-number">4.1. </span>Vocabulary, Vectorizer, Dataset<a class="headerlink" href="#vocabulary-vectorizer-dataset" title="Permalink to this headline">¶</a></h2>
+<p>We treat each surname as a sequence of characters. As usual, we implement a dataset class, that returns the vectorized surname as well as the integer representing its nationality. Additionally returned is the length of the sequence, which is used in downstream computations to know where the final vector in the sequence is located. This is a part of the familiar sequence of steps - implementing Dataset, a Vectorizer, and a Vocabulary before the actual training can take place.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -668,6 +681,14 @@
 </div>
 </div>
 </div>
+<p>The first stage in the vectorization pipeline is to map each character token in the surname to a unique integer. To accomplish this, we use the <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code> data structure, which we first introduced and described in <a class="reference external" href="https://weiliu2k.github.io/CITS4012/cnn/Document_Classification_with_CNN.html#data-vectorization-classes">Section 5.2.2 of Document Classification using CNN and GloVe Embeddings</a>. Recall that this data structure not only maps characters in the names to integers, but also utilizes four special­purpose tokens:</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">UNK</span></code> token,</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">MASK</span></code> token,</p></li>
+<li><p>the BEGIN­OF­SEQUENCE token, and</p></li>
+<li><p>the END­OF­SEQUENCE token.</p></li>
+</ul>
+<p>The first two tokens are vital for language data: the <code class="docutils literal notranslate"><span class="pre">UNK</span></code> token is used for unseen Out­Of­Vocabulary (OOV) tokens in the input and the <code class="docutils literal notranslate"><span class="pre">MASK</span></code> token enables handling variable­-length inputs. The latter two tokens provide the model with sentence boundary features and are prepended and appended to the sequence, respectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SequenceVocabulary</span><span class="p">(</span><span class="n">Vocabulary</span><span class="p">):</span>
@@ -715,6 +736,7 @@
 </div>
 </div>
 </div>
+<p>The overall vectorizer is <code class="docutils literal notranslate"><span class="pre">SurnameVectorizer</span></code>, which populates the <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code> by surname characters, and the normal <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> for nationalities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -935,6 +957,22 @@
 </div>
 <div class="section" id="model">
 <h2><span class="section-number">4.2. </span>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">SurnameClassifier</span></code> model is composed of an Embedding layer, the ElmanRNN, and a Linear layer. We assume that the input to the model is tokens represented as a set of integers after they have been mapped to integers by the <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code>. The model first embeds the integers using the embedding layer. Then, using the RNN, sequence representation vectors are computed. These vectors represent the hidden state for each character in the surname. Because the goal is to classify each surname,** the vector corresponding to the final character position in each surname is extracted**. One way to think about this vector is that the final vector is a result of passing over the entire sequence input, and hence it’s a summary vector for the surname. These summary vectors are passed through the Linear layer to compute a prediction vector. The prediction vector is used in the training loss, or we can apply the softmax function to create a probability distribution over surnames.</p>
+<p>The arguments to the model are</p>
+<ul class="simple">
+<li><p>the size of the embeddings - <em>hyperparameter</em>,</p></li>
+<li><p>the number of embeddings (i.e., vocabulary size) - determined by the data,</p></li>
+<li><p>the number of classes - determined by the data, and</p></li>
+<li><p>the hidden state size of the RNN - <em>hyperparameter</em>.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Although the two hyperparameters can take on any value, it is usually good to start with something small that ensures fast training, as a way verifying that the model actually works.</p>
+</div>
+<div class="section" id="retrieving-the-last-vector-of-each-sequence">
+<h3><span class="section-number">4.2.1. </span>Retrieving the last vector of each sequence<a class="headerlink" href="#retrieving-the-last-vector-of-each-sequence" title="Permalink to this headline">¶</a></h3>
+<p>You will notice that the <code class="docutils literal notranslate"><span class="pre">forward()</span></code> function in the model requires the lengths of the sequences. The lengths are used to retrieve the final vector of each sequence in the tensor that is returned from the RNN with a function named <code class="docutils literal notranslate"><span class="pre">column_gather()</span></code>, shown below. The function iterates over batch row indices and retrieves the vector that’s at the position indicated by the
+corresponding length of sequence.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">column_gather</span><span class="p">(</span><span class="n">y_out</span><span class="p">,</span> <span class="n">x_lengths</span><span class="p">):</span>
@@ -961,9 +999,16 @@
         <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_out</span><span class="p">[</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">ElmanRNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-elmanrnn-model">
+<h3><span class="section-number">4.2.2. </span>The ElmanRNN model<a class="headerlink" href="#the-elmanrnn-model" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ElmanRNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; an Elman RNN built using the RNNCell &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1099,6 +1144,7 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="settings">
 <h2><span class="section-number">4.3. </span>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -1180,6 +1226,7 @@
 </div>
 <div class="section" id="training-routine">
 <h2><span class="section-number">4.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<p>The training routine follows the standard formula. For a single batch of data, apply the model and compute the prediction vectors. Use the <code class="docutils literal notranslate"><span class="pre">CrossEntropyLoss()</span></code> loss function and the ground truth to compute a loss value. Using the loss value and an optimizer, compute the gradients and update the weights of the model using those gradients. Repeat this for each batch in the training data. Proceed similarly with the validation data, but set the model in eval mode so as to prevent backpropagating. Instead, the validation data is used only to give a less­biased sense of how the model is performing. Repeat this routine for a specific number of epochs or a stopping condition (e.g. loss is less than a threshold, or loss stoped changing in the most recent two epochs) is met.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -1472,6 +1519,13 @@ Test Accuracy: 41.06249999999999
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<ul class="simple">
+<li><p>Play with the hyperparameters to get a sense of what affects performance and by how much, and to tabulate the results.</p></li>
+<li><p>The model implemented in here is general and not restricted to characters. The embedding layer in the model can map any discrete item in a sequence of discrete items. Consider reuse the code here for sentence or document classification.</p></li>
+</ul>
 </div>
 </div>
 </div>
