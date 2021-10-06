@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
+    <title>Lab11: GRU, LSTM and Seq2Seq &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Gated Recurrent Units (GRUs)" href="gru.html" />
+    <link rel="prev" title="4. Surname Classification with RNN" href="../rnn/Surname_Classification.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -87,7 +89,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -418,6 +420,43 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="current reference internal" href="#">
+   Lab11: GRU, LSTM and Seq2Seq
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="gru.html">
+     1. Gated Recurrent Units (GRUs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="lstm.html">
+     2. Long Short Term Memories (LSTMs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="gru_lstm_square.html">
+     3. The Square Model Using GRU and LSTM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Surname_Generation_Unconditioned.html">
+     4. Surname Generation - Unconditioned
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Surname_Generation_Conditioned.html">
+     5. Surname Generation Conditioned
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -494,14 +533,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -510,7 +541,12 @@
         
               <div>
                 
-  
+  <div class="section" id="lab11-gru-lstm-and-seq2seq">
+<h1>Lab11: GRU, LSTM and Seq2Seq<a class="headerlink" href="#lab11-gru-lstm-and-seq2seq" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -540,6 +576,24 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="../rnn/Surname_Classification.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>Surname Classification with RNN</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="gru.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">1. </span>Gated Recurrent Units (GRUs)</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

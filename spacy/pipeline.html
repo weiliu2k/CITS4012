@@ -420,6 +420,43 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../LSTM/intro.html">
+   Lab11: GRU, LSTM and Seq2Seq
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/gru.html">
+     1. Gated Recurrent Units (GRUs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/lstm.html">
+     2. Long Short Term Memories (LSTMs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/gru_lstm_square.html">
+     3. The Square Model Using GRU and LSTM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/Surname_Generation_Unconditioned.html">
+     4. Surname Generation - Unconditioned
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/Surname_Generation_Conditioned.html">
+     5. Surname Generation Conditioned
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -674,13 +711,13 @@
 <p>spaCy allows you to load a selected set of pipeline components, dis-abling those that aren’t necessary.</p>
 <p>You can do this either when creating a nlp object or disable it after the nlp object is created.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="fb049e80-445b-41d1-85f0-1faa8dbe4d2a" name="68cd7340-c12a-4a7c-9185-2c6737546110" type="radio">
-</input><label class="tabbed-label" for="fb049e80-445b-41d1-85f0-1faa8dbe4d2a">
+<input checked="checked" id="a7daa74e-0c5f-4b96-b067-983ec5c7ee1a" name="d1140a43-6166-4965-931c-a08113e1a061" type="radio">
+</input><label class="tabbed-label" for="a7daa74e-0c5f-4b96-b067-983ec5c7ee1a">
 Disabling when create</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp</span> <span class="pre">=</span> <span class="pre">spacy.load('en_core_web_sm',disable=['parser'])</span></code></p>
 </div>
-<input id="70f3ef6f-46da-4586-bdf4-797dbe3ecf72" name="68cd7340-c12a-4a7c-9185-2c6737546110" type="radio">
-</input><label class="tabbed-label" for="70f3ef6f-46da-4586-bdf4-797dbe3ecf72">
+<input id="b4409381-0e4c-443a-ab76-eb628052d35b" name="d1140a43-6166-4965-931c-a08113e1a061" type="radio">
+</input><label class="tabbed-label" for="b4409381-0e4c-443a-ab76-eb628052d35b">
 Disabling after creation</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('tagger')</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">nlp.disable_pipes('parser')</span></code></p>

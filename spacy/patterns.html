@@ -422,6 +422,43 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../LSTM/intro.html">
+   Lab11: GRU, LSTM and Seq2Seq
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/gru.html">
+     1. Gated Recurrent Units (GRUs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/lstm.html">
+     2. Long Short Term Memories (LSTMs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/gru_lstm_square.html">
+     3. The Square Model Using GRU and LSTM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/Surname_Generation_Unconditioned.html">
+     4. Surname Generation - Unconditioned
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/Surname_Generation_Conditioned.html">
+     5. Surname Generation Conditioned
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -565,19 +602,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="59086bca-0008-4798-9769-532df9344599" name="e68ca3c1-c2d8-40b8-bc35-4c9350b1871a" type="radio">
-</input><label class="tabbed-label" for="59086bca-0008-4798-9769-532df9344599">
+<input checked="checked" id="227bd226-cfd8-4368-ab17-42c05094764f" name="c5494f36-dee1-4bc6-a428-a16d558c5d98" type="radio">
+</input><label class="tabbed-label" for="227bd226-cfd8-4368-ab17-42c05094764f">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="9b97d8ea-d9c7-4fee-9266-0b7d66b1d8ac" name="e68ca3c1-c2d8-40b8-bc35-4c9350b1871a" type="radio">
-</input><label class="tabbed-label" for="9b97d8ea-d9c7-4fee-9266-0b7d66b1d8ac">
+<input id="db8a4906-cf4a-4587-969f-10f5fdb4dd69" name="c5494f36-dee1-4bc6-a428-a16d558c5d98" type="radio">
+</input><label class="tabbed-label" for="db8a4906-cf4a-4587-969f-10f5fdb4dd69">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="9c571733-53ed-4f8f-882f-07799af6b54f" name="e68ca3c1-c2d8-40b8-bc35-4c9350b1871a" type="radio">
-</input><label class="tabbed-label" for="9c571733-53ed-4f8f-882f-07799af6b54f">
+<input id="755961f9-ed23-4d94-9412-e65ed70993c4" name="c5494f36-dee1-4bc6-a428-a16d558c5d98" type="radio">
+</input><label class="tabbed-label" for="755961f9-ed23-4d94-9412-e65ed70993c4">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

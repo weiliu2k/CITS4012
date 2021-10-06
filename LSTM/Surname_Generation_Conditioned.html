@@ -1,0 +1,1784 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5. Surname Generation Conditioned &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="4. Surname Generation - Unconditioned" href="Surname_Generation_Unconditioned.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks and Pytorch
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_pytorch.html">
+     3. Linear Models in Pytorch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Lab06: Neural Network Building Blocks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/loss.html">
+     2. Loss Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     3. Dynamic Computational Graph in PyTorch
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/nn_oop.html">
+     4. Neural Networks in PyTorch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../embeddings/intro.html">
+   Lab07: Word Embeddings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../embeddings/svd.html">
+     1. Word Vectors from Word-Word Coocurrence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../embeddings/glove.html">
+     2. GloVe: Global Vectors for Word Representation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../embeddings/word2vec.html">
+     3. Word2Vec
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../classification/intro.html">
+   Lab08: Document Classification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/perceptron.html">
+     1. Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/data_prep.html">
+     2. Dataset and DataLoader
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/yelp_preprocessing.html">
+     3. Yelp Dataset at a glance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/yelp.html">
+     4. Yelp Review Dataset - Document Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cnn/intro.html">
+   Lab09: CNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/dataset_frankenstein_processing.html">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/CBOW.html">
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/convolution.html">
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/dataset_AG_News_processing.html">
+     4. AG News Dataset at A Glance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+     5. Using CNN for Document Classification with Embeddings
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../rnn/intro.html">
+   Lab10: RNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/rnn.html">
+     1. Recurrent Neural Networks - Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/elman_rnn_square.html">
+     2. Classifying Synthetic Sequences - The Square Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/Surname_Dataset.html">
+     3. Surname Dataset Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/Surname_Classification.html">
+     4. Surname Classification with RNN
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
+   Lab11: GRU, LSTM and Seq2Seq
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="gru.html">
+     1. Gated Recurrent Units (GRUs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="lstm.html">
+     2. Long Short Term Memories (LSTMs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="gru_lstm_square.html">
+     3. The Square Model Using GRU and LSTM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Surname_Generation_Unconditioned.html">
+     4. Surname Generation - Unconditioned
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     5. Surname Generation Conditioned
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
+   data.zip
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/weiliu2k/CITS4012/raw/master/CITS4012LabBook.pdf">
+   PDF
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/LSTM/Surname_Generation_Conditioned.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/LSTM/Surname_Generation_Conditioned.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   5.1. Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-vectorization-classes">
+   5.2. Data Vectorization classes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vocabulary">
+     5.2.1. Vocabulary
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vectorizer">
+     5.2.2. Vectorizer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataset">
+     5.2.3. Dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-model-surnamegenerationmodel">
+   5.3. The Model: SurnameGenerationModel
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-routine">
+   5.4. Training Routine
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#helper-functions">
+     5.4.1. Helper functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-utilities">
+     5.4.2. General utilities
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#settings-and-some-prep-work">
+     5.4.3. Settings and some prep work
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initializations">
+     5.4.4. Initializations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-loop">
+     5.4.5. Training loop
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sampling">
+   5.5. Sampling
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="surname-generation-conditioned">
+<h1><span class="section-number">5. </span>Surname Generation Conditioned<a class="headerlink" href="#surname-generation-conditioned" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="imports">
+<h2><span class="section-number">5.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="data-vectorization-classes">
+<h2><span class="section-number">5.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vocabulary">
+<h3><span class="section-number">5.2.1. </span>Vocabulary<a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to process text and extract vocabulary for mapping&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_to_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            token_to_idx (dict): a pre-existing map of tokens to indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">token_to_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">token_to_idx</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span> <span class="o">=</span> <span class="n">token_to_idx</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_token</span> <span class="o">=</span> <span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="n">token</span> 
+                              <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        
+    <span class="k">def</span> <span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; returns a dictionary that can be serialized &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;token_to_idx&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; instantiates the Vocabulary from a serialized dictionary &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">contents</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update mapping dicts based on the token.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            token (str): the item to add into the Vocabulary</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            index (int): the integer corresponding to the token</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_token</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="k">return</span> <span class="n">index</span>
+            
+    <span class="k">def</span> <span class="nf">add_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a list of tokens into the Vocabulary</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            tokens (list): a list of string tokens</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            indices (list): a list of indices corresponding to the tokens</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">lookup_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the index associated with the token </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            token (str): the token to look up </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            index (int): the index corresponding to the token</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">lookup_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the token associated with the index</span>
+<span class="sd">        </span>
+<span class="sd">        Args: </span>
+<span class="sd">            index (int): the index to look up</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            token (str): the token corresponding to the index</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            KeyError: if the index is not in the Vocabulary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_token</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;the index (</span><span class="si">%d</span><span class="s2">) is not in the Vocabulary&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_token</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;Vocabulary(size=</span><span class="si">%d</span><span class="s2">)&gt;&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SequenceVocabulary</span><span class="p">(</span><span class="n">Vocabulary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_to_idx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unk_token</span><span class="o">=</span><span class="s2">&quot;&lt;UNK&gt;&quot;</span><span class="p">,</span>
+                 <span class="n">mask_token</span><span class="o">=</span><span class="s2">&quot;&lt;MASK&gt;&quot;</span><span class="p">,</span> <span class="n">begin_seq_token</span><span class="o">=</span><span class="s2">&quot;&lt;BEGIN&gt;&quot;</span><span class="p">,</span>
+                 <span class="n">end_seq_token</span><span class="o">=</span><span class="s2">&quot;&lt;END&gt;&quot;</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">SequenceVocabulary</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">token_to_idx</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mask_token</span> <span class="o">=</span> <span class="n">mask_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span> <span class="o">=</span> <span class="n">unk_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_begin_seq_token</span> <span class="o">=</span> <span class="n">begin_seq_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_end_seq_token</span> <span class="o">=</span> <span class="n">end_seq_token</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mask_token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin_seq_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_begin_seq_token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_seq_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_end_seq_token</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SequenceVocabulary</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">()</span>
+        <span class="n">contents</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;unk_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unk_token</span><span class="p">,</span>
+                         <span class="s1">&#39;mask_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_token</span><span class="p">,</span>
+                         <span class="s1">&#39;begin_seq_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_begin_seq_token</span><span class="p">,</span>
+                         <span class="s1">&#39;end_seq_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_seq_token</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">contents</span>
+
+    <span class="k">def</span> <span class="nf">lookup_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the index associated with the token </span>
+<span class="sd">          or the UNK index if token isn&#39;t present.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            token (str): the token to look up </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            index (int): the index corresponding to the token</span>
+<span class="sd">        Notes:</span>
+<span class="sd">            `unk_index` needs to be &gt;=0 (having been added into the Vocabulary) </span>
+<span class="sd">              for the UNK functionality </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unk_index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token_to_idx</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="vectorizer">
+<h3><span class="section-number">5.2.2. </span>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The Vectorizer which coordinates the Vocabularies and puts them to use&quot;&quot;&quot;</span>    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char_vocab</span><span class="p">,</span> <span class="n">nationality_vocab</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            char_vocab (SequenceVocabulary): maps words to integers</span>
+<span class="sd">            nationality_vocab (Vocabulary): maps nationalities to integers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span> <span class="o">=</span> <span class="n">char_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nationality_vocab</span> <span class="o">=</span> <span class="n">nationality_vocab</span>
+
+    <span class="k">def</span> <span class="nf">vectorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">vector_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Vectorize a surname into a vector of observations and targets</span>
+<span class="sd">        </span>
+<span class="sd">        The outputs are the vectorized surname split into two vectors:</span>
+<span class="sd">            surname[:-1] and surname[1:]</span>
+<span class="sd">        At each timestep, the first vector is the observation and the second vector is the target. </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            surname (str): the surname to be vectorized</span>
+<span class="sd">            vector_length (int): an argument for forcing the length of index vector</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            a tuple: (from_vector, to_vector)</span>
+<span class="sd">            from_vector (numpy.ndarray): the observation vector </span>
+<span class="sd">            to_vector (numpy.ndarray): the target prediction vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">begin_seq_index</span><span class="p">]</span> 
+        <span class="n">indices</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">surname</span><span class="p">)</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">end_seq_index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">vector_length</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">vector_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">from_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vector_length</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>         
+        <span class="n">from_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">from_vector</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">from_indices</span><span class="p">)]</span> <span class="o">=</span> <span class="n">from_indices</span>
+        <span class="n">from_vector</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">from_indices</span><span class="p">):]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">mask_index</span>
+
+        <span class="n">to_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vector_length</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">to_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">to_vector</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">to_indices</span><span class="p">)]</span> <span class="o">=</span> <span class="n">to_indices</span>
+        <span class="n">to_vector</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">to_indices</span><span class="p">):]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">mask_index</span>
+        
+        <span class="k">return</span> <span class="n">from_vector</span><span class="p">,</span> <span class="n">to_vector</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">surname_df</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Instantiate the vectorizer from the dataset dataframe</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            surname_df (pandas.DataFrame): the surname dataset</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            an instance of the SurnameVectorizer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">char_vocab</span> <span class="o">=</span> <span class="n">SequenceVocabulary</span><span class="p">()</span>
+        <span class="n">nationality_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">surname_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">surname</span><span class="p">:</span>
+                <span class="n">char_vocab</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+            <span class="n">nationality_vocab</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">nationality</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">char_vocab</span><span class="p">,</span> <span class="n">nationality_vocab</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">contents</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Instantiate the vectorizer from saved contents</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            contents (dict): a dict holding two vocabularies for this vectorizer</span>
+<span class="sd">                This dictionary is created using `vectorizer.to_serializable()`</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            an instance of SurnameVectorizer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">char_vocab</span> <span class="o">=</span> <span class="n">SequenceVocabulary</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="s1">&#39;char_vocab&#39;</span><span class="p">])</span>
+        <span class="n">nat_vocab</span> <span class="o">=</span>  <span class="n">Vocabulary</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="s1">&#39;nationality_vocab&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">char_vocab</span><span class="o">=</span><span class="n">char_vocab</span><span class="p">,</span> <span class="n">nationality_vocab</span><span class="o">=</span><span class="n">nat_vocab</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the serializable contents &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;char_vocab&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">(),</span> 
+                <span class="s1">&#39;nationality_vocab&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dataset">
+<h3><span class="section-number">5.2.3. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">surname_df</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            surname_df (pandas.DataFrame): the dataset</span>
+<span class="sd">            vectorizer (SurnameVectorizer): vectorizer instatiated from dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span> <span class="o">=</span> <span class="n">surname_df</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span> <span class="o">=</span> <span class="n">vectorizer</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="o">.</span><span class="n">surname</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_df</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validation_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_df</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">surname_df</span><span class="o">.</span><span class="n">split</span><span class="o">==</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_df</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lookup_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_size</span><span class="p">),</span> 
+                             <span class="s1">&#39;val&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_size</span><span class="p">),</span> 
+                             <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_size</span><span class="p">)}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+        
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">surname_csv</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load dataset and make a new vectorizer from scratch</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            surname_csv (str): location of the dataset</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            an instance of SurnameDataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">surname_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">surname_csv</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">surname_df</span><span class="p">,</span> <span class="n">SurnameVectorizer</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">surname_df</span><span class="p">))</span>
+        
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">surname_csv</span><span class="p">,</span> <span class="n">vectorizer_filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load dataset and the corresponding vectorizer. </span>
+<span class="sd">        Used in the case in the vectorizer has been cached for re-use</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            surname_csv (str): location of the dataset</span>
+<span class="sd">            vectorizer_filepath (str): location of the saved vectorizer</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            an instance of SurnameDataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">surname_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">surname_csv</span><span class="p">)</span>
+        <span class="n">vectorizer</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load_vectorizer_only</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">surname_df</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_vectorizer_only</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;a static method for loading the vectorizer from file</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vectorizer_filepath (str): the location of the serialized vectorizer</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            an instance of SurnameVectorizer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SurnameVectorizer</span><span class="o">.</span><span class="n">from_serializable</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">save_vectorizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vectorizer_filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;saves the vectorizer to disk using json</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vectorizer_filepath (str): the location to save the vectorizer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">vectorizer_filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">(),</span> <span class="n">fp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_vectorizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; returns the vectorizer &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span>
+
+    <span class="k">def</span> <span class="nf">set_split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_split</span> <span class="o">=</span> <span class="n">split</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lookup_dict</span><span class="p">[</span><span class="n">split</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_size</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;the primary entry point method for PyTorch datasets</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): the index to the data point </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            a dictionary holding the data point: (x_data, y_target, class_index)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        
+        <span class="n">from_vector</span><span class="p">,</span> <span class="n">to_vector</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">surname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_length</span><span class="p">)</span>
+        
+        <span class="n">nationality_index</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="o">.</span><span class="n">lookup_token</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">nationality</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x_data&#39;</span><span class="p">:</span> <span class="n">from_vector</span><span class="p">,</span> 
+                <span class="s1">&#39;y_target&#39;</span><span class="p">:</span> <span class="n">to_vector</span><span class="p">,</span> 
+                <span class="s1">&#39;class_index&#39;</span><span class="p">:</span> <span class="n">nationality_index</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">get_num_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a batch size, return the number of batches in the dataset</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            batch_size (int)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            number of batches in the dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">//</span> <span class="n">batch_size</span>
+    
+<span class="k">def</span> <span class="nf">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                     <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A generator function which wraps the PyTorch DataLoader. It will </span>
+<span class="sd">      ensure each tensor is on the write device location.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="n">drop_last</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">data_dict</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">out_data_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tensor</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">out_data_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">out_data_dict</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0., 0., 0., 0., 0.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0., 0., 0., 0., 0.], device=&#39;cuda:0&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-model-surnamegenerationmodel">
+<h2><span class="section-number">5.3. </span>The Model: SurnameGenerationModel<a class="headerlink" href="#the-model-surnamegenerationmodel" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameGenerationModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char_embedding_size</span><span class="p">,</span> <span class="n">char_vocab_size</span><span class="p">,</span> <span class="n">num_nationalities</span><span class="p">,</span>
+                 <span class="n">rnn_hidden_size</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dropout_p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            char_embedding_size (int): The size of the character embeddings</span>
+<span class="sd">            char_vocab_size (int): The number of characters to embed</span>
+<span class="sd">            num_nationalities (int): The size of the prediction vector </span>
+<span class="sd">            rnn_hidden_size (int): The size of the RNN&#39;s hidden state</span>
+<span class="sd">            batch_first (bool): Informs whether the input tensors will </span>
+<span class="sd">                have batch or the sequence on the 0th dimension</span>
+<span class="sd">            padding_idx (int): The index for the tensor padding; </span>
+<span class="sd">                see torch.nn.Embedding</span>
+<span class="sd">            dropout_p (float): the probability of zeroing activations using</span>
+<span class="sd">                the dropout method.  higher means more likely to zero.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SurnameGenerationModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_embeddings</span><span class="o">=</span><span class="n">char_vocab_size</span><span class="p">,</span>
+                                     <span class="n">embedding_dim</span><span class="o">=</span><span class="n">char_embedding_size</span><span class="p">,</span>
+                                     <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nation_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_embeddings</span><span class="o">=</span><span class="n">num_nationalities</span><span class="p">,</span>
+                                       <span class="n">embedding_dim</span><span class="o">=</span><span class="n">rnn_hidden_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="n">char_embedding_size</span><span class="p">,</span> 
+                          <span class="n">hidden_size</span><span class="o">=</span><span class="n">rnn_hidden_size</span><span class="p">,</span>
+                          <span class="n">batch_first</span><span class="o">=</span><span class="n">batch_first</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="n">rnn_hidden_size</span><span class="p">,</span> 
+                            <span class="n">out_features</span><span class="o">=</span><span class="n">char_vocab_size</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dropout_p</span> <span class="o">=</span> <span class="n">dropout_p</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_in</span><span class="p">,</span> <span class="n">nationality_index</span><span class="p">,</span> <span class="n">apply_softmax</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The forward pass of the model</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            x_in (torch.Tensor): an input data tensor. </span>
+<span class="sd">                x_in.shape should be (batch, max_seq_size)</span>
+<span class="sd">            nationality_index (torch.Tensor): The index of the nationality for each data point</span>
+<span class="sd">                Used to initialize the hidden state of the RNN</span>
+<span class="sd">            apply_softmax (bool): a flag for the softmax activation</span>
+<span class="sd">                should be false if used with the Cross Entropy losses</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the resulting tensor. tensor.shape should be (batch, char_vocab_size)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_emb</span><span class="p">(</span><span class="n">x_in</span><span class="p">)</span>
+        
+        <span class="c1"># hidden_size: (num_layers * num_directions, batch_size, rnn_hidden_size)</span>
+        <span class="n">nationality_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nation_emb</span><span class="p">(</span><span class="n">nationality_index</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">y_out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">x_embedded</span><span class="p">,</span> <span class="n">nationality_embedded</span><span class="p">)</span>
+
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_size</span><span class="p">,</span> <span class="n">feat_size</span> <span class="o">=</span> <span class="n">y_out</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">y_out</span> <span class="o">=</span> <span class="n">y_out</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">seq_size</span><span class="p">,</span> <span class="n">feat_size</span><span class="p">)</span>
+
+        <span class="n">y_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">y_out</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dropout_p</span><span class="p">))</span>
+                         
+        <span class="k">if</span> <span class="n">apply_softmax</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y_out</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">new_feat_size</span> <span class="o">=</span> <span class="n">y_out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">y_out</span> <span class="o">=</span> <span class="n">y_out</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_size</span><span class="p">,</span> <span class="n">new_feat_size</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">y_out</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_from_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
+                      <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sample a sequence of indices from the model</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        model (SurnameGenerationModel): the trained model</span>
+<span class="sd">        vectorizer (SurnameVectorizer): the corresponding vectorizer</span>
+<span class="sd">        nationalities (list): a list of integers representing nationalities</span>
+<span class="sd">        sample_size (int): the max length of the samples</span>
+<span class="sd">        temperature (float): accentuates or flattens </span>
+<span class="sd">            the distribution. </span>
+<span class="sd">            0.0 &lt; temperature &lt; 1.0 will make it peakier. </span>
+<span class="sd">            temperature &gt; 1.0 will make it more uniform</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        indices (torch.Tensor): the matrix of indices; </span>
+<span class="sd">        shape = (num_samples, sample_size)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nationalities</span><span class="p">)</span>
+    <span class="n">begin_seq_index</span> <span class="o">=</span> <span class="p">[</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">begin_seq_index</span> 
+                       <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)]</span>
+    <span class="n">begin_seq_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">begin_seq_index</span><span class="p">,</span> 
+                                   <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">begin_seq_index</span><span class="p">]</span>
+    <span class="n">nationality_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">h_t</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">nation_emb</span><span class="p">(</span><span class="n">nationality_indices</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">time_step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sample_size</span><span class="p">):</span>
+        <span class="n">x_t</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">time_step</span><span class="p">]</span>
+        <span class="n">x_emb_t</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">char_emb</span><span class="p">(</span><span class="n">x_t</span><span class="p">)</span>
+        <span class="n">rnn_out_t</span><span class="p">,</span> <span class="n">h_t</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">x_emb_t</span><span class="p">,</span> <span class="n">h_t</span><span class="p">)</span>
+        <span class="n">prediction_vector</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">rnn_out_t</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">probability_vector</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">prediction_vector</span> <span class="o">/</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">probability_vector</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">indices</span>
+
+<span class="k">def</span> <span class="nf">decode_samples</span><span class="p">(</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transform indices into the string form of a surname</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sampled_indices (torch.Tensor): the inidces from `sample_from_model`</span>
+<span class="sd">        vectorizer (SurnameVectorizer): the corresponding vectorizer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">decoded_surnames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">vocab</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">char_vocab</span>
+    
+    <span class="k">for</span> <span class="n">sample_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sampled_indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">surname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">time_step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sampled_indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">sample_item</span> <span class="o">=</span> <span class="n">sampled_indices</span><span class="p">[</span><span class="n">sample_index</span><span class="p">,</span> <span class="n">time_step</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sample_item</span> <span class="o">==</span> <span class="n">vocab</span><span class="o">.</span><span class="n">begin_seq_index</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">sample_item</span> <span class="o">==</span> <span class="n">vocab</span><span class="o">.</span><span class="n">end_seq_index</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">surname</span> <span class="o">+=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">sample_item</span><span class="p">)</span>
+        <span class="n">decoded_surnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">surname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">decoded_surnames</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-routine">
+<h2><span class="section-number">5.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="helper-functions">
+<h3><span class="section-number">5.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;stop_early&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;early_stopping_step&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;early_stopping_best_val&#39;</span><span class="p">:</span> <span class="mf">1e8</span><span class="p">,</span>
+            <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="s1">&#39;epoch_index&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;train_loss&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;train_acc&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;test_loss&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;test_acc&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;model_filename&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">model_state_file</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">update_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">train_state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handle the training state updates.</span>
+<span class="sd">    Components:</span>
+<span class="sd">     - Early Stopping: Prevent overfitting.</span>
+<span class="sd">     - Model Checkpoint: Model is saved if the model is better</span>
+<span class="sd">    </span>
+<span class="sd">    :param args: main arguments</span>
+<span class="sd">    :param model: model to train</span>
+<span class="sd">    :param train_state: a dictionary representing the training state values</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        a new train_state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Save one model at least</span>
+    <span class="k">if</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;epoch_index&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;model_filename&#39;</span><span class="p">])</span>
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;stop_early&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Save model if performance improved</span>
+    <span class="k">elif</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;epoch_index&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">loss_tm1</span><span class="p">,</span> <span class="n">loss_t</span> <span class="o">=</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+         
+        <span class="c1"># If loss worsened</span>
+        <span class="k">if</span> <span class="n">loss_t</span> <span class="o">&gt;=</span> <span class="n">loss_tm1</span><span class="p">:</span>
+            <span class="c1"># Update step</span>
+            <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;early_stopping_step&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># Loss decreased</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Save the best model</span>
+            <span class="k">if</span> <span class="n">loss_t</span> <span class="o">&lt;</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;early_stopping_best_val&#39;</span><span class="p">]:</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;model_filename&#39;</span><span class="p">])</span>
+                <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;early_stopping_best_val&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loss_t</span>
+
+            <span class="c1"># Reset early stopping step</span>
+            <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;early_stopping_step&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Stop early ?</span>
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;stop_early&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;early_stopping_step&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">args</span><span class="o">.</span><span class="n">early_stopping_criteria</span>
+
+    <span class="k">return</span> <span class="n">train_state</span>
+
+<span class="k">def</span> <span class="nf">normalize_sizes</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normalize tensor sizes</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        y_pred (torch.Tensor): the output of the model</span>
+<span class="sd">            If a 3-dimensional tensor, reshapes to a matrix</span>
+<span class="sd">        y_true (torch.Tensor): the target predictions</span>
+<span class="sd">            If a matrix, reshapes to be a vector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_true</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span>
+
+<span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">):</span>
+    <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">normalize_sizes</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">y_pred_indices</span> <span class="o">=</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">correct_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">y_pred_indices</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">valid_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    
+    <span class="n">n_correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">correct_indices</span> <span class="o">*</span> <span class="n">valid_indices</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">n_valid</span> <span class="o">=</span> <span class="n">valid_indices</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">n_correct</span> <span class="o">/</span> <span class="n">n_valid</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">sequence_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">):</span>
+    <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">normalize_sizes</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="n">mask_index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="general-utilities">
+<h3><span class="section-number">5.4.2. </span>General utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">handle_dirs</span><span class="p">(</span><span class="n">dirpath</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dirpath</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="settings-and-some-prep-work">
+<h3><span class="section-number">5.4.3. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
+    <span class="c1"># Data and Path information</span>
+    <span class="n">surname_csv</span><span class="o">=</span><span class="s2">&quot;../data/surnames/surnames_with_splits.csv&quot;</span><span class="p">,</span>
+    <span class="n">vectorizer_file</span><span class="o">=</span><span class="s2">&quot;vectorizer.json&quot;</span><span class="p">,</span>
+    <span class="n">model_state_file</span><span class="o">=</span><span class="s2">&quot;model.pth&quot;</span><span class="p">,</span>
+    <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;model_storage/model2_conditioned_surname_generation&quot;</span><span class="p">,</span>
+    <span class="c1"># Model hyper parameters</span>
+    <span class="n">char_embedding_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">rnn_hidden_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="c1"># Training hyper parameters</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+    <span class="n">num_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">early_stopping_criteria</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="c1"># Runtime options</span>
+    <span class="n">catch_keyboard_interrupt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cuda</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">expand_filepaths_to_save_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">reload_from_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">expand_filepaths_to_save_dir</span><span class="p">:</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
+                                        <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
+
+    <span class="n">args</span><span class="o">.</span><span class="n">model_state_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
+                                         <span class="n">args</span><span class="o">.</span><span class="n">model_state_file</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Expanded filepaths: &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_state_file</span><span class="p">))</span>
+    
+<span class="c1"># Check CUDA</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">cuda</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">args</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cuda</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using CUDA: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">))</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">set_seed_everywhere</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">)</span>
+
+<span class="c1"># handle dirs</span>
+<span class="n">handle_dirs</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expanded filepaths: 
+	model_storage/model2_conditioned_surname_generation\vectorizer.json
+	model_storage/model2_conditioned_surname_generation\model.pth
+Using CUDA: True
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="initializations">
+<h3><span class="section-number">5.4.4. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">reload_from_files</span><span class="p">:</span>
+    <span class="c1"># training from a checkpoint</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">SurnameDataset</span><span class="o">.</span><span class="n">load_dataset_and_load_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">surname_csv</span><span class="p">,</span>
+                                                              <span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># create dataset and vectorizer</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">SurnameDataset</span><span class="o">.</span><span class="n">load_dataset_and_make_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">surname_csv</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">save_vectorizer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">vectorizer_file</span><span class="p">)</span>
+
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_vectorizer</span><span class="p">()</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SurnameGenerationModel</span><span class="p">(</span><span class="n">char_embedding_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">char_embedding_size</span><span class="p">,</span>
+                               <span class="n">char_vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">char_vocab</span><span class="p">),</span>
+                               <span class="n">num_nationalities</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="p">),</span>
+                               <span class="n">rnn_hidden_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">rnn_hidden_size</span><span class="p">,</span>
+                               <span class="n">padding_idx</span><span class="o">=</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">mask_index</span><span class="p">,</span>
+                               <span class="n">dropout_p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-loop">
+<h3><span class="section-number">5.4.5. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask_index</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">mask_index</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+                                           <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                           <span class="n">patience</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">train_state</span> <span class="o">=</span> <span class="n">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
+                          <span class="n">total</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">,</span>
+                          <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=train&#39;</span><span class="p">,</span>
+                          <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_num_batches</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> 
+                          <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                          <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;val&#39;</span><span class="p">)</span>
+<span class="n">val_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=val&#39;</span><span class="p">,</span>
+                        <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_num_batches</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> 
+                        <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                        <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">epoch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">):</span>
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;epoch_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch_index</span>
+
+        <span class="c1"># Iterate over training dataset</span>
+
+        <span class="c1"># setup: batch generator, set loss and acc to 0, set train mode on</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+        <span class="n">batch_generator</span> <span class="o">=</span> <span class="n">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> 
+                                           <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> 
+                                           <span class="n">device</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">running_acc</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">batch_index</span><span class="p">,</span> <span class="n">batch_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_generator</span><span class="p">):</span>
+            <span class="c1"># the training routine is these 5 steps:</span>
+
+            <span class="c1"># --------------------------------------    </span>
+            <span class="c1"># step 1. zero the gradients</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+            <span class="c1"># step 2. compute the output</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">],</span> 
+                           <span class="n">nationality_index</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;class_index&#39;</span><span class="p">])</span>
+
+            <span class="c1"># step 3. compute the loss</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">sequence_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">],</span> <span class="n">mask_index</span><span class="p">)</span>
+
+
+            <span class="c1"># step 4. use loss to produce gradients</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+            <span class="c1"># step 5. use optimizer to take gradient step</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="c1"># -----------------------------------------</span>
+            <span class="c1"># compute the  running loss and running accuracy</span>
+            <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">acc_t</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">],</span> <span class="n">mask_index</span><span class="p">)</span>
+            <span class="n">running_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">acc_t</span> <span class="o">-</span> <span class="n">running_acc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># update bar</span>
+            <span class="n">train_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">running_loss</span><span class="p">,</span>
+                                  <span class="n">acc</span><span class="o">=</span><span class="n">running_acc</span><span class="p">,</span>
+                                  <span class="n">epoch</span><span class="o">=</span><span class="n">epoch_index</span><span class="p">)</span>
+            <span class="n">train_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;train_loss&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_loss</span><span class="p">)</span>
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;train_acc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_acc</span><span class="p">)</span>
+
+        <span class="c1"># Iterate over val dataset</span>
+
+        <span class="c1"># setup: batch generator, set loss and acc to 0; set eval mode on</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;val&#39;</span><span class="p">)</span>
+        <span class="n">batch_generator</span> <span class="o">=</span> <span class="n">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> 
+                                           <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> 
+                                           <span class="n">device</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">running_acc</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">batch_index</span><span class="p">,</span> <span class="n">batch_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_generator</span><span class="p">):</span>
+            <span class="c1"># compute the output</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">],</span> 
+                           <span class="n">nationality_index</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;class_index&#39;</span><span class="p">])</span>
+
+            <span class="c1"># step 3. compute the loss</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">sequence_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">],</span> <span class="n">mask_index</span><span class="p">)</span>
+
+            <span class="c1"># compute the  running loss and running accuracy</span>
+            <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">acc_t</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">],</span> <span class="n">mask_index</span><span class="p">)</span>
+            <span class="n">running_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">acc_t</span> <span class="o">-</span> <span class="n">running_acc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            
+            <span class="c1"># Update bar</span>
+            <span class="n">val_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">running_loss</span><span class="p">,</span> <span class="n">acc</span><span class="o">=</span><span class="n">running_acc</span><span class="p">,</span> 
+                            <span class="n">epoch</span><span class="o">=</span><span class="n">epoch_index</span><span class="p">)</span>
+            <span class="n">val_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_loss</span><span class="p">)</span>
+        <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;val_acc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_acc</span><span class="p">)</span>
+
+        <span class="n">train_state</span> <span class="o">=</span> <span class="n">update_train_state</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> 
+                                         <span class="n">train_state</span><span class="o">=</span><span class="n">train_state</span><span class="p">)</span>
+
+        <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;stop_early&#39;</span><span class="p">]:</span>
+            <span class="k">break</span>
+            
+        <span class="c1"># move model to cpu for sampling</span>
+        
+        <span class="n">nationalities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="p">)),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">sampled_surnames</span> <span class="o">=</span> <span class="n">decode_samples</span><span class="p">(</span>
+            <span class="n">sample_from_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span> <span class="n">nationalities</span><span class="o">=</span><span class="n">nationalities</span><span class="p">),</span> 
+            <span class="n">vectorizer</span><span class="p">)</span>
+        
+        <span class="n">sample1</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-&gt;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">nationalities</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> 
+                                  <span class="n">sampled_surnames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">sample2</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-&gt;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">nationalities</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> 
+                                  <span class="n">sampled_surnames</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">epoch_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">sample1</span><span class="o">=</span><span class="n">sample1</span><span class="p">,</span> 
+                              <span class="n">sample2</span><span class="o">=</span><span class="n">sample2</span><span class="p">)</span>
+        <span class="c1"># move model back to whichever device it should be on</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="n">train_bar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">val_bar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">epoch_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exiting loop&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "efbb541c1e6144bf9f7097f29032b2fe"}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "26a3e9d57d4f463699ff47e8749a96e7"}
+</script><script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "47cc83474bec4cfe84a2cc03d80e6a3b"}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the loss &amp; accuracy on the test set using the best available model</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;model_filename&#39;</span><span class="p">]))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+<span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">batch_generator</span> <span class="o">=</span> <span class="n">generate_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> 
+                                   <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> 
+                                   <span class="n">device</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="n">running_acc</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">batch_index</span><span class="p">,</span> <span class="n">batch_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_generator</span><span class="p">):</span>
+    <span class="c1"># compute the output</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_in</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;x_data&#39;</span><span class="p">],</span> 
+                   <span class="n">nationality_index</span><span class="o">=</span><span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;class_index&#39;</span><span class="p">])</span>
+
+    <span class="c1"># compute the loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">sequence_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">],</span> <span class="n">mask_index</span><span class="p">)</span>
+    
+    <span class="c1"># compute the running loss and running accuracy</span>
+    <span class="n">running_loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">-</span> <span class="n">running_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">acc_t</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">batch_dict</span><span class="p">[</span><span class="s1">&#39;y_target&#39;</span><span class="p">],</span> <span class="n">mask_index</span><span class="p">)</span>
+    <span class="n">running_acc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">acc_t</span> <span class="o">-</span> <span class="n">running_acc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_loss&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">running_loss</span> 
+<span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_acc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">running_acc</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test loss: </span><span class="si">{}</span><span class="s2">;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_loss&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_state</span><span class="p">[</span><span class="s1">&#39;test_acc&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test loss: 2.4188760916392007;
+Test Accuracy: 28.964094993312216
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sampling">
+<h2><span class="section-number">5.5. </span>Sampling<a class="headerlink" href="#sampling" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="p">)):</span>
+    <span class="n">nationality</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">nationality_vocab</span><span class="o">.</span><span class="n">lookup_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sampled for </span><span class="si">{}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nationality</span><span class="p">))</span>
+    <span class="n">sampled_indices</span> <span class="o">=</span> <span class="n">sample_from_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span>  
+                                        <span class="n">nationalities</span><span class="o">=</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> 
+                                        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sampled_surname</span> <span class="ow">in</span> <span class="n">decode_samples</span><span class="p">(</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-  &quot;</span> <span class="o">+</span> <span class="n">sampled_surname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampled for Arabic: 
+-  Bohama
+-  Badol
+-  Setar
+Sampled for Chinese: 
+-  Anga
+-  Anfo
+-  Mini
+Sampled for Czech: 
+-  Chakabins
+-  Fringo
+-  Altrora
+Sampled for Dutch: 
+-  Harlach
+-  Himtell
+-  Methabel
+Sampled for English: 
+-  Storel
+-  Hurin
+-  Fiente
+Sampled for French: 
+-  Dirnis
+-  Piin
+-  Malbello
+Sampled for German: 
+-  Wesnen
+-  Tinnit
+-  Kachark
+Sampled for Greek: 
+-  Minusha
+-  Yichekse
+-  Alelagon
+Sampled for Irish: 
+-  Solley
+-  Warahin
+-  Ciwene
+Sampled for Italian: 
+-  Aceahe
+-  Ansatea
+-  Hyras
+Sampled for Japanese: 
+-  Vosani
+-  Tunago
+-  Staroka
+Sampled for Korean: 
+-  Co
+-  Ded
+-  Tes
+Sampled for Polish: 
+-  Sovzon
+-  Povourov
+-  Haera
+Sampled for Portuguese: 
+-  Giagori
+-  Neara
+-  Firnou
+Sampled for Russian: 
+-  Kavanon
+-  Askanek
+-  Turendov
+Sampled for Scottish: 
+-  Miwodr
+-  Korothrin
+-  Teneitin
+Sampled for Spanish: 
+-  Arnkir
+-  Ccille
+-  Barn
+Sampled for Vietnamese: 
+-  Na
+-  Kinno
+-  Lan
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./LSTM"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="Surname_Generation_Unconditioned.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>Surname Generation - Unconditioned</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
