@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6. Surname Generation - Unconditioned &#8212; CITS4012 Natural Language Processing</title>
+    <title>5. Surname Generation - Unconditioned &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="7. Surname Generation Conditioned" href="Surname_Generation_Conditioned.html" />
+    <link rel="next" title="6. Surname Generation Conditioned" href="Surname_Generation_Conditioned.html" />
     <link rel="prev" title="4. Sequence to Sequence Models" href="seq2seq.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -452,12 +452,12 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     6. Surname Generation - Unconditioned
+     5. Surname Generation - Unconditioned
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Surname_Generation_Conditioned.html">
-     7. Surname Generation Conditioned
+     6. Surname Generation Conditioned
     </a>
    </li>
   </ul>
@@ -565,71 +565,71 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#imports">
-   6.1. Imports
+   5.1. Imports
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-vectorization-classes">
-   6.2. Data Vectorization classes
+   5.2. Data Vectorization classes
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#vocabulary">
-     6.2.1. Vocabulary
+     5.2.1. Vocabulary
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#vectorizer">
-     6.2.2. Vectorizer
+     5.2.2. Vectorizer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#dataset">
-     6.2.3. Dataset
+     5.2.3. Dataset
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-model-surnamegenerationmodel">
-   6.3. The Model: SurnameGenerationModel
+   5.3. The Model: SurnameGenerationModel
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine">
-   6.4. Training Routine
+   5.4. Training Routine
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#helper-functions">
-     6.4.1. Helper functions
+     5.4.1. Helper functions
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#general-utilities">
-     6.4.2. General utilities
+     5.4.2. General utilities
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#settings-and-some-prep-work">
-     6.4.3. Settings and some prep work
+     5.4.3. Settings and some prep work
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#initializations">
-     6.4.4. Initializations
+     5.4.4. Initializations
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-loop">
-     6.4.5. Training loop
+     5.4.5. Training loop
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#inference">
-   6.5. Inference
+   5.5. Inference
   </a>
  </li>
 </ul>
@@ -644,9 +644,9 @@
               <div>
                 
   <div class="section" id="surname-generation-unconditioned">
-<h1><span class="section-number">6. </span>Surname Generation - Unconditioned<a class="headerlink" href="#surname-generation-unconditioned" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">5. </span>Surname Generation - Unconditioned<a class="headerlink" href="#surname-generation-unconditioned" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="imports">
-<h2><span class="section-number">6.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -670,9 +670,9 @@
 </div>
 </div>
 <div class="section" id="data-vectorization-classes">
-<h2><span class="section-number">6.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Data Vectorization classes<a class="headerlink" href="#data-vectorization-classes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="vocabulary">
-<h3><span class="section-number">6.2.1. </span>Vocabulary<a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.1. </span>Vocabulary<a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -808,7 +808,7 @@
 </div>
 </div>
 <div class="section" id="vectorizer">
-<h3><span class="section-number">6.2.2. </span>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.2. </span>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -900,7 +900,7 @@
 </div>
 </div>
 <div class="section" id="dataset">
-<h3><span class="section-number">6.2.3. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.3. </span>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -1041,7 +1041,7 @@
 </div>
 </div>
 <div class="section" id="the-model-surnamegenerationmodel">
-<h2><span class="section-number">6.3. </span>The Model: SurnameGenerationModel<a class="headerlink" href="#the-model-surnamegenerationmodel" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.3. </span>The Model: SurnameGenerationModel<a class="headerlink" href="#the-model-surnamegenerationmodel" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameGenerationModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1170,9 +1170,9 @@
 </div>
 </div>
 <div class="section" id="training-routine">
-<h2><span class="section-number">6.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="helper-functions">
-<h3><span class="section-number">6.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -1268,7 +1268,7 @@
 </div>
 </div>
 <div class="section" id="general-utilities">
-<h3><span class="section-number">6.4.2. </span>General utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.4.2. </span>General utilities<a class="headerlink" href="#general-utilities" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1286,7 +1286,7 @@
 </div>
 </div>
 <div class="section" id="settings-and-some-prep-work">
-<h3><span class="section-number">6.4.3. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.4.3. </span>Settings and some prep work<a class="headerlink" href="#settings-and-some-prep-work" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
@@ -1350,7 +1350,7 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="initializations">
-<h3><span class="section-number">6.4.4. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.4.4. </span>Initializations<a class="headerlink" href="#initializations" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">reload_from_files</span><span class="p">:</span>
@@ -1374,7 +1374,7 @@ Using CUDA: True
 </div>
 </div>
 <div class="section" id="training-loop">
-<h3><span class="section-number">6.4.5. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.4.5. </span>Training loop<a class="headerlink" href="#training-loop" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask_index</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">char_vocab</span><span class="o">.</span><span class="n">mask_index</span>
@@ -1582,7 +1582,7 @@ Test Accuracy: 23.699346354510485
 </div>
 </div>
 <div class="section" id="inference">
-<h2><span class="section-number">6.5. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of names to generate</span>
@@ -1660,7 +1660,7 @@ Wardhin
         <a class="right-next" href="Surname_Generation_Conditioned.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">7. </span>Surname Generation Conditioned</p>
+                <p class="prevnext-title"><span class="section-number">6. </span>Surname Generation Conditioned</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

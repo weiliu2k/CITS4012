@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6. Surname Generation - Unconditioned" href="Surname_Generation_Unconditioned.html" />
+    <link rel="next" title="5. Surname Generation - Unconditioned" href="Surname_Generation_Unconditioned.html" />
     <link rel="prev" title="3. The Square Model Using GRU and LSTM" href="gru_lstm_square.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -452,12 +452,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Surname_Generation_Unconditioned.html">
-     6. Surname Generation - Unconditioned
+     5. Surname Generation - Unconditioned
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Surname_Generation_Conditioned.html">
-     7. Surname Generation Conditioned
+     6. Surname Generation Conditioned
     </a>
    </li>
   </ul>
@@ -563,71 +563,62 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   4. Sequence to Sequence Models
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-plotting-and-helper-functions">
+   4.1. Download Plotting and Helper Functions
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#imports">
-     4.1. Imports
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sequence-to-sequence">
-   5. Sequence-to-Sequence
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   4.2. Imports
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data-generation">
-     5.1. Data Generation
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-generation">
+   4.3. Data Generation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoder-decoder-architecture">
+   4.4. Encoder-Decoder Architecture
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoder">
+     4.4.1. Encoder
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encoder-decoder-architecture">
-     5.2. Encoder-Decoder Architecture
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decoder">
+     4.4.2. Decoder
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#encoder">
-       5.2.1. Encoder
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#decoder">
-       5.2.2. Decoder
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#teacher-forcing">
-         5.2.2.1. Teacher Forcing
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#encoder-decoder">
-       5.2.3. Encoder + Decoder
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#data-preparation">
-       5.2.4. Data Preparation
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#model-training-configuration">
-       5.2.5. Model Training &amp; Configuration
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#visualizing-predictions">
-       5.2.6. Visualizing Predictions
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#teacher-forcing">
+       4.4.2.1. Teacher Forcing
       </a>
      </li>
     </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoder-decoder">
+     4.4.3. Encoder + Decoder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-preparation">
+     4.4.4. Data Preparation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-training-configuration">
+     4.4.5. Model Training &amp; Configuration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualizing-predictions">
+     4.4.6. Visualizing Predictions
+    </a>
    </li>
   </ul>
  </li>
@@ -644,8 +635,55 @@
                 
   <div class="section" id="sequence-to-sequence-models">
 <h1><span class="section-number">4. </span>Sequence to Sequence Models<a class="headerlink" href="#sequence-to-sequence-models" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="download-plotting-and-helper-functions">
+<h2><span class="section-number">4.1. </span>Download Plotting and Helper Functions<a class="headerlink" href="#download-plotting-and-helper-functions" title="Permalink to this headline">¶</a></h2>
+<p>Download the followings files and place them in the same folder as the notebook before proceed further. These files contain the utility functions and plotting functions needed for this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">FileLink</span><span class="p">,</span> <span class="n">FileLinks</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;plots.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='plots.py' target='_blank'>plots.py</a><br></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;plots_seq2seq.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='plots_seq2seq.py' target='_blank'>plots_seq2seq.py</a><br></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;util.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='util.py' target='_blank'>util.py</a><br></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FileLink</span><span class="p">(</span><span class="s1">&#39;replay.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><a href='replay.py' target='_blank'>replay.py</a><br></div></div>
+</div>
+</div>
 <div class="section" id="imports">
-<h2><span class="section-number">4.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
@@ -658,16 +696,14 @@
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">random_split</span><span class="p">,</span> <span class="n">TensorDataset</span>
 <span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">StepByStep</span>
 <span class="kn">from</span> <span class="nn">plots</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">plots_seq2seq</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="sequence-to-sequence">
-<h1><span class="section-number">5. </span>Sequence-to-Sequence<a class="headerlink" href="#sequence-to-sequence" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="data-generation">
-<h2><span class="section-number">5.1. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.3. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">variable_len</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
@@ -692,7 +728,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_6_0.png" src="../_images/seq2seq_6_0.png" />
+<img alt="../_images/seq2seq_11_0.png" src="../_images/seq2seq_11_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -702,7 +738,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_7_0.png" src="../_images/seq2seq_7_0.png" />
+<img alt="../_images/seq2seq_12_0.png" src="../_images/seq2seq_12_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -719,15 +755,14 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_9_0.png" src="../_images/seq2seq_9_0.png" />
+<img alt="../_images/seq2seq_14_0.png" src="../_images/seq2seq_14_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="encoder-decoder-architecture">
-<h2><span class="section-number">5.2. </span>Encoder-Decoder Architecture<a class="headerlink" href="#encoder-decoder-architecture" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.4. </span>Encoder-Decoder Architecture<a class="headerlink" href="#encoder-decoder-architecture" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="encoder">
-<h3><span class="section-number">5.2.1. </span>Encoder<a class="headerlink" href="#encoder" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="LSTM/images/encoder.png" /></p>
+<h3><span class="section-number">4.4.1. </span>Encoder<a class="headerlink" href="#encoder" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -773,8 +808,7 @@
 </div>
 </div>
 <div class="section" id="decoder">
-<h3><span class="section-number">5.2.2. </span>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="LSTM/images/decoder.png" /></p>
+<h3><span class="section-number">4.4.2. </span>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -836,7 +870,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="teacher-forcing">
-<h4><span class="section-number">5.2.2.1. </span>Teacher Forcing<a class="headerlink" href="#teacher-forcing" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">4.4.2.1. </span>Teacher Forcing<a class="headerlink" href="#teacher-forcing" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial hidden state will be encoder&#39;s final hidden state</span>
@@ -900,7 +934,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="encoder-decoder">
-<h3><span class="section-number">5.2.3. </span>Encoder + Decoder<a class="headerlink" href="#encoder-decoder" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.4.3. </span>Encoder + Decoder<a class="headerlink" href="#encoder-decoder" title="Permalink to this headline">¶</a></h3>
 <p><img alt="" src="LSTM/images/encoder_decoder.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1004,7 +1038,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="data-preparation">
-<h3><span class="section-number">5.2.4. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.4.4. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span><span class="p">,</span> <span class="n">directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">()</span>
@@ -1038,7 +1072,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="model-training-configuration">
-<h3><span class="section-number">5.2.5. </span>Model Training &amp; Configuration<a class="headerlink" href="#model-training-configuration" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.4.5. </span>Model Training &amp; Configuration<a class="headerlink" href="#model-training-configuration" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
@@ -1067,12 +1101,12 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_36_0.png" src="../_images/seq2seq_36_0.png" />
+<img alt="../_images/seq2seq_39_0.png" src="../_images/seq2seq_39_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="visualizing-predictions">
-<h3><span class="section-number">5.2.6. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.4.6. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">sequence_pred</span><span class="p">(</span><span class="n">sbs_seq</span><span class="p">,</span> <span class="n">full_test</span><span class="p">,</span> <span class="n">test_directions</span><span class="p">)</span>
@@ -1080,14 +1114,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_18760</span><span class="o">/</span><span class="mf">3974989328.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">fig</span> <span class="o">=</span> <span class="n">sequence_pred</span><span class="p">(</span><span class="n">sbs_seq</span><span class="p">,</span> <span class="n">full_test</span><span class="p">,</span> <span class="n">test_directions</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;sequence_pred&#39; is not defined
-</pre></div>
-</div>
+<img alt="../_images/seq2seq_41_0.png" src="../_images/seq2seq_41_0.png" />
 </div>
 </div>
 </div>
@@ -1136,7 +1163,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
         <a class="right-next" href="Surname_Generation_Unconditioned.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">6. </span>Surname Generation - Unconditioned</p>
+                <p class="prevnext-title"><span class="section-number">5. </span>Surname Generation - Unconditioned</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
