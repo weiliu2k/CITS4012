@@ -42,6 +42,8 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -635,6 +637,7 @@
                 
   <div class="section" id="sequence-to-sequence-models">
 <h1><span class="section-number">4. </span>Sequence to Sequence Models<a class="headerlink" href="#sequence-to-sequence-models" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will be using the same squares as before, but this time know the first two corners (the source sequence) and ask our model to predict the next two corners (the target sequence). As with every sequence-related problem, the order is important, so it is not enough to get the corner’s coordinates right, but they should follow the same direction (clockwise or counter-clockwise).</p>
 <div class="section" id="download-plotting-and-helper-functions">
 <h2><span class="section-number">4.1. </span>Download Plotting and Helper Functions<a class="headerlink" href="#download-plotting-and-helper-functions" title="Permalink to this headline">¶</a></h2>
 <p>Download the followings files and place them in the same folder as the notebook before proceed further. These files contain the utility functions and plotting functions needed for this notebook.</p>
@@ -704,6 +707,7 @@
 </div>
 <div class="section" id="data-generation">
 <h2><span class="section-number">4.3. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
+<p>Same method as before for generating noisy squares.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">variable_len</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
@@ -721,6 +725,7 @@
 </div>
 </div>
 </div>
+<p>Visualise an counter clock-wise perfect square and a clock-wise one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">counter_vs_clock</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -728,9 +733,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_11_0.png" src="../_images/seq2seq_11_0.png" />
+<img alt="../_images/seq2seq_13_0.png" src="../_images/seq2seq_13_0.png" />
 </div>
 </div>
+<p>Since there are four corners to start from and two directions to follow, there are effectively eight possible sequences.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_sequences</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">target_len</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -738,9 +744,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_12_0.png" src="../_images/seq2seq_12_0.png" />
+<img alt="../_images/seq2seq_15_0.png" src="../_images/seq2seq_15_0.png" />
 </div>
 </div>
+<p>Generate 128 random noisy squares:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span><span class="p">,</span> <span class="n">directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
@@ -748,6 +755,7 @@
 </div>
 </div>
 </div>
+<p>Visualize the first five squares.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_data</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -755,14 +763,22 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_14_0.png" src="../_images/seq2seq_14_0.png" />
+<img alt="../_images/seq2seq_19_0.png" src="../_images/seq2seq_19_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="encoder-decoder-architecture">
 <h2><span class="section-number">4.4. </span>Encoder-Decoder Architecture<a class="headerlink" href="#encoder-decoder-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The encoder-decoder is a combination of two models: the <strong>encoder</strong> and the
+<strong>decoder</strong>.</p>
 <div class="section" id="encoder">
 <h3><span class="section-number">4.4.1. </span>Encoder<a class="headerlink" href="#encoder" title="Permalink to this headline">¶</a></h3>
+<p>The encoder’s goal is to generate a vector representation <span class="math notranslate nohighlight">\(\psi\)</span> of the source sequence, that is, to encode it.</p>
+<p>An encoder can be any of the featuriser we have seen before, e.g. a Conv1D, an Elman RNN, a GRU, an LSTM or their stacked and bidirectional variances. Here we use a GRU, <span class="math notranslate nohighlight">\(\psi\)</span> is the hidden state of the last cell.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We kept the outputs of all cells in the <code class="docutils literal notranslate"><span class="pre">Encoder</span></code> code, to make the code more extendable to future “attention-based” models.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -781,6 +797,7 @@
 </div>
 </div>
 </div>
+<p>A perfect square with two corners as source, and two coners target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -790,6 +807,7 @@
 </div>
 </div>
 </div>
+<p>We use the un-trained <code class="docutils literal notranslate"><span class="pre">Encoder</span></code> to encode the source sequence. If trained the output vector is expected to caputre the source seqence’s intrinsic positional thus directional information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
@@ -809,6 +827,15 @@
 </div>
 <div class="section" id="decoder">
 <h3><span class="section-number">4.4.2. </span>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
+<p>The decoder’s goal is to generate the target sequence from an
+initial representation, that is, to decode it.</p>
+<p>Very often the decorder takes the encoder’s output of last cell, as its initial hidden state, and use last input the encoder as its first input, to generate a sequence of desired length. The output of each cell through a linear transformantion (<em>regression</em>) to obtain the output sequence of the decoder  So the encoder can be realised through an RNN or its variants  as well.</p>
+<p>The code below uses a GRU layer as a decoder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since we are generating numerical values that represent the coordinates of the corners, we are dealing with a regression problem. So in the later model training, we use MSE as loss function.</p>
+</div>
+<p><img alt="Encoder-Decoder" src="../_images/encoder_decoder.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -839,6 +866,7 @@
 </div>
 </div>
 </div>
+<p>Decoder is often considered as a generator. Here the <code class="docutils literal notranslate"><span class="pre">decoder</span></code> is intialised with the last hidden state of the encoder first. The initial input is the last element of the source sequence. Then it takes the previous cell output as input, in a for loop, until it generate a specified number (<em>target sequence length</em>) of elements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
@@ -871,6 +899,13 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 <div class="section" id="teacher-forcing">
 <h4><span class="section-number">4.4.2.1. </span>Teacher Forcing<a class="headerlink" href="#teacher-forcing" title="Permalink to this headline">¶</a></h4>
+<p>There is one problem with the approach above, an untrained model will
+make really bad predictions, and these predictions will still be used as inputs for subsequent steps. This makes model training unnecessarily hard because the prediction error in one step is caused by both the (untrained) model and the prediction error in the previous step.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We can use the actual target sequence instead!
+This technique is called <strong>teacher forcing</strong>. We can ignore the predictions and use the real data from the target sequence instead.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial hidden state will be encoder&#39;s final hidden state</span>
@@ -898,6 +933,7 @@ Output: tensor([[[0.2265, 0.4529]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 </div>
+<p>Put the two cases together:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial hidden state is encoder&#39;s final hidden state</span>
@@ -935,7 +971,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 <div class="section" id="encoder-decoder">
 <h3><span class="section-number">4.4.3. </span>Encoder + Decoder<a class="headerlink" href="#encoder-decoder" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="LSTM/images/encoder_decoder.png" /></p>
+<p>We can assemble a <strong>boilerplate</strong> that integrates a encoder and a decoder. Given an encoder and a decoder model, the code below implements a forward method that splits the input into the source and target sequences, loops over the generation of the target sequence, and implements teacher forcing in training mode.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1039,6 +1075,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 <div class="section" id="data-preparation">
 <h3><span class="section-number">4.4.4. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
+<p>The first two corners of the square <code class="docutils literal notranslate"><span class="pre">data[:,</span> <span class="pre">:2]</span></code> are the source sequences; the last two corners <code class="docutils literal notranslate"><span class="pre">data[:,</span> <span class="pre">2:]</span></code> are the target sequences.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span><span class="p">,</span> <span class="n">directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">()</span>
@@ -1101,7 +1138,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_39_0.png" src="../_images/seq2seq_39_0.png" />
+<img alt="../_images/seq2seq_53_0.png" src="../_images/seq2seq_53_0.png" />
 </div>
 </div>
 </div>
@@ -1114,7 +1151,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_41_0.png" src="../_images/seq2seq_41_0.png" />
+<img alt="../_images/seq2seq_55_0.png" src="../_images/seq2seq_55_0.png" />
 </div>
 </div>
 </div>
