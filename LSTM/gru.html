@@ -625,39 +625,31 @@
 <h1><span class="section-number">1. </span>Gated Recurrent Units (GRUs)<a class="headerlink" href="#gated-recurrent-units-grus" title="Permalink to this headline">¶</a></h1>
 <div class="admonition-update-gate admonition">
 <p class="admonition-title">Update Gate</p>
-<p>Weights between old and new (candidate) hidden state
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
+<p>Weights between old and new (candidate) hidden state</p>
+<p><span class="math notranslate nohighlight">\(\begin{align*}
 h_{new} &amp;= tanh(t_h+t_x) \\
 h' &amp;= h_{new} * (1 - z) + h_{old} * z
-\end{align*}
-\)</span>$</p>
+\end{align*}\)</span></p>
 </div>
 <div class="admonition-reset-gate admonition">
 <p class="admonition-title">Reset Gate</p>
-<p>Weights between input and hidden state
-$<span class="math notranslate nohighlight">\(
-h_{new} = tanh(r*t_h + t_x)
-\)</span>$</p>
+<p>Weights between input and hidden state</p>
+<p><span class="math notranslate nohighlight">\(h_{new} = tanh(r*t_h + t_x)\)</span></p>
 </div>
 <div class="admonition-gru-cell admonition">
 <p class="admonition-title">GRU Cell</p>
-<div class="math notranslate nohighlight">
-\[
-h' = tanh(r*t_h + t_x) * (1-z) + h*z
-\]</div>
+<p><span class="math notranslate nohighlight">\(h' = tanh(r*t_h + t_x) * (1-z) + h*z\)</span></p>
 </div>
 <p><img alt="GRU Cell" src="../_images/gru_cell.png" /></p>
 <div class="section" id="gru-cell">
 <h2><span class="section-number">1.1. </span>GRU Cell<a class="headerlink" href="#gru-cell" title="Permalink to this headline">¶</a></h2>
-<p>RNN is a special case of GRU when <span class="math notranslate nohighlight">\(r=1\)</span> and <span class="math notranslate nohighlight">\(z=0\)</span>.
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
+<p>RNN is a special case of GRU when <span class="math notranslate nohighlight">\(r=1\)</span> and <span class="math notranslate nohighlight">\(z=0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
 RNN: h'&amp;=tanh(t_h+t_x)
 \\
 GRU: h'&amp;=\underbrace{\underbrace{tanh(\color{red}{r}*t_{hn}+t_{xn})}_{n}*\color{#0066CC}{(1-z)} + \color{gray}{h}*\color{#0066CC}{z}}_{weighted\ average\ of\ n\ and\ h}
-\end{align*}
-\)</span>$</p>
+\end{align*}\end{split}\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -767,41 +759,7 @@ torch.Size([6]) torch.Size([6])
 </div>
 <div class="section" id="splitting-up-the-weight-ih-as-an-example">
 <h3><span class="section-number">1.3.1. </span>Splitting up the <code class="docutils literal notranslate"><span class="pre">weight_ih</span></code> as an example<a class="headerlink" href="#splitting-up-the-weight-ih-as-an-example" title="Permalink to this headline">¶</a></h3>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-W_{ir}=
-\begin{cases}
-\begin{align*}
-&amp; &amp;-0.0930,&amp; &amp;0.0497,
-\\
-&amp; &amp;0.4670,&amp; &amp;-0.5319,
-\end{align*}
-\end{cases}
-\\
-W_{iz}=
-\begin{cases}
-\begin{align*}
-&amp;&amp;-0.6656,&amp;\ \ \ &amp;0.0699,
-\\
-&amp; &amp;-0.1662,&amp;\ &amp;0.0654,
-\end{align*}
-\end{cases}
-\\
-W_{in}=
-\begin{cases}
-\begin{align*}
-&amp; &amp;-0.0449,&amp; &amp;-0.6828,
-\\
-&amp; &amp;-0.6769,&amp; &amp;-0.1889
-\end{align*}
-\end{cases}
-\end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[
-\underbrace{-0.4316,  0.4019}_{b_{ir}}, 
-\underbrace{0.1222, -0.4647}_{b_{iz}}, 
-\underbrace{-0.5578,  0.4493}_{b_{in}}
-\]</div>
+<p><img alt="GRU Cell State Split" src="../_images/gru_cell_state_split.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Wir</span><span class="p">,</span> <span class="n">Wiz</span><span class="p">,</span> <span class="n">Win</span> <span class="o">=</span> <span class="n">Wi</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
