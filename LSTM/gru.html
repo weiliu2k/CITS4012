@@ -448,13 +448,18 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="seq2seq.html">
+     4. Sequence to Sequence Models
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="Surname_Generation_Unconditioned.html">
-     4. Surname Generation - Unconditioned
+     5. Surname Generation - Unconditioned
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Surname_Generation_Conditioned.html">
-     5. Surname Generation Conditioned
+     6. Surname Generation Conditioned
     </a>
    </li>
   </ul>
@@ -618,10 +623,8 @@
                 
   <div class="section" id="gated-recurrent-units-grus">
 <h1><span class="section-number">1. </span>Gated Recurrent Units (GRUs)<a class="headerlink" href="#gated-recurrent-units-grus" title="Permalink to this headline">¶</a></h1>
-<div class="tabbed-set docutils">
-<input checked="checked" id="ffde612c-9bd3-4714-9497-9436c4e9e59a" name="634b63d3-5852-4464-b778-55fc0a183210" type="radio">
-</input><label class="tabbed-label" for="ffde612c-9bd3-4714-9497-9436c4e9e59a">
-Update Gate</label><div class="tabbed-content docutils">
+<div class="admonition-update-gate admonition">
+<p class="admonition-title">Update Gate</p>
 <p>Weights between old and new (candidate) hidden state
 $<span class="math notranslate nohighlight">\(
 \begin{align*}
@@ -630,22 +633,19 @@ h' &amp;= h_{new} * (1 - z) + h_{old} * z
 \end{align*}
 \)</span>$</p>
 </div>
-<input id="19bc5289-217d-4017-a072-ede6dba73db3" name="634b63d3-5852-4464-b778-55fc0a183210" type="radio">
-</input><label class="tabbed-label" for="19bc5289-217d-4017-a072-ede6dba73db3">
-Reset Gate</label><div class="tabbed-content docutils">
+<div class="admonition-reset-gate admonition">
+<p class="admonition-title">Reset Gate</p>
 <p>Weights between input and hidden state
 $<span class="math notranslate nohighlight">\(
 h_{new} = tanh(r*t_h + t_x)
 \)</span>$</p>
 </div>
-<input id="144d7147-344c-4cec-82d1-61030cecc41b" name="634b63d3-5852-4464-b778-55fc0a183210" type="radio">
-</input><label class="tabbed-label" for="144d7147-344c-4cec-82d1-61030cecc41b">
-GRU Cell</label><div class="tabbed-content docutils">
+<div class="admonition-gru-cell admonition">
+<p class="admonition-title">GRU Cell</p>
 <div class="math notranslate nohighlight">
 \[
 h' = tanh(r*t_h + t_x) * (1-z) + h*z
 \]</div>
-</div>
 </div>
 <p><img alt="GRU Cell" src="../_images/gru_cell.png" /></p>
 <div class="section" id="gru-cell">
