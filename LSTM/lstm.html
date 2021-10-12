@@ -42,6 +42,8 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -572,11 +574,38 @@
   <a class="reference internal nav-link" href="#lstm-cell">
    2.2. LSTM Cell
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-generation">
-   2.3. Data Generation
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nn-lstmcell">
+     2.2.1.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       nn.LSTMCell
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#replicate-a-lstmcell-manually">
+     2.2.2. Replicate a LSTMCell Manually
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-generation">
+     2.2.3. Data Generation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verify-the-result-against-nn-lstmcell">
+     2.2.4. Verify the result against
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       nn.LSTMCell
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -591,7 +620,29 @@
                 
   <div class="section" id="long-short-term-memories-lstms">
 <h1><span class="section-number">2. </span>Long Short Term Memories (LSTMs)<a class="headerlink" href="#long-short-term-memories-lstms" title="Permalink to this headline">¶</a></h1>
-<p><img alt="LSTM Cell" src="../_images/lstm_cell.png" /></p>
+<p>In addtion to the bounded hidden state (between [-1,1]), LSTM introduced an unbounded <strong>cell state</strong>, which is mimic the “long term memory”. This allows more past information to be kept and thus passed to the current cell, because the gradient is not squashed to approach zero as fast as <code class="docutils literal notranslate"><span class="pre">tanh</span></code>, so it is also refered to as a “gradient highway”. In contrast, the hidden state keeps more recent information, thus responsible for the “short term memory”.</p>
+<div class="admonition-the-candidate-hidden-state admonition">
+<p class="admonition-title">The candidate hidden state</p>
+<div class="math notranslate nohighlight">
+\[
+g = tanh(t_{hg}+t_{xg})
+\]</div>
+</div>
+<p>Cell state is an unbounded weighted sum of the candidate hidden state <span class="math notranslate nohighlight">\(g\)</span> and previous cell state <span class="math notranslate nohighlight">\(c\)</span>, weighted by learnt input gate <span class="math notranslate nohighlight">\(i\)</span> and forget gate <span class="math notranslate nohighlight">\(f\)</span>, respectively.</p>
+<div class="admonition-the-candidate-hidden-state admonition">
+<p class="admonition-title">The candidate hidden state</p>
+<div class="math notranslate nohighlight">
+\[
+c' = g * i + c * f
+\]</div>
+</div>
+<p>The new hidden state is obtained by bounding the new cell state (<span class="math notranslate nohighlight">\(c'\)</span>) before applying output gate weights (<span class="math notranslate nohighlight">\(o\)</span>):::
+$<span class="math notranslate nohighlight">\(
+h' = tanh(c') * o
+\)</span>$</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 <div class="section" id="imports">
 <h2><span class="section-number">2.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -612,6 +663,31 @@
 </div>
 <div class="section" id="lstm-cell">
 <h2><span class="section-number">2.2. </span>LSTM Cell<a class="headerlink" href="#lstm-cell" title="Permalink to this headline">¶</a></h2>
+<p>There are two sets of weights for each type of gates, one for hidden state, one for input. They are learnt through a linear layer followed by sigmoid like in a GRU cell.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\color{#82b366}{i\ (hidden)}&amp;\color{#82b366}{:t_{hi}}&amp;\color{#82b366}{=}&amp;\color{#82b366}{W_{hi}}&amp;\color{#82b366}{h}&amp;\color{#82b366}{+}&amp;\color{#82b366}{b_{hi}}
+\\
+\color{#82b366}{i\ (input)}&amp;\color{#82b366}{:t_{xi}}&amp;\color{#82b366}{=}&amp;\color{#82b366}{W_{ii}}&amp;\color{#82b366}{x}&amp;\color{#82b366}{+}&amp;\color{#82b366}{b_{ii}}
+\\
+\color{red}{f\ (hidden)}&amp;\color{red}{:t_{hf}}&amp;\color{red}{=}&amp;\color{red}{W_{hf}}&amp;\color{red}{h}&amp;\color{red}{+}&amp;\color{red}{b_{hf}}
+\\
+\color{red}{f\ (input)}&amp;\color{red}{:t_{xf}}&amp;\color{red}{=}&amp;\color{red}{W_{if}}&amp;\color{red}{x}&amp;\color{red}{+}&amp;\color{red}{b_{if}}
+\\
+g\ (hidden)&amp;:t_{hg}&amp; = &amp;W_{hg}&amp;h&amp;+&amp;b_{hg}
+\\
+g\ (input)&amp;:t_{xg}&amp; = &amp;W_{ig}&amp;x&amp;+&amp;b_{ig}
+\\
+\color{#0066cc}{o\ (hidden)}&amp;\color{#0066cc}{:t_{ho}}&amp;\color{#0066cc}{=}&amp;\color{#0066cc}{W_{ho}}&amp;\color{#0066cc}{h}&amp;\color{#0066cc}{+}&amp;\color{#0066cc}{b_{ho}}
+\\
+\color{#0066cc}{o\ (input)}&amp;\color{#0066cc}{:t_{xo}}&amp;\color{#0066cc}{=}&amp;\color{#0066cc}{W_{io}}&amp;\color{#0066cc}{x}&amp;\color{#0066cc}{+}&amp;\color{#0066cc}{b_{io}}
+\end{align*}
+\end{split}\]</div>
+<p><img alt="LSTM Cell" src="../_images/lstm_cell.png" /></p>
+<div class="section" id="nn-lstmcell">
+<h3><span class="section-number">2.2.1. </span><code class="docutils literal notranslate"><span class="pre">nn.LSTMCell</span></code><a class="headerlink" href="#nn-lstmcell" title="Permalink to this headline">¶</a></h3>
+<p>Let’s take a look at the weights generated by <code class="docutils literal notranslate"><span class="pre">nn.LSTMCell</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_features</span> <span class="o">=</span> <span class="mi">2</span>
@@ -651,6 +727,10 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="replicate-a-lstmcell-manually">
+<h3><span class="section-number">2.2.2. </span>Replicate a LSTMCell Manually<a class="headerlink" href="#replicate-a-lstmcell-manually" title="Permalink to this headline">¶</a></h3>
+<p>The code below tries to use the above the weights, manually create the linear layers for learning the gates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linear_layers</span><span class="p">(</span><span class="n">Wi</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">Wh</span><span class="p">,</span> <span class="n">bh</span><span class="p">):</span>
@@ -664,6 +744,7 @@
 </div>
 </div>
 </div>
+<p>Split the weights and the create the linear layers for input, forget and output gate. Note the candidate hidden state is an Elman RNN.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Wx</span><span class="p">,</span> <span class="n">bx</span> <span class="o">=</span> <span class="n">lstm_state</span><span class="p">[</span><span class="s1">&#39;weight_ih&#39;</span><span class="p">],</span> <span class="n">lstm_state</span><span class="p">[</span><span class="s1">&#39;bias_ih&#39;</span><span class="p">]</span>
@@ -717,7 +798,8 @@
 </div>
 </div>
 <div class="section" id="data-generation">
-<h2><span class="section-number">2.3. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">2.2.3. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h3>
+<p>Same square sequence is used here to verify that our manual LSTM produces the same result as <code class="docutils literal notranslate"><span class="pre">nn.LSTMCell</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">variable_len</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
@@ -809,6 +891,7 @@
 </div>
 </div>
 </div>
+<p>LSTM Cell output hidden state and cell state.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">h_prime</span><span class="p">,</span> <span class="n">c_prime</span><span class="p">)</span>
@@ -822,6 +905,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="verify-the-result-against-nn-lstmcell">
+<h3><span class="section-number">2.2.4. </span>Verify the result against <code class="docutils literal notranslate"><span class="pre">nn.LSTMCell</span></code><a class="headerlink" href="#verify-the-result-against-nn-lstmcell" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lstm_cell</span><span class="p">(</span><span class="n">first_corner</span><span class="p">)</span>
@@ -833,6 +919,11 @@
  tensor([[-0.1340, -0.0004]], grad_fn=&lt;AddBackward0&gt;))
 </pre></div>
 </div>
+</div>
+</div>
+<div class="admonition-bilstm-layer admonition">
+<p class="admonition-title">BiLSTM Layer</p>
+<p>Find out how to create a Bidirectional LSTM Layer in PyTorch? What’s the output look like?</p>
 </div>
 </div>
 </div>

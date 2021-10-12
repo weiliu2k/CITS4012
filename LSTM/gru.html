@@ -623,19 +623,25 @@
                 
   <div class="section" id="gated-recurrent-units-grus">
 <h1><span class="section-number">1. </span>Gated Recurrent Units (GRUs)<a class="headerlink" href="#gated-recurrent-units-grus" title="Permalink to this headline">¶</a></h1>
+<p>GRU addressed two fundamental limitations of Elman RNN, by introducing</p>
+<ul class="simple">
+<li><p><strong>Update Gate</strong>: Weights between old and new (candidate) hidden state</p></li>
+</ul>
 <div class="admonition-update-gate admonition">
 <p class="admonition-title">Update Gate</p>
-<p>Weights between old and new (candidate) hidden state</p>
 <p><span class="math notranslate nohighlight">\(\begin{align*}
 h_{new} &amp;= tanh(t_h+t_x) \\
 h' &amp;= h_{new} * (1 - z) + h_{old} * z
 \end{align*}\)</span></p>
 </div>
+<ul class="simple">
+<li><p><strong>Reset Gate</strong>: Weights between input and hidden state</p></li>
+</ul>
 <div class="admonition-reset-gate admonition">
 <p class="admonition-title">Reset Gate</p>
-<p>Weights between input and hidden state</p>
 <p><span class="math notranslate nohighlight">\(h_{new} = tanh(r*t_h + t_x)\)</span></p>
 </div>
+<p>Both gates can be learned through linear layer followed by sigmoid to ensure they are values in the range [0,1]. Put them together, we have a GRU cell.</p>
 <div class="admonition-gru-cell admonition">
 <p class="admonition-title">GRU Cell</p>
 <p><span class="math notranslate nohighlight">\(h' = tanh(r*t_h + t_x) * (1-z) + h*z\)</span></p>
