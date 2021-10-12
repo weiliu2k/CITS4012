@@ -645,6 +645,12 @@
                 
   <div class="section" id="surname-generation-unconditioned">
 <h1><span class="section-number">5. </span>Surname Generation - Unconditioned<a class="headerlink" href="#surname-generation-unconditioned" title="Permalink to this headline">¶</a></h1>
+<p>The difference in the conditioned <code class="docutils literal notranslate"><span class="pre">SurnameGenerationModel</span></code>, is that an extra Embedding is introduced to map the nationality indices to vectors the same size as the RNN’s hidden layer. Then, in the forward function, nationality indices are embedded and simply passed in as the initial hidden layer of the RNN. Although this is a very simple modification to the first model, it has a profound effect in letting the RNN change its behavior based on the nationality of the surname being generated.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sample_from_model()</span></code> function is also modified to accept a list of nationality indices rather than a specified number of samples. The modified function uses the nationality indices with the nationality embedding to construct the initial hidden state of the GRU. After that, the sampling procedure is exactly the same as with the unconditioned model.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Find the relevant code section and try to understand the changes.</p>
+</div>
 <div class="section" id="imports">
 <h2><span class="section-number">5.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">

@@ -644,6 +644,27 @@
                 
   <div class="section" id="surname-generation-conditioned">
 <h1><span class="section-number">6. </span>Surname Generation Conditioned<a class="headerlink" href="#surname-generation-conditioned" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we use the same <code class="docutils literal notranslate"><span class="pre">Surname</span></code> dataset, but not for nationality classification. The RNN here is used as a decoder that generates sequences of characters (i.e. a generated surname) instead of a featurizer for the  classification task we have seen before.</p>
+<p>The model in this notebook is <strong>unconditioned</strong>: it does not observe the nationality before generating a surname. In practice, being unconditioned means the GRU does not bias its computations toward any nationality. In PyTorch code, this means we use a vector of all <code class="docutils literal notranslate"><span class="pre">0</span></code>s so that the initial hidden state vector does not
+contribute to the computations. In <a class="reference external" href="https://weiliu2k.github.io/CITS4012/LSTM/Surname_Generation_Conditioned.html">the next notebook</a>, the computational bias is introduced through the initial
+hidden vector.</p>
+<p>The <a class="reference external" href="#the-model-surnamegenerationmodel"><code class="docutils literal notranslate"><span class="pre">SurnameGenerationModel</span></code></a> embeds character indices, computes
+their sequential state using a GRU, and computes the probability of token predictions using a Linear
+layer. More explicitly, the unconditioned <code class="docutils literal notranslate"><span class="pre">SurnameGenerationModel</span></code> starts with initializing an
+Embedding layer, a GRU, and a Linear layer. Similar to the sequence models for classification, when a matrix of integers is input to the model:</p>
+<ul class="simple">
+<li><p>We first use a PyTorch Embedding instance, the <code class="docutils literal notranslate"><span class="pre">char_embedding</span></code>, to convert the integers to a three dimensional tensor (a sequence of vectors for each batch item);</p></li>
+<li><p>This tensor is passed to the GRU, which computes a hidden state vector for each character in each sequence.</p></li>
+</ul>
+<p>The primary difference between the sequence classification tasks and sequence prediction
+tasks of this chapter is how the state vectors computed by the RNN are handled. In classification, we
+retrieved a single vector per batch index and performed predictions using those single vectors. In this
+example, we reshape our three dimensional tensor into a two dimensional tensor (a matrix) so that the
+row dimension represents every sample (batch and sequence index). Using this matrix and the
+Linear layer, we compute prediction vectors for every sample. We finish the computation by
+reshaping the matrix back into a threedimensional tensor. Because the ordering information is
+preserved with reshaping operations, each batch and sequence index is still in the same position. The
+reason why we needed to reshape is because the Linear layer requires a matrix as input.</p>
 <div class="section" id="imports">
 <h2><span class="section-number">6.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -1080,6 +1101,18 @@
 </div>
 <div class="section" id="the-model-surnamegenerationmodel">
 <h2><span class="section-number">6.3. </span>The Model: SurnameGenerationModel<a class="headerlink" href="#the-model-surnamegenerationmodel" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="#the-model-surnamegenerationmodel"><code class="docutils literal notranslate"><span class="pre">SurnameGenerationModel</span></code></a> embeds character indices, computes
+their sequential state using a GRU, and computes the probability of token predictions using a Linear
+layer. More explicitly, the unconditioned <code class="docutils literal notranslate"><span class="pre">SurnameGenerationModel</span></code> starts with initializing an
+Embedding layer, a GRU, and a Linear layer. Similar to the sequence models for classification, when a matrix of integers is input to the model:</p>
+<ul class="simple">
+<li><p>We first use a PyTorch Embedding instance, the <code class="docutils literal notranslate"><span class="pre">char_embedding</span></code>, to convert the integers to a three dimensional tensor (a sequence of vectors for each batch item);</p></li>
+<li><p>This tensor is passed to the GRU, which computes a hidden state vector for each character in each sequence.</p></li>
+</ul>
+<p>The primary difference between the sequence classification tasks and sequence prediction
+tasks of this chapter is how the state vectors computed by the RNN are handled. In classification, we
+retrieved a single vector per batch index and performed predictions using those single vectors. In this
+example, we reshape our three-dimensional tensor <code class="docutils literal notranslate"><span class="pre">(N,L,F)</span></code> into a two-dimensional tensor (a matrix <code class="docutils literal notranslate"><span class="pre">(NxL,F)</span></code>) with each row represents a character (batch and sequence index) and the columns of each row are features (embedding for the character). Using this matrix and the Linear layer, we compute prediction vectors for every character. We finish the computation by reshaping the matrix back into a threedimensional tensor. Because the ordering information is preserved with reshaping operations, each batch and sequence index is still in the same position. The reason why we needed to reshape is because the Linear layer requires a matrix as input.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SurnameGenerationModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1132,10 +1165,12 @@
         <span class="n">x_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_emb</span><span class="p">(</span><span class="n">x_in</span><span class="p">)</span>
         
         <span class="c1"># hidden_size: (num_layers * num_directions, batch_size, rnn_hidden_size)</span>
+        <span class="c1"># L,N,F</span>
         <span class="n">nationality_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nation_emb</span><span class="p">(</span><span class="n">nationality_index</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="n">y_out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">x_embedded</span><span class="p">,</span> <span class="n">nationality_embedded</span><span class="p">)</span>
 
+        <span class="c1"># N,L,F</span>
         <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_size</span><span class="p">,</span> <span class="n">feat_size</span> <span class="o">=</span> <span class="n">y_out</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">y_out</span> <span class="o">=</span> <span class="n">y_out</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">seq_size</span><span class="p">,</span> <span class="n">feat_size</span><span class="p">)</span>
 
@@ -1152,6 +1187,12 @@
 </div>
 </div>
 </div>
+<p>Even though the percharacter accuracy of the predictions is a measure of model performance, it is
+better in this example to do qualitative evaluation by inspecting what kinds of surnames the model will
+generate. To do this, we write a new loop over a modified version of the steps in the <code class="docutils literal notranslate"><span class="pre">forward()</span></code>
+method to compute predictions at each time step and use those predictions as the input to the following
+time step. Please see the code in the <code class="docutils literal notranslate"><span class="pre">sample_from_model()</span></code> function.</p>
+<p>The output of the model at each time step is a prediction vector which is turned into a probability distribution using the softmax function. Using the probability distribution, we take advantage of the <code class="docutils literal notranslate"><span class="pre">torch.multinomial()</span></code> sampling function, which selects an index at a rate proportional to the probability of the index. Sampling is a stochastic procedure that produces different outputs each time.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_from_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
@@ -1189,8 +1230,18 @@
         <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">probability_vector</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">indices</span>
-
-<span class="k">def</span> <span class="nf">decode_samples</span><span class="p">(</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We need to transform the sampled indices from the <code class="docutils literal notranslate"><span class="pre">sample_from_model()</span></code> function into a string
+for humanreadable output. The <code class="docutils literal notranslate"><span class="pre">decode_sample()</span></code> function demonstrates, to do this, we use the
+<code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code> that was used to vectorize the surnames. In creating the string, we use only
+the indices up to the <code class="docutils literal notranslate"><span class="pre">ENDOFSEQUENCE</span></code> index. This assumes that the model learns some sense of
+when surnames should end.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">decode_samples</span><span class="p">(</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">vectorizer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Transform indices into the string form of a surname</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
@@ -1219,6 +1270,15 @@
 </div>
 <div class="section" id="training-routine">
 <h2><span class="section-number">6.4. </span>Training Routine<a class="headerlink" href="#training-routine" title="Permalink to this headline">¶</a></h2>
+<p>Computing the loss in this example requires two changes when compared with previous examples
+because we are making predictions at every time step in the sequence.</p>
+<ol class="simple">
+<li><p>We reshape three-dimensional tensors to two-dimensional tensors (matrices) to satisfy computational constraints.</p></li>
+<li><p>We coordinate the masking index, which allows for variable length sequences, with the loss function so that the loss does not use the masked positions in its computations.</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">normalize_sizes()</span></code> function below normalize the predictions and the targets to sizes that
+the loss function expects (two dimensions for the predictions and one dimension for the targets). After size normalization, each row represents a single sample: one time step in one sequence.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">equence_loss()</span></code> function ensures that the crossentropy loss is used with the <code class="docutils literal notranslate"><span class="pre">ignore_index</span></code> set to the <code class="docutils literal notranslate"><span class="pre">mask_index</span></code>. This has the effect of the loss function ignoring any position in the targets that matches the <code class="docutils literal notranslate"><span class="pre">ignore_index</span></code>.</p>
 <div class="section" id="helper-functions">
 <h3><span class="section-number">6.4.1. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
@@ -1720,6 +1780,7 @@ Sampled for Vietnamese:
 </div>
 </div>
 </div>
+<p>Using the functions <code class="docutils literal notranslate"><span class="pre">sample_from_model()</span></code> and <code class="docutils literal notranslate"><span class="pre">decode_samples()</span></code> functions, we can inspect the output of the model, to get a sense of whether the model is learning to generate sensible surnames.</p>
 </div>
 </div>
 
