@@ -464,6 +464,28 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../attention/intro.html">
+   Lab12: Sequence to Sequence Learning with Attention
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/attention.html">
+     1. Attention Mechanism
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/self_attention.html">
+     2. Self-Attention
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -623,6 +645,11 @@
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bidirectional-lstm-as-an-encoder">
+   4.5. Bidirectional LSTM as an Encoder
+  </a>
  </li>
 </ul>
 
@@ -1154,6 +1181,21 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 <img alt="../_images/seq2seq_55_0.png" src="../_images/seq2seq_55_0.png" />
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="bidirectional-lstm-as-an-encoder">
+<h2><span class="section-number">4.5. </span>Bidirectional LSTM as an Encoder<a class="headerlink" href="#bidirectional-lstm-as-an-encoder" title="Permalink to this headline">¶</a></h2>
+<p>We have been using the output of GRU above to exact the last hidden state as the representation vector <span class="math notranslate nohighlight">\(\psi\)</span> betwen the encoder and decoder. Note that despite the output and hidden state of a GRU cell is the same, we still used the output, rather than the hidden state. This is because the bidirectional variations outputs are hidden states are not the same. Recall that the overall output of the bidirectional RNN must have two elements:</p>
+<ul class="simple">
+<li><p>a concatenation side-by-side of both sequences of hidden states (input aligned)</p></li>
+<li><p>the concatenation of final hidden states of both layers, the last of the forward layer is corresponding to the last element of the sequence, the last of the backward layer is corresponding to the first element of the sequence (i.e. not input aligned).</p></li>
+</ul>
+<p>See the figure below for clarification.</p>
+<p><img alt="Bidirectional RNN" src="../_images/bidirect_rnn.png" /></p>
+<p>For Sequence to Sequence model, we will need an input aligned output, so the code above largely should still work (the dimenionality changed though), but conceptually we need to be clear of what’s happening.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Change the code above to use BiLSTM as an encoder.</p>
 </div>
 </div>
 </div>

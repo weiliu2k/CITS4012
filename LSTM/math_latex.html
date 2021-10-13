@@ -462,6 +462,28 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../attention/intro.html">
+   Lab12: Sequence to Sequence Learning with Attention
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/attention.html">
+     1. Attention Mechanism
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/self_attention.html">
+     2. Self-Attention
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
    data.zip
@@ -580,6 +602,24 @@ W_{in}=
 &amp; &amp;-0.6769,&amp; &amp;-0.1889
 \end{align*}
 \end{cases}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\underbrace{-0.4316,  0.4019}_{b_{ir}}, 
+\underbrace{0.1222, -0.4647}_{b_{iz}}, 
+\underbrace{-0.5578,  0.4493}_{b_{in}}
+\]</div>
+<p>LSTM Cell
+$<span class="math notranslate nohighlight">\(
+\begin{align*}
+&amp;\color{#82b366}{i(nput\ gate)}&amp;=\color{#82b366}{\sigma(t_{hi}+t_{xi})}
+\\
+&amp;\color{red}{f(orget\ gate)}&amp;\color{red}{=\sigma(t_{hf}+t_{xf})}
+\\
+&amp;\color{#0066cc}{o(utput\ gate)}&amp;\color{#0066cc}{=\sigma(t_{ho}+t_{xo})}
+\\
+&amp;g&amp;=tanh(t_{hg}+t_{xg})
+\end{align*}
+\)</span>$</p>
 
     <script type="text/x-thebe-config">
     {

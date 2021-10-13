@@ -448,13 +448,40 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/seq2seq.html">
+     4. Sequence to Sequence Models
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../LSTM/Surname_Generation_Unconditioned.html">
-     4. Surname Generation - Unconditioned
+     5. Surname Generation - Unconditioned
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../LSTM/Surname_Generation_Conditioned.html">
-     5. Surname Generation Conditioned
+     6. Surname Generation Conditioned
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../attention/intro.html">
+   Lab12: Sequence to Sequence Learning with Attention
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/attention.html">
+     1. Attention Mechanism
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/self_attention.html">
+     2. Self-Attention
     </a>
    </li>
   </ul>
@@ -602,19 +629,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="227bd226-cfd8-4368-ab17-42c05094764f" name="c5494f36-dee1-4bc6-a428-a16d558c5d98" type="radio">
-</input><label class="tabbed-label" for="227bd226-cfd8-4368-ab17-42c05094764f">
+<input checked="checked" id="7ab8c650-8958-4e72-a552-23e091a26fe2" name="0d0c55da-d610-479b-8090-f44a89fb3277" type="radio">
+</input><label class="tabbed-label" for="7ab8c650-8958-4e72-a552-23e091a26fe2">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="db8a4906-cf4a-4587-969f-10f5fdb4dd69" name="c5494f36-dee1-4bc6-a428-a16d558c5d98" type="radio">
-</input><label class="tabbed-label" for="db8a4906-cf4a-4587-969f-10f5fdb4dd69">
+<input id="3f4bd2ff-62d2-4298-8e62-7ddb1441061a" name="0d0c55da-d610-479b-8090-f44a89fb3277" type="radio">
+</input><label class="tabbed-label" for="3f4bd2ff-62d2-4298-8e62-7ddb1441061a">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="755961f9-ed23-4d94-9412-e65ed70993c4" name="c5494f36-dee1-4bc6-a428-a16d558c5d98" type="radio">
-</input><label class="tabbed-label" for="755961f9-ed23-4d94-9412-e65ed70993c4">
+<input id="efcd268d-ca75-4703-81a6-d8ba0d3ea61c" name="0d0c55da-d610-479b-8090-f44a89fb3277" type="radio">
+</input><label class="tabbed-label" for="efcd268d-ca75-4703-81a6-d8ba0d3ea61c">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily
