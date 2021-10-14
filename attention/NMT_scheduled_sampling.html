@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6. Neural Machine Translation Model &#8212; CITS4012 Natural Language Processing</title>
+    <title>6. Neural Machine Translation - Scheduled Sampling &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="4. Neural Machine Translation Model" href="NMT_No_Sampling.html" />
+    <link rel="prev" title="5. Neual Machine Translation - No Sampling" href="NMT_No_Sampling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -487,13 +487,18 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="PackedSequence.html">
+     4. Packed Sequences
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="NMT_No_Sampling.html">
-     4. Neural Machine Translation Model
+     5. Neual Machine Translation - No Sampling
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     6. Neural Machine Translation Model
+     6. Neural Machine Translation - Scheduled Sampling
     </a>
    </li>
   </ul>
@@ -599,14 +604,14 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   6. Neural Machine Translation Model
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neural-machine-translation-model">
+   6.1. Neural Machine Translation Model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine-and-bookkeeping-functions">
-   7. Training Routine and Bookkeeping Functions
+   6.2. Training Routine and Bookkeeping Functions
   </a>
  </li>
 </ul>
@@ -620,7 +625,9 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="neural-machine-translation-scheduled-sampling">
+<h1><span class="section-number">6. </span>Neural Machine Translation - Scheduled Sampling<a class="headerlink" href="#neural-machine-translation-scheduled-sampling" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
@@ -1062,7 +1069,7 @@
 </div>
 </div>
 <div class="section" id="neural-machine-translation-model">
-<h1><span class="section-number">6. </span>Neural Machine Translation Model<a class="headerlink" href="#neural-machine-translation-model" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">6.1. </span>Neural Machine Translation Model<a class="headerlink" href="#neural-machine-translation-model" title="Permalink to this headline">¶</a></h2>
 <p>Components:</p>
 <ol class="simple">
 <li><p>NMTEncoder</p>
@@ -1321,7 +1328,7 @@
 </div>
 </div>
 <div class="section" id="training-routine-and-bookkeeping-functions">
-<h1><span class="section-number">7. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">6.2. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1776,7 +1783,7 @@ Using CUDA: True
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.28705687208416497, 0.26730098289088333)
 </pre></div>
 </div>
-<img alt="../_images/NMT_scheduled_sampling_16_1.png" src="../_images/NMT_scheduled_sampling_16_1.png" />
+<img alt="../_images/NMT_scheduled_sampling_17_1.png" src="../_images/NMT_scheduled_sampling_17_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1836,9 +1843,9 @@ Using CUDA: True
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/NMT_scheduled_sampling_20_0.png" src="../_images/NMT_scheduled_sampling_20_0.png" />
-<img alt="../_images/NMT_scheduled_sampling_20_1.png" src="../_images/NMT_scheduled_sampling_20_1.png" />
-<img alt="../_images/NMT_scheduled_sampling_20_2.png" src="../_images/NMT_scheduled_sampling_20_2.png" />
+<img alt="../_images/NMT_scheduled_sampling_21_0.png" src="../_images/NMT_scheduled_sampling_21_0.png" />
+<img alt="../_images/NMT_scheduled_sampling_21_1.png" src="../_images/NMT_scheduled_sampling_21_1.png" />
+<img alt="../_images/NMT_scheduled_sampling_21_2.png" src="../_images/NMT_scheduled_sampling_21_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1889,6 +1896,7 @@ Using CUDA: True
 </div>
 </div>
 </div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1924,7 +1932,7 @@ Using CUDA: True
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">4. </span>Neural Machine Translation Model</p>
+                <p class="prevnext-title"><span class="section-number">5. </span>Neual Machine Translation - No Sampling</p>
             </div>
         </a>
     </div>

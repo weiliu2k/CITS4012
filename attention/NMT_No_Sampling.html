@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. Neural Machine Translation Model &#8212; CITS4012 Natural Language Processing</title>
+    <title>5. Neural Machine Translation - No Sampling &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6. Neural Machine Translation Model" href="NMT_scheduled_sampling.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="PackedSequence.html" />
+    <link rel="next" title="6. Neural Machine Translation - Scheduled Sampling" href="NMT_scheduled_sampling.html" />
+    <link rel="prev" title="4. Packed Sequences" href="PackedSequence.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -487,14 +487,19 @@
      3. Neual Machine Translation
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="PackedSequence.html">
+     4. Packed Sequences
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     4. Neural Machine Translation Model
+     5. Neural Machine Translation - No Sampling
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="NMT_scheduled_sampling.html">
-     6. Neural Machine Translation Model
+     6. Neural Machine Translation - Scheduled Sampling
     </a>
    </li>
   </ul>
@@ -600,14 +605,47 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   4. Neural Machine Translation Model
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   5.1. Imports
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-sentences-to-vectorised-tokens-vocabulary-dataset-dataloader-vectorizer">
+   5.2. From sentences to vectorised tokens (Vocabulary, Dataset, DataLoader, Vectorizer)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vocabulary-and-sequencevocabulary">
+     5.2.1.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Vocabulary
+      </span>
+     </code>
+     and
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SequenceVocabulary
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtvectorizer">
+     5.2.2. NMTVectorizer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neural-machine-translation-model">
+   5.3. Neural Machine Translation Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine-and-bookkeeping-functions">
-   5. Training Routine and Bookkeeping Functions
+   5.4. Training Routine and Bookkeeping Functions
   </a>
  </li>
 </ul>
@@ -621,7 +659,13 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="neural-machine-translation-no-sampling">
+<h1><span class="section-number">5. </span>Neural Machine Translation - No Sampling<a class="headerlink" href="#neural-machine-translation-no-sampling" title="Permalink to this headline">¶</a></h1>
+<p>The encoder in our model uses a bidirectional gated recurrent unit (bi­GRU) to compute vectors for each position in the source sequence that are informed by all parts of the sequence. To accomplish this, we use PyTorch’s <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> data structure. See a separate short notebook introducing how <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> helps with variable-length sequences.</p>
+<p>The attention mechanism, is applied to the hidden states of the bi­GRU and used to condition the target sequence generation.</p>
+<div class="section" id="imports">
+<h2><span class="section-number">5.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
@@ -638,11 +682,17 @@
 <span class="kn">from</span> <span class="nn">torch.nn.utils.rnn</span> <span class="kn">import</span> <span class="n">pack_padded_sequence</span><span class="p">,</span> <span class="n">pad_packed_sequence</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="from-sentences-to-vectorised-tokens-vocabulary-dataset-dataloader-vectorizer">
+<h2><span class="section-number">5.2. </span>From sentences to vectorised tokens (Vocabulary, Dataset, DataLoader, Vectorizer)<a class="headerlink" href="#from-sentences-to-vectorised-tokens-vocabulary-dataset-dataloader-vectorizer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vocabulary-and-sequencevocabulary">
+<h3><span class="section-number">5.2.1. </span><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> and <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code><a class="headerlink" href="#vocabulary-and-sequencevocabulary" title="Permalink to this headline">¶</a></h3>
+<p>These two classes are standard as we have seen earlier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -776,6 +826,35 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="nmtvectorizer">
+<h3><span class="section-number">5.2.2. </span>NMTVectorizer<a class="headerlink" href="#nmtvectorizer" title="Permalink to this headline">¶</a></h3>
+<p>Vectorizing the source English and target French sentences requires a more complex pipeline than we have seen in pervious labs. There are two reasons for the increase in complexity.</p>
+<ul class="simple">
+<li><p>First, the source and target sequences have different roles in the model, belong to different languages, and are vectorized in two different ways.</p></li>
+<li><p>Second, as a prerequisite to use PyTorch’s <code class="docutils literal notranslate"><span class="pre">PackedSequences</span></code>, we must sort each minibatch by the length of the source sentences.</p></li>
+</ul>
+<p>To prepare for these two complexities, the NMTVectorizer is instantiated with two separate <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code> objects and two measurements of max sequence length, as shown in the constructor <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function below.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Vectorization of the source sequence
+The source sequence is vectorized with the <code class="docutils literal notranslate"><span class="pre">BEGIN­OF­SEQUENCE</span></code> token inserted at the beginning and the <code class="docutils literal notranslate"><span class="pre">END­OF­SEQUENCE</span></code> token added to the end. The model uses a bi­GRU to create summary vectors for each token in the source sentence, and these summary vectors greatly benefit from having an indication of sentence boundaries.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Vectorization of the target sequence
+The target sequence is vectorized as two copies offset by one token: the first copy needs the <code class="docutils literal notranslate"><span class="pre">BEGIN­OF­SEQUENCE</span></code> token and the second
+copy needs the <code class="docutils literal notranslate"><span class="pre">END­OF­SEQUENCE</span></code> token.</p>
+</div>
+<p>recall that sequence prediction tasks require observations of the input token and output token at every time step. The decoder in an seq2seq
+model is performing this task, but with the added availability of the encoder context. To address this
+complexity,</p>
+<ul class="simple">
+<li><p>We make the core vectorization method, <code class="docutils literal notranslate"><span class="pre">_vectorize()</span></code>, indifferent to whether it is the
+source or target indices.</p></li>
+<li><p>Then, two methods are written to handle the source and target indices separately.</p></li>
+<li><p>Finally, these sets of indices are coordinated by using the <code class="docutils literal notranslate"><span class="pre">NMTVectorizer.vectorize</span></code> method, which is the method invoked by the dataset.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1067,8 +1146,10 @@
 </div>
 </div>
 </div>
+</div>
+</div>
 <div class="section" id="neural-machine-translation-model">
-<h1><span class="section-number">4. </span>Neural Machine Translation Model<a class="headerlink" href="#neural-machine-translation-model" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">5.3. </span>Neural Machine Translation Model<a class="headerlink" href="#neural-machine-translation-model" title="Permalink to this headline">¶</a></h2>
 <p>Components:</p>
 <ol class="simple">
 <li><p>NMTEncoder</p>
@@ -1081,11 +1162,7 @@
 <li><p>using the encoder state and attention, the decoder generates a new sequence</p></li>
 <li><p>the ground truth target sequence is used as input to the decoder at each time step</p></li>
 <li><p>an alternative formulation would allow some of the decoder’s own choices to be used as input</p></li>
-<li><p>this is referred to as curriculum learning, learning to search</p>
-<ul>
-<li><p>TODO: Look up references for this.  I believe Bengio has a paper from the image captioning competitions. Hal Daume has tons on this and is the main NLP guy for it.</p></li>
-</ul>
-</li>
+<li><p>this is referred to as curriculum learning, learning to search</p></li>
 </ul>
 </li>
 <li><p>NMTModel</p>
@@ -1309,7 +1386,7 @@
 </div>
 </div>
 <div class="section" id="training-routine-and-bookkeeping-functions">
-<h1><span class="section-number">5. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">5.4. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1415,13 +1492,25 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">dataset_csv</span><span class="o">=</span><span class="s2">&quot;data/nmt/simplest_eng_fra.csv&quot;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">dataset_csv</span><span class="o">=</span><span class="s2">&quot;../data/nmt/simplest_eng_fra.csv&quot;</span><span class="p">,</span>
                  <span class="n">vectorizer_file</span><span class="o">=</span><span class="s2">&quot;vectorizer.json&quot;</span><span class="p">,</span>
                  <span class="n">model_state_file</span><span class="o">=</span><span class="s2">&quot;model.pth&quot;</span><span class="p">,</span>
-                 <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;model_storage/ch8/nmt_luong_no_sampling&quot;</span><span class="p">,</span>
+                 <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;model_storage/nmt_luong_no_sampling&quot;</span><span class="p">,</span>
                  <span class="n">reload_from_files</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">expand_filepaths_to_save_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                 <span class="n">cuda</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">cuda</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">seed</span><span class="o">=</span><span class="mi">1337</span><span class="p">,</span>
                  <span class="n">learning_rate</span><span class="o">=</span><span class="mf">5e-4</span><span class="p">,</span>
                  <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
@@ -1461,9 +1550,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expanded filepaths: 
-	model_storage/ch8/nmt_luong_no_sampling/vectorizer.json
-	model_storage/ch8/nmt_luong_no_sampling/model.pth
-Using CUDA: False
+	model_storage/nmt_luong_no_sampling\vectorizer.json
+	model_storage/nmt_luong_no_sampling\model.pth
+Using CUDA: True
 </pre></div>
 </div>
 </div>
@@ -1518,17 +1607,17 @@ Using CUDA: False
 <span class="n">mask_index</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">target_vocab</span><span class="o">.</span><span class="n">mask_index</span>
 <span class="n">train_state</span> <span class="o">=</span> <span class="n">make_train_state</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-<span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
+<span class="n">epoch_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;training routine&#39;</span><span class="p">,</span> 
                           <span class="n">total</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_epochs</span><span class="p">,</span>
                           <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
-<span class="n">train_bar</span> <span class="o">=</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=train&#39;</span><span class="p">,</span>
+<span class="n">train_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=train&#39;</span><span class="p">,</span>
                           <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_num_batches</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> 
                           <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
                           <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dataset</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="s1">&#39;val&#39;</span><span class="p">)</span>
-<span class="n">val_bar</span> <span class="o">=</span> <span class="n">tqdm_notebook</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=val&#39;</span><span class="p">,</span>
+<span class="n">val_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;split=val&#39;</span><span class="p">,</span>
                         <span class="n">total</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_num_batches</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> 
                         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
                         <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1637,15 +1726,12 @@ Using CUDA: False
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "e4c6282bbde04870b128e96ef0da9260", "version_major": 2, "version_minor": 0}
+{"version_major": 2, "version_minor": 0, "model_id": "842503b19d5541e698a1df42c449d352"}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "cd0bb05dd6c04295bd2e4702de6fb961", "version_major": 2, "version_minor": 0}
+{"version_major": 2, "version_minor": 0, "model_id": "46f00fb8c4284b3ab4beb459ef7d2362"}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "bec25a08e7994b9281bc44f324067aed", "version_major": 2, "version_minor": 0}
-</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exiting loop
-</pre></div>
-</div>
-</div>
+{"version_major": 2, "version_minor": 0, "model_id": "138cf0a3b72c4e14bfbd8936b465b967"}
+</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1782,7 +1868,7 @@ Using CUDA: False
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.25407270926974085, 0.238016853527947)
 </pre></div>
 </div>
-<img alt="../_images/NMT_No_Sampling_18_1.png" src="../_images/NMT_No_Sampling_18_1.png" />
+<img alt="../_images/NMT_No_Sampling_23_1.png" src="../_images/NMT_No_Sampling_23_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1846,60 +1932,60 @@ Using CUDA: False
   max_open_warning, RuntimeWarning)
 </pre></div>
 </div>
-<img alt="../_images/NMT_No_Sampling_22_1.png" src="../_images/NMT_No_Sampling_22_1.png" />
-<img alt="../_images/NMT_No_Sampling_22_2.png" src="../_images/NMT_No_Sampling_22_2.png" />
-<img alt="../_images/NMT_No_Sampling_22_3.png" src="../_images/NMT_No_Sampling_22_3.png" />
-<img alt="../_images/NMT_No_Sampling_22_4.png" src="../_images/NMT_No_Sampling_22_4.png" />
-<img alt="../_images/NMT_No_Sampling_22_5.png" src="../_images/NMT_No_Sampling_22_5.png" />
-<img alt="../_images/NMT_No_Sampling_22_6.png" src="../_images/NMT_No_Sampling_22_6.png" />
-<img alt="../_images/NMT_No_Sampling_22_7.png" src="../_images/NMT_No_Sampling_22_7.png" />
-<img alt="../_images/NMT_No_Sampling_22_8.png" src="../_images/NMT_No_Sampling_22_8.png" />
-<img alt="../_images/NMT_No_Sampling_22_9.png" src="../_images/NMT_No_Sampling_22_9.png" />
-<img alt="../_images/NMT_No_Sampling_22_10.png" src="../_images/NMT_No_Sampling_22_10.png" />
-<img alt="../_images/NMT_No_Sampling_22_11.png" src="../_images/NMT_No_Sampling_22_11.png" />
-<img alt="../_images/NMT_No_Sampling_22_12.png" src="../_images/NMT_No_Sampling_22_12.png" />
-<img alt="../_images/NMT_No_Sampling_22_13.png" src="../_images/NMT_No_Sampling_22_13.png" />
-<img alt="../_images/NMT_No_Sampling_22_14.png" src="../_images/NMT_No_Sampling_22_14.png" />
-<img alt="../_images/NMT_No_Sampling_22_15.png" src="../_images/NMT_No_Sampling_22_15.png" />
-<img alt="../_images/NMT_No_Sampling_22_16.png" src="../_images/NMT_No_Sampling_22_16.png" />
-<img alt="../_images/NMT_No_Sampling_22_17.png" src="../_images/NMT_No_Sampling_22_17.png" />
-<img alt="../_images/NMT_No_Sampling_22_18.png" src="../_images/NMT_No_Sampling_22_18.png" />
-<img alt="../_images/NMT_No_Sampling_22_19.png" src="../_images/NMT_No_Sampling_22_19.png" />
-<img alt="../_images/NMT_No_Sampling_22_20.png" src="../_images/NMT_No_Sampling_22_20.png" />
-<img alt="../_images/NMT_No_Sampling_22_21.png" src="../_images/NMT_No_Sampling_22_21.png" />
-<img alt="../_images/NMT_No_Sampling_22_22.png" src="../_images/NMT_No_Sampling_22_22.png" />
-<img alt="../_images/NMT_No_Sampling_22_23.png" src="../_images/NMT_No_Sampling_22_23.png" />
-<img alt="../_images/NMT_No_Sampling_22_24.png" src="../_images/NMT_No_Sampling_22_24.png" />
-<img alt="../_images/NMT_No_Sampling_22_25.png" src="../_images/NMT_No_Sampling_22_25.png" />
-<img alt="../_images/NMT_No_Sampling_22_26.png" src="../_images/NMT_No_Sampling_22_26.png" />
-<img alt="../_images/NMT_No_Sampling_22_27.png" src="../_images/NMT_No_Sampling_22_27.png" />
-<img alt="../_images/NMT_No_Sampling_22_28.png" src="../_images/NMT_No_Sampling_22_28.png" />
-<img alt="../_images/NMT_No_Sampling_22_29.png" src="../_images/NMT_No_Sampling_22_29.png" />
-<img alt="../_images/NMT_No_Sampling_22_30.png" src="../_images/NMT_No_Sampling_22_30.png" />
-<img alt="../_images/NMT_No_Sampling_22_31.png" src="../_images/NMT_No_Sampling_22_31.png" />
-<img alt="../_images/NMT_No_Sampling_22_32.png" src="../_images/NMT_No_Sampling_22_32.png" />
-<img alt="../_images/NMT_No_Sampling_22_33.png" src="../_images/NMT_No_Sampling_22_33.png" />
-<img alt="../_images/NMT_No_Sampling_22_34.png" src="../_images/NMT_No_Sampling_22_34.png" />
-<img alt="../_images/NMT_No_Sampling_22_35.png" src="../_images/NMT_No_Sampling_22_35.png" />
-<img alt="../_images/NMT_No_Sampling_22_36.png" src="../_images/NMT_No_Sampling_22_36.png" />
-<img alt="../_images/NMT_No_Sampling_22_37.png" src="../_images/NMT_No_Sampling_22_37.png" />
-<img alt="../_images/NMT_No_Sampling_22_38.png" src="../_images/NMT_No_Sampling_22_38.png" />
-<img alt="../_images/NMT_No_Sampling_22_39.png" src="../_images/NMT_No_Sampling_22_39.png" />
-<img alt="../_images/NMT_No_Sampling_22_40.png" src="../_images/NMT_No_Sampling_22_40.png" />
-<img alt="../_images/NMT_No_Sampling_22_41.png" src="../_images/NMT_No_Sampling_22_41.png" />
-<img alt="../_images/NMT_No_Sampling_22_42.png" src="../_images/NMT_No_Sampling_22_42.png" />
-<img alt="../_images/NMT_No_Sampling_22_43.png" src="../_images/NMT_No_Sampling_22_43.png" />
-<img alt="../_images/NMT_No_Sampling_22_44.png" src="../_images/NMT_No_Sampling_22_44.png" />
-<img alt="../_images/NMT_No_Sampling_22_45.png" src="../_images/NMT_No_Sampling_22_45.png" />
-<img alt="../_images/NMT_No_Sampling_22_46.png" src="../_images/NMT_No_Sampling_22_46.png" />
-<img alt="../_images/NMT_No_Sampling_22_47.png" src="../_images/NMT_No_Sampling_22_47.png" />
-<img alt="../_images/NMT_No_Sampling_22_48.png" src="../_images/NMT_No_Sampling_22_48.png" />
-<img alt="../_images/NMT_No_Sampling_22_49.png" src="../_images/NMT_No_Sampling_22_49.png" />
-<img alt="../_images/NMT_No_Sampling_22_50.png" src="../_images/NMT_No_Sampling_22_50.png" />
-<img alt="../_images/NMT_No_Sampling_22_51.png" src="../_images/NMT_No_Sampling_22_51.png" />
-<img alt="../_images/NMT_No_Sampling_22_52.png" src="../_images/NMT_No_Sampling_22_52.png" />
-<img alt="../_images/NMT_No_Sampling_22_53.png" src="../_images/NMT_No_Sampling_22_53.png" />
-<img alt="../_images/NMT_No_Sampling_22_54.png" src="../_images/NMT_No_Sampling_22_54.png" />
+<img alt="../_images/NMT_No_Sampling_27_1.png" src="../_images/NMT_No_Sampling_27_1.png" />
+<img alt="../_images/NMT_No_Sampling_27_2.png" src="../_images/NMT_No_Sampling_27_2.png" />
+<img alt="../_images/NMT_No_Sampling_27_3.png" src="../_images/NMT_No_Sampling_27_3.png" />
+<img alt="../_images/NMT_No_Sampling_27_4.png" src="../_images/NMT_No_Sampling_27_4.png" />
+<img alt="../_images/NMT_No_Sampling_27_5.png" src="../_images/NMT_No_Sampling_27_5.png" />
+<img alt="../_images/NMT_No_Sampling_27_6.png" src="../_images/NMT_No_Sampling_27_6.png" />
+<img alt="../_images/NMT_No_Sampling_27_7.png" src="../_images/NMT_No_Sampling_27_7.png" />
+<img alt="../_images/NMT_No_Sampling_27_8.png" src="../_images/NMT_No_Sampling_27_8.png" />
+<img alt="../_images/NMT_No_Sampling_27_9.png" src="../_images/NMT_No_Sampling_27_9.png" />
+<img alt="../_images/NMT_No_Sampling_27_10.png" src="../_images/NMT_No_Sampling_27_10.png" />
+<img alt="../_images/NMT_No_Sampling_27_11.png" src="../_images/NMT_No_Sampling_27_11.png" />
+<img alt="../_images/NMT_No_Sampling_27_12.png" src="../_images/NMT_No_Sampling_27_12.png" />
+<img alt="../_images/NMT_No_Sampling_27_13.png" src="../_images/NMT_No_Sampling_27_13.png" />
+<img alt="../_images/NMT_No_Sampling_27_14.png" src="../_images/NMT_No_Sampling_27_14.png" />
+<img alt="../_images/NMT_No_Sampling_27_15.png" src="../_images/NMT_No_Sampling_27_15.png" />
+<img alt="../_images/NMT_No_Sampling_27_16.png" src="../_images/NMT_No_Sampling_27_16.png" />
+<img alt="../_images/NMT_No_Sampling_27_17.png" src="../_images/NMT_No_Sampling_27_17.png" />
+<img alt="../_images/NMT_No_Sampling_27_18.png" src="../_images/NMT_No_Sampling_27_18.png" />
+<img alt="../_images/NMT_No_Sampling_27_19.png" src="../_images/NMT_No_Sampling_27_19.png" />
+<img alt="../_images/NMT_No_Sampling_27_20.png" src="../_images/NMT_No_Sampling_27_20.png" />
+<img alt="../_images/NMT_No_Sampling_27_21.png" src="../_images/NMT_No_Sampling_27_21.png" />
+<img alt="../_images/NMT_No_Sampling_27_22.png" src="../_images/NMT_No_Sampling_27_22.png" />
+<img alt="../_images/NMT_No_Sampling_27_23.png" src="../_images/NMT_No_Sampling_27_23.png" />
+<img alt="../_images/NMT_No_Sampling_27_24.png" src="../_images/NMT_No_Sampling_27_24.png" />
+<img alt="../_images/NMT_No_Sampling_27_25.png" src="../_images/NMT_No_Sampling_27_25.png" />
+<img alt="../_images/NMT_No_Sampling_27_26.png" src="../_images/NMT_No_Sampling_27_26.png" />
+<img alt="../_images/NMT_No_Sampling_27_27.png" src="../_images/NMT_No_Sampling_27_27.png" />
+<img alt="../_images/NMT_No_Sampling_27_28.png" src="../_images/NMT_No_Sampling_27_28.png" />
+<img alt="../_images/NMT_No_Sampling_27_29.png" src="../_images/NMT_No_Sampling_27_29.png" />
+<img alt="../_images/NMT_No_Sampling_27_30.png" src="../_images/NMT_No_Sampling_27_30.png" />
+<img alt="../_images/NMT_No_Sampling_27_31.png" src="../_images/NMT_No_Sampling_27_31.png" />
+<img alt="../_images/NMT_No_Sampling_27_32.png" src="../_images/NMT_No_Sampling_27_32.png" />
+<img alt="../_images/NMT_No_Sampling_27_33.png" src="../_images/NMT_No_Sampling_27_33.png" />
+<img alt="../_images/NMT_No_Sampling_27_34.png" src="../_images/NMT_No_Sampling_27_34.png" />
+<img alt="../_images/NMT_No_Sampling_27_35.png" src="../_images/NMT_No_Sampling_27_35.png" />
+<img alt="../_images/NMT_No_Sampling_27_36.png" src="../_images/NMT_No_Sampling_27_36.png" />
+<img alt="../_images/NMT_No_Sampling_27_37.png" src="../_images/NMT_No_Sampling_27_37.png" />
+<img alt="../_images/NMT_No_Sampling_27_38.png" src="../_images/NMT_No_Sampling_27_38.png" />
+<img alt="../_images/NMT_No_Sampling_27_39.png" src="../_images/NMT_No_Sampling_27_39.png" />
+<img alt="../_images/NMT_No_Sampling_27_40.png" src="../_images/NMT_No_Sampling_27_40.png" />
+<img alt="../_images/NMT_No_Sampling_27_41.png" src="../_images/NMT_No_Sampling_27_41.png" />
+<img alt="../_images/NMT_No_Sampling_27_42.png" src="../_images/NMT_No_Sampling_27_42.png" />
+<img alt="../_images/NMT_No_Sampling_27_43.png" src="../_images/NMT_No_Sampling_27_43.png" />
+<img alt="../_images/NMT_No_Sampling_27_44.png" src="../_images/NMT_No_Sampling_27_44.png" />
+<img alt="../_images/NMT_No_Sampling_27_45.png" src="../_images/NMT_No_Sampling_27_45.png" />
+<img alt="../_images/NMT_No_Sampling_27_46.png" src="../_images/NMT_No_Sampling_27_46.png" />
+<img alt="../_images/NMT_No_Sampling_27_47.png" src="../_images/NMT_No_Sampling_27_47.png" />
+<img alt="../_images/NMT_No_Sampling_27_48.png" src="../_images/NMT_No_Sampling_27_48.png" />
+<img alt="../_images/NMT_No_Sampling_27_49.png" src="../_images/NMT_No_Sampling_27_49.png" />
+<img alt="../_images/NMT_No_Sampling_27_50.png" src="../_images/NMT_No_Sampling_27_50.png" />
+<img alt="../_images/NMT_No_Sampling_27_51.png" src="../_images/NMT_No_Sampling_27_51.png" />
+<img alt="../_images/NMT_No_Sampling_27_52.png" src="../_images/NMT_No_Sampling_27_52.png" />
+<img alt="../_images/NMT_No_Sampling_27_53.png" src="../_images/NMT_No_Sampling_27_53.png" />
+<img alt="../_images/NMT_No_Sampling_27_54.png" src="../_images/NMT_No_Sampling_27_54.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1949,6 +2035,7 @@ Using CUDA: False
 </div>
 </div>
 </div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1959,16 +2046,16 @@ Using CUDA: False
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "nlpbook"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "nlpbook",
+            kernelName: "python3",
             path: "./attention"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'nlpbook'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -1984,7 +2071,7 @@ Using CUDA: False
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>Packed Sequences</p>
             </div>
         </a>
     </div>
@@ -1992,7 +2079,7 @@ Using CUDA: False
         <a class="right-next" href="NMT_scheduled_sampling.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">6. </span>Neural Machine Translation Model</p>
+                <p class="prevnext-title"><span class="section-number">6. </span>Neural Machine Translation - Scheduled Sampling</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

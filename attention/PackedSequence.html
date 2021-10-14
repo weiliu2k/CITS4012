@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; CITS4012 Natural Language Processing</title>
+    <title>4. Packed Sequences &#8212; CITS4012 Natural Language Processing</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4. Neural Machine Translation Model" href="NMT_No_Sampling.html" />
+    <link rel="next" title="5. Neural Machine Translation - No Sampling" href="NMT_No_Sampling.html" />
     <link rel="prev" title="3. Neual Machine Translation" href="nmt_data_processing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -89,7 +89,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basics/intro.html">
    Lab 01: Conda Environment and Python Refresher
@@ -462,16 +462,16 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="intro.html">
    Lab12: Sequence to Sequence Learning with Attention
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
   <label for="toctree-checkbox-12">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="attention.html">
      1. Attention Mechanism
@@ -487,14 +487,19 @@
      3. Neual Machine Translation
     </a>
    </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4. Packed Sequences
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="NMT_No_Sampling.html">
-     4. Neural Machine Translation Model
+     5. Neural Machine Translation - No Sampling
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="NMT_scheduled_sampling.html">
-     6. Neural Machine Translation Model
+     6. Neural Machine Translation - Scheduled Sampling
     </a>
    </li>
   </ul>
@@ -599,7 +604,17 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-padded-to-packed">
+   4.1. From padded to packed
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-packed-to-padded">
+   4.2. From packed to padded
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -611,7 +626,21 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="packed-sequences">
+<h1><span class="section-number">4. </span>Packed Sequences<a class="headerlink" href="#packed-sequences" title="Permalink to this headline">¶</a></h1>
+<p>Normally, a minibatch of <em>variable-­length</em> sequences is represented numerically as rows in a matrix of integers in which each sequence is left aligned and <em>zero­-padded</em> to accommodate the variable lengths.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> data structure represents variable­-length sequences as an array by concatenating the data for the sequences at each time step, one after another, and knowing the number of sequences at each time step, as shown in the figure below.</p>
+<p><img alt="Packed Sequences" src="../_images/packed-sequence.png" /></p>
+<p>A matrix of padded sequences and its lengths are shown on the left. The padded matrix is the standard way of representing variable-­length sequences, by righ-­padding them with zeroes and stacking them as row vectors.</p>
+<p>In PyTorch, we can pack the padded sequences into a terser representation, the <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code>, shown on the right along with the batch sizes. This representation allows the GPU to step through the sequence by keeping track of how many sequences are in each time step (the batch sizes). Using the example above,</p>
+<ul class="simple">
+<li><p>The longest sequence is 4, so the maximum time step is 4.</p></li>
+<li><p>The first time step, we have three sequences (<code class="docutils literal notranslate"><span class="pre">a</span></code>,<code class="docutils literal notranslate"><span class="pre">e</span></code>, and <code class="docutils literal notranslate"><span class="pre">h</span></code>).</p></li>
+<li><p>The second time step, we have two sequences (<code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">f</span></code>).</p></li>
+<li><p>The third time step, we have two sequences (<code class="docutils literal notranslate"><span class="pre">c</span></code>, and <code class="docutils literal notranslate"><span class="pre">g</span></code>).</p></li>
+<li><p>The final time step, we have one sequence (<code class="docutils literal notranslate"><span class="pre">d</span></code>).</p></li>
+</ul>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
@@ -630,6 +659,8 @@
 </div>
 </div>
 </div>
+<div class="section" id="from-padded-to-packed">
+<h2><span class="section-number">4.1. </span>From padded to packed<a class="headerlink" href="#from-padded-to-packed" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">abcd_padded</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -663,11 +694,15 @@ tensor([[1., 2., 3., 4.],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PackedSequence(data=tensor([1., 5., 8., 2., 6., 3., 7., 4.]), batch_sizes=tensor([3, 2, 2, 1]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PackedSequence(data=tensor([1., 5., 8., 2., 6., 3., 7., 4.]), batch_sizes=tensor([3, 2, 2, 1]), sorted_indices=None, unsorted_indices=None)
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="from-packed-to-padded">
+<h2><span class="section-number">4.2. </span>From packed to padded<a class="headerlink" href="#from-packed-to-padded" title="Permalink to this headline">¶</a></h2>
+<p>You can also turn packed sequence back to padded sequence</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unpacked_tensor</span><span class="p">,</span> <span class="n">unpacked_lengths</span> <span class="o">=</span> <span class="n">pad_packed_sequence</span><span class="p">(</span><span class="n">packed_tensor</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -691,6 +726,8 @@ tensor([4, 3, 1])
 </div>
 </div>
 </div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -701,16 +738,16 @@ tensor([4, 3, 1])
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "nlpbook"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "nlpbook",
+            kernelName: "python3",
             path: "./attention"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'nlpbook'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -734,7 +771,7 @@ tensor([4, 3, 1])
         <a class="right-next" href="NMT_No_Sampling.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">4. </span>Neural Machine Translation Model</p>
+                <p class="prevnext-title"><span class="section-number">5. </span>Neural Machine Translation - No Sampling</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
