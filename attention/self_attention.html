@@ -53,6 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Neual Machine Translation" href="nmt_data_processing.html" />
     <link rel="prev" title="1. Attention Mechanism" href="attention.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -483,6 +484,21 @@
      2. Self-Attention
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="nmt_data_processing.html">
+     3. Neual Machine Translation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="NMT_No_Sampling.html">
+     4. Neural Machine Translation Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="NMT_scheduled_sampling.html">
+     6. Neural Machine Translation Model
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -612,60 +628,65 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encoder">
-     2.5.1. Encoder
+    <a class="reference internal nav-link" href="#attention-scores-from-input">
+     2.5.1. Attention Scores from Input
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cross-attention">
-     2.5.2. Cross-Attention
+    <a class="reference internal nav-link" href="#encoder-with-self-attention">
+     2.5.2. Encoder with Self-Attention
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoder-the-square-sequence">
+     2.5.3. Encoder the Square Sequence
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#decoder">
-     2.5.3. Decoder
+     2.5.4. Decoder
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#subsequent-inputs-and-teacher-forcing">
-       2.5.3.1. Subsequent Inputs and Teacher Forcing
+       2.5.4.1. Subsequent Inputs and Teacher Forcing
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#attention-scores">
-       2.5.3.2. Attention Scores
+       2.5.4.2. Attention Scores
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#target-mask-training">
-       2.5.3.3. Target Mask (Training)
+       2.5.4.3. Target Mask (Training)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#target-mask-evaluation-prediction">
-       2.5.3.4. Target Mask (Evaluation/Prediction)
+       2.5.4.4. Target Mask (Evaluation/Prediction)
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#encoder-decoder-self-attention">
-     2.5.4. Encoder + Decoder + Self-Attention
+     2.5.5. Encoder + Decoder + Self-Attention
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#data-preparation">
-     2.5.5. Data Preparation
+     2.5.6. Data Preparation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#model-configuration-training">
-     2.5.6. Model Configuration &amp; Training
+     2.5.7. Model Configuration &amp; Training
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#visualizing-predictions">
-     2.5.7. Visualizing Predictions
+     2.5.8. Visualizing Predictions
     </a>
    </li>
   </ul>
@@ -683,9 +704,11 @@
                 
   <div class="section" id="self-attention">
 <h1><span class="section-number">2. </span>Self-Attention<a class="headerlink" href="#self-attention" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we look at how self-attention works. In other words, no RNN, but simply self attention of source sequence for the encoder, attention (both self and cross) of the <strong>shifted target sequence</strong> for the decoder.</p>
+<p><img alt="Self Attention" src="../_images/encdec_self_simplified.png" /></p>
 <div class="section" id="download-untility-files-for-plotting-and-data-generation">
 <h2><span class="section-number">2.1. </span>Download Untility Files for Plotting and Data Generation<a class="headerlink" href="#download-untility-files-for-plotting-and-data-generation" title="Permalink to this headline">¶</a></h2>
-<p>Download these utility functions first and place them in the same directory as this notebook.</p>
+<p>Download these utility functions first and place them in the same directory as this notebook. These files are the same as the ones in <a class="reference external" href="https://weiliu2k.github.io/CITS4012/LSTM/seq2seq.html">Lab11 Sequence to Sequence Model</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">FileLink</span><span class="p">,</span> <span class="n">FileLinks</span>
@@ -752,7 +775,7 @@
 </div>
 <div class="section" id="data-generation">
 <h2><span class="section-number">2.3. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
-<p>Same method as before for generating noisy squares.</p>
+<p>We still make use of the Square Sequences, using the first two corners to predict the last two. Same method as before for generating noisy squares.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">variable_len</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
@@ -854,9 +877,10 @@
 </div>
 <div class="section" id="id1">
 <h2><span class="section-number">2.5. </span>Self-Attention<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="encoder">
-<h3><span class="section-number">2.5.1. </span>Encoder<a class="headerlink" href="#encoder" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="attention/images/encoder_self.png" /></p>
+<p>Instead of using RNN to generate the hidden states, we use attention mechanism to generate hidden states for inputs. This is called self-attention, i.e. attention on the input data points themselves. Each input will have its own context vector. All context vectors are concatenated and transformed through a linear layer, as an input to the feedforward network as hidden state for the corresponding input.</p>
+<div class="section" id="attention-scores-from-input">
+<h3><span class="section-number">2.5.1. </span>Attention Scores from Input<a class="headerlink" href="#attention-scores-from-input" title="Permalink to this headline">¶</a></h3>
+<p>Inputs or their affine transformations are used as Keys, Values and Queries.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \alpha_{\color{blue}{0}\color{red}0}, \alpha_{{\color{blue}{0}\color{red}1}} = softmax(\frac{\color{red}{Q_0}\color{black}\cdot K_0}{\sqrt{2}}, \frac{\color{red}{Q_0}\color{black}\cdot K_1}{\sqrt{2}})
@@ -865,15 +889,12 @@
 \end{split}\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 \alpha_{\color{blue}{1}\color{red}0}, \alpha_{{\color{blue}{1}\color{red}1}} = softmax(\frac{\color{red}{Q_1}\color{black}\cdot K_0}{\sqrt{2}}, \frac{\color{red}{Q_1}\color{black}\cdot K_1}{\sqrt{2}})
 \\
-\Large
 \color{blue}{context\ vector_1}\color{black}= \alpha_{\color{blue}{1}\color{red}0}V_0 + \alpha_{{\color{blue}{1}\color{red}1}}V_1
 \end{split}\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 \begin{array}{c|cc}
 &amp; source\\
 target&amp; \color{red}{x_0} &amp; \color{red}{x_1} \\
@@ -883,6 +904,10 @@ target&amp; \color{red}{x_0} &amp; \color{red}{x_1} \\
 \end{array}
 \end{split}\]</div>
 <p><img alt="" src="attention/images/transf_encself.png" /></p>
+</div>
+<div class="section" id="encoder-with-self-attention">
+<h3><span class="section-number">2.5.2. </span>Encoder with Self-Attention<a class="headerlink" href="#encoder-with-self-attention" title="Permalink to this headline">¶</a></h3>
+<p>As you can see from the code below, each input has its own attention head, so it makes use of the multi-headed attention above. Check the code against the diagram for better understanding.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderSelfAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -908,6 +933,10 @@ target&amp; \color{red}{x_0} &amp; \color{red}{x_1} \\
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="encoder-the-square-sequence">
+<h3><span class="section-number">2.5.3. </span>Encoder the Square Sequence<a class="headerlink" href="#encoder-the-square-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The perfect sequare with four corners, is split into a source sequence of two corners and a target sequence of two corners.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -935,11 +964,9 @@ target&amp; \color{red}{x_0} &amp; \color{red}{x_1} \\
 </div>
 </div>
 </div>
-<div class="section" id="cross-attention">
-<h3><span class="section-number">2.5.2. </span>Cross-Attention<a class="headerlink" href="#cross-attention" title="Permalink to this headline">¶</a></h3>
-</div>
 <div class="section" id="decoder">
-<h3><span class="section-number">2.5.3. </span>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.5.4. </span>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
+<p>This decoder has both self attention and cross-attention, which uses the decoder hidden state as query.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DecoderSelfAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -970,11 +997,9 @@ target&amp; \color{red}{x_0} &amp; \color{red}{x_1} \\
 </div>
 </div>
 </div>
-<p><img alt="" src="attention/images/decoder_self.png" /></p>
-<p><img alt="" src="attention/images/transf_decself.png" /></p>
 <div class="section" id="subsequent-inputs-and-teacher-forcing">
-<h4><span class="section-number">2.5.3.1. </span>Subsequent Inputs and Teacher Forcing<a class="headerlink" href="#subsequent-inputs-and-teacher-forcing" title="Permalink to this headline">¶</a></h4>
-<p><img alt="" src="attention/images/shifted_target.png" /></p>
+<h4><span class="section-number">2.5.4.1. </span>Subsequent Inputs and Teacher Forcing<a class="headerlink" href="#subsequent-inputs-and-teacher-forcing" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>shifted target sequence</strong> containes the last element of the source sequence, and everything but the last element of the target sequence.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shifted_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">source_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">target_seq</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -984,26 +1009,24 @@ target&amp; \color{red}{x_0} &amp; \color{red}{x_1} \\
 </div>
 </div>
 <div class="section" id="attention-scores">
-<h4><span class="section-number">2.5.3.2. </span>Attention Scores<a class="headerlink" href="#attention-scores" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.5.4.2. </span>Attention Scores<a class="headerlink" href="#attention-scores" title="Permalink to this headline">¶</a></h4>
+<p>Because we feed the entire shifted target sequence to the decoder, we need to be careful not to allow the model to peek into the future.</p>
+<p>The attention score <span class="math notranslate nohighlight">\(\alpha_{22}\)</span> is problematic, because we are using the <span class="math notranslate nohighlight">\(K_2\)</span> and <span class="math notranslate nohighlight">\(V_2\)</span> which the model should not have seen yet for calculation. So we need <strong>target mask</strong> to ensure that it is not computed.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 \alpha_{\color{green}{2}\color{red}1}, \alpha_{{\color{green}{2}\color{red}2}} = softmax(\frac{\color{red}{Q_1}\color{black}\cdot K_1}{\sqrt{2}}, \frac{\color{red}{Q_1}\color{black}\cdot K_2}{\sqrt{2}})
 \\
-\Large
 \color{green}{context\ vector_2}\color{black}= \alpha_{\color{green}{2}\color{red}1}V_1 + \alpha_{{\color{green}{2}\color{red}2}}V_2
 \end{split}\]</div>
+<p>Below, it is fine for us to use <span class="math notranslate nohighlight">\(K_2\)</span> and <span class="math notranslate nohighlight">\(V_2\)</span> to caluate <span class="math notranslate nohighlight">\(\alpha_3\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 \alpha_{\color{green}{3}\color{red}1}, \alpha_{{\color{green}{3}\color{red}2}} = softmax(\frac{\color{red}{Q_2}\color{black}\cdot K_1}{\sqrt{2}}, \frac{\color{red}{Q_2}\color{black}\cdot K_2}{\sqrt{2}})
 \\
-\Large
 \color{green}{context\ vector_3}\color{black}= \alpha_{\color{green}{3}\color{red}1}V_1 + \alpha_{{\color{green}{3}\color{red}2}}V_2
 \end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\Large
+<p>Any values in the attention score matrix that are above the diagnal line needs to be masked. Here we need to mask <span class="math notranslate nohighlight">\(\alpha_{22}\)</span> to 0.
+$<span class="math notranslate nohighlight">\(
 \begin{array}{c|cc}
 &amp; source\\
 target&amp; \color{red}{x_1} &amp; \color{red}{x_2} \\
@@ -1011,13 +1034,13 @@ target&amp; \color{red}{x_1} &amp; \color{red}{x_2} \\
  \color{green}{h_2} &amp; \alpha_{\color{green}{2}\color{red}1} &amp; \alpha_{{\color{green}{2}\color{red}2}} \\
  \color{green}{h_3} &amp; \alpha_{\color{green}{3}\color{red}1} &amp; \alpha_{{\color{green}{3}\color{red}2}}
 \end{array}
-\end{split}\]</div>
+\)</span>$</p>
 </div>
 <div class="section" id="target-mask-training">
-<h4><span class="section-number">2.5.3.3. </span>Target Mask (Training)<a class="headerlink" href="#target-mask-training" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.5.4.3. </span>Target Mask (Training)<a class="headerlink" href="#target-mask-training" title="Permalink to this headline">¶</a></h4>
+<p>The masked scoreing matrix should look like this:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 \begin{array}{c|cc}
 &amp; source\\
 target&amp; \color{red}{x_1} &amp; \color{red}{x_2} \\
@@ -1049,6 +1072,15 @@ target&amp; \color{red}{x_1} &amp; \color{red}{x_2} \\
 </div>
 </div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Subsequent Mask
+We must use this mask while querying the decoder to prevent it
+from cheating. You can choose to use an additional mask to
+“hide” more data from the decoder if you wish, but the
+subsequent mask is a strong requirement of the self-attention
+decoder.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
@@ -1079,21 +1111,24 @@ target&amp; \color{red}{x_1} &amp; \color{red}{x_2} \\
 </div>
 </div>
 <div class="section" id="target-mask-evaluation-prediction">
-<h4><span class="section-number">2.5.3.4. </span>Target Mask (Evaluation/Prediction)<a class="headerlink" href="#target-mask-evaluation-prediction" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.5.4.4. </span>Target Mask (Evaluation/Prediction)<a class="headerlink" href="#target-mask-evaluation-prediction" title="Permalink to this headline">¶</a></h4>
+<p>The only difference between training and evaluation, concerning the target mask,
+is that we’ll be using larger masks as we go. The very first mask is actually trivial
+since there are no elements above the diagonal:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 1^{st}\ Step
-\Large
 \begin{cases}
 \begin{array}{c|cc}
-&amp; source\\
-target&amp; \color{red}{x_1} &amp; \\
+target&amp; source\\
+&amp; \color{red}{x_1} &amp; \\
 \hline
  \color{green}{h_2} &amp; \alpha_{\color{green}{2}\color{red}1}
 \end{array}
 \end{cases}
 \end{split}\]</div>
+<p>In evaluation/prediction time we only have the source sequence and, in our
+example, we use its last element as input for the decoder:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="o">=</span> <span class="n">source_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
@@ -1109,6 +1144,8 @@ target&amp; \color{red}{x_1} &amp; \\
 </div>
 </div>
 </div>
+<p>The mask is not actually masking anything in this case, and we get a prediction for
+the coordinates of <span class="math notranslate nohighlight">\(x_2\)</span> as expected. In RNN based seq2seq models, this prediction would be used directly as the next input, but the self-attention decoder expects the full sequence as “query”, so we concatenate the prediction to the previous “query”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">inputs</span><span class="p">,</span> <span class="n">out</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
@@ -1123,15 +1160,15 @@ target&amp; \color{red}{x_1} &amp; \\
 </div>
 </div>
 </div>
+<p>Now there are two data points for querying the decoder, so we adjust the mask
+accordingly.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 2^{nd}\ Step
-\Large
 \begin{cases}
 \begin{array}{c|cc}
-&amp; source\\
-target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
+target&amp; source\\
+&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 \hline
  \color{green}{h_2} &amp; \alpha_{\color{green}{2}\color{red}1} &amp; 0 \\
  \color{green}{h_3} &amp; \alpha_{\color{green}{3}\color{red}1} &amp; \alpha_{{\color{green}{3}\color{green}2}}
@@ -1153,6 +1190,13 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The mask guarantees that the predicted <span class="math notranslate nohighlight">\(x_2\)</span> (in the first step)
+won’t change the predicted <span class="math notranslate nohighlight">\(x_2\)</span> (in the second step) because
+predictions are made based on past data points only</p>
+</div>
+<p>The last prediction is, once again, concatenated to the previous “query”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">inputs</span><span class="p">,</span> <span class="n">out</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
@@ -1168,6 +1212,9 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 </div>
+<p>But, since we’re actually done with the predictions (the desired target sequence has
+a length of two), we simply exclude the first data point in the query (the one coming
+from the source sequence) and that’s the predicted target sequence</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
@@ -1184,9 +1231,7 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 <div class="section" id="encoder-decoder-self-attention">
-<h3><span class="section-number">2.5.4. </span>Encoder + Decoder + Self-Attention<a class="headerlink" href="#encoder-decoder-self-attention" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="attention/images/encdec_self_simplified.png" /></p>
-<p><img alt="" src="attention/images/transf_encdecself.png" /></p>
+<h3><span class="section-number">2.5.5. </span>Encoder + Decoder + Self-Attention<a class="headerlink" href="#encoder-decoder-self-attention" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderDecoderSelfAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1252,7 +1297,7 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 <div class="section" id="data-preparation">
-<h3><span class="section-number">2.5.5. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.5.6. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span><span class="p">,</span> <span class="n">directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">()</span>
@@ -1286,7 +1331,7 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 <div class="section" id="model-configuration-training">
-<h3><span class="section-number">2.5.6. </span>Model Configuration &amp; Training<a class="headerlink" href="#model-configuration-training" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.5.7. </span>Model Configuration &amp; Training<a class="headerlink" href="#model-configuration-training" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
@@ -1315,12 +1360,12 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/self_attention_60_0.png" src="../_images/self_attention_60_0.png" />
+<img alt="../_images/self_attention_67_0.png" src="../_images/self_attention_67_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="visualizing-predictions">
-<h3><span class="section-number">2.5.7. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.5.8. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">sequence_pred</span><span class="p">(</span><span class="n">sbs_seq_selfattn</span><span class="p">,</span> <span class="n">full_test</span><span class="p">,</span> <span class="n">test_directions</span><span class="p">)</span>
@@ -1328,7 +1373,7 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/self_attention_62_0.png" src="../_images/self_attention_62_0.png" />
+<img alt="../_images/self_attention_69_0.png" src="../_images/self_attention_69_0.png" />
 </div>
 </div>
 </div>
@@ -1373,6 +1418,15 @@ target&amp; \color{red}{x_1} &amp; \color{green}{x_2} \\
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="nmt_data_processing.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Neual Machine Translation</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

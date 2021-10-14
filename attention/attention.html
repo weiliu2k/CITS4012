@@ -484,6 +484,21 @@
      2. Self-Attention
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="nmt_data_processing.html">
+     3. Neual Machine Translation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="NMT_No_Sampling.html">
+     4. Neural Machine Translation Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="NMT_scheduled_sampling.html">
+     6. Neural Machine Translation Model
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -601,87 +616,121 @@
   <a class="reference internal nav-link" href="#data-generation">
    1.3. Data Generation
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plain-encoder-decoder">
+   1.4. Plain Encoder-Decoder
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#attention-mechanism-explained">
+   1.5. Attention Mechanism Explained
+  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plain-encoder-decoder">
-     1.3.1. Plain Encoder-Decoder
+    <a class="reference internal nav-link" href="#an-illustration-of-attention-scores">
+     1.5.1. An illustration of Attention Scores
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#context-vector">
+     1.5.2. Context Vector
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#values-and-keys">
+     1.5.3. “Values” and “Keys”
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#query">
+     1.5.4. Query
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-attention-score">
+     1.5.5. Compute the Attention Score
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#values">
-   1.4. “Values”
+  <a class="reference internal nav-link" href="#scoring-method">
+   1.6. Scoring Method
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#keys-and-queries">
-     1.4.1. “Keys” and “Queries”
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computing-the-context-vector">
-     1.4.2. Computing the Context Vector
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scoring-method">
-     1.4.3. Scoring Method
+    <a class="reference internal nav-link" href="#dot-product">
+     1.6.1. Dot product
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#attention-scores">
-     1.4.4. Attention Scores
+     1.6.2. Attention Scores
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualizing-the-context-vector">
-     1.4.5. Visualizing the Context Vector
+    <a class="reference internal nav-link" href="#visualizing-the-context">
+     1.6.3. Visualizing the Context
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scaled-dot-product">
-     1.4.6. Scaled Dot Product
+    <a class="reference internal nav-link" href="#scaled-dot">
+     1.6.4. Scaled Dot
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#variance-of-a-batch-dot-product-is-roughly-the-same-as-the-dimension-of-the-vector">
+       1.6.4.1. Variance of a batch dot product is roughly the same as the dimension of the vector
+      </a>
+     </li>
+    </ul>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoder-decoder-with-attention-mechanism">
+   1.7. Encoder Decoder with Attention Mechanism
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     1.4.7. Attention Mechanism
+    <a class="reference internal nav-link" href="#attention-class">
+     1.7.1. Attention Class
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#source-mask">
-     1.4.8. Source Mask
+     1.7.2. Source Mask
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#decoder">
-     1.4.9. Decoder
+    <a class="reference internal nav-link" href="#decoder-with-attention">
+     1.7.3. Decoder with Attention
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#encoder-decoder-attention">
-     1.4.10. Encoder + Decoder + Attention
+     1.7.4. Encoder + Decoder + Attention
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#data-preparation">
-     1.4.11. Data Preparation
+     1.7.5. Data Preparation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#model-configuration-training">
-     1.4.12. Model Configuration &amp; Training
+     1.7.6. Model Configuration &amp; Training
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#visualizing-predictions">
-     1.4.13. Visualizing Predictions
+     1.7.7. Visualizing Predictions
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#visualizing-attention">
-     1.4.14. Visualizing Attention
+     1.7.8. Visualizing Attention
     </a>
    </li>
   </ul>
@@ -699,9 +748,11 @@
                 
   <div class="section" id="attention-mechanism">
 <h1><span class="section-number">1. </span>Attention Mechanism<a class="headerlink" href="#attention-mechanism" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we introduce the attention mechanism to our plain sequence to sequence model, as illustrated in the diagram below:</p>
+<p><img alt="Attention Mechanism" src="../_images/encdec_attn.png" /></p>
 <div class="section" id="download-untility-files-for-plotting-and-data-generation">
 <h2><span class="section-number">1.1. </span>Download Untility Files for Plotting and Data Generation<a class="headerlink" href="#download-untility-files-for-plotting-and-data-generation" title="Permalink to this headline">¶</a></h2>
-<p>Download these utility functions first and place them in the same directory as this notebook.</p>
+<p>Download these utility functions first and place them in the same directory as this notebook. These files are the same as the ones in <a class="reference external" href="https://weiliu2k.github.io/CITS4012/LSTM/seq2seq.html">Lab11 Sequence to Sequence Model</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">FileLink</span><span class="p">,</span> <span class="n">FileLinks</span>
@@ -768,7 +819,7 @@
 </div>
 <div class="section" id="data-generation">
 <h2><span class="section-number">1.3. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h2>
-<p>Same method as before for generating noisy squares.</p>
+<p>We still make use of the Square Sequences, using the first two corners to predict the last two. Same method as before for generating noisy squares.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">variable_len</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
@@ -786,9 +837,10 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="plain-encoder-decoder">
-<h3><span class="section-number">1.3.1. </span>Plain Encoder-Decoder<a class="headerlink" href="#plain-encoder-decoder" title="Permalink to this headline">¶</a></h3>
-<p>We use exactly the same encoder-decoder from last lab’s sequence to sequence notebook.</p>
+<h2><span class="section-number">1.4. </span>Plain Encoder-Decoder<a class="headerlink" href="#plain-encoder-decoder" title="Permalink to this headline">¶</a></h2>
+<p>We use exactly the same encoder-decoder from Lab11’s <a class="reference external" href="https://weiliu2k.github.io/CITS4012/LSTM/seq2seq.html">sequence to sequence notebook</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -902,6 +954,11 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="attention-mechanism-explained">
+<h2><span class="section-number">1.5. </span>Attention Mechanism Explained<a class="headerlink" href="#attention-mechanism-explained" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="an-illustration-of-attention-scores">
+<h3><span class="section-number">1.5.1. </span>An illustration of Attention Scores<a class="headerlink" href="#an-illustration-of-attention-scores" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">figure9</span><span class="p">()</span>
@@ -913,20 +970,16 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="values">
-<h2><span class="section-number">1.4. </span>“Values”<a class="headerlink" href="#values" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="context-vector">
+<h3><span class="section-number">1.5.2. </span>Context Vector<a class="headerlink" href="#context-vector" title="Permalink to this headline">¶</a></h3>
+<p>The context vector is the weighted average of encoder hidden states.</p>
 <div class="math notranslate nohighlight">
 \[
 context\ vector = \underbrace{\alpha_0 * h_0}_{alignment\ vector_0} + \underbrace{\alpha_1 * h_1}_{alignment\ vector_1} = 0.8 * value_{the} + 0.2 *value_{zone}
 \]</div>
-<div class="section" id="keys-and-queries">
-<h3><span class="section-number">1.4.1. </span>“Keys” and “Queries”<a class="headerlink" href="#keys-and-queries" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="attention/images/score_alignment_translate.png" /></p>
-</div>
-<div class="section" id="computing-the-context-vector">
-<h3><span class="section-number">1.4.2. </span>Computing the Context Vector<a class="headerlink" href="#computing-the-context-vector" title="Permalink to this headline">¶</a></h3>
-<p>Let’s use our own sequence-to-sequence problem, and the “perfect” square as input:</p>
+<p>But how do we compute alphas - attention scores?</p>
+<p>Let’s use our own sequence-to-sequence problem, and the “perfect” square as input to illustrate how the context vector is computed.</p>
+<p>A sequence <code class="docutils literal notranslate"><span class="pre">full_seq</span></code> is splitted into source and target sequences.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -936,8 +989,10 @@ context\ vector = \underbrace{\alpha_0 * h_0}_{alignment\ vector_0} + \underbrac
 </div>
 </div>
 </div>
-<p>The source sequence is the input of the encoder, and the hidden states it outputs
-are going to be both “values” (V) and “keys” (K):</p>
+</div>
+<div class="section" id="values-and-keys">
+<h3><span class="section-number">1.5.3. </span>“Values” and “Keys”<a class="headerlink" href="#values-and-keys" title="Permalink to this headline">¶</a></h3>
+<p>The source sequence is the input of the encoder. The hidden states the encoder outputs are going to be both “values” (V) and “keys” (K):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
@@ -970,8 +1025,11 @@ are going to be both “values” (V) and “keys” (K):</p>
 </div>
 </div>
 </div>
-<p>The encoder-decoder dynamics stay exactly the same: despite that we are sending the entire sequence of hidden states to the decoder, we still use the encoder’s
-final hidden state as the decoder’s initial hidden state. In this example of using the first two corners to predict the last two, we still use the last element of the source sequence as input to the first step of the decoder:</p>
+</div>
+<div class="section" id="query">
+<h3><span class="section-number">1.5.4. </span>Query<a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h3>
+<p>The encoder-decoder dynamics stay exactly the same: despite that we are sending the entire sequence of hidden states to the decoder, we still use the encoder’s final hidden state as the decoder’s initial hidden state.</p>
+<p>In this example of using the first two corners to predict the last two, we still use the last element of the source sequence as input to the first step of the decoder:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
@@ -999,6 +1057,9 @@ always sequence-first, so we permute it to batch-first):</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="compute-the-attention-score">
+<h3><span class="section-number">1.5.5. </span>Compute the Attention Score<a class="headerlink" href="#compute-the-attention-score" title="Permalink to this headline">¶</a></h3>
 <p>Once we have the “keys” and a “query”, we can compute attention scores (alphas) using them. This is for illustration only, we will progressively develop the <code class="docutils literal notranslate"><span class="pre">calc_alphas()</span></code> to reflect the true processing in the digram.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1022,10 +1083,7 @@ always sequence-first, so we permute it to batch-first):</p>
 </div>
 </div>
 </div>
-<p>We had to make sure alphas had the right shape (N, 1, L) so that, when multiplied
-by the “values” with shape (N, L, H), it will result in a weighted sum of the
-alignment vectors with shape (N, 1, H). We can use batch matrix multiplication
-(torch.bmm) for that:</p>
+<p>We had to make sure alphas had the right shape (N, 1, L) so that, when multiplied by the “values” with shape (N, L, H), it will result in a weighted sum of the alignment vectors with shape (N, 1, H). We can use batch matrix multiplication (torch.bmm) for that:</p>
 <div class="math notranslate nohighlight">
 \[(\textcolor{green}{N}, 1, \textcolor{red}{L}) \times (\textcolor{green}{N}, \textcolor{red}{L}, H) = (N, 1, H)\]</div>
 <p>We can simply ignore the first dimension and PyTorch will go over all the elements in the mini-batch for us.</p>
@@ -1065,10 +1123,22 @@ generates the predicted coordinates:</p>
 </div>
 </div>
 </div>
-<p><img alt="" src="attention/images/encdec_attn.png" /></p>
+<p>In summary, the above can be summarised into the following steps of a typical attention mechanism:</p>
+<ul class="simple">
+<li><p>encoder to get hidden states, which are used as <code class="docutils literal notranslate"><span class="pre">&quot;values&quot;</span></code> as well as <code class="docutils literal notranslate"><span class="pre">&quot;keys&quot;</span></code></p></li>
+<li><p>decoder to get the first hidden state, which is used as <code class="docutils literal notranslate"><span class="pre">&quot;query&quot;</span></code></p></li>
+<li><p>query and keys to work out attention scores, <code class="docutils literal notranslate"><span class="pre">alphas</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;values&quot;</span></code> weighted by <code class="docutils literal notranslate"><span class="pre">alphas</span></code> to get <code class="docutils literal notranslate"><span class="pre">alignment</span> <span class="pre">vectors</span></code></p></li>
+<li><p>summing up <code class="docutils literal notranslate"><span class="pre">alignment</span> <span class="pre">vectors</span></code> to get the <code class="docutils literal notranslate"><span class="pre">context</span> <span class="pre">vector</span></code></p></li>
+<li><p>concatenate <code class="docutils literal notranslate"><span class="pre">context</span> <span class="pre">vector</span></code> with the decoder hidden state (in this simplest case, the same as <code class="docutils literal notranslate"><span class="pre">query</span></code>), for output predication.</p></li>
+</ul>
+</div>
 </div>
 <div class="section" id="scoring-method">
-<h3><span class="section-number">1.4.3. </span>Scoring Method<a class="headerlink" href="#scoring-method" title="Permalink to this headline">¶</a></h3>
+<h2><span class="section-number">1.6. </span>Scoring Method<a class="headerlink" href="#scoring-method" title="Permalink to this headline">¶</a></h2>
+<p>In the <code class="docutils literal notranslate"><span class="pre">calc_alpha()</span></code> function above, we used the simple <span class="math notranslate nohighlight">\(\frac{1}{L}\)</span> as weights, which produces an average of the hidden states. Below we show the use of dot product between Q and K as a scoring method.</p>
+<div class="section" id="dot-product">
+<h3><span class="section-number">1.6.1. </span>Dot product<a class="headerlink" href="#dot-product" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[
 cos\ \theta = \frac{\sum_i{q_ik_i}}{\sqrt{\sum_j{q_j^2}}\sqrt{\sum_j{k_j^2}}}
@@ -1097,7 +1167,7 @@ cos \theta\ ||Q||\ ||K|| = Q \cdot K
 </div>
 </div>
 <div class="section" id="attention-scores">
-<h3><span class="section-number">1.4.4. </span>Attention Scores<a class="headerlink" href="#attention-scores" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.6.2. </span>Attention Scores<a class="headerlink" href="#attention-scores" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alphas</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">products</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
@@ -1123,8 +1193,9 @@ cos \theta\ ||Q||\ ||K|| = Q \cdot K
 </div>
 </div>
 </div>
-<div class="section" id="visualizing-the-context-vector">
-<h3><span class="section-number">1.4.5. </span>Visualizing the Context Vector<a class="headerlink" href="#visualizing-the-context-vector" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="visualizing-the-context">
+<h3><span class="section-number">1.6.3. </span>Visualizing the Context<a class="headerlink" href="#visualizing-the-context" title="Permalink to this headline">¶</a></h3>
+<p>Here we use a single query (<code class="docutils literal notranslate"><span class="pre">q</span></code>) and three keys (<code class="docutils literal notranslate"><span class="pre">k</span></code>) to illustrate the idea of using dot products in measuring vector similarity. Visually, the red query vector (<span class="math notranslate nohighlight">\(Q\)</span>) is closer to <span class="math notranslate nohighlight">\(K_0\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">.55</span><span class="p">,</span> <span class="mf">.95</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># N, 1, H</span>
@@ -1142,12 +1213,11 @@ cos \theta\ ||Q||\ ||K|| = Q \cdot K
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/attention_48_0.png" src="../_images/attention_48_0.png" />
+<img alt="../_images/attention_47_0.png" src="../_images/attention_47_0.png" />
 </div>
 </div>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 \begin{align*}
 Q \cdot K_0 = cos \theta_0\ ||Q||\ ||K_0|| =&amp; &amp;0.73 &amp;*&amp; 1.10 &amp;*&amp; 0.68 =&amp; &amp;0.54
 \\
@@ -1204,12 +1274,15 @@ Q \cdot K_2 = cos \theta_2\ ||Q||\ ||K_2|| =&amp; -&amp;0.93 &amp;*&amp; 1.10 &a
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/attention_53_0.png" src="../_images/attention_53_0.png" />
+<img alt="../_images/attention_52_0.png" src="../_images/attention_52_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="scaled-dot-product">
-<h3><span class="section-number">1.4.6. </span>Scaled Dot Product<a class="headerlink" href="#scaled-dot-product" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="scaled-dot">
+<h3><span class="section-number">1.6.4. </span>Scaled Dot<a class="headerlink" href="#scaled-dot" title="Permalink to this headline">¶</a></h3>
+<p>The dot product score is sensitive to the length of the vectors, and we can normalise using the standard deviation, which is roughly the sequare root of the dimension of vector as verified using randomly generated normally distributed data.</p>
+<div class="section" id="variance-of-a-batch-dot-product-is-roughly-the-same-as-the-dimension-of-the-vector">
+<h4><span class="section-number">1.6.4.1. </span>Variance of a batch dot product is roughly the same as the dimension of the vector<a class="headerlink" href="#variance-of-a-batch-dot-product-is-roughly-the-same-as-the-dimension-of-the-vector" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_dims</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1227,10 +1300,8 @@ Q \cdot K_2 = cos \theta_2\ ||Q||\ ||K_2|| =&amp; -&amp;0.93 &amp;*&amp; 1.10 &a
 </div>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\Large
 Var(Q \cdot K) = d_q = d_k
 \\
-\Large
 \sigma(Q \cdot K) = \sqrt{d_q} = \sqrt{d_k}
 \end{split}\]</div>
 <div class="cell docutils container">
@@ -1248,7 +1319,6 @@ Var(Q \cdot K) = d_q = d_k
 </div>
 <div class="math notranslate nohighlight">
 \[
-\Large
 scaled\ dot\ product = \frac{Q \cdot K}{\sqrt{d_k}}
 \]</div>
 <div class="cell docutils container">
@@ -1307,9 +1377,12 @@ scaled\ dot\ product = \frac{Q \cdot K}{\sqrt{d_k}}
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3><span class="section-number">1.4.7. </span>Attention Mechanism<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="attention/images/attention.png" /></p>
+</div>
+</div>
+<div class="section" id="encoder-decoder-with-attention-mechanism">
+<h2><span class="section-number">1.7. </span>Encoder Decoder with Attention Mechanism<a class="headerlink" href="#encoder-decoder-with-attention-mechanism" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attention-class">
+<h3><span class="section-number">1.7.1. </span>Attention Class<a class="headerlink" href="#attention-class" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Attention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1355,7 +1428,7 @@ scaled\ dot\ product = \frac{Q \cdot K}{\sqrt{d_k}}
 </div>
 </div>
 <div class="section" id="source-mask">
-<h3><span class="section-number">1.4.8. </span>Source Mask<a class="headerlink" href="#source-mask" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.7.2. </span>Source Mask<a class="headerlink" href="#source-mask" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]])</span>
@@ -1397,8 +1470,8 @@ scaled\ dot\ product = \frac{Q \cdot K}{\sqrt{d_k}}
 </div>
 </div>
 </div>
-<div class="section" id="decoder">
-<h3><span class="section-number">1.4.9. </span>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="decoder-with-attention">
+<h3><span class="section-number">1.7.3. </span>Decoder with Attention<a class="headerlink" href="#decoder-with-attention" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DecoderAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1472,8 +1545,8 @@ Output: tensor([[[-0.2641, -0.2521]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="encoder-decoder-attention">
-<h3><span class="section-number">1.4.10. </span>Encoder + Decoder + Attention<a class="headerlink" href="#encoder-decoder-attention" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="attention/images/encdec_attn.png" /></p>
+<h3><span class="section-number">1.7.4. </span>Encoder + Decoder + Attention<a class="headerlink" href="#encoder-decoder-attention" title="Permalink to this headline">¶</a></h3>
+<p>We can safely use the orginal code for grouping the encoder and decoder (in this case, the decoder with attention), and create a valid model, but we would like to store the output to visualise attention scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encdec</span> <span class="o">=</span> <span class="n">EncoderDecoder</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder_attn</span><span class="p">,</span> <span class="n">input_len</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">target_len</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">teacher_forcing_prob</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
@@ -1516,7 +1589,8 @@ Output: tensor([[[-0.2641, -0.2521]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="data-preparation">
-<h3><span class="section-number">1.4.11. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.7.5. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h3>
+<p>Training data of the square sequences generated.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span><span class="p">,</span> <span class="n">directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">()</span>
@@ -1550,7 +1624,7 @@ Output: tensor([[[-0.2641, -0.2521]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="model-configuration-training">
-<h3><span class="section-number">1.4.12. </span>Model Configuration &amp; Training<a class="headerlink" href="#model-configuration-training" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.7.6. </span>Model Configuration &amp; Training<a class="headerlink" href="#model-configuration-training" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
@@ -1584,7 +1658,7 @@ Output: tensor([[[-0.2641, -0.2521]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="visualizing-predictions">
-<h3><span class="section-number">1.4.13. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.7.7. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">sequence_pred</span><span class="p">(</span><span class="n">sbs_seq_attn</span><span class="p">,</span> <span class="n">full_test</span><span class="p">,</span> <span class="n">test_directions</span><span class="p">)</span>
@@ -1597,7 +1671,7 @@ Output: tensor([[[-0.2641, -0.2521]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="section" id="visualizing-attention">
-<h3><span class="section-number">1.4.14. </span>Visualizing Attention<a class="headerlink" href="#visualizing-attention" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.7.8. </span>Visualizing Attention<a class="headerlink" href="#visualizing-attention" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="o">=</span> <span class="n">full_train</span><span class="p">[:</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
