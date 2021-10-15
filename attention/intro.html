@@ -590,6 +590,13 @@
                 
   <div class="section" id="lab12-sequence-to-sequence-learning-with-attention">
 <h1>Lab12: Sequence to Sequence Learning with Attention<a class="headerlink" href="#lab12-sequence-to-sequence-learning-with-attention" title="Permalink to this headline">¶</a></h1>
+<p>In this lab we introduce the <a class="reference external" href="https://weiliu2k.github.io/CITS4012/attention/attention.html">basic attention (cross-attention)</a> and the <a class="reference external" href="https://weiliu2k.github.io/CITS4012/attention/self_attention.html">self-attention mechansim</a>, applying them to the same square sequence predication problem we have seen in <a class="reference external" href="https://weiliu2k.github.io/CITS4012/LSTM/seq2seq.html">Lab11’s Sequence to Sequence Model</a>.</p>
+<p>The second part of this lab focuses on a real neural machine translation task to build attention based models, one <a class="reference external" href="https://weiliu2k.github.io/CITS4012/attention/NMT_No_Sampling.html">with no sampling</a> (i.e. using teacher forcing 100% of the time), and another with <a class="reference external" href="https://weiliu2k.github.io/CITS4012/attention/NMT_scheduled_sampling.html">scheduled sampling</a> (i.e. using teacher forcing only sometimes). Since we have biGRU for the Encoder, the masked padded sequence in the backward layer would affect the results. So here we take the opportunity to introduce the <a class="reference external" href="https://weiliu2k.github.io/CITS4012/attention/PackedSequence.html"><code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code></a> in PyTorch to handle variable length sequences.</p>
+<p>Credit: the notebooks are adapted from:</p>
+<ul class="simple">
+<li><p>Chpater 9 of <a class="reference external" href="https://github.com/dvgodoy/PyTorchStepByStep">Deep Learning with PyTorch Step-by-Step</a></p></li>
+<li><p>Chapter 8 of <a class="reference external" href="https://github.com/joosthub/PyTorchNLPBook/tree/master/chapters/chapter_8">Natural Language Processing with PyTorch</a></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 </div>
