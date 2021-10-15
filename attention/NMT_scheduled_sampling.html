@@ -51,7 +51,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="5. Neual Machine Translation - No Sampling" href="NMT_No_Sampling.html" />
+    <link rel="prev" title="5. Neural Machine Translation - No Sampling" href="NMT_No_Sampling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -493,7 +493,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="NMT_No_Sampling.html">
-     5. Neual Machine Translation - No Sampling
+     5. Neural Machine Translation - No Sampling
     </a>
    </li>
    <li class="toctree-l2 current active">
@@ -605,13 +605,50 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-machine-translation-model">
-   6.1. Neural Machine Translation Model
+  <a class="reference internal nav-link" href="#import">
+   6.1. Import
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-prepration-vocabulary-verctorizer-dataloader">
+   6.2. Data Prepration (Vocabulary, Verctorizer, DataLoader)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neural-machine-translation-model">
+   6.3. Neural Machine Translation Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtencoder">
+     6.3.1. NMTEncoder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#attention">
+     6.3.2. Attention
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtdecoder-with-scheduled-sampling">
+     6.3.3. NMTDecoder with Scheduled Sampling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtmodel">
+     6.3.4. NMTModel
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine-and-bookkeeping-functions">
-   6.2. Training Routine and Bookkeeping Functions
+   6.4. Training Routine and Bookkeeping Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inference-and-evaluation">
+   6.5. Inference and Evaluation
   </a>
  </li>
 </ul>
@@ -627,6 +664,27 @@
                 
   <div class="section" id="neural-machine-translation-scheduled-sampling">
 <h1><span class="section-number">6. </span>Neural Machine Translation - Scheduled Sampling<a class="headerlink" href="#neural-machine-translation-scheduled-sampling" title="Permalink to this headline">¶</a></h1>
+<p>In the previous notebook (no sampling), the model assumes that the target sequence is provided and will be used as the input at each time step in the decoder. In other words, we use teacher forcing with 100% probability.</p>
+<p>At test time, this assumption is violated because the model cannot cheat and know the sequence it is trying to generate. To accommodate this fact, one technique is to allow the model to use its own predictions during training. This is a technique explored
+in the literature as “learning to search” and “scheduled sampling”, or simply without tearcher forcing.</p>
+<p>One intuitive way to understand this technique is to think of the prediction problem as a search problem. At each time step, the model has many paths from which to choose (the number of choices is the size of the target vocabulary) and the target sequence is observations of correct paths.</p>
+<p>At test time, the model is finally allowed to go “off path” because it is not provided the correct path from which it should be computing probability distributions. Thus, the technique of letting the model sample its own path provides a way in which you can optimize the model for having better probability distributions when it deviates from target sequences
+in the dataset.</p>
+<p>There are three primary modifications to the code to have the model sample its own predictions during training.</p>
+<ul class="simple">
+<li><p>First, the initial indices are made more explicit as the <code class="docutils literal notranslate"><span class="pre">BEGIN­OF­SEQUENCE</span></code> token indices.</p></li>
+<li><p>Second, a random sample is drawn for each step in the generation loop, and if the random sample is smaller than the sample probability, it uses the model’s predictions during that iteration.</p></li>
+<li><p>Finally, the actual sampling itself is done under the conditional <code class="docutils literal notranslate"><span class="pre">if</span>&#160; <span class="pre">use_sample</span></code>.</p></li>
+</ul>
+<p>In the <code class="docutils literal notranslate"><span class="pre">NMTDecoder</span></code>, a commented line shows how you could use the maximum prediction, whereas the uncommented line shows how to actually sample indices at rates proportional to their probability.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">use_sample</span><span class="p">:</span>
+    <span class="n">p_y_t_index</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">score_for_y_t_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_temperature</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># _, y_t_index = torch.max(p_y_t_index, 1)</span>
+    <span class="n">y_t_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">p_y_t_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="import">
+<h2><span class="section-number">6.1. </span>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -649,6 +707,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="data-prepration-vocabulary-verctorizer-dataloader">
+<h2><span class="section-number">6.2. </span>Data Prepration (Vocabulary, Verctorizer, DataLoader)<a class="headerlink" href="#data-prepration-vocabulary-verctorizer-dataloader" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1068,8 +1129,9 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="neural-machine-translation-model">
-<h2><span class="section-number">6.1. </span>Neural Machine Translation Model<a class="headerlink" href="#neural-machine-translation-model" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.3. </span>Neural Machine Translation Model<a class="headerlink" href="#neural-machine-translation-model" title="Permalink to this headline">¶</a></h2>
 <p>Components:</p>
 <ol class="simple">
 <li><p>NMTEncoder</p>
@@ -1082,11 +1144,7 @@
 <li><p>using the encoder state and attention, the decoder generates a new sequence</p></li>
 <li><p>the ground truth target sequence is used as input to the decoder at each time step</p></li>
 <li><p>an alternative formulation would allow some of the decoder’s own choices to be used as input</p></li>
-<li><p>this is referred to as curriculum learning, learning to search</p>
-<ul>
-<li><p>TODO: Look up references for this.  I believe Bengio has a paper from the image captioning competitions. Hal Daume has tons on this and is the main NLP guy for it.</p></li>
-</ul>
-</li>
+<li><p>this is referred to as curriculum learning, learning to search</p></li>
 </ul>
 </li>
 <li><p>NMTModel</p>
@@ -1095,6 +1153,8 @@
 </ul>
 </li>
 </ol>
+<div class="section" id="nmtencoder">
+<h3><span class="section-number">6.3.1. </span>NMTEncoder<a class="headerlink" href="#nmtencoder" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1140,8 +1200,16 @@
         <span class="n">x_unpacked</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pad_packed_sequence</span><span class="p">(</span><span class="n">x_birnn_out</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">x_unpacked</span><span class="p">,</span> <span class="n">x_birnn_h</span>
-
-<span class="k">def</span> <span class="nf">verbose_attention</span><span class="p">(</span><span class="n">encoder_state_vectors</span><span class="p">,</span> <span class="n">query_vector</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="attention">
+<h3><span class="section-number">6.3.2. </span>Attention<a class="headerlink" href="#attention" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verbose_attention</span><span class="p">(</span><span class="n">encoder_state_vectors</span><span class="p">,</span> <span class="n">query_vector</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A descriptive version of the neural attention mechanism </span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
@@ -1170,10 +1238,16 @@
     <span class="n">context_vectors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">encoder_state_vectors</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> 
                                    <span class="n">vector_probabilities</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">context_vectors</span><span class="p">,</span> <span class="n">vector_probabilities</span>
-
-
-
-<span class="k">class</span> <span class="nc">NMTDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="nmtdecoder-with-scheduled-sampling">
+<h3><span class="section-number">6.3.3. </span>NMTDecoder with Scheduled Sampling<a class="headerlink" href="#nmtdecoder-with-scheduled-sampling" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_embeddings</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">rnn_hidden_size</span><span class="p">,</span> <span class="n">bos_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -1278,9 +1352,16 @@
         <span class="n">output_vectors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">output_vectors</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">output_vectors</span>
-    
-    
-<span class="k">class</span> <span class="nc">NMTModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="nmtmodel">
+<h3><span class="section-number">6.3.4. </span>NMTModel<a class="headerlink" href="#nmtmodel" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The Neural Machine Translation Model &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_vocab_size</span><span class="p">,</span> <span class="n">source_embedding_size</span><span class="p">,</span> 
                  <span class="n">target_vocab_size</span><span class="p">,</span> <span class="n">target_embedding_size</span><span class="p">,</span> <span class="n">encoding_size</span><span class="p">,</span> 
@@ -1327,8 +1408,9 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="training-routine-and-bookkeeping-functions">
-<h2><span class="section-number">6.2. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1671,6 +1753,9 @@ Using CUDA: True
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="inference-and-evaluation">
+<h2><span class="section-number">6.5. </span>Inference and Evaluation<a class="headerlink" href="#inference-and-evaluation" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.translate</span> <span class="kn">import</span> <span class="n">bleu_score</span>
@@ -1783,7 +1868,7 @@ Using CUDA: True
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.28705687208416497, 0.26730098289088333)
 </pre></div>
 </div>
-<img alt="../_images/NMT_scheduled_sampling_17_1.png" src="../_images/NMT_scheduled_sampling_17_1.png" />
+<img alt="../_images/NMT_scheduled_sampling_27_1.png" src="../_images/NMT_scheduled_sampling_27_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1843,9 +1928,9 @@ Using CUDA: True
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/NMT_scheduled_sampling_21_0.png" src="../_images/NMT_scheduled_sampling_21_0.png" />
-<img alt="../_images/NMT_scheduled_sampling_21_1.png" src="../_images/NMT_scheduled_sampling_21_1.png" />
-<img alt="../_images/NMT_scheduled_sampling_21_2.png" src="../_images/NMT_scheduled_sampling_21_2.png" />
+<img alt="../_images/NMT_scheduled_sampling_31_0.png" src="../_images/NMT_scheduled_sampling_31_0.png" />
+<img alt="../_images/NMT_scheduled_sampling_31_1.png" src="../_images/NMT_scheduled_sampling_31_1.png" />
+<img alt="../_images/NMT_scheduled_sampling_31_2.png" src="../_images/NMT_scheduled_sampling_31_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1932,7 +2017,7 @@ Using CUDA: True
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">5. </span>Neual Machine Translation - No Sampling</p>
+                <p class="prevnext-title"><span class="section-number">5. </span>Neural Machine Translation - No Sampling</p>
             </div>
         </a>
     </div>

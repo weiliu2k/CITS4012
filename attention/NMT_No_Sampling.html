@@ -636,16 +636,53 @@
      5.2.2. NMTVectorizer
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtdataset">
+     5.2.3. NMTDataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataloader-generate-nmt-batches-using-packedsequence">
+     5.2.4. DataLoader - Generate NMT Batches using PackedSequence
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#neural-machine-translation-model">
    5.3. Neural Machine Translation Model
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtencoder">
+     5.3.1. NMTEncoder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#attention-mechanism">
+     5.3.2. Attention Mechanism
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtdecoder">
+     5.3.3. NMTDecoder
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nmtmodel">
+     5.3.4. NMTModel
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#training-routine-and-bookkeeping-functions">
    5.4. Training Routine and Bookkeeping Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inference-and-evaluation">
+   5.5. Inference and Evaluation
   </a>
  </li>
 </ul>
@@ -661,8 +698,36 @@
                 
   <div class="section" id="neural-machine-translation-no-sampling">
 <h1><span class="section-number">5. </span>Neural Machine Translation - No Sampling<a class="headerlink" href="#neural-machine-translation-no-sampling" title="Permalink to this headline">¶</a></h1>
-<p>The encoder in our model uses a bidirectional gated recurrent unit (bi­GRU) to compute vectors for each position in the source sequence that are informed by all parts of the sequence. To accomplish this, we use PyTorch’s <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> data structure. See a separate short notebook introducing how <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> helps with variable-length sequences.</p>
-<p>The attention mechanism, is applied to the hidden states of the bi­GRU and used to condition the target sequence generation.</p>
+<p>Vectorizing the source English and target French sentences requires a more complex pipeline than we have seen in pervious labs. There are two reasons for the increase in complexity.</p>
+<ul class="simple">
+<li><p>First, the source and target sequences have different roles in the model, belong to different languages, and are vectorized in two different ways. Therefore,</p>
+<ul>
+<li><p>the <a class="reference external" href="#nmtvectorizer">NMTVectorizer</a> is instantiated with two separate <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code> objects and two measurements of max sequence length, as shown in the constructor <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function below.</p></li>
+</ul>
+</li>
+<li><p>Second, we use PyTorch’s <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> data structure to handle variable length sequences in a more compact way than padded sequences. See <a class="reference external" href="https://weiliu2k.github.io/CITS4012/attention/PackedSequence.html">a separate short notebook</a> introducing <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code>. As a prerequisite to use PyTorch’s <code class="docutils literal notranslate"><span class="pre">PackedSequences</span></code>, we must sort each minibatch by the length of the source sentences.</p>
+<ul>
+<li><p>To address this complexity, the <code class="docutils literal notranslate"><span class="pre">generate_batches()</span></code> function is modified to become the <code class="docutils literal notranslate"><span class="pre">generate_nmt_batches()</span></code> function, which produces a DataLoader that sort the minibatch into decending order of the sequence length, and then used in the <code class="docutils literal notranslate"><span class="pre">NMTEncoder</span></code> forward function.</p></li>
+</ul>
+</li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Encoder and <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code></p>
+<p>The <strong>encoder</strong> in our model uses a bidirectional gated recurrent unit (bi­GRU) to compute vectors for each position in the source sequence that are informed by all parts of the sequence.</p>
+<p>In general, the encoder takes as input a sequence of integers and creates a feature vector for each position. The output of the encoder in this example is these vectors and the final hidden state of the biGRU that is used to make the feature vectors. This hidden state is used to initialize the hidden state of the decoder.</p>
+<p>Diving deeper into the encoder, we first embed the input sequence using an embedding layer. Usually, just by setting the <code class="docutils literal notranslate"><span class="pre">padding_idx</span></code> flag on the embedding layer, we enable the model to handle variable­length sequences because any position that equals <code class="docutils literal notranslate"><span class="pre">padding_idx</span></code> is given a zero-­valued vector, which does not update during optimization. Recall that this is called the <code class="docutils literal notranslate"><span class="pre">mask</span></code>.</p>
+<p>However, in this encoder–decoder model, masked positions need to be handled differently because we use a bi­GRU to encode the source sequence. The primary reason is that the backward component can be influenced by the masked positions, with a factor proportional to the number of masked positions it encounters before it starts on the sequence.</p>
+<p>To handle the masked positions of variable­length sequences in the bi­GRU, we use PyTorch’s PackedSequence data structure. <code class="docutils literal notranslate"><span class="pre">PackedSequences</span></code> are derived from how CUDA allows for the
+handling of variable­length sequences in a batched format. Any zero-­padded sequence, such as the embedded source sequence in the encoder can be converted to a <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> if two conditions are met:</p>
+<ul class="simple">
+<li><p>the length of each sequence is provided, and</p></li>
+<li><p>the minibatch is sorted according to the length of those sequences.</p></li>
+</ul>
+</div>
+<div class="admonition-decoder-and-attentional-mechanism admonition">
+<p class="admonition-title">Decoder and Attentional Mechanism</p>
+<p>The encoder maps each source sequence to a sequence of vector states with a bi­GRU and a final hidden state. The final hidden state is used as the decoder’s inital hidden state for a decoder, which uses attention mechanism to select different information in the source sequence to generate an output sequence.</p>
+</div>
 <div class="section" id="imports">
 <h2><span class="section-number">5.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -829,12 +894,6 @@
 </div>
 <div class="section" id="nmtvectorizer">
 <h3><span class="section-number">5.2.2. </span>NMTVectorizer<a class="headerlink" href="#nmtvectorizer" title="Permalink to this headline">¶</a></h3>
-<p>Vectorizing the source English and target French sentences requires a more complex pipeline than we have seen in pervious labs. There are two reasons for the increase in complexity.</p>
-<ul class="simple">
-<li><p>First, the source and target sequences have different roles in the model, belong to different languages, and are vectorized in two different ways.</p></li>
-<li><p>Second, as a prerequisite to use PyTorch’s <code class="docutils literal notranslate"><span class="pre">PackedSequences</span></code>, we must sort each minibatch by the length of the source sentences.</p></li>
-</ul>
-<p>To prepare for these two complexities, the NMTVectorizer is instantiated with two separate <code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code> objects and two measurements of max sequence length, as shown in the constructor <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function below.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Vectorization of the source sequence
@@ -1009,6 +1068,9 @@ source or target indices.</p></li>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="nmtdataset">
+<h3><span class="section-number">5.2.3. </span>NMTDataset<a class="headerlink" href="#nmtdataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -1126,6 +1188,15 @@ source or target indices.</p></li>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="dataloader-generate-nmt-batches-using-packedsequence">
+<h3><span class="section-number">5.2.4. </span>DataLoader - Generate NMT Batches using PackedSequence<a class="headerlink" href="#dataloader-generate-nmt-batches-using-packedsequence" title="Permalink to this headline">¶</a></h3>
+<p>There are two prerequisites for creating a <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code>:</p>
+<ol class="simple">
+<li><p>knowing the length of each sequence, and</p></li>
+<li><p>sorting the sequences in descending order by the length of the source sequence.</p></li>
+</ol>
+<p>To reflect this newly sorted matrix, the remaining tensors in the minibatch are sorted in the same order so that they stay aligned with the source sequence encoding. The actual packing and unpacking of <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code>s happens in the <code class="docutils literal notranslate"><span class="pre">forward()</span></code> function of the NMTEncoder model .</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_nmt_batches</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
@@ -1136,8 +1207,10 @@ source or target indices.</p></li>
 
     <span class="k">for</span> <span class="n">data_dict</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
         <span class="n">lengths</span> <span class="o">=</span> <span class="n">data_dict</span><span class="p">[</span><span class="s1">&#39;x_source_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="c1"># Get the indices according to sorted length</span>
         <span class="n">sorted_length_indices</span> <span class="o">=</span> <span class="n">lengths</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         
+        <span class="c1"># Sort the minibatch</span>
         <span class="n">out_data_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tensor</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">out_data_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_dict</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">sorted_length_indices</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
@@ -1171,6 +1244,11 @@ source or target indices.</p></li>
 </ul>
 </li>
 </ol>
+<div class="section" id="nmtencoder">
+<h3><span class="section-number">5.3.1. </span>NMTEncoder<a class="headerlink" href="#nmtencoder" title="Permalink to this headline">¶</a></h3>
+<p>In the <code class="docutils literal notranslate"><span class="pre">forward()</span></code> function, PyTorch’s <code class="docutils literal notranslate"><span class="pre">pack_padded_sequence()</span></code> function is evoked by passing the embedded sequences, the lengths of the sequences, and a Boolean flag indicating a batch-first tensor. The output of this function is a <code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code>. The resulting
+<code class="docutils literal notranslate"><span class="pre">PackedSequence</span></code> is input into the <code class="docutils literal notranslate"><span class="pre">bi­GRU</span></code> to create hidden state vectors for the downstream decoder.</p>
+<p>The output of the <code class="docutils literal notranslate"><span class="pre">bi­GRU</span></code> is <strong>unpacked</strong> into a full tensor. The unpacking operation, sets each masked position to be a zero-­valued vector, preserving the integrity for downstream computations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1216,8 +1294,30 @@ source or target indices.</p></li>
         <span class="n">x_unpacked</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pad_packed_sequence</span><span class="p">(</span><span class="n">x_birnn_out</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">x_unpacked</span><span class="p">,</span> <span class="n">x_birnn_h</span>
-
-<span class="k">def</span> <span class="nf">verbose_attention</span><span class="p">(</span><span class="n">encoder_state_vectors</span><span class="p">,</span> <span class="n">query_vector</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="attention-mechanism">
+<h3><span class="section-number">5.3.2. </span>Attention Mechanism<a class="headerlink" href="#attention-mechanism" title="Permalink to this headline">¶</a></h3>
+<p>The attention mechanism can be described as the decoder uses <code class="docutils literal notranslate"><span class="pre">queries</span></code>, to match with <code class="docutils literal notranslate"><span class="pre">keys</span></code> in the encoder in order to work out the distribution of the <code class="docutils literal notranslate"><span class="pre">values</span></code> that contributes to the <em>context vector</em>. A score function takes as input the <code class="docutils literal notranslate"><span class="pre">query</span></code> vector and the <code class="docutils literal notranslate"><span class="pre">key</span></code> vectors to compute a set of weights that select among the <code class="docutils literal notranslate"><span class="pre">value</span></code> vectors.</p>
+<p>In this example, we use the <code class="docutils literal notranslate"><span class="pre">dot­</span> <span class="pre">product</span></code> scoring function, but it is not the only one. In this example, the decoder’s hidden state is used as the query vector, and the set of encoder state vectors are both the key and value vectors. The dot product of the decoder’s hidden state with the vectors in the encoder state creates a scalar for each item in the encoded sequence. Upon using the softmax function, these scalars become a probability distribution over the vectors in the encoder state. These probabilities are used to weight
+the encoder state vectors before they are added together to result in a single vector (i.e. the context vector) for each batch item.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To summarize, the decoder hidden state is allowed to preferentially weight the encoder state at each time step.</p>
+</div>
+<p>This is like a <strong>spotlight</strong>, giving the model the ability to learn how to highlight the information it needs to generate an output sequence. We demonstrate this version of the attention mechanism in <code class="docutils literal notranslate"><span class="pre">verbose_attention()</span></code>. This function tries to verbosely spell out the operations. Additionally, it uses the <code class="docutils literal notranslate"><span class="pre">view()</span></code> operation to insert dimensions with size 1 so that the tensor can be broadcast against another tensor.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">terse_attention()</span></code> version, the <code class="docutils literal notranslate"><span class="pre">view()</span></code> operation is replaced with the more
+commonly accepted practice, <code class="docutils literal notranslate"><span class="pre">unsqueeze()</span></code>. In addition, rather than multiplying elementwise and summing, the more efficient <code class="docutils literal notranslate"><span class="pre">matmul()</span></code> operation is used.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Modify the code below to use <code class="docutils literal notranslate"><span class="pre">torch.bmm()</span></code>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verbose_attention</span><span class="p">(</span><span class="n">encoder_state_vectors</span><span class="p">,</span> <span class="n">query_vector</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A descriptive version of the neural attention mechanism </span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
@@ -1246,9 +1346,31 @@ source or target indices.</p></li>
     <span class="n">context_vectors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">encoder_state_vectors</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> 
                                    <span class="n">vector_probabilities</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">context_vectors</span><span class="p">,</span> <span class="n">vector_probabilities</span>
-
-
-<span class="k">class</span> <span class="nc">NMTDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="nmtdecoder">
+<h3><span class="section-number">5.3.3. </span>NMTDecoder<a class="headerlink" href="#nmtdecoder" title="Permalink to this headline">¶</a></h3>
+<p>After the encoder creates the state vectors with its bi­GRU and packing­-unpacking coordination, the decoder iterates over the time steps to generate an output sequence. Functionally, this loop should seem very similar to the generation loop we have seen before, but with a few differences that are distinctly the methodological choices of Luong, Pham, and Manning’s (2015) style of attention.</p>
+<ul class="simple">
+<li><p>First, a target sequence is provided as observations at each time step.</p></li>
+<li><p>Hidden states are computed by using a GRUCell.</p></li>
+<li><p>The initial hidden state is computed by applying a Linear layer to <em>the concatenated final hidden states of the encoder bi­GRU</em>.</p></li>
+<li><p>The input to the decoder GRU at each time step is a concatenated vector of <em>an embedded input token</em> and <em>the last time step’s context vector</em>.</p>
+<ul>
+<li><p>The context vector is intended to capture information that is useful for that time step and acts to condition the output of the model.</p></li>
+<li><p>For the first time step, the context vector is all 0s to represent no context and mathematically allow only the input to contribute to the GRU computation.</p></li>
+<li><p>Using the new hidden state as a query vector, a new set of context vectors are created using the attention mechanism for the current time step.</p></li>
+<li><p>These context vectors are concatenated with the hidden state to create a vector representing the decoding information at that time step.</p></li>
+</ul>
+</li>
+</ul>
+<p>This decoding information state vector is used in a classifier (in this case, a simple Linear layer) to create a prediction vector, <code class="docutils literal notranslate"><span class="pre">score_for_y_t_index</span></code>. These prediction vectors can be turned into probability distributions over the output vocabulary using the softmax function, or they can be used with cross-entropy loss to optimize for ground truth targets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NMTDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_embeddings</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">rnn_hidden_size</span><span class="p">,</span> <span class="n">bos_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -1339,8 +1461,17 @@ source or target indices.</p></li>
         <span class="n">output_vectors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">output_vectors</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">output_vectors</span>
-    
-    
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="nmtmodel">
+<h3><span class="section-number">5.3.4. </span>NMTModel<a class="headerlink" href="#nmtmodel" title="Permalink to this headline">¶</a></h3>
+<p>The model that connects <code class="docutils literal notranslate"><span class="pre">NMTdecoder</span></code> with <code class="docutils literal notranslate"><span class="pre">NMTEncoder</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    
 <span class="k">class</span> <span class="nc">NMTModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The Neural Machine Translation Model &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_vocab_size</span><span class="p">,</span> <span class="n">source_embedding_size</span><span class="p">,</span> 
@@ -1385,8 +1516,22 @@ source or target indices.</p></li>
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="training-routine-and-bookkeeping-functions">
 <h2><span class="section-number">5.4. </span>Training Routine and Bookkeeping Functions<a class="headerlink" href="#training-routine-and-bookkeeping-functions" title="Permalink to this headline">¶</a></h2>
+<p>The training routine for this example is nearly identical to the training routines seen previously.</p>
+<p>However, each minibatch here is composed of four tensors:</p>
+<ul class="simple">
+<li><p>a matrix of integers for the <strong>source sequence</strong>,</p></li>
+<li><p>two matrices of integers for the <strong>target sequence</strong>, and</p></li>
+<li><p>a vector of integers for the <strong>source sequence lengths</strong>.</p></li>
+</ul>
+<p>The two target sequence matrices are</p>
+<ul class="simple">
+<li><p>the target sequence offset by one and padded with either <code class="docutils literal notranslate"><span class="pre">BEGIN­OF­SEQUENCE</span></code> tokens to act as target sequence observations or</p></li>
+<li><p>END­OSEQUENCE tokens to act as target sequence prediction labels.</p></li>
+</ul>
+<p>The model takes as input the source sequence and the target sequence observations to produce target sequence predictions. The target sequence prediction labels are used in the loss function to compute the <strong>cross­entropy loss</strong>, which is then backpropagated to each model parameter so that it knows its gradient. The optimizer is then invoked and updates each model parameter by some amount proportional to the gradient.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_seed_everywhere</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="p">):</span>
@@ -1756,6 +1901,16 @@ Using CUDA: True
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="inference-and-evaluation">
+<h2><span class="section-number">5.5. </span>Inference and Evaluation<a class="headerlink" href="#inference-and-evaluation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Measuring the performance is an important and nontrivial problem in Machine Translation.</p>
+<p>Several sequence generation evaluation metrics (including manual human assessment) exist, but metrics such as <code class="docutils literal notranslate"><span class="pre">BLEU</span></code> which measure the n­gram overlap between predicted sentences and reference sentences have become a standard for the machine translation field. In the
+code below, the model’s outputs are aggregated with the source sentence, the reference target sentence, and the attention probability matrix for that example. Finally, BLEU­4 is computed for each pair of source and generated sentences.</p>
+<p>To qualitatively assess how well the model is working, we visualize the attention probability matrix as alignments between the source and generated text. It is important to note, however, that recent research has shown attention-­based alignments are not exactly the same as they are in classical machine translation. Instead of the alignments between words and phrases being indicative of translation synonymy, attention-­based alignment scores could indicate useful information for the decoder, such as attending to the sentence’’’s subject when generating the output verb (Koehn and Knowles, 2017).</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.translate</span> <span class="kn">import</span> <span class="n">bleu_score</span>
@@ -1868,7 +2023,7 @@ Using CUDA: True
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.25407270926974085, 0.238016853527947)
 </pre></div>
 </div>
-<img alt="../_images/NMT_No_Sampling_23_1.png" src="../_images/NMT_No_Sampling_23_1.png" />
+<img alt="../_images/NMT_No_Sampling_33_1.png" src="../_images/NMT_No_Sampling_33_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1932,60 +2087,60 @@ Using CUDA: True
   max_open_warning, RuntimeWarning)
 </pre></div>
 </div>
-<img alt="../_images/NMT_No_Sampling_27_1.png" src="../_images/NMT_No_Sampling_27_1.png" />
-<img alt="../_images/NMT_No_Sampling_27_2.png" src="../_images/NMT_No_Sampling_27_2.png" />
-<img alt="../_images/NMT_No_Sampling_27_3.png" src="../_images/NMT_No_Sampling_27_3.png" />
-<img alt="../_images/NMT_No_Sampling_27_4.png" src="../_images/NMT_No_Sampling_27_4.png" />
-<img alt="../_images/NMT_No_Sampling_27_5.png" src="../_images/NMT_No_Sampling_27_5.png" />
-<img alt="../_images/NMT_No_Sampling_27_6.png" src="../_images/NMT_No_Sampling_27_6.png" />
-<img alt="../_images/NMT_No_Sampling_27_7.png" src="../_images/NMT_No_Sampling_27_7.png" />
-<img alt="../_images/NMT_No_Sampling_27_8.png" src="../_images/NMT_No_Sampling_27_8.png" />
-<img alt="../_images/NMT_No_Sampling_27_9.png" src="../_images/NMT_No_Sampling_27_9.png" />
-<img alt="../_images/NMT_No_Sampling_27_10.png" src="../_images/NMT_No_Sampling_27_10.png" />
-<img alt="../_images/NMT_No_Sampling_27_11.png" src="../_images/NMT_No_Sampling_27_11.png" />
-<img alt="../_images/NMT_No_Sampling_27_12.png" src="../_images/NMT_No_Sampling_27_12.png" />
-<img alt="../_images/NMT_No_Sampling_27_13.png" src="../_images/NMT_No_Sampling_27_13.png" />
-<img alt="../_images/NMT_No_Sampling_27_14.png" src="../_images/NMT_No_Sampling_27_14.png" />
-<img alt="../_images/NMT_No_Sampling_27_15.png" src="../_images/NMT_No_Sampling_27_15.png" />
-<img alt="../_images/NMT_No_Sampling_27_16.png" src="../_images/NMT_No_Sampling_27_16.png" />
-<img alt="../_images/NMT_No_Sampling_27_17.png" src="../_images/NMT_No_Sampling_27_17.png" />
-<img alt="../_images/NMT_No_Sampling_27_18.png" src="../_images/NMT_No_Sampling_27_18.png" />
-<img alt="../_images/NMT_No_Sampling_27_19.png" src="../_images/NMT_No_Sampling_27_19.png" />
-<img alt="../_images/NMT_No_Sampling_27_20.png" src="../_images/NMT_No_Sampling_27_20.png" />
-<img alt="../_images/NMT_No_Sampling_27_21.png" src="../_images/NMT_No_Sampling_27_21.png" />
-<img alt="../_images/NMT_No_Sampling_27_22.png" src="../_images/NMT_No_Sampling_27_22.png" />
-<img alt="../_images/NMT_No_Sampling_27_23.png" src="../_images/NMT_No_Sampling_27_23.png" />
-<img alt="../_images/NMT_No_Sampling_27_24.png" src="../_images/NMT_No_Sampling_27_24.png" />
-<img alt="../_images/NMT_No_Sampling_27_25.png" src="../_images/NMT_No_Sampling_27_25.png" />
-<img alt="../_images/NMT_No_Sampling_27_26.png" src="../_images/NMT_No_Sampling_27_26.png" />
-<img alt="../_images/NMT_No_Sampling_27_27.png" src="../_images/NMT_No_Sampling_27_27.png" />
-<img alt="../_images/NMT_No_Sampling_27_28.png" src="../_images/NMT_No_Sampling_27_28.png" />
-<img alt="../_images/NMT_No_Sampling_27_29.png" src="../_images/NMT_No_Sampling_27_29.png" />
-<img alt="../_images/NMT_No_Sampling_27_30.png" src="../_images/NMT_No_Sampling_27_30.png" />
-<img alt="../_images/NMT_No_Sampling_27_31.png" src="../_images/NMT_No_Sampling_27_31.png" />
-<img alt="../_images/NMT_No_Sampling_27_32.png" src="../_images/NMT_No_Sampling_27_32.png" />
-<img alt="../_images/NMT_No_Sampling_27_33.png" src="../_images/NMT_No_Sampling_27_33.png" />
-<img alt="../_images/NMT_No_Sampling_27_34.png" src="../_images/NMT_No_Sampling_27_34.png" />
-<img alt="../_images/NMT_No_Sampling_27_35.png" src="../_images/NMT_No_Sampling_27_35.png" />
-<img alt="../_images/NMT_No_Sampling_27_36.png" src="../_images/NMT_No_Sampling_27_36.png" />
-<img alt="../_images/NMT_No_Sampling_27_37.png" src="../_images/NMT_No_Sampling_27_37.png" />
-<img alt="../_images/NMT_No_Sampling_27_38.png" src="../_images/NMT_No_Sampling_27_38.png" />
-<img alt="../_images/NMT_No_Sampling_27_39.png" src="../_images/NMT_No_Sampling_27_39.png" />
-<img alt="../_images/NMT_No_Sampling_27_40.png" src="../_images/NMT_No_Sampling_27_40.png" />
-<img alt="../_images/NMT_No_Sampling_27_41.png" src="../_images/NMT_No_Sampling_27_41.png" />
-<img alt="../_images/NMT_No_Sampling_27_42.png" src="../_images/NMT_No_Sampling_27_42.png" />
-<img alt="../_images/NMT_No_Sampling_27_43.png" src="../_images/NMT_No_Sampling_27_43.png" />
-<img alt="../_images/NMT_No_Sampling_27_44.png" src="../_images/NMT_No_Sampling_27_44.png" />
-<img alt="../_images/NMT_No_Sampling_27_45.png" src="../_images/NMT_No_Sampling_27_45.png" />
-<img alt="../_images/NMT_No_Sampling_27_46.png" src="../_images/NMT_No_Sampling_27_46.png" />
-<img alt="../_images/NMT_No_Sampling_27_47.png" src="../_images/NMT_No_Sampling_27_47.png" />
-<img alt="../_images/NMT_No_Sampling_27_48.png" src="../_images/NMT_No_Sampling_27_48.png" />
-<img alt="../_images/NMT_No_Sampling_27_49.png" src="../_images/NMT_No_Sampling_27_49.png" />
-<img alt="../_images/NMT_No_Sampling_27_50.png" src="../_images/NMT_No_Sampling_27_50.png" />
-<img alt="../_images/NMT_No_Sampling_27_51.png" src="../_images/NMT_No_Sampling_27_51.png" />
-<img alt="../_images/NMT_No_Sampling_27_52.png" src="../_images/NMT_No_Sampling_27_52.png" />
-<img alt="../_images/NMT_No_Sampling_27_53.png" src="../_images/NMT_No_Sampling_27_53.png" />
-<img alt="../_images/NMT_No_Sampling_27_54.png" src="../_images/NMT_No_Sampling_27_54.png" />
+<img alt="../_images/NMT_No_Sampling_37_1.png" src="../_images/NMT_No_Sampling_37_1.png" />
+<img alt="../_images/NMT_No_Sampling_37_2.png" src="../_images/NMT_No_Sampling_37_2.png" />
+<img alt="../_images/NMT_No_Sampling_37_3.png" src="../_images/NMT_No_Sampling_37_3.png" />
+<img alt="../_images/NMT_No_Sampling_37_4.png" src="../_images/NMT_No_Sampling_37_4.png" />
+<img alt="../_images/NMT_No_Sampling_37_5.png" src="../_images/NMT_No_Sampling_37_5.png" />
+<img alt="../_images/NMT_No_Sampling_37_6.png" src="../_images/NMT_No_Sampling_37_6.png" />
+<img alt="../_images/NMT_No_Sampling_37_7.png" src="../_images/NMT_No_Sampling_37_7.png" />
+<img alt="../_images/NMT_No_Sampling_37_8.png" src="../_images/NMT_No_Sampling_37_8.png" />
+<img alt="../_images/NMT_No_Sampling_37_9.png" src="../_images/NMT_No_Sampling_37_9.png" />
+<img alt="../_images/NMT_No_Sampling_37_10.png" src="../_images/NMT_No_Sampling_37_10.png" />
+<img alt="../_images/NMT_No_Sampling_37_11.png" src="../_images/NMT_No_Sampling_37_11.png" />
+<img alt="../_images/NMT_No_Sampling_37_12.png" src="../_images/NMT_No_Sampling_37_12.png" />
+<img alt="../_images/NMT_No_Sampling_37_13.png" src="../_images/NMT_No_Sampling_37_13.png" />
+<img alt="../_images/NMT_No_Sampling_37_14.png" src="../_images/NMT_No_Sampling_37_14.png" />
+<img alt="../_images/NMT_No_Sampling_37_15.png" src="../_images/NMT_No_Sampling_37_15.png" />
+<img alt="../_images/NMT_No_Sampling_37_16.png" src="../_images/NMT_No_Sampling_37_16.png" />
+<img alt="../_images/NMT_No_Sampling_37_17.png" src="../_images/NMT_No_Sampling_37_17.png" />
+<img alt="../_images/NMT_No_Sampling_37_18.png" src="../_images/NMT_No_Sampling_37_18.png" />
+<img alt="../_images/NMT_No_Sampling_37_19.png" src="../_images/NMT_No_Sampling_37_19.png" />
+<img alt="../_images/NMT_No_Sampling_37_20.png" src="../_images/NMT_No_Sampling_37_20.png" />
+<img alt="../_images/NMT_No_Sampling_37_21.png" src="../_images/NMT_No_Sampling_37_21.png" />
+<img alt="../_images/NMT_No_Sampling_37_22.png" src="../_images/NMT_No_Sampling_37_22.png" />
+<img alt="../_images/NMT_No_Sampling_37_23.png" src="../_images/NMT_No_Sampling_37_23.png" />
+<img alt="../_images/NMT_No_Sampling_37_24.png" src="../_images/NMT_No_Sampling_37_24.png" />
+<img alt="../_images/NMT_No_Sampling_37_25.png" src="../_images/NMT_No_Sampling_37_25.png" />
+<img alt="../_images/NMT_No_Sampling_37_26.png" src="../_images/NMT_No_Sampling_37_26.png" />
+<img alt="../_images/NMT_No_Sampling_37_27.png" src="../_images/NMT_No_Sampling_37_27.png" />
+<img alt="../_images/NMT_No_Sampling_37_28.png" src="../_images/NMT_No_Sampling_37_28.png" />
+<img alt="../_images/NMT_No_Sampling_37_29.png" src="../_images/NMT_No_Sampling_37_29.png" />
+<img alt="../_images/NMT_No_Sampling_37_30.png" src="../_images/NMT_No_Sampling_37_30.png" />
+<img alt="../_images/NMT_No_Sampling_37_31.png" src="../_images/NMT_No_Sampling_37_31.png" />
+<img alt="../_images/NMT_No_Sampling_37_32.png" src="../_images/NMT_No_Sampling_37_32.png" />
+<img alt="../_images/NMT_No_Sampling_37_33.png" src="../_images/NMT_No_Sampling_37_33.png" />
+<img alt="../_images/NMT_No_Sampling_37_34.png" src="../_images/NMT_No_Sampling_37_34.png" />
+<img alt="../_images/NMT_No_Sampling_37_35.png" src="../_images/NMT_No_Sampling_37_35.png" />
+<img alt="../_images/NMT_No_Sampling_37_36.png" src="../_images/NMT_No_Sampling_37_36.png" />
+<img alt="../_images/NMT_No_Sampling_37_37.png" src="../_images/NMT_No_Sampling_37_37.png" />
+<img alt="../_images/NMT_No_Sampling_37_38.png" src="../_images/NMT_No_Sampling_37_38.png" />
+<img alt="../_images/NMT_No_Sampling_37_39.png" src="../_images/NMT_No_Sampling_37_39.png" />
+<img alt="../_images/NMT_No_Sampling_37_40.png" src="../_images/NMT_No_Sampling_37_40.png" />
+<img alt="../_images/NMT_No_Sampling_37_41.png" src="../_images/NMT_No_Sampling_37_41.png" />
+<img alt="../_images/NMT_No_Sampling_37_42.png" src="../_images/NMT_No_Sampling_37_42.png" />
+<img alt="../_images/NMT_No_Sampling_37_43.png" src="../_images/NMT_No_Sampling_37_43.png" />
+<img alt="../_images/NMT_No_Sampling_37_44.png" src="../_images/NMT_No_Sampling_37_44.png" />
+<img alt="../_images/NMT_No_Sampling_37_45.png" src="../_images/NMT_No_Sampling_37_45.png" />
+<img alt="../_images/NMT_No_Sampling_37_46.png" src="../_images/NMT_No_Sampling_37_46.png" />
+<img alt="../_images/NMT_No_Sampling_37_47.png" src="../_images/NMT_No_Sampling_37_47.png" />
+<img alt="../_images/NMT_No_Sampling_37_48.png" src="../_images/NMT_No_Sampling_37_48.png" />
+<img alt="../_images/NMT_No_Sampling_37_49.png" src="../_images/NMT_No_Sampling_37_49.png" />
+<img alt="../_images/NMT_No_Sampling_37_50.png" src="../_images/NMT_No_Sampling_37_50.png" />
+<img alt="../_images/NMT_No_Sampling_37_51.png" src="../_images/NMT_No_Sampling_37_51.png" />
+<img alt="../_images/NMT_No_Sampling_37_52.png" src="../_images/NMT_No_Sampling_37_52.png" />
+<img alt="../_images/NMT_No_Sampling_37_53.png" src="../_images/NMT_No_Sampling_37_53.png" />
+<img alt="../_images/NMT_No_Sampling_37_54.png" src="../_images/NMT_No_Sampling_37_54.png" />
 </div>
 </div>
 <div class="cell docutils container">
