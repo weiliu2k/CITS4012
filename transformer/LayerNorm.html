@@ -1,0 +1,1104 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. Layer Normalization &#8212; CITS4012 Natural Language Processing</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Transform and Roll Out" href="transformer.html" />
+    <link rel="prev" title="1. Positional Encoding" href="position_encoding.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo_ntlp.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CITS4012 Natural Language Processing</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   HOME
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../basics/intro.html">
+   Lab 01: Conda Environment and Python Refresher
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation.html">
+     1. CITS4012 Base Environment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/installation_misc.html">
+     2. CITS4012 MISC Enviornment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/lab_machines.html">
+     3. Use Lab Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/python_review.html">
+     4. Python Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/iterables.html">
+     5. Iterables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/numpy.html">
+     6. Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/matplotlib.html">
+     7. Matplotlib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../NLTK/intro.html">
+   Lab02: NLTK
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/start.html">
+     1. Starting with NLTK
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/closer_look.html">
+     2. A Closer Look at Python: Texts as Lists of Words
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/computing.html">
+     3. Computing with Language: Simple Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/take_control.html">
+     4. Back to Python: Making Decisions and Taking Control
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../NLTK/exercises.html">
+     5. Exercises
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../spacy/intro.html">
+   Lab03: spaCy NLP pipelines
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/container.html">
+     1. Container Objects in spaCy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/pipeline.html">
+     2. NLP Pipelines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/patterns.html">
+     3. Finding Patterns
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/telegram.html">
+     4. Your first chatbot
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../spacy/exercise.html">
+     5. Exercise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../gensim/intro.html">
+   Lab04: Count-Based Models
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/tf-idf.html">
+     1. TF-IDF in scikit-learn and Gensim
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../gensim/classification.html">
+     2. Document Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../nn/intro.html">
+   Lab05: Introduction to Neural Networks and Pytorch
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_numpy.html">
+     1. Linear Models in Numpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/tensors.html">
+     2. Introduction to Pytorch Tensors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../nn/linear_model_pytorch.html">
+     3. Linear Models in Pytorch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../pytorch/intro.html">
+   Lab06: Neural Network Building Blocks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/activations.html">
+     1. Activation Functions and their derivatives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/loss.html">
+     2. Loss Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/computational_graph.html">
+     3. Dynamic Computational Graph in PyTorch
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../pytorch/nn_oop.html">
+     4. Neural Networks in PyTorch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../embeddings/intro.html">
+   Lab07: Word Embeddings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../embeddings/svd.html">
+     1. Word Vectors from Word-Word Coocurrence Matrix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../embeddings/glove.html">
+     2. GloVe: Global Vectors for Word Representation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../embeddings/word2vec.html">
+     3. Word2Vec
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../classification/intro.html">
+   Lab08: Document Classification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/perceptron.html">
+     1. Perceptron
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/data_prep.html">
+     2. Dataset and DataLoader
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/yelp_preprocessing.html">
+     3. Yelp Dataset at a glance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../classification/yelp.html">
+     4. Yelp Review Dataset - Document Classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cnn/intro.html">
+   Lab09: CNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/dataset_frankenstein_processing.html">
+     1. Frankenstein Dataset At a Glance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/CBOW.html">
+     2. Learning Embeddings with Continuous Bag of Words (CBOW)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/convolution.html">
+     3. Convolution Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/dataset_AG_News_processing.html">
+     4. AG News Dataset at A Glance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cnn/Document_Classification_with_CNN.html">
+     5. Using CNN for Document Classification with Embeddings
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../rnn/intro.html">
+   Lab10: RNN for NLP
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/rnn.html">
+     1. Recurrent Neural Networks - Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/elman_rnn_square.html">
+     2. Classifying Synthetic Sequences - The Square Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/Surname_Dataset.html">
+     3. Surname Dataset Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../rnn/Surname_Classification.html">
+     4. Surname Classification with RNN
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../LSTM/intro.html">
+   Lab11: GRU, LSTM and Seq2Seq
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/gru.html">
+     1. Gated Recurrent Units (GRUs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/lstm.html">
+     2. Long Short Term Memories (LSTMs)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/gru_lstm_square.html">
+     3. The Square Model Using GRU and LSTM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/seq2seq.html">
+     4. Sequence to Sequence Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/Surname_Generation_Unconditioned.html">
+     5. Surname Generation - Unconditioned
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../LSTM/Surname_Generation_Conditioned.html">
+     6. Surname Generation Conditioned
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../attention/intro.html">
+   Lab12: Sequence to Sequence Learning with Attention
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/attention.html">
+     1. Attention Mechanism
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/self_attention.html">
+     2. Self-Attention
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/nmt_data_processing.html">
+     3. Neual Machine Translation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/PackedSequence.html">
+     4. Packed Sequences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/NMT_No_Sampling.html">
+     5. Neural Machine Translation - No Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/NMT_scheduled_sampling.html">
+     6. Neural Machine Translation - Scheduled Sampling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
+   Extra: Transformers
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="position_encoding.html">
+     1. Positional Encoding
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2. Layer Normalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformer.html">
+     3. Transform and Roll Out
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://drive.google.com/file/d/1AQxhGLhoHE162HALo1NkgdaN-LVY4QWo/view?usp=sharing">
+   data.zip
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/weiliu2k/CITS4012/raw/master/CITS4012LabBook.pdf">
+   PDF
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/transformer/LayerNorm.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/transformer/LayerNorm.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#batch-vs-layer">
+   2.1. Batch vs Layer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#our-seq2seq-problem">
+   2.2. Our Seq2Seq Problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#projections-or-embeddings">
+   2.3. Projections or Embeddings
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="layer-normalization">
+<h1><span class="section-number">2. </span>Layer Normalization<a class="headerlink" href="#layer-normalization" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        <span class="n">pe</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_len</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">angular_speed</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10000.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">d_model</span><span class="p">))</span>
+        <span class="n">pe</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">angular_speed</span><span class="p">)</span> <span class="c1"># even dimensions</span>
+        <span class="n">pe</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">angular_speed</span><span class="p">)</span> <span class="c1"># odd dimensions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="n">pe</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># x is N, L, D</span>
+        <span class="c1"># pe is 1, maxlen, D</span>
+        <span class="n">scaled_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">)</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="n">scaled_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">:]</span>
+        <span class="k">return</span> <span class="n">encoded</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_model</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">seq_len</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">n_points</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">34</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+<span class="n">pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">pe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">inputs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-3.8049,  1.9899, -1.7325,  2.1359],
+         [ 1.7854,  0.8155,  0.1116, -1.7420]],
+
+        [[-2.4273,  1.3559,  2.8615,  2.0084],
+         [-1.0353, -1.2766, -2.2082, -0.6952]],
+
+        [[-0.8044,  1.9707,  3.3704,  2.0587],
+         [ 4.2256,  6.9575,  1.4770,  2.0762]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="math notranslate nohighlight">
+\[
+\Large
+\overline{X}_{n,l} = \frac{1}{D}\sum_{d=1}^Dx_{n,l,d}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs_mean</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">inputs_mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.3529],
+         [ 0.2426]],
+
+        [[ 0.9496],
+         [-1.3038]],
+
+        [[ 1.6489],
+         [ 3.6841]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="math notranslate nohighlight">
+\[
+\Large
+\sigma_{n,l}(X) = \sqrt{\frac{1}{D}\sum_{d=1}^D(x_{n,l,d}-\overline{X}_{n,l})^2}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs_var</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">unbiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">inputs_var</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[6.3756],
+         [1.6661]],
+
+        [[4.0862],
+         [0.3153]],
+
+        [[2.3135],
+         [4.6163]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="math notranslate nohighlight">
+\[
+\Large
+standardized\ x_{n,l,d}=\frac{x_{n,l,d}-\overline{X}_{n,l}}{\sigma_{n,l}(X) + \epsilon}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">inputs</span> <span class="o">-</span> <span class="n">inputs_mean</span><span class="p">)</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">inputs_var</span><span class="o">+</span><span class="mf">1e-5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-1.3671,  0.9279, -0.5464,  0.9857],
+         [ 1.1953,  0.4438, -0.1015, -1.5376]],
+
+        [[-1.6706,  0.2010,  0.9458,  0.5238],
+         [ 0.4782,  0.0485, -1.6106,  1.0839]],
+
+        [[-1.6129,  0.2116,  1.1318,  0.2695],
+         [ 0.2520,  1.5236, -1.0272, -0.7484]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="n">layer_norm</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;weight&#39;, tensor([1., 1., 1., 1.])),
+             (&#39;bias&#39;, tensor([0., 0., 0., 0.]))])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="n">normalized</span> <span class="o">=</span> <span class="n">layer_norm</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+<span class="n">normalized</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">normalized</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">unbiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor(-1.4901e-08, grad_fn=&lt;MeanBackward0&gt;),
+ tensor(1.0000, grad_fn=&lt;StdBackward&gt;))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer_norm</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;weight&#39;, tensor([1., 1., 1., 1.])),
+             (&#39;bias&#39;, tensor([0., 0., 0., 0.]))])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="math notranslate nohighlight">
+\[
+\Large
+layer\ normed\ x_{n,l,d} = b_d + w_d\ standardized\ x_{n,l,d}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\Large
+layer\ normed\ x_{n,l,d} = standardized\ x_{n,l,d}\ \gamma_d + \beta_d
+\]</div>
+<div class="section" id="batch-vs-layer">
+<h2><span class="section-number">2.1. </span>Batch vs Layer<a class="headerlink" href="#batch-vs-layer" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+<span class="n">dummy_points</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">dummy_pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">dummy_enc</span> <span class="o">=</span> <span class="n">dummy_pe</span><span class="p">(</span><span class="n">dummy_points</span><span class="p">)</span>
+<span class="n">dummy_enc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-14.4193,  10.0495,  -7.8116,  ..., -15.4844, -18.0732,  -3.9566]],
+
+        [[  2.6628,  -3.5462, -23.6461,  ...,  -0.9403, -18.4375, -37.4197]],
+
+        [[-24.6397,  -1.9127, -16.4244,  ..., -17.3708, -26.0550, -14.0706]],
+
+        [[ 13.7988,  21.4612,  10.4125,  ...,  -3.2333, -17.0188,   3.9237]]])
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="transformer/images/layer_vs_batch_norm.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hist_encoding</span><span class="p">(</span><span class="n">encoding</span><span class="p">):</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">data_point</span> <span class="o">=</span> <span class="n">encoding</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_point</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data Point #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;# of features&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mean=</span><span class="si">{</span><span class="n">data_point</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s1"> var=</span><span class="si">{</span><span class="n">data_point</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">label_outer</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>    
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="k">def</span> <span class="nf">hist_layer_normed</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="n">normed</span><span class="p">):</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">normed</span> <span class="o">=</span> <span class="n">normed</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">data_point</span> <span class="o">=</span> <span class="n">encoding</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">normed_point</span> <span class="o">=</span> <span class="n">normed</span><span class="o">.</span><span class="n">detach</span><span class="p">()[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_point</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">normed_point</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Standardized&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data Point #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;# of features&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mean=</span><span class="si">{</span><span class="n">normed</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s1"> std=</span><span class="si">{</span><span class="n">normed</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">unbiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">label_outer</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">hist_encoding</span><span class="p">(</span><span class="n">dummy_enc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/LayerNorm_19_0.png" src="../_images/LayerNorm_19_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer_normalizer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+<span class="n">dummy_normed</span> <span class="o">=</span> <span class="n">layer_normalizer</span><span class="p">(</span><span class="n">dummy_enc</span><span class="p">)</span>
+<span class="n">dummy_normed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.9210,  0.5911, -0.5127,  ..., -0.9868, -1.1467, -0.2744]],
+
+        [[ 0.1399, -0.2607, -1.5574,  ..., -0.0925, -1.2214, -2.4460]],
+
+        [[-1.5755, -0.1191, -1.0491,  ..., -1.1097, -1.6662, -0.8982]],
+
+        [[ 0.8643,  1.3324,  0.6575,  ..., -0.1761, -1.0183,  0.2611]]],
+       grad_fn=&lt;NativeLayerNormBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">hist_layer_normed</span><span class="p">(</span><span class="n">dummy_enc</span><span class="p">,</span> <span class="n">dummy_normed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/LayerNorm_21_0.png" src="../_images/LayerNorm_21_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="our-seq2seq-problem">
+<h2><span class="section-number">2.2. </span>Our Seq2Seq Problem<a class="headerlink" href="#our-seq2seq-problem" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">max_len</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">source_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span> <span class="mf">1.0349</span><span class="p">,</span>  <span class="mf">0.9661</span><span class="p">],</span> <span class="p">[</span> <span class="mf">0.8055</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9169</span><span class="p">]]])</span>
+<span class="n">source_seq_enc</span> <span class="o">=</span> <span class="n">pe</span><span class="p">(</span><span class="n">source_seq</span><span class="p">)</span>
+<span class="n">source_seq_enc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 1.4636,  2.3663],
+         [ 1.9806, -0.7564]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">norm</span><span class="p">(</span><span class="n">source_seq_enc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-1.0000,  1.0000],
+         [ 1.0000, -1.0000]]], grad_fn=&lt;NativeLayerNormBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="projections-or-embeddings">
+<h2><span class="section-number">2.3. </span>Projections or Embeddings<a class="headerlink" href="#projections-or-embeddings" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">proj_dim</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">linear_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">proj_dim</span><span class="p">)</span>
+<span class="n">pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">proj_dim</span><span class="p">)</span>
+
+<span class="n">source_seq_proj</span> <span class="o">=</span> <span class="n">linear_proj</span><span class="p">(</span><span class="n">source_seq</span><span class="p">)</span>
+<span class="n">source_seq_proj_enc</span> <span class="o">=</span> <span class="n">pe</span><span class="p">(</span><span class="n">source_seq_proj</span><span class="p">)</span>
+<span class="n">source_seq_proj_enc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-2.0934,  1.5040,  1.8742,  0.0628,  0.3034,  2.0190],
+         [-0.8853,  2.8213,  0.5911,  2.4193, -2.5230,  0.3599]]],
+       grad_fn=&lt;AddBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">proj_dim</span><span class="p">)</span>
+<span class="n">norm</span><span class="p">(</span><span class="n">source_seq_proj_enc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-1.9061,  0.6287,  0.8896, -0.3868, -0.2172,  0.9917],
+         [-0.7362,  1.2864,  0.0694,  1.0670, -1.6299, -0.0568]]],
+       grad_fn=&lt;NativeLayerNormBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./transformer"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="position_encoding.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title"><span class="section-number">1. </span>Positional Encoding</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="transformer.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Transform and Roll Out</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By A/Prof. Wei Liu<br/>
+        
+            &copy; Copyright UWA 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
