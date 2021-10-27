@@ -484,6 +484,53 @@
      2. Self-Attention
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/nmt_data_processing.html">
+     3. Neual Machine Translation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/PackedSequence.html">
+     4. Packed Sequences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/NMT_No_Sampling.html">
+     5. Neural Machine Translation - No Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../attention/NMT_scheduled_sampling.html">
+     6. Neural Machine Translation - Scheduled Sampling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../transformer/intro.html">
+   Extra: Transformers
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../transformer/position_encoding.html">
+     1. Positional Encoding
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../transformer/LayerNorm.html">
+     2. Layer Normalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../transformer/transformer.html">
+     3. Transform and Roll Out
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -629,19 +676,19 @@
 <h1><span class="section-number">3. </span>Finding Patterns<a class="headerlink" href="#finding-patterns" title="Permalink to this headline">¶</a></h1>
 <p>Imagine you are building a chat bot and we are trying to find utterances in user input that express one of the following:</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="7ab8c650-8958-4e72-a552-23e091a26fe2" name="0d0c55da-d610-479b-8090-f44a89fb3277" type="radio">
-</input><label class="tabbed-label" for="7ab8c650-8958-4e72-a552-23e091a26fe2">
+<input checked="checked" id="baba4a00-f49a-45c9-965d-d34092f9317e" name="aa0585af-493f-4466-87d8-d514a446f57d" type="radio">
+</input><label class="tabbed-label" for="baba4a00-f49a-45c9-965d-d34092f9317e">
 What’s Expressed</label><div class="tabbed-content docutils">
 <p>ability, possibility, permission, or obligation (as opposed to utterances that describe real actions that have occurred, are occurring, or occur regularly)</p>
 </div>
-<input id="3f4bd2ff-62d2-4298-8e62-7ddb1441061a" name="0d0c55da-d610-479b-8090-f44a89fb3277" type="radio">
-</input><label class="tabbed-label" for="3f4bd2ff-62d2-4298-8e62-7ddb1441061a">
+<input id="a685ed45-aa91-4288-a407-dfd441a2659e" name="aa0585af-493f-4466-87d8-d514a446f57d" type="radio">
+</input><label class="tabbed-label" for="a685ed45-aa91-4288-a407-dfd441a2659e">
 Example Sentences</label><div class="tabbed-content docutils">
 <p>For instance, we want to find “I can do it.”
 but not “I’ve done it.”</p>
 </div>
-<input id="efcd268d-ca75-4703-81a6-d8ba0d3ea61c" name="0d0c55da-d610-479b-8090-f44a89fb3277" type="radio">
-</input><label class="tabbed-label" for="efcd268d-ca75-4703-81a6-d8ba0d3ea61c">
+<input id="c099e1b6-18d2-4632-91fc-d2e15569d37d" name="aa0585af-493f-4466-87d8-d514a446f57d" type="radio">
+</input><label class="tabbed-label" for="c099e1b6-18d2-4632-91fc-d2e15569d37d">
 Linguistic Pattern</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">+</span> <span class="pre">auxiliary</span> <span class="pre">+</span> <span class="pre">verb</span> <span class="pre">+</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">.</span> <span class="pre">+</span> <span class="pre">direct</span> <span class="pre">object</span> <span class="pre">+</span> <span class="pre">...</span></code></p>
 <p>The ellipses indicate that the direct object isn’t necessarily

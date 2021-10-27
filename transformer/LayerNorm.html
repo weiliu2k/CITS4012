@@ -635,18 +635,44 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#batch-vs-layer">
-   2.1. Batch vs Layer
+  <a class="reference internal nav-link" href="#imports">
+   2.1. imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#positional-encoding">
+   2.2. Positional Encoding
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-by-step-layer-normalization">
+   2.3. Step-by-step Layer Normalization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pytorch-s-nn-layernorm-function">
+   2.4. PyTorch’s
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     nn.LayerNorm
+    </span>
+   </code>
+   function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#layer-normalization-of-positionally-encoded-dummy">
+   2.5. Layer Normalization of Positionally Encoded Dummy
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#our-seq2seq-problem">
-   2.2. Our Seq2Seq Problem
+   2.6. Our Seq2Seq Problem
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#projections-or-embeddings">
-   2.3. Projections or Embeddings
+   2.7. Projections or Embeddings
   </a>
  </li>
 </ul>
@@ -662,6 +688,18 @@
                 
   <div class="section" id="layer-normalization">
 <h1><span class="section-number">2. </span>Layer Normalization<a class="headerlink" href="#layer-normalization" title="Permalink to this headline">¶</a></h1>
+<p>Layer normalization was introduced by Jimmy Lei Ba, Jamie Ryan Kiros, and
+Geoffery E. Hinton in their 2016 paper <a class="reference external" href="https://arxiv.org/abs/1607.06450">Layer Normalization</a>, but it only got really popular after being used in the hugely successful Transformer architecture.</p>
+<p>Simply put: layer normalization standardizes individual data
+points, not features. This is completely different than the standardizations we’ve performed so far. Before, each feature, either in the whole training set (using Scikit-learn’s <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> or in a mini-batch (using batch norm), was standardized to have zero mean and unit standard deviation. In a tabular dataset, we were standardizing the columns.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Layer normalization
+Layer normalization, in a tabular dataset, standardizes the rows. Each data point will have the average of its features equals zero, and the standard deviation of its features equals one.</p>
+</div>
+<p><img alt="batch vs. layer normalization" src="../_images/batch_layer_norm.png" /></p>
+<div class="section" id="imports">
+<h2><span class="section-number">2.1. </span>imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -672,6 +710,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="positional-encoding">
+<h2><span class="section-number">2.2. </span>Positional Encoding<a class="headerlink" href="#positional-encoding" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -695,6 +736,14 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="step-by-step-layer-normalization">
+<h2><span class="section-number">2.3. </span>Step-by-step Layer Normalization<a class="headerlink" href="#step-by-step-layer-normalization" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Calculating the mean of data point</p></li>
+<li><p>Calculating the standard deviation of the data point</p></li>
+<li><p>Computing the standardized data point</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_model</span> <span class="o">=</span> <span class="mi">4</span>
@@ -810,6 +859,9 @@ standardized\ x_{n,l,d}=\frac{x_{n,l,d}-\overline{X}_{n,l}}{\sigma_{n,l}(X) + \e
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="pytorch-s-nn-layernorm-function">
+<h2><span class="section-number">2.4. </span>PyTorch’s <code class="docutils literal notranslate"><span class="pre">nn.LayerNorm</span></code> function<a class="headerlink" href="#pytorch-s-nn-layernorm-function" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
@@ -849,8 +901,13 @@ layer\ normed\ x_{n,l,d} = b_d + w_d\ standardized\ x_{n,l,d}
 \Large
 layer\ normed\ x_{n,l,d} = standardized\ x_{n,l,d}\ \gamma_d + \beta_d
 \]</div>
-<div class="section" id="batch-vs-layer">
-<h2><span class="section-number">2.1. </span>Batch vs Layer<a class="headerlink" href="#batch-vs-layer" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="layer-normalization-of-positionally-encoded-dummy">
+<h2><span class="section-number">2.5. </span>Layer Normalization of Positionally Encoded Dummy<a class="headerlink" href="#layer-normalization-of-positionally-encoded-dummy" title="Permalink to this headline">¶</a></h2>
+<p>The size of the mini-batch strongly impacts the running statistics of the batch normalization. We also learned that batch norms oscillating statistics may introduce a regularizing effect.</p>
+<p>None of this happens with layer normalization: it steadily delivers data points with
+zero mean and unit standard deviation regardless of our choice of mini-batch size
+or anything else.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
@@ -873,7 +930,6 @@ layer\ normed\ x_{n,l,d} = standardized\ x_{n,l,d}\ \gamma_d + \beta_d
 </div>
 </div>
 </div>
-<p><img alt="" src="transformer/images/layer_vs_batch_norm.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hist_encoding</span><span class="p">(</span><span class="n">encoding</span><span class="p">):</span>
@@ -919,7 +975,7 @@ layer\ normed\ x_{n,l,d} = standardized\ x_{n,l,d}\ \gamma_d + \beta_d
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/LayerNorm_19_0.png" src="../_images/LayerNorm_19_0.png" />
+<img alt="../_images/LayerNorm_22_0.png" src="../_images/LayerNorm_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -950,12 +1006,16 @@ layer\ normed\ x_{n,l,d} = standardized\ x_{n,l,d}\ \gamma_d + \beta_d
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/LayerNorm_21_0.png" src="../_images/LayerNorm_21_0.png" />
+<img alt="../_images/LayerNorm_24_0.png" src="../_images/LayerNorm_24_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="our-seq2seq-problem">
-<h2><span class="section-number">2.2. </span>Our Seq2Seq Problem<a class="headerlink" href="#our-seq2seq-problem" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.6. </span>Our Seq2Seq Problem<a class="headerlink" href="#our-seq2seq-problem" title="Permalink to this headline">¶</a></h2>
+<p>So far, we have been using dummy examples to illustrate how layer normalization
+works. Let’s go back to our sequence-to-sequence problem, where the source
+sequence had two data points, each data point representing the coordinates of
+two corners. As usual, we are adding positional encoding to it</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">max_len</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -987,9 +1047,23 @@ layer\ normed\ x_{n,l,d} = standardized\ x_{n,l,d}\ \gamma_d + \beta_d
 </div>
 </div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When one tries to layer normalize two features only: they become either minus one or one. Even worse, it will be the same for every data point. These
+values will not get us anywhere.</p>
+</div>
+<p>We need projections (for numerical values) or embeddings (for categorical values) to get us from 2 dimensions to a different dimensionality.</p>
 </div>
 <div class="section" id="projections-or-embeddings">
-<h2><span class="section-number">2.3. </span>Projections or Embeddings<a class="headerlink" href="#projections-or-embeddings" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.7. </span>Projections or Embeddings<a class="headerlink" href="#projections-or-embeddings" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sometimes projections and embeddings are used
+interchangeably. Here, we are sticking with embeddings
+for categorical values and projections for numerical values.
+}</p>
+<p>Projections/Embeddings are referring to using a simple linear layer to project our pair of coordinates into a higher-dimensional feature space.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>

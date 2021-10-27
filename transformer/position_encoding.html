@@ -638,74 +638,89 @@
   <a class="reference internal nav-link" href="#helper-files">
    1.1. Helper Files
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   1.2. Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#angular-speed">
+   1.3. Angular Speed
+  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#a-note-on-encoded-distances">
-     1.1.1. A Note on Encoded Distances
+    <a class="reference internal nav-link" href="#fixed-based-positional-encoding">
+     1.3.1. Fixed Based Positional Encoding
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encoder-decoder-pe">
-     1.1.2. Encoder + Decoder + PE
+    <a class="reference internal nav-link" href="#general-exponential-bases">
+     1.3.2. General Exponential Bases
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-note-on-encoded-distances">
+     1.3.3. A Note on Encoded Distances
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-preparation">
-   1.2. Data Preparation
+  <a class="reference internal nav-link" href="#the-positional-encoding-class">
+   1.4. The positional encoding class
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#model-configuration-training">
-     1.2.1. Model Configuration &amp; Training
+    <a class="reference internal nav-link" href="#register-buffer">
+     1.4.1.
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       register_buffer
+      </span>
+     </code>
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reverse-input-scaling">
+     1.4.2. Reverse Input Scaling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoder-and-decoder-with-self-attention">
+   1.5. Encoder and Decoder with Self Attention
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoder-decoder-pe">
+   1.6. Encoder + Decoder + PE
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   1.7. Data Preparation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-configuration-training">
+   1.8. Model Configuration &amp; Training
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizing-results">
+   1.9. Visualizing Results
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#visualizing-predictions">
-     1.2.2. Visualizing Predictions
+     1.9.1. Visualizing Predictions
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#visualizing-attention">
-     1.2.3. Visualizing Attention
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#putting-it-all-together">
-   1.3. Putting It All Together
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     1.3.1. Data Preparation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#model-assembly">
-     1.3.2. Model Assembly
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encoder-decoder-positional-encoding">
-     1.3.3. Encoder + Decoder + Positional Encoding
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#self-attention-layers">
-     1.3.4. Self-Attention “Layers”
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#attention-heads">
-     1.3.5. Attention Heads
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     1.3.6. Model Configuration &amp; Training
+     1.9.2. Visualizing Attention
     </a>
    </li>
   </ul>
@@ -723,6 +738,14 @@
                 
   <div class="section" id="positional-encoding">
 <h1><span class="section-number">1. </span>Positional Encoding<a class="headerlink" href="#positional-encoding" title="Permalink to this headline">¶</a></h1>
+<p>We loose positional information when using self-attention, as compared to RNNs with cross-attention. The idea of positional encoding is to capture the position information and use that to augument the input vectors.</p>
+<p>Three key requirements of positional encoding vectors:</p>
+<ul class="simple">
+<li><p>The values need to be bounded.</p></li>
+<li><p>Each position should have its own vector. The same position should have the same values.</p></li>
+<li><p>They need to be unique. No two positions should share the same encoding vectors.</p></li>
+<li><p>The euclidean distance between two vectors needs to reflect the positional distance between the correponding two position indices. Take position <code class="docutils literal notranslate"><span class="pre">3</span></code> for example, the vector distance between position <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code>, needs to be the same as <code class="docutils literal notranslate"><span class="pre">3</span></code> and <code class="docutils literal notranslate"><span class="pre">5</span></code>, as both <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">5</span></code> are two positions away from <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p></li>
+</ul>
 <div class="section" id="helper-files">
 <h2><span class="section-number">1.1. </span>Helper Files<a class="headerlink" href="#helper-files" title="Permalink to this headline">¶</a></h2>
 <p>Download these files and place them in the same directory as the current notebook before you start.</p>
@@ -760,6 +783,9 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><a href='replay.py' target='_blank'>replay.py</a><br></div></div>
 </div>
+</div>
+<div class="section" id="imports">
+<h2><span class="section-number">1.2. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -775,6 +801,12 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="angular-speed">
+<h2><span class="section-number">1.3. </span>Angular Speed<a class="headerlink" href="#angular-speed" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fixed-based-positional-encoding">
+<h3><span class="section-number">1.3.1. </span>Fixed Based Positional Encoding<a class="headerlink" href="#fixed-based-positional-encoding" title="Permalink to this headline">¶</a></h3>
+<p>Visualisation of base 4, 5 and 7. Each base corresponds to an angular speed of (<span class="math notranslate nohighlight">\(\frac{360}{4}\)</span>,<span class="math notranslate nohighlight">\(\frac{360}{5}\)</span>,<span class="math notranslate nohighlight">\(\frac{360}{7}\)</span>) per position, indicating how many degrees to move along the circle at each position. For example, at position 3, the corresponding degrees to move for each base is <span class="math notranslate nohighlight">\(\frac{360}{4} *3\)</span>,<span class="math notranslate nohighlight">\(\frac{360}{5} *3 \)</span>,<span class="math notranslate nohighlight">\(\frac{360}{7} * 3\)</span>, respectively. We use sine and cosine of these degrees along a unit circle to get the position encodings. The values under each position index is a vector encode the position.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">encoding_degrees</span><span class="p">(</span><span class="n">dims</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seqs</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">tot</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
@@ -782,11 +814,38 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_7_0.png" src="../_images/position_encoding_7_0.png" />
+<img alt="../_images/position_encoding_9_0.png" src="../_images/position_encoding_9_0.png" />
 </div>
 </div>
-<p><img alt="" src="transformer/images/posenc_modnorm_sincos.png" /></p>
-<p><img alt="" src="transformer/images/sincos_distance.png" /></p>
+<p><img alt="" src="../_images/posenc_modnorm_sincos.png" /></p>
+<p><img alt="" src="../_images/sincos_distance.png" /></p>
+<p>As shown above the position encoding above meets the requirements we listed above.</p>
+<div class="admonition-your-turn admonition">
+<p class="admonition-title">Your Turn</p>
+<p>Implement a position encoding using the above bases (4,5,7), and verify the distance between positions is maintained by the positional encodings.</p>
+</div>
+</div>
+<div class="section" id="general-exponential-bases">
+<h3><span class="section-number">1.3.2. </span>General Exponential Bases<a class="headerlink" href="#general-exponential-bases" title="Permalink to this headline">¶</a></h3>
+<p>In real implementation, we do not need to worry about choosing the right bases.</p>
+<p>As the first vector, we can simply move along the circle as many radians as the index of the position (one radian is approximately <span class="math notranslate nohighlight">\(\frac{360}{2\pi}=57.3\)</span>
+degrees). Then, for each new vector we add to the encoding, we move along the
+circle with exponentially slower angular speeds. For example, in the second
+vector, we would move only one-tenth of a radian (approximately 5.73 degrees)
+for each new position. In the third vector we would move only one-hundredth of a
+radian, and so on and so forth. Figure below depicts the red arrow moving at
+increasingly slower angular speeds, for an eight dimensional positional encoding. For eight dimensions, we need four speeds and to get the four speeds, we can use the exponential power of 10000 like below to get speed multipliers (in this case, <span class="math notranslate nohighlight">\([1, 0.1, 0.01, 0.001]\)</span>).
+$<span class="math notranslate nohighlight">\(
+\left(\frac{1}{10000^{\frac{0}{8}}}, \frac{1}{10000^{\frac{2}{8}}}, \frac{1}{10000^{\frac{4}{8}}}, \frac{1}{10000^{\frac{6}{8}}}\right)=(1, 0.1, 0.01, 0.001)
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+PE_{pos,\ 2d+1} = cos \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right)
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">exponential_dials</span><span class="p">(</span><span class="n">d_model</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -794,29 +853,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_9_0.png" src="../_images/position_encoding_9_0.png" />
+<img alt="../_images/position_encoding_12_0.png" src="../_images/position_encoding_12_0.png" />
 </div>
 </div>
-<div class="math notranslate nohighlight">
-\[
-\left(\frac{1}{10000^{\frac{0}{8}}}, \frac{1}{10000^{\frac{2}{8}}}, \frac{1}{10000^{\frac{4}{8}}}, \frac{1}{10000^{\frac{6}{8}}}\right)=(1, 0.1, 0.01, 0.001)
-\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">10000</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0
-</pre></div>
-</div>
-</div>
-</div>
-<div class="math notranslate nohighlight">
-\[
-PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{pos,\ 2d+1} = cos \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right)
-\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_len</span> <span class="o">=</span> <span class="mi">10</span>
@@ -857,8 +896,22 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="a-note-on-encoded-distances">
-<h3><span class="section-number">1.1.1. </span>A Note on Encoded Distances<a class="headerlink" href="#a-note-on-encoded-distances" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.3.3. </span>A Note on Encoded Distances<a class="headerlink" href="#a-note-on-encoded-distances" title="Permalink to this headline">¶</a></h3>
+<p>We have already seen:</p>
+<ul class="simple">
+<li><p>the encoded distance is defined by the Euclidean distance between two
+vectors or, in other words, it is the norm (size) of the difference between
+two encoding vectors</p></li>
+<li><p>the encoded distance between positions zero and two (T=2) should be
+exactly the same as the encoded distance between positions one and
+three, two and four, and so on</p></li>
+</ul>
+<p>In other words, the encoded distance between any two positions T steps
+apart remains constant. Let’s illustrate this by computing the encoded
+distances among the first five positions (by the way, we are using the
+encoding with eight dimensions.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -881,6 +934,28 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 <img alt="../_images/position_encoding_18_0.png" src="../_images/position_encoding_18_0.png" />
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="the-positional-encoding-class">
+<h2><span class="section-number">1.4. </span>The positional encoding class<a class="headerlink" href="#the-positional-encoding-class" title="Permalink to this headline">¶</a></h2>
+<p>There is a couple of things about this class to highlight:</p>
+<ul class="simple">
+<li><p>in the constructor, it uses <code class="docutils literal notranslate"><span class="pre">register_buffer</span></code> to define an attribute of the module</p></li>
+<li><p>in the forward method, it is scaling the input before adding the positional
+encoding</p></li>
+</ul>
+<div class="section" id="register-buffer">
+<h3><span class="section-number">1.4.1. </span><code class="docutils literal notranslate"><span class="pre">register_buffer</span></code><a class="headerlink" href="#register-buffer" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code class="docutils literal notranslate"><span class="pre">register_buffer</span></code>
+The <code class="docutils literal notranslate"><span class="pre">register_buffer</span></code> is used to define an attribute that is part of the module’s
+state, yet not a parameter. In other words, it is the recorded in <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> but is not updated or tracked by the dynamic computational graph for gradient calculation.</p>
+</div>
+<p>The positional encoding is a good example: its values
+are computed according to the dimension and length used by the model, and even
+though these values are going to be used during training, they shouldn not be updated
+by gradient descent.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -904,6 +979,27 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="reverse-input-scaling">
+<h3><span class="section-number">1.4.2. </span>Reverse Input Scaling<a class="headerlink" href="#reverse-input-scaling" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>“crowded-out” effect
+As shown below, the original coordinates are “crowded-out” by the addition of
+the positional encoding (especially the first row). This may happen if the data
+points have values roughly in the same range as the positional encoding.</p>
+</div>
+<p>Unfortunately, this is fairly common: both standardized inputs and word
+embeddings are likely to have most of their values inside the <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code> range of the positional encoding.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“How can we handle “crowded-out”?”
+The scaling in the forward method “reverses the standardization” of the inputs (using a standard deviation equals the square root of their dimensionality) to retrieve the hypothetical “raw” inputs.</p>
+</div>
+<div class="math notranslate nohighlight">
+\[
+\text{standardized}\ x = \frac{\text{``raw&quot;}\ x}{\sqrt{d_x}} \implies \text{``raw&quot;} x = \sqrt{d_x}\ \text{standardized}\ x
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posenc</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -973,10 +1069,6 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 </div>
-<div class="math notranslate nohighlight">
-\[
-\text{standardized}\ x = \frac{\text{``raw&quot;}\ x}{\sqrt{d_x}} \implies \text{``raw&quot;} x = \sqrt{d_x}\ \text{standardized}\ x
-\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posenc</span><span class="p">(</span><span class="n">source_seq</span><span class="p">)</span>
@@ -990,6 +1082,17 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 </div>
+<p>The results above (after the encoding) illustrate the effect of scaling the inputs: it seems to have lessened the crowding-out effect of the positional encoding.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Reverse standardisation is bad for the model, when the input dimension is large</p>
+<p>For inputs with many dimensions, the effect of reverse standardisation will be much more pronounced: a 300-dimensions embedding will have a scaling factor around 17, for example. Another normalization trick: <a class="reference external" href="https://weiliu2k.github.io/CITS4012/transformer/LayerNorm.html">layer normalization</a>, will counter-act it.</p>
+</div>
+</div>
+</div>
+<div class="section" id="encoder-and-decoder-with-self-attention">
+<h2><span class="section-number">1.5. </span>Encoder and Decoder with Self Attention<a class="headerlink" href="#encoder-and-decoder-with-self-attention" title="Permalink to this headline">¶</a></h2>
+<p>These are the same code we have seen earlier in the Week 12 lab.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Attention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1125,7 +1228,9 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 <div class="section" id="encoder-decoder-pe">
-<h3><span class="section-number">1.1.2. </span>Encoder + Decoder + PE<a class="headerlink" href="#encoder-decoder-pe" title="Permalink to this headline">¶</a></h3>
+<h2><span class="section-number">1.6. </span>Encoder + Decoder + PE<a class="headerlink" href="#encoder-decoder-pe" title="Permalink to this headline">¶</a></h2>
+<p>The new encoder and decoder classes are just wrapping their self-attention
+counterparts by assigning the latter as the layer attribute (<code class="docutils literal notranslate"><span class="pre">self.layer</span></code>) of the former, and encoding the inputs prior to calling the corresponding layer in the <code class="docutils literal notranslate"><span class="pre">forward()</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderPe</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -1222,9 +1327,8 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="data-preparation">
-<h2><span class="section-number">1.2. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.7. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">variable_len</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
@@ -1273,8 +1377,9 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="model-configuration-training">
-<h3><span class="section-number">1.2.1. </span>Model Configuration &amp; Training<a class="headerlink" href="#model-configuration-training" title="Permalink to this headline">¶</a></h3>
+<h2><span class="section-number">1.8. </span>Model Configuration &amp; Training<a class="headerlink" href="#model-configuration-training" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">43</span><span class="p">)</span>
@@ -1304,12 +1409,14 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_43_0.png" src="../_images/position_encoding_43_0.png" />
+<img alt="../_images/position_encoding_46_0.png" src="../_images/position_encoding_46_0.png" />
 </div>
 </div>
 </div>
+<div class="section" id="visualizing-results">
+<h2><span class="section-number">1.9. </span>Visualizing Results<a class="headerlink" href="#visualizing-results" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="visualizing-predictions">
-<h3><span class="section-number">1.2.2. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.9.1. </span>Visualizing Predictions<a class="headerlink" href="#visualizing-predictions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">sequence_pred</span><span class="p">(</span><span class="n">sbs_seq_selfattnpe</span><span class="p">,</span> <span class="n">full_test</span><span class="p">,</span> <span class="n">test_directions</span><span class="p">)</span>
@@ -1317,12 +1424,12 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_45_0.png" src="../_images/position_encoding_45_0.png" />
+<img alt="../_images/position_encoding_48_0.png" src="../_images/position_encoding_48_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="visualizing-attention">
-<h3><span class="section-number">1.2.3. </span>Visualizing Attention<a class="headerlink" href="#visualizing-attention" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.9.2. </span>Visualizing Attention<a class="headerlink" href="#visualizing-attention" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="o">=</span> <span class="n">full_test</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
@@ -1337,7 +1444,7 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_47_0.png" src="../_images/position_encoding_47_0.png" />
+<img alt="../_images/position_encoding_50_0.png" src="../_images/position_encoding_50_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1350,7 +1457,7 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_48_0.png" src="../_images/position_encoding_48_0.png" />
+<img alt="../_images/position_encoding_51_0.png" src="../_images/position_encoding_51_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1362,318 +1469,7 @@ PE_{pos,\ 2d} = sin \left(\frac{1}{10000^{\frac{2d}{d_{model}}}}pos\right); PE_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/position_encoding_49_0.png" src="../_images/position_encoding_49_0.png" />
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="putting-it-all-together">
-<h2><span class="section-number">1.3. </span>Putting It All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3><span class="section-number">1.3.1. </span>Data Preparation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training set</span>
-<span class="n">points</span><span class="p">,</span> <span class="n">directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">()</span>
-<span class="n">full_train</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
-<span class="n">target_train</span> <span class="o">=</span> <span class="n">full_train</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">full_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-
-<span class="n">generator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span>
-<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">)</span>
-
-<span class="c1"># Validation/Test Set</span>
-<span class="n">test_points</span><span class="p">,</span> <span class="n">test_directions</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">19</span><span class="p">)</span>
-<span class="n">full_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
-<span class="n">source_test</span> <span class="o">=</span> <span class="n">full_test</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">target_test</span> <span class="o">=</span> <span class="n">full_test</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">source_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="model-assembly">
-<h3><span class="section-number">1.3.2. </span>Model Assembly<a class="headerlink" href="#model-assembly" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderDecoderSelfAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">input_len</span><span class="p">,</span> <span class="n">target_len</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">encoder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">decoder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_len</span> <span class="o">=</span> <span class="n">input_len</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_len</span> <span class="o">=</span> <span class="n">target_len</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trg_masks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsequent_mask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_len</span><span class="p">)</span>
-        
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">subsequent_mask</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-        <span class="n">attn_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-        <span class="n">subsequent_mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">attn_shape</span><span class="p">),</span> <span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">subsequent_mask</span>
-                
-    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">):</span>
-        <span class="c1"># Encodes the source sequence and uses the result</span>
-        <span class="c1"># to initialize the decoder</span>
-        <span class="n">encoder_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">source_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">init_keys</span><span class="p">(</span><span class="n">encoder_states</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shifted_target_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="c1"># Decodes/generates a sequence using the shifted (masked)</span>
-        <span class="c1"># target sequence - used in TRAIN mode</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">shifted_target_seq</span><span class="p">,</span> 
-                               <span class="n">source_mask</span><span class="o">=</span><span class="n">source_mask</span><span class="p">,</span>
-                               <span class="n">target_mask</span><span class="o">=</span><span class="n">target_mask</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">outputs</span>
-    
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">):</span>
-        <span class="c1"># Decodes/generates a sequence using one input</span>
-        <span class="c1"># at a time - used in EVAL mode</span>
-        <span class="n">inputs</span> <span class="o">=</span> <span class="n">source_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_len</span><span class="p">):</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trg_masks</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">inputs</span><span class="p">,</span> <span class="n">out</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">inputs</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span>
-        <span class="k">return</span> <span class="n">outputs</span>
-                
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">source_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="c1"># Sends the mask to the same device as the inputs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trg_masks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trg_masks</span><span class="o">.</span><span class="n">type_as</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">bool</span><span class="p">()</span>
-        <span class="c1"># Slices the input to get source sequence</span>
-        <span class="n">source_seq</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">input_len</span><span class="p">,</span> <span class="p">:]</span>
-        <span class="c1"># Encodes source sequence AND initializes decoder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">source_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
-            <span class="c1"># Slices the input to get the shifted target seq</span>
-            <span class="n">shifted_target_seq</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_len</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="c1"># Decodes using the mask to prevent cheating</span>
-            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">shifted_target_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trg_masks</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Decodes using its own predictions</span>
-            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">source_seq</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">)</span>
-            
-        <span class="k">return</span> <span class="n">outputs</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="encoder-decoder-positional-encoding">
-<h3><span class="section-number">1.3.3. </span>Encoder + Decoder + Positional Encoding<a class="headerlink" href="#encoder-decoder-positional-encoding" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
-        <span class="n">pe</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
-        <span class="n">position</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_len</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">angular_speed</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10000.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">d_model</span><span class="p">))</span>
-        <span class="n">pe</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">angular_speed</span><span class="p">)</span> <span class="c1"># even dimensions</span>
-        <span class="n">pe</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">angular_speed</span><span class="p">)</span> <span class="c1"># odd dimensions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="n">pe</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="c1"># x is N, L, D</span>
-        <span class="c1"># pe is 1, maxlen, D</span>
-        <span class="n">scaled_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">)</span>
-        <span class="n">encoded</span> <span class="o">=</span> <span class="n">scaled_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">[:,</span> <span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="p">:]</span>
-        <span class="k">return</span> <span class="n">encoded</span>
-
-<span class="k">class</span> <span class="nc">EncoderPe</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="n">pe_dim</span> <span class="o">=</span> <span class="n">d_model</span> <span class="k">if</span> <span class="n">n_features</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n_features</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">pe_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">EncoderSelfAttn</span><span class="p">(</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">query_pe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="n">query_pe</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
-    
-<span class="k">class</span> <span class="nc">DecoderPe</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="n">pe_dim</span> <span class="o">=</span> <span class="n">d_model</span> <span class="k">if</span> <span class="n">n_features</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n_features</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pe</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">pe_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">DecoderSelfAttn</span><span class="p">(</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">init_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">init_keys</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">source_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">query_pe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pe</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="n">query_pe</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">,</span> <span class="n">target_mask</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="self-attention-layers">
-<h3><span class="section-number">1.3.4. </span>Self-Attention “Layers”<a class="headerlink" href="#self-attention-layers" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderSelfAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_heads</span> <span class="o">=</span> <span class="n">n_heads</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ff_units</span> <span class="o">=</span> <span class="n">ff_units</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">n_features</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">self_attn_heads</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="n">n_features</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">),</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">ff_units</span><span class="p">,</span> <span class="n">d_model</span><span class="p">),</span>
-        <span class="p">)</span>
-         
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">self_attn_heads</span><span class="o">.</span><span class="n">init_keys</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="n">att</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">self_attn_heads</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span><span class="p">(</span><span class="n">att</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
-
-<span class="k">class</span> <span class="nc">DecoderSelfAttn</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_heads</span> <span class="o">=</span> <span class="n">n_heads</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ff_units</span> <span class="o">=</span> <span class="n">ff_units</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">d_model</span> <span class="k">if</span> <span class="n">n_features</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">n_features</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">self_attn_heads</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cross_attn_heads</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">ff_units</span><span class="p">),</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">ff_units</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">),</span>
-        <span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">init_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cross_attn_heads</span><span class="o">.</span><span class="n">init_keys</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
-         
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">source_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">self_attn_heads</span><span class="o">.</span><span class="n">init_keys</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="n">att1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">self_attn_heads</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">target_mask</span><span class="p">)</span>
-        <span class="n">att2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_attn_heads</span><span class="p">(</span><span class="n">att1</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span><span class="p">(</span><span class="n">att2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="attention-heads">
-<h3><span class="section-number">1.3.5. </span>Attention Heads<a class="headerlink" href="#attention-heads" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proj_values</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">linear_out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_heads</span> <span class="o">*</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attn_heads</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">Attention</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> 
-                                                   <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim</span><span class="p">,</span> 
-                                                   <span class="n">proj_values</span><span class="o">=</span><span class="n">proj_values</span><span class="p">)</span> 
-                                         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_heads</span><span class="p">)])</span>
-        
-    <span class="k">def</span> <span class="nf">init_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">attn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_heads</span><span class="p">:</span>
-            <span class="n">attn</span><span class="o">.</span><span class="n">init_keys</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">alphas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Shape: n_heads, N, 1, L (source)</span>
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">attn</span><span class="o">.</span><span class="n">alphas</span> <span class="k">for</span> <span class="n">attn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_heads</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">output_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contexts</span><span class="p">):</span>
-        <span class="c1"># N, 1, n_heads * D</span>
-        <span class="n">concatenated</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">contexts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_out</span><span class="p">(</span><span class="n">concatenated</span><span class="p">)</span> <span class="c1"># N, 1, D</span>
-        <span class="k">return</span> <span class="n">out</span>
-        
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">contexts</span> <span class="o">=</span> <span class="p">[</span><span class="n">attn</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">attn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_heads</span><span class="p">]</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_function</span><span class="p">(</span><span class="n">contexts</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
-    
-<span class="k">class</span> <span class="nc">Attention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proj_values</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">hidden_dim</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span> <span class="k">if</span> <span class="n">input_dim</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">input_dim</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">proj_values</span> <span class="o">=</span> <span class="n">proj_values</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">linear_query</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">linear_key</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">linear_value</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span> <span class="o">=</span> <span class="kc">None</span>
-                
-    <span class="k">def</span> <span class="nf">init_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="n">keys</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">proj_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span> \
-                      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj_values</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span>
-                
-    <span class="k">def</span> <span class="nf">score_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-        <span class="n">proj_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="c1"># scaled dot product</span>
-        <span class="c1"># N, 1, H x N, H, L -&gt; N, 1, L</span>
-        <span class="n">dot_products</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">proj_query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj_keys</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">scores</span> <span class="o">=</span>  <span class="n">dot_products</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d_k</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">scores</span>
-            
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="c1"># Query is batch-first N, 1, H</span>
-        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_function</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="c1"># N, 1, L</span>
-        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">masked_fill</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e9</span><span class="p">)</span>
-        <span class="n">alphas</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># N, 1, L</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">alphas</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-        
-        <span class="c1"># N, 1, L x N, L, H -&gt; N, 1, H</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">context</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="id2">
-<h3><span class="section-number">1.3.6. </span>Model Configuration &amp; Training<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">43</span><span class="p">)</span>
-<span class="n">encpe</span> <span class="o">=</span> <span class="n">EncoderPe</span><span class="p">(</span><span class="n">n_heads</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ff_units</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">decpe</span> <span class="o">=</span> <span class="n">DecoderPe</span><span class="p">(</span><span class="n">n_heads</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ff_units</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">EncoderDecoderSelfAttn</span><span class="p">(</span><span class="n">encpe</span><span class="p">,</span> <span class="n">decpe</span><span class="p">,</span> <span class="n">input_len</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">target_len</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sbs_seq_selfattnpe</span> <span class="o">=</span> <span class="n">StepByStep</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span>
-<span class="n">sbs_seq_selfattnpe</span><span class="o">.</span><span class="n">set_loaders</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">)</span>
-<span class="n">sbs_seq_selfattnpe</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sbs_seq_selfattnpe</span><span class="o">.</span><span class="n">losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">sbs_seq_selfattnpe</span><span class="o">.</span><span class="n">val_losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.017481574206613004, 0.02478515519760549)
-</pre></div>
-</div>
+<img alt="../_images/position_encoding_52_0.png" src="../_images/position_encoding_52_0.png" />
 </div>
 </div>
 </div>

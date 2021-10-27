@@ -617,6 +617,14 @@
                 
   <div class="section" id="extra-transformers">
 <h1>Extra: Transformers<a class="headerlink" href="#extra-transformers" title="Permalink to this headline">¶</a></h1>
+<p>This set of notebooks first introduces the key elements for building a transformer encoder-decoder modle, namely, <a class="reference external" href="https://weiliu2k.github.io/CITS4012/transformer/transformer.html#narrow-attention">multi-headed narrow attention</a>, <a class="reference external" href="https://weiliu2k.github.io/CITS4012/transformer/LayerNorm.html">layer normalisation</a>, and <a class="reference external" href="https://weiliu2k.github.io/CITS4012/transformer/position_encoding.html">position encoding</a>.</p>
+<p>Then finally, we assemble them together to build our own Transformer Model, and compare it with the PyTorch <code class="docutils literal notranslate"><span class="pre">nn.Tranformer</span></code> class in the <a class="reference external" href="https://weiliu2k.github.io/CITS4012/transformer/transformer.html">transform and roll out notebook</a>. The picture below provides a good mapping of classes we implemented to the components used in a Transformer Encoder-Decoder Model.</p>
+<p><img alt="Full Transformer with Class Mapping" src="../_images/full_transformer_and_class.png" /></p>
+<p>Credit: the notebooks are adapted from:</p>
+<ul class="simple">
+<li><p>Chpater 9 of <a class="reference external" href="https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter09.ipynb">Deep Learning with PyTorch Step-by-Step</a></p></li>
+<li><p>Chpater 10 of <a class="reference external" href="https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb">Deep Learning with PyTorch Step-by-Step</a></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 </div>
