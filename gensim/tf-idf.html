@@ -814,8 +814,8 @@
 <h3><span class="section-number">1.1.3. </span>Step 3: Calculating the tfidf values<a class="headerlink" href="#step-3-calculating-the-tfidf-values" title="Permalink to this headline">¶</a></h3>
 <p>A <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html"><code class="docutils literal notranslate"><span class="pre">gensim.models.TfidfModel</span></code></a> object can be constructed using the processed BoW corpus. The <code class="docutils literal notranslate"><span class="pre">smartirs</span></code> parameter stands for SMART information retrieval system, where SMART is an acronym for “System for the Mechanical Analysis and Retrieval of Text”. If interested, you can read more about <a class="reference external" href="https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System">SMART on Wikipedia</a>, which contains a rather comprehensive list of TF-IDF variants.  <code class="docutils literal notranslate"><span class="pre">smartirs</span> <span class="pre">=</span> <span class="pre">ntc</span></code> means the model will use <code class="docutils literal notranslate"><span class="pre">n</span></code> raw term freqency, <code class="docutils literal notranslate"><span class="pre">t</span></code> zero-corrected idf, and <code class="docutils literal notranslate"><span class="pre">c</span></code> cosine for document vector nomalisation. For a list of other letter codes for each of the three tf-idf components, see the tabs or refer to the <a class="reference external" href="https://radimrehurek.com/gensim/models/tfidfmodel.html">original documentation</a>. You do not need to memorise all these variants, but just be aware of the many alternatives in calculating such a seemingly simple value. You can even define your own way of calculating tf and idf to feed into the model constructor.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="bff2ef58-db29-4f6d-a8f1-8e56d5618aa4" name="95fb4c61-6c08-49b9-ad41-da42e14bf6ba" type="radio">
-</input><label class="tabbed-label" for="bff2ef58-db29-4f6d-a8f1-8e56d5618aa4">
+<input checked="checked" id="71eeb355-6480-4887-a921-d3f339b866d4" name="962a8915-19c0-4ba5-851b-0783a3f76185" type="radio">
+</input><label class="tabbed-label" for="71eeb355-6480-4887-a921-d3f339b866d4">
 Term frequency weighing</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>b - binary,</p></li>
@@ -826,8 +826,8 @@ Term frequency weighing</label><div class="tabbed-content docutils">
 <li><p>L - log average.</p></li>
 </ul>
 </div>
-<input id="8a6e6a73-fbc6-4c4a-9ecb-d661ae2af760" name="95fb4c61-6c08-49b9-ad41-da42e14bf6ba" type="radio">
-</input><label class="tabbed-label" for="8a6e6a73-fbc6-4c4a-9ecb-d661ae2af760">
+<input id="1178054d-46b8-4c6a-9a84-8e9f44785187" name="962a8915-19c0-4ba5-851b-0783a3f76185" type="radio">
+</input><label class="tabbed-label" for="1178054d-46b8-4c6a-9a84-8e9f44785187">
 Document frequency weighting</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>x or n - none,</p></li>
@@ -836,8 +836,8 @@ Document frequency weighting</label><div class="tabbed-content docutils">
 <li><p>p - probabilistic idf.</p></li>
 </ul>
 </div>
-<input id="e0881ab8-04d0-48f5-8430-26befb5d23a1" name="95fb4c61-6c08-49b9-ad41-da42e14bf6ba" type="radio">
-</input><label class="tabbed-label" for="e0881ab8-04d0-48f5-8430-26befb5d23a1">
+<input id="8202d020-aec4-4dd0-aa49-8178e7050557" name="962a8915-19c0-4ba5-851b-0783a3f76185" type="radio">
+</input><label class="tabbed-label" for="8202d020-aec4-4dd0-aa49-8178e7050557">
 Document normalization</label><div class="tabbed-content docutils">
 <ul class="simple">
 <li><p>x or n - none,</p></li>
@@ -1064,15 +1064,15 @@ Document normalization</label><div class="tabbed-content docutils">
 <h2><span class="section-number">1.2. </span>TF-IDF in scikit-learn<a class="headerlink" href="#tf-idf-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
 <p>In scikit-learn, the TF-IDF is caculated using the <code class="docutils literal notranslate"><span class="pre">TfidfTransformer</span></code>. Its default settings, <code class="docutils literal notranslate"><span class="pre">TfidfTransformer(norm='l2',</span> <span class="pre">use_idf=True,</span> <span class="pre">smooth_idf=True,</span> <span class="pre">sublinear_tf=False)</span></code> the term frequency, the number of times a term occurs in a given document, is multiplied with idf component, which is computed as</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="8416f221-8801-4a53-86d2-2f406ef69fb6" name="1b51ef2f-26ec-4970-8db4-51a7ca4d71cc" type="radio">
-</input><label class="tabbed-label" for="8416f221-8801-4a53-86d2-2f406ef69fb6">
+<input checked="checked" id="7947e036-aec0-4050-9386-eb228e7f8299" name="5cee5186-f6e7-4e31-b44b-29343c680774" type="radio">
+</input><label class="tabbed-label" for="7947e036-aec0-4050-9386-eb228e7f8299">
 TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code></label><div class="tabbed-content docutils">
 <div class="math notranslate nohighlight">
 \[idf_t = \log_2\frac{1+n}{1+df_t} + 1\]</div>
 <p>The default parameter <code class="docutils literal notranslate"><span class="pre">smooth_idf=True</span></code> adds “1” to the numerator and denominator as if an extra document was seen containing every term in the collection exactly once, which prevents zero divisions.</p>
 </div>
-<input id="4006dc00-13d8-4794-9a60-0a7676d00d1c" name="1b51ef2f-26ec-4970-8db4-51a7ca4d71cc" type="radio">
-</input><label class="tabbed-label" for="4006dc00-13d8-4794-9a60-0a7676d00d1c">
+<input id="8ca6fd2e-e2ff-4101-9d69-0848c51c5000" name="5cee5186-f6e7-4e31-b44b-29343c680774" type="radio">
+</input><label class="tabbed-label" for="8ca6fd2e-e2ff-4101-9d69-0848c51c5000">
 TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_idf=False</span></code></label><div class="tabbed-content docutils">
 <div class="math notranslate nohighlight">
 \[idf_t = \log_2\frac{n}{df_t} + 1\]</div>
@@ -1258,7 +1258,7 @@ TF-IDF with <code class="docutils literal notranslate"><span class="pre">smooth_
         
           By A/Prof. Wei Liu<br/>
         
-            &copy; Copyright UWA 2021.<br/>
+            &copy; Copyright UWA 2022.<br/>
       </p>
     </div>
   </footer>

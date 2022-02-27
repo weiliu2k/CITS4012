@@ -1103,13 +1103,13 @@ tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=torch.int32)
 <h3><span class="section-number">2.2.7. </span>Subtleties in Torch Memory Model<a class="headerlink" href="#subtleties-in-torch-memory-model" title="Permalink to this headline">¶</a></h3>
 <p>Another way of creating tensor is to use <code class="docutils literal notranslate"><span class="pre">torch.as_tensor()</span></code>. What’s the difference between <code class="docutils literal notranslate"><span class="pre">torch.as_tensor()</span></code> and <code class="docutils literal notranslate"><span class="pre">torch.tensor()</span></code>?</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="f499ea6f-ce3b-4963-9c7e-e8a6e004a71c" name="61f44eb3-9a81-4c78-b4fc-4870e68be654" type="radio">
-</input><label class="tabbed-label" for="f499ea6f-ce3b-4963-9c7e-e8a6e004a71c">
+<input checked="checked" id="01f99560-bd71-4baf-b330-c5791f5d1883" name="7fff14fc-8a7f-42de-b07c-c8a292395770" type="radio">
+</input><label class="tabbed-label" for="01f99560-bd71-4baf-b330-c5791f5d1883">
 &lt;literal&gt;torch.tensor()&lt;/literal&gt;</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">torch.tensor</span></code> always copies the data. For example, <code class="docutils literal notranslate"><span class="pre">torch.tensor(x)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">x.clone().detach()</span></code>.</p>
 </div>
-<input id="3a25ca39-e489-4f1e-9cfe-12eceb8d97bb" name="61f44eb3-9a81-4c78-b4fc-4870e68be654" type="radio">
-</input><label class="tabbed-label" for="3a25ca39-e489-4f1e-9cfe-12eceb8d97bb">
+<input id="53842aae-589f-4702-9299-1bb5d4b60733" name="7fff14fc-8a7f-42de-b07c-c8a292395770" type="radio">
+</input><label class="tabbed-label" for="53842aae-589f-4702-9299-1bb5d4b60733">
 &lt;literal&gt;torch.as_tensor()&lt;/literal&gt;</label><div class="tabbed-content docutils">
 <p><code class="docutils literal notranslate"><span class="pre">torch.as_tensor</span></code> always tries to avoid copies of the data. One of the cases where <code class="docutils literal notranslate"><span class="pre">as_tensor</span></code> avoids copying the data is if the original data is a numpy array.</p>
 </div>
@@ -1627,7 +1627,7 @@ tensor([[0.3817, 0.3665],
         
           By A/Prof. Wei Liu<br/>
         
-            &copy; Copyright UWA 2021.<br/>
+            &copy; Copyright UWA 2022.<br/>
       </p>
     </div>
   </footer>
