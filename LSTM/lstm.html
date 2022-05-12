@@ -705,12 +705,13 @@ g = tanh(t_{hg}+t_{xg})
 c' = g * i + c * f
 \]</div>
 </div>
-<p>The new hidden state is obtained by bounding the new cell state (<span class="math notranslate nohighlight">\(c'\)</span>) before applying output gate weights (<span class="math notranslate nohighlight">\(o\)</span>):::
-$<span class="math notranslate nohighlight">\(
+<p>The new hidden state is obtained by bounding the new cell state (<span class="math notranslate nohighlight">\(c'\)</span>) before applying output gate weights (<span class="math notranslate nohighlight">\(o\)</span>)</p>
+<div class="admonition-the-new-hidden-state admonition">
+<p class="admonition-title">The new hidden state</p>
+<div class="math notranslate nohighlight">
+\[
 h' = tanh(c') * o
-\)</span>$</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
+\]</div>
 </div>
 <div class="section" id="imports">
 <h2><span class="section-number">2.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
