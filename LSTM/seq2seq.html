@@ -829,6 +829,24 @@
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">points</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([[ 1.03487506,  0.96613817],
+       [ 0.80546093, -0.91690943],
+       [-0.82507582, -0.94988627],
+       [-0.86696831,  0.93424827]]), array([[ 1.0184946 , -1.06510565],
+       [ 0.88794931,  0.96533932],
+       [-1.09113448,  0.92538647],
+       [-1.07709685, -1.04139537]])]
+</pre></div>
+</div>
+</div>
+</div>
 <p>Visualize the first five squares.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -837,7 +855,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_19_0.png" src="../_images/seq2seq_19_0.png" />
+<img alt="../_images/seq2seq_20_0.png" src="../_images/seq2seq_20_0.png" />
 </div>
 </div>
 </div>
@@ -889,6 +907,34 @@
 <span class="n">hidden_seq</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">source_seq</span><span class="p">)</span> <span class="c1"># output is N, L, F</span>
 <span class="n">hidden_final</span> <span class="o">=</span> <span class="n">hidden_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>   <span class="c1"># takes last hidden state</span>
 <span class="n">hidden_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.3105, -0.5263]]], grad_fn=&lt;SliceBackward&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 training sample, N=1; </span>
+<span class="c1"># Sequence contain two corners, Length L=2;</span>
+<span class="c1"># Each corner is in two dimensional space, Feature F=2;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hidden_seq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.0832, -0.0356],
+         [ 0.3105, -0.5263]]], grad_fn=&lt;TransposeBackward1&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hidden_seq</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span>
 </pre></div>
 </div>
 </div>
@@ -1212,7 +1258,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_53_0.png" src="../_images/seq2seq_53_0.png" />
+<img alt="../_images/seq2seq_56_0.png" src="../_images/seq2seq_56_0.png" />
 </div>
 </div>
 </div>
@@ -1225,7 +1271,7 @@ Output: tensor([[[-0.0226,  0.4628]]], grad_fn=&lt;ViewBackward&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/seq2seq_55_0.png" src="../_images/seq2seq_55_0.png" />
+<img alt="../_images/seq2seq_58_0.png" src="../_images/seq2seq_58_0.png" />
 </div>
 </div>
 </div>

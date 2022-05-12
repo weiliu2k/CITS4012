@@ -698,8 +698,8 @@ g = tanh(t_{hg}+t_{xg})
 \]</div>
 </div>
 <p>Cell state is an unbounded weighted sum of the candidate hidden state <span class="math notranslate nohighlight">\(g\)</span> and previous cell state <span class="math notranslate nohighlight">\(c\)</span>, weighted by learnt input gate <span class="math notranslate nohighlight">\(i\)</span> and forget gate <span class="math notranslate nohighlight">\(f\)</span>, respectively.</p>
-<div class="admonition-the-candidate-hidden-state admonition">
-<p class="admonition-title">The candidate hidden state</p>
+<div class="admonition-the-new-cell-state admonition">
+<p class="admonition-title">The new cell state</p>
 <div class="math notranslate nohighlight">
 \[
 c' = g * i + c * f
