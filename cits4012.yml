@@ -1,4 +1,4 @@
-name: null
+name: cits4012
 channels:
   - pytorch
   - conda-forge
@@ -181,4 +181,3 @@ dependencies:
     - truecase==0.0.12
     - typer==0.3.2
     - wasabi==0.8.2
-prefix: c:\envs\cits4012
